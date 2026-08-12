@@ -5,17 +5,17 @@ Collaborative development with ChatGPT on portable modular software.
 
 ---
 
-## D1: Basic System Boot
+## Direction 1: Basic System Boot
 
-### boot/
-**P:** Load system from USB without installation
+### Module: boot/
+**Purpose:** Load system from USB without installation
 
-**C:**
+**Components:**
 - `bootloader.js` — USB detection, kernel load
 - `init.js` — Process initialization
 - `config.js` — Hardware detection
 
-**Skills:**
+**Skills Extracted:**
 - USB auto-detection
 - Hardware abstraction
 - Graceful fallback
@@ -26,17 +26,17 @@ Collaborative development with ChatGPT on portable modular software.
 
 ---
 
-## D2: Terminal
+## Direction 2: Terminal
 
-### terminal/
-**P:** Command-line interface with basic commands
+### Module: terminal/
+**Purpose:** Command-line interface with basic commands
 
-**C:**
+**Components:**
 - `shell.js` — Command parser
 - `commands.js` — Built-in commands
 - `history.js` — Command history
 
-**Skills:**
+**Skills Extracted:**
 - Command parsing
 - Tab completion
 - History navigation
@@ -47,17 +47,17 @@ Collaborative development with ChatGPT on portable modular software.
 
 ---
 
-## D3: File System
+## Direction 3: File System
 
-### filesystem/
-**P:** Virtual file system on USB
+### Module: filesystem/
+**Purpose:** Virtual file system on USB
 
-**C:**
+**Components:**
 - `vfs.js` — Virtual filesystem
 - `mount.js` — Mount points
 - `permissions.js` — Access control
 
-**Skills:**
+**Skills Extracted:**
 - Virtual filesystem
 - Union mounts
 - Overlay filesystem
@@ -68,17 +68,17 @@ Collaborative development with ChatGPT on portable modular software.
 
 ---
 
-## D4: Internet
+## Direction 4: Internet
 
-### network/
-**P:** Secure internet access
+### Module: network/
+**Purpose:** Secure internet access
 
-**C:**
+**Components:**
 - `proxy.js` — SOCKS5/HTTP proxy
 - `dns.js` — DNS resolver
 - `firewall.js` — Traffic filtering
 
-**Skills:**
+**Skills Extracted:**
 - Proxy chaining
 - DNS over HTTPS
 - Traffic filtering
