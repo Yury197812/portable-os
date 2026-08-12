@@ -1,0 +1,14 @@
+{
+  "name": "portable-os",
+  "version": "0.1.0",
+  "description": "Portable OS with internet access",
+  "main": "engine/core.js",
+  "scripts": {
+    "start": "node engine/core.js",
+    "terminal": "node app/terminal.js",
+    "test": "node tests/test.js"
+  },
+  "keywords": ["portable", "os", "usb", "privacy"],
+  "author": "Yury197812",
+  "license": "MIT"
+}

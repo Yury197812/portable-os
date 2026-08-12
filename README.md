@@ -2,19 +2,21 @@
 
 Portable PO with internet access.
 
+## Quick Start
+
+```bash
+npm install
+npm start
+```
+
 ## Structure
 
-- `app/` - Application layer
-- `engine/` - Core engine
-- `skills/` - Skill modules
-- `book/` - Oculus book project
-- `MIMO/` - MIMO integration
-- `tests/` - Test suite
-- `build/` - Build scripts
-- `portable/` - Portable distribution
-- `dashboard/` - Dashboard UI
-- `api/` - API layer
+- `app/` — Terminal, filesystem, network modules
+- `engine/` — Core system
+- `skills/` — Skill modules
+- `book/` — Development documentation
+- `tests/` — Test suite
 
-## Development
+## Chapter 1
 
-First full development cycle starts from Chapter 1 of the book.
+See `book/chapter_01_portable_os.md` for system architecture.
