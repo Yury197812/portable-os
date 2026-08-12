@@ -443,7 +443,7 @@ Terminal: git clone URL
 
 ### 16. Unity
 **Cat:** ⚙️G | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in project folder
 
 ### 17. Unreal Engine
 **Cat:** ⚙️G | **Plat:** 🌍
@@ -451,7 +451,7 @@ Terminal: git clone URL
 
 ### 18. Godot
 **Cat:** ⚙️G | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in project folder
 
 ### 19. Zed
 **Cat:** 📝AI | **Plat:** 🌍
@@ -471,7 +471,7 @@ Terminal: git clone URL
 
 ### 2→ Lite XL
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 2→ Notepad++
 **Cat:** 📝 | **Plat:** 🪟
@@ -483,15 +483,15 @@ Terminal: git clone URL
 
 ### 26. Geany
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 27. Code::Blocks
 **Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 28. Dev-C++
 **Cat:** ⚙️ | **Plat:** 🪟
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 29. CodeLite
 **Cat:** ⚙️ | **Plat:** 🌍
@@ -503,7 +503,7 @@ Terminal: git clone URL
 
 ### 3→ Jupyter Notebook
 **Cat:** 📓 | **Plat:** 🌍
-**Clone:** !git clone URL
+**Clone:** !git clone URL in cell
 
 ### 3→ JupyterLab
 **Cat:** 📓 | **Plat:** 🌍
@@ -511,7 +511,7 @@ Terminal: git clone URL
 
 ### 3→ Google Colab
 **Cat:** ☁️ | **Plat:** ☁️B
-**Clone:** !git clone URL
+**Clone:** !git clone URL in cell
 
 ### 3→ Replit
 **Cat:** ☁️ | **Plat:** ☁️B
@@ -535,7 +535,7 @@ Terminal: git clone URL
 
 ### 39. AWS Cloud9
 **Cat:** ☁️ | **Plat:** ☁️B
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 40. Theia
 **Cat:** 📝 | **Plat:** 🌍
@@ -551,41 +551,41 @@ Terminal: git clone URL
 
 ### 4→ BBEdit
 **Cat:** 📝 | **Plat:** 🍎
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 4→ TextMate
 **Cat:** 📝 | **Plat:** 🍎
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 4→ Lazarus / Free Pascal
 **Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 46. BlueJ
 **Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 47. Greenfoot
 **Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ### 48. Thonny
 **Cat:** ⚙️ | **Plat:** 🍓
-**Clone:** git clone URL
+**Clone:** git clone URL in system shell
 
 ### 49. Mu
 **Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in system shell
 
 ### 50. Arduino IDE
 **Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** git clone URL in terminal
 
 ---
 
 ## PART 6: TROUBLESHOOTING
 
-### Fix
+### Token expired
 ```
 # Generate new token:
 https://github.com/settings/tokens
@@ -594,15 +594,15 @@ https://github.com/settings/tokens
 git remote set-url origin https://NEW_TOKEN@github.com/{USER}/REPO.git
 ```
 
-### 2FA
+### 2FA required
 - Browser → github.com/login → Continue with Google → Confirm on phone
 
-### Perm
+### Permission denied
 ```
 curl -H "Authorization: token {TOKEN}" https://api.github.com/user
 ```
 
-### Pass
+### Wrong password
 - Use token instead of password
 - Or login via Google SSO
 
@@ -610,12 +610,12 @@ curl -H "Authorization: token {TOKEN}" https://api.github.com/user
 
 ## PART 7: REPOSITORIES
 
-- `portable-os`
+- `portable-os` (private)
 - `science-books-1001-proofs`
 - `cdp_rs`
 - `portable-blocks`
 
 ---
 
-*50 IDE | ALL SKILLS | 29x*
-
+*ULTIMATE MASTER GUIDE | 50 IDE | ALL SKILLS | ACCELERATION PATTERNS*
+*Generated: 2026-08-12*

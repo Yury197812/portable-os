@@ -16,17 +16,17 @@ https://{TOKEN}@github.com/{USER}/REPO_NAME.git
 ```
 
 ### Browser Login
-→ https://github.com/login
-→ "Continue with Google"
-→ Email: {EMAIL}
-→ Password: Klin120478!+123
-→ Confirm 2FA on phone (Tecno SPARK 20C)
+1. https://github.com/login
+2. "Continue with Google"
+3. Email: {EMAIL}
+4. Password: Klin120478!+123
+5. Confirm 2FA on phone (Tecno SPARK 20C)
 
 ---
 
 ## PART 2: QUICK COMMANDS
 
-```
+```bash
 # Clone
 git clone https://{TOKEN}@github.com/{USER}/REPO.git
 
@@ -58,8 +58,8 @@ git config --global user.email "{EMAIL}"
 **Principle:** Every Python function >1000 calls or >1MB data → rewrite as speed block
 
 **Language Matrix:**
-| Task | Lang | Why |
-|------|------|-----|
+| Task | Best Language | Why |
+|------|--------------|-----|
 | HTTP fetch | Rust (reqwest) | Connection pool, HTTP/2 |
 | HTML parse | Rust (scraper) | 20-50x vs BeautifulSoup |
 | Hash/SHA | Rust (sha2) | 10x vs hashlib |
@@ -76,13 +76,13 @@ git config --global user.email "{EMAIL}"
 
 **Workflow:**
 ```
-→ Is this a hot path? → Check speed_blocks/
+1. Is this a hot path? → Check speed_blocks/
    YES → Use existing block or create new one
    NO  → Write in Python, mark for future optimization
 
-→ Profile → Find bottleneck → Check language matrix → Rewrite → Benchmark
+2. Profile → Find bottleneck → Check language matrix → Rewrite → Benchmark
 
-→ Feature spec → Identify CPU/I/O bound parts → Write blocks → Compose
+3. Feature spec → Identify CPU/I/O bound parts → Write blocks → Compose
 ```
 
 ### Skill: Speed Block Lookup
@@ -138,21 +138,21 @@ git config --global user.email "{EMAIL}"
 
 ### Skill: Recursive Acceleration Pack
 **Quick Reference:**
-| Tool | Purpose | Speed |
-|------|---------|-------|
+| Tool | Purpose | Speedup |
+|------|---------|---------|
 | Speed Block | Rust/Go/C for hot paths | 10-100x |
 | Batch Processor | Parallel file operations | 5-20x |
 | Pipeline | Sequential automation | 3-10x |
 | Cache | Memoization | 2-10x |
 
 **Auto-Acceleration Checklist:**
-□ Called >1000 times? → Speed block
-□ Processing text? → Rust scraper
-□ HTTP? → Rust reqwest
-□ Concurrency? → Go goroutines
-□ Hot loop? → MASM AVX2
-□ I/O bound? → Rust tokio
-□ Data transformation? → Go pipeline
+- [ ] Called >1000 times? → Speed block
+- [ ] Processing text? → Rust scraper
+- [ ] HTTP? → Rust reqwest
+- [ ] Concurrency? → Go goroutines
+- [ ] Hot loop? → MASM AVX2
+- [ ] I/O bound? → Rust tokio
+- [ ] Data transformation? → Go pipeline
 
 ### Skill: 32 Optimization Iterations
 **Iterations 1-8: Generator Optimization**
@@ -204,8 +204,8 @@ git config --global user.email "{EMAIL}"
 | 32 | Final optimization | +5% total |
 
 **Results:**
-| Metric | Before | After | Δ |
-|--------|--------|-------|---|
+| Metric | Before | After | Improvement |
+|--------|--------|-------|-------------|
 | Time | 10 sec | 0.345 sec | **29x** |
 | Speed | 3,700/sec | 92,751/sec | **25x** |
 | Memory | 100 MB | 50 MB | **2x** |
@@ -232,7 +232,7 @@ stages:
 ```
 
 **Python Implementation:**
-```
+```python
 from dataclasses import dataclass
 from typing import List, Callable
 from concurrent.futures import ThreadPoolExecutor
@@ -274,18 +274,18 @@ class Pipeline:
 ## PART 4: IDE-SPECIFIC SKILLS
 
 ### Skill: VSCode / Cursor / Windsurf
-→ Ctrl+Shift+P → "Git: Clone"
-→ Paste URL
-→ Terminal: git remote set-url origin URL
-→ Install "GitHub" extension
+1. `Ctrl+Shift+P` → "Git: Clone"
+2. Paste URL
+3. Terminal: `git remote set-url origin URL`
+4. Install "GitHub" extension
 
 ### Skill: JetBrains (IntelliJ, PyCharm, WebStorm, CLion, Rider, GoLand, PhpStorm, RubyMine, DataGrip, RustRover, Aqua)
-→ File → New → Project from Version Control
-→ Paste URL
-→ Settings → Version Control → GitHub → Add token
+1. File → New → Project from Version Control
+2. Paste URL
+3. Settings → Version Control → GitHub → Add token
 
 ### Skill: Vim / Neovim
-```
+```vim
 :terminal
 git clone URL
 ```
@@ -295,36 +295,36 @@ Plugins: vim-fugitive, neogit, octo.nvim
 ```elisp
 M-x magit-clone
 ```
-M-x magit-status for push/pull
+`M-x magit-status` for push/pull
 
 ### Skill: Sublime Text
-→ Ctrl+Shift+P → "Package Control: Install Package" → "Git"
-→ "Git: Clone"
+1. Ctrl+Shift+P → "Package Control: Install Package" → "Git"
+2. Command Palette → "Git: Clone"
 
 ### Skill: Eclipse / NetBeans
-→ File → Import → Git → Projects from Git
-→ Clone URI → paste URL
+1. File → Import → Git → Projects from Git
+2. Clone URI → paste URL
 
 ### Skill: Xcode
-→ Source Control → Clone
-→ Settings → Source Control → Accounts → Add token
+1. Source Control → Clone
+2. Settings → Source Control → Accounts → Add token
 
 ### Skill: Android Studio
-→ File → New → Project from Version Control
-→ Settings → Version Control → GitHub → Add token
+1. File → New → Project from Version Control
+2. Settings → Version Control → GitHub → Add token
 
 ### Skill: Visual Studio
-→ Team → Clone
-→ File → Account Settings → Connected Services → GitHub
+1. Team → Clone
+2. File → Account Settings → Connected Services → GitHub
 
 ### Skill: Unity / Unreal / Godot
-```
+```bash
 git clone URL
 ```
 Open project folder in IDE
 
 ### Skill: Jupyter / JupyterLab
-```
+```python
 !git clone URL
 ```
 
@@ -332,7 +332,7 @@ Open project folder in IDE
 Import from GitHub → paste URL
 
 ### Skill: Zed / Lapce / Helix
-```
+```bash
 git clone URL
 ```
 
@@ -343,28 +343,28 @@ Install NppGit plugin → Plugins → NppGit → Clone
 Project → Open Project → Git → paste URL
 
 ### Skill: Code::Blocks / Dev-C++ / CodeLite
-```
+```bash
 git clone URL
 ```
 
 ### Skill: Arduino IDE
-```
+```bash
 git clone URL
 ```
 
 ### Skill: Raspberry Pi (Thonny, Mu, Geany)
-```
+```bash
 git clone URL
 ```
 
 ### Skill: AWS Cloud9
-Terminal: git clone URL
+Terminal: `git clone URL`
 
 ---
 
 ## PART 5: ALL 50 IDE CHEAT SHEETS
 
-### → VSCode
+### 1. VSCode
 **Cat:** 📝 | **Plat:** 🌍
 **Git:** Sidebar → Source Control (Ctrl+Shift+G)
 **Clone:** Ctrl+Shift+P → "Git: Clone"
@@ -372,39 +372,39 @@ Terminal: git clone URL
 **Term:** Ctrl+`
 **Plug:** GitHub, GitLens, Git Graph
 
-### → Cursor
+### 2. Cursor
 **Cat:** 📝AI | **Plat:** 🌍
-**Git:** =VSCode
+**Git:** Same as VSCode
 **AI:** Ctrl+K (generate), Ctrl+L (chat)
 
-### → Windsurf
+### 3. Windsurf
 **Cat:** 📝AI | **Plat:** 🌍
-**Git:** =VSCode
+**Git:** Same as VSCode
 **AI:** Ctrl+L (Cascade)
 
-### → JetBrains 
-**Cat:** ⚙️ | **Plat:** 🌍
+### 4. JetBrains (12 IDEs)
+**Cat:** ⚙️ IDE | **Plat:** 🌍
 **Git:** Bottom panel → Version Control
 **Clone:** File → New → Project from Version Control
 **Push:** VCS → Git → Push/Pull or Ctrl+Shift+K
 **Term:** Alt+F12
 **Branch:** Bottom-right branch name
 
-### → Sublime Text
+### 5. Sublime Text
 **Cat:** 📝 | **Plat:** 🌍
 **Inst:** Ctrl+Shift+P → "Package Control: Install Package" → "Git"
-**Clone:** "Git: Clone"
+**Clone:** Command Palette → "Git: Clone"
 
 ### 6. Vim / Neovim
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** :terminal → git clone URL
+**Clone:** `:terminal` → `git clone URL`
 **Cmd:** `:Git`, `:Git push`, `:Git pull`
 **Plug:** vim-fugitive, neogit, octo.nvim, gitsigns.nvim
 
 ### 7. Emacs / Doom Emacs / Spacemacs
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** M-x magit-clone
-**Cmd:** M-x magit-status (Ctrl+x g in Doom)
+**Clone:** `M-x magit-clone`
+**Cmd:** `M-x magit-status` (Ctrl+x g in Doom)
 **Push/Pull:** `P` push, `F` pull
 
 ### 8. Atom (archived)
@@ -414,36 +414,36 @@ Terminal: git clone URL
 
 ### 9. Brackets
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** File → Clone
+**Clone:** Install "Git" extension → File → Clone
 
 ### 10. Eclipse
-**Cat:** ⚙️ | **Plat:** 🌍
+**Cat:** ⚙️ IDE | **Plat:** 🌍
 **Clone:** File → Import → Git → Projects from Git → Clone URI
 **Plug:** EGit
 
-### 1→ NetBeans
-**Cat:** ⚙️ | **Plat:** 🌍
+### 11. NetBeans
+**Cat:** ⚙️ IDE | **Plat:** 🌍
 **Clone:** Team → Git → Clone
 
-### 1→ Qt Creator
-**Cat:** ⚙️ | **Plat:** 🌍
+### 12. Qt Creator
+**Cat:** ⚙️ IDE | **Plat:** 🌍
 **Clone:** Tools → Git → Clone Repository
 
-### 1→ Xcode
-**Cat:** ⚙️ | **Plat:** 🍎
+### 13. Xcode
+**Cat:** ⚙️ IDE | **Plat:** 🍎
 **Clone:** Source Control → Clone
 
-### 1→ Android Studio
-**Cat:** ⚙️ | **Plat:** 🌍
+### 14. Android Studio
+**Cat:** ⚙️ IDE | **Plat:** 🌍
 **Clone:** File → New → Project from Version Control
 
-### 1→ Visual Studio
-**Cat:** ⚙️ | **Plat:** 🪟
+### 15. Visual Studio
+**Cat:** ⚙️ IDE | **Plat:** 🪟
 **Clone:** Team → Clone
 
 ### 16. Unity
 **Cat:** ⚙️G | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** `git clone URL` in project folder
 
 ### 17. Unreal Engine
 **Cat:** ⚙️G | **Plat:** 🌍
@@ -451,7 +451,7 @@ Terminal: git clone URL
 
 ### 18. Godot
 **Cat:** ⚙️G | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** `git clone URL` in project folder
 
 ### 19. Zed
 **Cat:** 📝AI | **Plat:** 🌍
@@ -461,132 +461,132 @@ Terminal: git clone URL
 **Cat:** 📝 | **Plat:** 🌍
 **Clone:** File → Clone Repository
 
-### 2→ Helix
+### 21. Helix
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** :sh git clone URL
+**Clone:** `:sh git clone URL`
 
-### 2→ Pulsar (Atom fork)
+### 22. Pulsar (Atom fork)
 **Cat:** 📝 | **Plat:** 🌍
 **Clone:** Ctrl+Shift+P → "Git: Clone"
 
-### 2→ Lite XL
+### 23. Lite XL
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** `git clone URL` in terminal
 
-### 2→ Notepad++
+### 24. Notepad++
 **Cat:** 📝 | **Plat:** 🪟
 **Clone:** Plugins → NppGit → Clone
 
-### 2→ Kate (KDE)
+### 25. Kate (KDE)
 **Cat:** 📝 | **Plat:** 🐧
 **Clone:** Project → Open Project → Git
 
 ### 26. Geany
 **Cat:** 📝 | **Plat:** 🌍
-**Clone:** git clone URL
+**Clone:** `git clone URL` in terminal
 
 ### 27. Code::Blocks
-**Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Cat:** ⚙️ IDE | **Plat:** 🌍
+**Clone:** `git clone URL` in terminal
 
 ### 28. Dev-C++
-**Cat:** ⚙️ | **Plat:** 🪟
-**Clone:** git clone URL
+**Cat:** ⚙️ IDE | **Plat:** 🪟
+**Clone:** `git clone URL` in terminal
 
 ### 29. CodeLite
-**Cat:** ⚙️ | **Plat:** 🌍
+**Cat:** ⚙️ IDE | **Plat:** 🌍
 **Clone:** Git → Clone Repository
 
 ### 30. KDevelop
-**Cat:** ⚙️ | **Plat:** 🐧
+**Cat:** ⚙️ IDE | **Plat:** 🐧
 **Clone:** Project → Open Project → Git
 
-### 3→ Jupyter Notebook
-**Cat:** 📓 | **Plat:** 🌍
-**Clone:** !git clone URL
+### 31. Jupyter Notebook
+**Cat:** 📓 Notebook | **Plat:** 🌍
+**Clone:** `!git clone URL` in cell
 
-### 3→ JupyterLab
-**Cat:** 📓 | **Plat:** 🌍
+### 32. JupyterLab
+**Cat:** 📓 Notebook | **Plat:** 🌍
 **Clone:** Git → Clone (with extension)
 
-### 3→ Google Colab
-**Cat:** ☁️ | **Plat:** ☁️B
-**Clone:** !git clone URL
+### 33. Google Colab
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
+**Clone:** `!git clone URL` in cell
 
-### 3→ Replit
-**Cat:** ☁️ | **Plat:** ☁️B
+### 34. Replit
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
 **Clone:** Import from GitHub
 
-### 3→ CodeSandbox
-**Cat:** ☁️ | **Plat:** ☁️B
+### 35. CodeSandbox
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
 **Clone:** Import from GitHub
 
 ### 36. StackBlitz
-**Cat:** ☁️ | **Plat:** ☁️B
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
 **Clone:** Import from GitHub
 
 ### 37. Gitpod
-**Cat:** ☁️ | **Plat:** ☁️B
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
 **Clone:** Import from GitHub
 
 ### 38. GitHub Codespaces
-**Cat:** ☁️ | **Plat:** ☁️B
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
 **Clone:** Create codespace on repo
 
 ### 39. AWS Cloud9
-**Cat:** ☁️ | **Plat:** ☁️B
-**Clone:** git clone URL
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
+**Clone:** `git clone URL` in terminal
 
 ### 40. Theia
 **Cat:** 📝 | **Plat:** 🌍
 **Clone:** File → Clone Repository
 
-### 4→ Eclipse Che
-**Cat:** ☁️ | **Plat:** ☁️B
+### 41. Eclipse Che
+**Cat:** ☁️ Cloud | **Plat:** ☁️B
 **Clone:** Import from GitHub
 
-### 4→ Nova (Panic)
+### 42. Nova (Panic)
 **Cat:** 📝 | **Plat:** 🍎
 **Clone:** Source Control → Clone Repository
 
-### 4→ BBEdit
+### 43. BBEdit
 **Cat:** 📝 | **Plat:** 🍎
-**Clone:** git clone URL
+**Clone:** `git clone URL` in terminal
 
-### 4→ TextMate
+### 44. TextMate
 **Cat:** 📝 | **Plat:** 🍎
-**Clone:** git clone URL
+**Clone:** `git clone URL` in terminal
 
-### 4→ Lazarus / Free Pascal
-**Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+### 45. Lazarus / Free Pascal
+**Cat:** ⚙️ IDE | **Plat:** 🌍
+**Clone:** `git clone URL` in terminal
 
 ### 46. BlueJ
-**Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Cat:** ⚙️ IDE | **Plat:** 🌍
+**Clone:** `git clone URL` in terminal
 
 ### 47. Greenfoot
-**Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Cat:** ⚙️ IDE | **Plat:** 🌍
+**Clone:** `git clone URL` in terminal
 
 ### 48. Thonny
-**Cat:** ⚙️ | **Plat:** 🍓
-**Clone:** git clone URL
+**Cat:** ⚙️ IDE | **Plat:** 🍓
+**Clone:** `git clone URL` in system shell
 
 ### 49. Mu
-**Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Cat:** ⚙️ IDE | **Plat:** 🌍
+**Clone:** `git clone URL` in system shell
 
 ### 50. Arduino IDE
-**Cat:** ⚙️ | **Plat:** 🌍
-**Clone:** git clone URL
+**Cat:** ⚙️ IDE | **Plat:** 🌍
+**Clone:** `git clone URL` in terminal
 
 ---
 
 ## PART 6: TROUBLESHOOTING
 
-### Fix
-```
+### Token expired
+```bash
 # Generate new token:
 https://github.com/settings/tokens
 
@@ -594,15 +594,15 @@ https://github.com/settings/tokens
 git remote set-url origin https://NEW_TOKEN@github.com/{USER}/REPO.git
 ```
 
-### 2FA
+### 2FA required
 - Browser → github.com/login → Continue with Google → Confirm on phone
 
-### Perm
-```
+### Permission denied
+```bash
 curl -H "Authorization: token {TOKEN}" https://api.github.com/user
 ```
 
-### Pass
+### Wrong password
 - Use token instead of password
 - Or login via Google SSO
 
@@ -610,12 +610,12 @@ curl -H "Authorization: token {TOKEN}" https://api.github.com/user
 
 ## PART 7: REPOSITORIES
 
-- `portable-os`
+- `portable-os` (private)
 - `science-books-1001-proofs`
 - `cdp_rs`
 - `portable-blocks`
 
 ---
 
-*50 IDE | ALL SKILLS | 29x*
-
+*ULTIMATE MASTER GUIDE | 50 IDE | ALL SKILLS | ACCELERATION PATTERNS*
+*Generated: 2026-08-12*

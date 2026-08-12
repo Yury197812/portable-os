@@ -585,7 +585,7 @@ Terminal: git clone URL
 
 ## PART 6: TROUBLESHOOTING
 
-### Fix
+### Token expired
 ```
 # Generate new token:
 https://github.com/settings/tokens
@@ -594,15 +594,15 @@ https://github.com/settings/tokens
 git remote set-url origin https://NEW_TOKEN@github.com/{USER}/REPO.git
 ```
 
-### 2FA
+### 2FA required
 - Browser → github.com/login → Continue with Google → Confirm on phone
 
-### Perm
+### Permission denied
 ```
 curl -H "Authorization: token {TOKEN}" https://api.github.com/user
 ```
 
-### Pass
+### Wrong password
 - Use token instead of password
 - Or login via Google SSO
 
@@ -610,12 +610,12 @@ curl -H "Authorization: token {TOKEN}" https://api.github.com/user
 
 ## PART 7: REPOSITORIES
 
-- `portable-os`
+- `portable-os` (private)
 - `science-books-1001-proofs`
 - `cdp_rs`
 - `portable-blocks`
 
 ---
 
-*50 IDE | ALL SKILLS | 29x*
-
+*ULTIMATE MASTER GUIDE | 50 IDE | ALL SKILLS | ACCELERATION PATTERNS*
+*Generated: 2026-08-12*
