@@ -12,7 +12,7 @@
 
 ### Universal Clone URL
 ```
-https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO_NAME.git
+https://TOKEN@github.com/Yury197812/REPO_NAME.git
 ```
 
 ### Browser Login
@@ -28,22 +28,22 @@ https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO_NAME
 
 ```bash
 # Clone
-git clone https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO.git
+git clone https://TOKEN@github.com/Yury197812/REPO.git
 
 # Set remote
-git remote set-url origin https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO.git
+git remote set-url origin https://TOKEN@github.com/Yury197812/REPO.git
 
 # Check auth
-curl -H "Authorization: token ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw" https://api.github.com/user
+curl -H "Authorization: token TOKEN" https://api.github.com/user
 
 # List repos
-curl -H "Authorization: token ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw" https://api.github.com/user/repos
+curl -H "Authorization: token TOKEN" https://api.github.com/user/repos
 
 # Create repo
-curl -X POST -H "Authorization: token ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw" https://api.github.com/user/repos -d '{"name":"REPO","private":true}'
+curl -X POST -H "Authorization: token TOKEN" https://api.github.com/user/repos -d '{"name":"REPO","private":true}'
 
 # Upload file
-curl -X PUT -H "Authorization: token ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw" https://api.github.com/repos/Yury197812/REPO/contents/PATH -d '{"message":"add","content":"BASE64"}'
+curl -X PUT -H "Authorization: token TOKEN" https://api.github.com/repos/Yury197812/REPO/contents/PATH -d '{"message":"add","content":"BASE64"}'
 
 # Config
 git config --global user.name "Yury197812"
@@ -251,12 +251,12 @@ class Stage:
 class Pipeline:
     def __init__(self, stages: List[Stage]):
         self.stages = stages
-    
+
     def run(self, data):
         for stage in self.stages:
             data = self.run_stage(stage, data)
         return data
-    
+
     def run_stage(self, stage, data):
         if any(s.parallel for s in stage.steps):
             with ThreadPoolExecutor() as executor:
@@ -599,7 +599,7 @@ git remote set-url origin https://NEW_TOKEN@github.com/Yury197812/REPO.git
 
 ### Permission denied
 ```bash
-curl -H "Authorization: token ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw" https://api.github.com/user
+curl -H "Authorization: token TOKEN" https://api.github.com/user
 ```
 
 ### Wrong password

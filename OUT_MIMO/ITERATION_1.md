@@ -251,12 +251,12 @@ class Stage:
 class Pipeline:
     def __init__(self, stages: List[Stage]):
         self.stages = stages
-    
+
     def run(self, data):
         for stage in self.stages:
             data = self.run_stage(stage, data)
         return data
-    
+
     def run_stage(self, stage, data):
         if any(s.parallel for s in stage.steps):
             with ThreadPoolExecutor() as executor:
