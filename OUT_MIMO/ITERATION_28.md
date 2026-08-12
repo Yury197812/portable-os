@@ -1,112 +1,117 @@
-# Portable Software — 4 Directions
+# Platform Software — 4 Directions (VK, Дзен, ТГ, Яндекс+Google)
 ## Overview
-Collaborative development with ChatGPT on portable modular software.
-## D1: Basic System Boot
-## boot/
-**P:** Boot from USB
+Portable modular software for 4 social media/platform directions.
+## D1: VK (ВКонтакте)
+## vk/
+**P:** VK API
 **C:**
-bootloader.js
-init.js
-config.js
-**Skills:**
-USB auto-detection
-HW abstract
-Fallback
-**Acc:**
-Rust boot
-C HW detect
-## D2: Terminal
-## terminal/
-**P:** CLI with commands
+api.js
+auth.js
+posts.js
+analytics.js
+**S:**
+Pub content
+Analytics
+Communities
+**A:**
+- Rust HTTP
+- Go parallel
+## D2: Дзен (Yandex Dzen)
+## dzen/
+**P:** Dzen API
 **C:**
-shell.js
-commands.js
-history.js
-**Skills:**
-Parse
-Tab
-History
-**Acc:**
-Go exec
-Rust str
-## D3: File System
-## filesystem/
-**P:** VFS on USB
+api.js
+auth.js
+publish.js
+seo.js
+**S:**
+Pub articles
+SEO
+Analytics
+**A:**
+- Rust HTML
+- Go content
+## D3: Telegram
+## telegram/
+**P:** TG Bot API
 **C:**
-vfs.js
-mount.js
-permissions.js
-**Skills:**
-VFS
-Union
-Overlay
-**Acc:**
-Rust I/O
-C FS
-## D4: Internet
-## network/
-**P:** Secure internet
+bot.js
+auth.js
+messages.js
+media.js
+**S:**
+Bots
+Messages
+Media
+**A:**
+- Rust HTTP
+- Go msgs
+## D4: Яндекс + Google
+## yandex_google/
+**P:** Yandex+Google API
 **C:**
-proxy.js
-dns.js
-firewall.js
-**Skills:**
-Proxy
-DoH
-Filter
-**Acc:**
-Rust HTTP
-Go conn
+yandex/api.js
+google/api.js
+auth.js
+search.js
+**S:**
+Yandex search
+Google Analytics
+SEO
+**A:**
+- Rust HTTP
+- Go search
 ## Arch
 ```
-portable-os/
-├── boot/
-│   ├── bootloader.js
-│   ├── init.js
-│   └── config.js
-├── terminal/
-│   ├── shell.js
-│   ├── commands.js
-│   └── history.js
-├── filesystem/
-│   ├── vfs.js
-│   ├── mount.js
-│   └── permissions.js
-├── network/
-│   ├── proxy.js
-│   ├── dns.js
-│   └── firewall.js
+platform-software/
+├── vk/
+│   ├── api.js
+│   ├── auth.js
+│   ├── posts.js
+│   └── analytics.js
+├── dzen/
+│   ├── api.js
+│   ├── auth.js
+│   ├── publish.js
+│   └── seo.js
+├── telegram/
+│   ├── bot.js
+│   ├── auth.js
+│   ├── messages.js
+│   └── media.js
+├── yandex_google/
+│   ├── yandex/
+│   ├── google/
+│   ├── auth.js
+│   └── search.js
 ├── engine/
 ├── skills/
-├── api/
-├── dashboard/
-└── portable/
+└── api/
 ```
 ## Acc Patterns
 | Pattern | Speed | Where |
 |---------|-------|-------|
-| Rust bootloader | 10x | boot/ |
-| Go terminal | 5x | terminal/ |
-| Rust filesystem | 20x | filesystem/ |
-| Rust network | 15x | network/ |
-| C hardware detection | 50x | boot/config.js |
+| Rust HTTP | 10x | Все модули |
+| Go parallel | 5x | Обработка контента |
+| Rust HTML parse | 20x | Дзен, SEO |
+| C auth | 50x | OAuth flows |
 ## Book
 ## Chapter 1: Introduction
 Intro
-## Chapter 2: System Boot
-USB boot process
-- Hardware detection
-- Kernel loading
-## Chapter 3: Terminal
-Parse
-- Built-in commands
-- History and completion
-## Chapter 4: File System
-VFS
-- Mounting USB
-- Permissions
-## Chapter 5: Internet
-Net
+## Chapter 2: VK
+VK API setup
+- Authentication
+- Posting and analytics
+## Chapter 3: Дзен
+Dzen API setup
+- Article publishing
+- SEO optimization
+## Chapter 4: Telegram
+TG
+## Chapter 5: Яндекс + Google
+Yandex API
+Google API
+- Cross-platform search
 ## Chapter 6: Acceleration
 Acc
 ## Workflow
@@ -114,4 +119,4 @@ Acc
 2. MIMO → OUT_MIMO
 3. Iter until production-ready
 4. Book
-*4D | Modular | Accel*
+*4D: VK, Dzen, TG, Ya+Go | Modular | Accel*

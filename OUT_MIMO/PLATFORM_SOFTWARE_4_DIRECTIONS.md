@@ -5,10 +5,10 @@ Portable modular software for 4 social media/platform directions.
 
 ---
 
-## D1: VK (ВКонтакте)
+## Direction 1: VK (ВКонтакте)
 
-### vk/
-**P:** Работа с VK API
+### Module: vk/
+**Purpose:** Работа с VK API
 
 **Components:**
 - `api.js` — VK API wrapper
@@ -27,10 +27,10 @@ Portable modular software for 4 social media/platform directions.
 
 ---
 
-## D2: Дзен (Yandex Dzen)
+## Direction 2: Дзен (Yandex Dzen)
 
-### dzen/
-**P:** Работа с Yandex Dzen API
+### Module: dzen/
+**Purpose:** Работа с Yandex Dzen API
 
 **Components:**
 - `api.js` — Dzen API wrapper
@@ -49,10 +49,10 @@ Portable modular software for 4 social media/platform directions.
 
 ---
 
-## D3: Telegram
+## Direction 3: Telegram
 
-### telegram/
-**P:** Работа с Telegram Bot API
+### Module: telegram/
+**Purpose:** Работа с Telegram Bot API
 
 **Components:**
 - `bot.js` — Telegram Bot API
@@ -71,10 +71,10 @@ Portable modular software for 4 social media/platform directions.
 
 ---
 
-## D4: Яндекс + Google
+## Direction 4: Яндекс + Google
 
-### yandex_google/
-**P:** Работа с Yandex и Google APIs
+### Module: yandex_google/
+**Purpose:** Работа с Yandex и Google APIs
 
 **Components:**
 - `yandex/api.js` — Yandex API
