@@ -12,7 +12,7 @@
 
 ### Universal Clone URL
 ```
-https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO_NAME.git
+https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO.git
 ```
 
 ### Browser Login
@@ -367,10 +367,10 @@ Terminal: `git clone URL`
 ### 1. VSCode
 **Cat:** 📝 Editor | **Plat:** 🌍 All
 **Git:** Sidebar → Source Control (Ctrl+Shift+G)
-**Clone:** Ctrl+Shift+P → "Git: Clone"
-**Push:** Bottom status bar or Ctrl+Shift+P → "Git: Push/Pull"
-**Term:** Ctrl+`
-**Plug:** GitHub, GitLens, Git Graph
+**Клонировать:** Ctrl+Shift+P → "Git: Clone"
+**Пуш/Пулл:** Bottom status bar or Ctrl+Shift+P → "Git: Push/Pull"
+**Терминал:** Ctrl+`
+**Плагины:** GitHub, GitLens, Git Graph
 
 ### 2. Cursor
 **Cat:** 📝 Editor (AI) | **Plat:** 🌍 All
@@ -385,201 +385,201 @@ Terminal: `git clone URL`
 ### 4. JetBrains (12 IDEs)
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
 **Git:** Bottom panel → Version Control
-**Clone:** File → New → Project from Version Control
-**Push:** VCS → Git → Push/Pull or Ctrl+Shift+K
-**Term:** Alt+F12
-**Branch:** Bottom-right branch name
+**Клонировать:** File → New → Project from Version Control
+**Пуш/Пулл:** VCS → Git → Push/Pull or Ctrl+Shift+K
+**Терминал:** Alt+F12
+**Ветки:** Bottom-right branch name
 
 ### 5. Sublime Text
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Install:** Ctrl+Shift+P → "Package Control: Install Package" → "Git"
-**Clone:** Command Palette → "Git: Clone"
+**Установка Git:** Ctrl+Shift+P → "Package Control: Install Package" → "Git"
+**Клонировать:** Command Palette → "Git: Clone"
 
 ### 6. Vim / Neovim
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** `:terminal` → `git clone URL`
-**Cmd:** `:Git`, `:Git push`, `:Git pull`
-**Plug:** vim-fugitive, neogit, octo.nvim, gitsigns.nvim
+**Клонировать:** `:terminal` → `git clone URL`
+**Команды:** `:Git`, `:Git push`, `:Git pull`
+**Плагины:** vim-fugitive, neogit, octo.nvim, gitsigns.nvim
 
 ### 7. Emacs / Doom Emacs / Spacemacs
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** `M-x magit-clone`
-**Cmd:** `M-x magit-status` (Ctrl+x g in Doom)
+**Клонировать:** `M-x magit-clone`
+**Команды:** `M-x magit-status` (Ctrl+x g in Doom)
 **Push/Pull:** `P` push, `F` pull
 
 ### 8. Atom (archived)
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** Ctrl+Shift+P → "Git: Clone"
-**Plug:** git-plus, git-control
+**Клонировать:** Ctrl+Shift+P → "Git: Clone"
+**Плагины:** git-plus, git-control
 
 ### 9. Brackets
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** Install "Git" extension → File → Clone
+**Клонировать:** Install "Git" extension → File → Clone
 
 ### 10. Eclipse
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** File → Import → Git → Projects from Git → Clone URI
-**Plug:** EGit
+**Клонировать:** File → Import → Git → Projects from Git → Clone URI
+**Плагины:** EGit
 
 ### 11. NetBeans
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** Team → Git → Clone
+**Клонировать:** Team → Git → Clone
 
 ### 12. Qt Creator
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** Tools → Git → Clone Repository
+**Клонировать:** Tools → Git → Clone Repository
 
 ### 13. Xcode
 **Cat:** ⚙️ IDE | **Plat:** 🍎 macOS
-**Clone:** Source Control → Clone
+**Клонировать:** Source Control → Clone
 
 ### 14. Android Studio
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** File → New → Project from Version Control
+**Клонировать:** File → New → Project from Version Control
 
 ### 15. Visual Studio
 **Cat:** ⚙️ IDE | **Plat:** 🪟 Windows
-**Clone:** Team → Clone
+**Клонировать:** Team → Clone
 
 ### 16. Unity
 **Cat:** ⚙️ IDE (Game) | **Plat:** 🌍 All
-**Clone:** `git clone URL` in project folder
+**Клонировать:** `git clone URL` in project folder
 
 ### 17. Unreal Engine
 **Cat:** ⚙️ IDE (Game) | **Plat:** 🌍 All
-**Connect:** Source Control → Connect to Source Control → Git
+**Подключение:** Source Control → Connect to Source Control → Git
 
 ### 18. Godot
 **Cat:** ⚙️ IDE (Game) | **Plat:** 🌍 All
-**Clone:** `git clone URL` in project folder
+**Клонировать:** `git clone URL` in project folder
 
 ### 19. Zed
 **Cat:** 📝 Editor (AI) | **Plat:** 🌍 All
-**Clone:** File → Clone Repository
+**Клонировать:** File → Clone Repository
 
 ### 20. Lapce
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** File → Clone Repository
+**Клонировать:** File → Clone Repository
 
 ### 21. Helix
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** `:sh git clone URL`
+**Клонировать:** `:sh git clone URL`
 
 ### 22. Pulsar (Atom fork)
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** Ctrl+Shift+P → "Git: Clone"
+**Клонировать:** Ctrl+Shift+P → "Git: Clone"
 
 ### 23. Lite XL
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 24. Notepad++
 **Cat:** 📝 Editor | **Plat:** 🪟 Windows
-**Clone:** Plugins → NppGit → Clone
+**Клонировать:** Plugins → NppGit → Clone
 
 ### 25. Kate (KDE)
 **Cat:** 📝 Editor | **Plat:** 🐧 Linux
-**Clone:** Project → Open Project → Git
+**Клонировать:** Project → Open Project → Git
 
 ### 26. Geany
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 27. Code::Blocks
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 28. Dev-C++
 **Cat:** ⚙️ IDE | **Plat:** 🪟 Windows
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 29. CodeLite
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** Git → Clone Repository
+**Клонировать:** Git → Clone Repository
 
 ### 30. KDevelop
 **Cat:** ⚙️ IDE | **Plat:** 🐧 Linux
-**Clone:** Project → Open Project → Git
+**Клонировать:** Project → Open Project → Git
 
 ### 31. Jupyter Notebook
 **Cat:** 📓 Notebook | **Plat:** 🌍 All
-**Clone:** `!git clone URL` in cell
+**Клонировать:** `!git clone URL` in cell
 
 ### 32. JupyterLab
 **Cat:** 📓 Notebook | **Plat:** 🌍 All
-**Clone:** Git → Clone (with extension)
+**Клонировать:** Git → Clone (with extension)
 
 ### 33. Google Colab
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** `!git clone URL` in cell
+**Клонировать:** `!git clone URL` in cell
 
 ### 34. Replit
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** Import from GitHub
+**Клонировать:** Import from GitHub
 
 ### 35. CodeSandbox
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** Import from GitHub
+**Клонировать:** Import from GitHub
 
 ### 36. StackBlitz
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** Import from GitHub
+**Клонировать:** Import from GitHub
 
 ### 37. Gitpod
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** Import from GitHub
+**Клонировать:** Import from GitHub
 
 ### 38. GitHub Codespaces
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** Create codespace on repo
+**Клонировать:** Create codespace on repo
 
 ### 39. AWS Cloud9
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 40. Theia
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Clone:** File → Clone Repository
+**Клонировать:** File → Clone Repository
 
 ### 41. Eclipse Che
 **Cat:** ☁️ Cloud | **Plat:** ☁️ Browser
-**Clone:** Import from GitHub
+**Клонировать:** Import from GitHub
 
 ### 42. Nova (Panic)
 **Cat:** 📝 Editor | **Plat:** 🍎 macOS
-**Clone:** Source Control → Clone Repository
+**Клонировать:** Source Control → Clone Repository
 
 ### 43. BBEdit
 **Cat:** 📝 Editor | **Plat:** 🍎 macOS
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 44. TextMate
 **Cat:** 📝 Editor | **Plat:** 🍎 macOS
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 45. Lazarus / Free Pascal
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 46. BlueJ
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 47. Greenfoot
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ### 48. Thonny
 **Cat:** ⚙️ IDE | **Plat:** 🍓 Raspberry Pi
-**Clone:** `git clone URL` in system shell
+**Клонировать:** `git clone URL` in system shell
 
 ### 49. Mu
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** `git clone URL` in system shell
+**Клонировать:** `git clone URL` in system shell
 
 ### 50. Arduino IDE
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
-**Clone:** `git clone URL` in terminal
+**Клонировать:** `git clone URL` in terminal
 
 ---
 

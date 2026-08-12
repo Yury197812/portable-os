@@ -12,7 +12,7 @@
 
 ### Universal Clone URL
 ```
-https://TOKEN@github.com/Yury197812/REPO.git
+https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO_NAME.git
 ```
 
 ### Browser Login
@@ -28,10 +28,10 @@ https://TOKEN@github.com/Yury197812/REPO.git
 
 ```bash
 # Clone
-git clone https://TOKEN@github.com/Yury197812/REPO.git
+git clone https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO.git
 
 # Set remote
-git remote set-url origin https://TOKEN@github.com/Yury197812/REPO.git
+git remote set-url origin https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO.git
 
 # Check auth
 curl -H "Authorization: token ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw" https://api.github.com/user

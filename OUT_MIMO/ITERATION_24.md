@@ -12,7 +12,7 @@
 
 ### Universal Clone URL
 ```
-https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO_NAME.git
+https://ghp_YEhX7Q9YX9Ukbt8g3YaELsFZnwdUFf1S_FBw@github.com/Yury197812/REPO.git
 ```
 
 ### Browser Login
@@ -369,8 +369,8 @@ Terminal: `git clone URL`
 **Git:** Sidebar → Source Control (Ctrl+Shift+G)
 **Clone:** Ctrl+Shift+P → "Git: Clone"
 **Push:** Bottom status bar or Ctrl+Shift+P → "Git: Push/Pull"
-**Term:** Ctrl+`
-**Plug:** GitHub, GitLens, Git Graph
+**Терминал:** Ctrl+`
+**Плагины:** GitHub, GitLens, Git Graph
 
 ### 2. Cursor
 **Cat:** 📝 Editor (AI) | **Plat:** 🌍 All
@@ -387,30 +387,30 @@ Terminal: `git clone URL`
 **Git:** Bottom panel → Version Control
 **Clone:** File → New → Project from Version Control
 **Push:** VCS → Git → Push/Pull or Ctrl+Shift+K
-**Term:** Alt+F12
-**Branch:** Bottom-right branch name
+**Терминал:** Alt+F12
+**Ветки:** Bottom-right branch name
 
 ### 5. Sublime Text
 **Cat:** 📝 Editor | **Plat:** 🌍 All
-**Install:** Ctrl+Shift+P → "Package Control: Install Package" → "Git"
+**Установка Git:** Ctrl+Shift+P → "Package Control: Install Package" → "Git"
 **Clone:** Command Palette → "Git: Clone"
 
 ### 6. Vim / Neovim
 **Cat:** 📝 Editor | **Plat:** 🌍 All
 **Clone:** `:terminal` → `git clone URL`
-**Cmd:** `:Git`, `:Git push`, `:Git pull`
-**Plug:** vim-fugitive, neogit, octo.nvim, gitsigns.nvim
+**Команды:** `:Git`, `:Git push`, `:Git pull`
+**Плагины:** vim-fugitive, neogit, octo.nvim, gitsigns.nvim
 
 ### 7. Emacs / Doom Emacs / Spacemacs
 **Cat:** 📝 Editor | **Plat:** 🌍 All
 **Clone:** `M-x magit-clone`
-**Cmd:** `M-x magit-status` (Ctrl+x g in Doom)
+**Команды:** `M-x magit-status` (Ctrl+x g in Doom)
 **Push/Pull:** `P` push, `F` pull
 
 ### 8. Atom (archived)
 **Cat:** 📝 Editor | **Plat:** 🌍 All
 **Clone:** Ctrl+Shift+P → "Git: Clone"
-**Plug:** git-plus, git-control
+**Плагины:** git-plus, git-control
 
 ### 9. Brackets
 **Cat:** 📝 Editor | **Plat:** 🌍 All
@@ -419,7 +419,7 @@ Terminal: `git clone URL`
 ### 10. Eclipse
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
 **Clone:** File → Import → Git → Projects from Git → Clone URI
-**Plug:** EGit
+**Плагины:** EGit
 
 ### 11. NetBeans
 **Cat:** ⚙️ IDE | **Plat:** 🌍 All
@@ -447,7 +447,7 @@ Terminal: `git clone URL`
 
 ### 17. Unreal Engine
 **Cat:** ⚙️ IDE (Game) | **Plat:** 🌍 All
-**Connect:** Source Control → Connect to Source Control → Git
+**Подключение:** Source Control → Connect to Source Control → Git
 
 ### 18. Godot
 **Cat:** ⚙️ IDE (Game) | **Plat:** 🌍 All

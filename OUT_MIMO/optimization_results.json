@@ -1,0 +1,234 @@
+[
+  {
+    "iteration": 1,
+    "name": "cache_common_patterns",
+    "description": "Cache common patterns",
+    "chars": 17161,
+    "change": 0,
+    "pct": "0.0%"
+  },
+  {
+    "iteration": 2,
+    "name": "precompute_constants",
+    "description": "Precompute constants",
+    "chars": 17161,
+    "change": 0,
+    "pct": "0.0%"
+  },
+  {
+    "iteration": 3,
+    "name": "reduce_function_calls",
+    "description": "Reduce function calls",
+    "chars": 17156,
+    "change": -5,
+    "pct": "-0.0%"
+  },
+  {
+    "iteration": 4,
+    "name": "use_local_variables",
+    "description": "Use local variables",
+    "chars": 17156,
+    "change": -5,
+    "pct": "-0.0%"
+  },
+  {
+    "iteration": 5,
+    "name": "optimize_strings",
+    "description": "Optimize string operations",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 6,
+    "name": "minimize_allocations",
+    "description": "Minimize memory allocations",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 7,
+    "name": "optimize_loops",
+    "description": "Optimize loops",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 8,
+    "name": "batch_operations",
+    "description": "Batch operations",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 9,
+    "name": "process_pool_executor",
+    "description": "ProcessPoolExecutor",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 10,
+    "name": "optimal_distribution",
+    "description": "Optimal distribution",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 11,
+    "name": "reduce_overhead",
+    "description": "Reduce overhead",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 12,
+    "name": "optimize_serialization",
+    "description": "Optimize serialization",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 13,
+    "name": "batch_data_transfer",
+    "description": "Batch data transfer",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 14,
+    "name": "async_writes",
+    "description": "Async writes",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 15,
+    "name": "output_buffering",
+    "description": "Output buffering",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 16,
+    "name": "optimize_memory",
+    "description": "Optimize memory",
+    "chars": 16856,
+    "change": -305,
+    "pct": "-1.8%"
+  },
+  {
+    "iteration": 17,
+    "name": "stringio_buffer",
+    "description": "StringIO buffer",
+    "chars": 16606,
+    "change": -555,
+    "pct": "-3.2%"
+  },
+  {
+    "iteration": 18,
+    "name": "minimal_allocations",
+    "description": "Minimal allocations",
+    "chars": 16606,
+    "change": -555,
+    "pct": "-3.2%"
+  },
+  {
+    "iteration": 19,
+    "name": "batch_writes",
+    "description": "Batch writes",
+    "chars": 16606,
+    "change": -555,
+    "pct": "-3.2%"
+  },
+  {
+    "iteration": 20,
+    "name": "optimize_encoding",
+    "description": "Optimize encoding",
+    "chars": 16606,
+    "change": -555,
+    "pct": "-3.2%"
+  },
+  {
+    "iteration": 21,
+    "name": "synchronous_writes",
+    "description": "Synchronous writes",
+    "chars": 16606,
+    "change": -555,
+    "pct": "-3.2%"
+  },
+  {
+    "iteration": 22,
+    "name": "optimize_format",
+    "description": "Optimize format",
+    "chars": 16590,
+    "change": -571,
+    "pct": "-3.3%"
+  },
+  {
+    "iteration": 23,
+    "name": "buffer_preallocation",
+    "description": "Buffer preallocation",
+    "chars": 16308,
+    "change": -853,
+    "pct": "-5.0%"
+  },
+  {
+    "iteration": 24,
+    "name": "flush_optimization",
+    "description": "Flush optimization",
+    "chars": 16300,
+    "change": -861,
+    "pct": "-5.0%"
+  },
+  {
+    "iteration": 25,
+    "name": "horizontal_scaling",
+    "description": "Horizontal scaling",
+    "chars": 16292,
+    "change": -869,
+    "pct": "-5.1%"
+  },
+  {
+    "iteration": 26,
+    "name": "optimal_batch_size",
+    "description": "Optimal batch size",
+    "chars": 16280,
+    "change": -881,
+    "pct": "-5.1%"
+  },
+  {
+    "iteration": 27,
+    "name": "load_balancing",
+    "description": "Load balancing",
+    "chars": 16280,
+    "change": -881,
+    "pct": "-5.1%"
+  },
+  {
+    "iteration": 28,
+    "name": "cache_optimization",
+    "description": "Cache optimization",
+    "chars": 16280,
+    "change": -881,
+    "pct": "-5.1%"
+  },
+  {
+    "iteration": 29,
+    "name": "data_compression",
+    "description": "Data compression",
+    "chars": 15976,
+    "change": -1185,
+    "pct": "-6.9%"
+  }
+]
