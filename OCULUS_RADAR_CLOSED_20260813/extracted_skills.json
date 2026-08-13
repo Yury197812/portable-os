@@ -1,0 +1,92 @@
+[
+  {
+    "skill_id": "ACC-001",
+    "name": "Rust Speed Blocks",
+    "speedup_factor": 25.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "ACC-002",
+    "name": "Go Concurrency Pipeline",
+    "speedup_factor": 8.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "ACC-003",
+    "name": "Vectorized NumPy",
+    "speedup_factor": 50.0,
+    "accuracy_impact": "minimal"
+  },
+  {
+    "skill_id": "ACC-004",
+    "name": "Caching Layer",
+    "speedup_factor": 100.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "ACC-005",
+    "name": "Lazy Evaluation",
+    "speedup_factor": 2.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "ACC-006",
+    "name": "Batch Processing",
+    "speedup_factor": 10.0,
+    "accuracy_impact": "minimal"
+  },
+  {
+    "skill_id": "ACC-007",
+    "name": "SIMD Optimization",
+    "speedup_factor": 4.0,
+    "accuracy_impact": "minimal"
+  },
+  {
+    "skill_id": "ACC-008",
+    "name": "Memory Mapping",
+    "speedup_factor": 3.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "BOOK-chapter_00",
+    "name": "Cache pattern from chapter_00",
+    "speedup_factor": 5.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "BOOK-chapter_01",
+    "name": "Cache pattern from chapter_01",
+    "speedup_factor": 5.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "BOOK-chapter_02",
+    "name": "Cache pattern from chapter_02",
+    "speedup_factor": 5.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "BOOK-chapter_07",
+    "name": "Cache pattern from chapter_07",
+    "speedup_factor": 5.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "BOOK-chapter_08",
+    "name": "Cache pattern from chapter_08",
+    "speedup_factor": 5.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "BOOK-chapter_09",
+    "name": "Cache pattern from chapter_09",
+    "speedup_factor": 5.0,
+    "accuracy_impact": "none"
+  },
+  {
+    "skill_id": "BOOK-chapter_10",
+    "name": "Cache pattern from chapter_10",
+    "speedup_factor": 5.0,
+    "accuracy_impact": "none"
+  }
+]
