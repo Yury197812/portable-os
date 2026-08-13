@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Глава 9: Верификация — Машины проверяют доказательства</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            line-height: 1.8;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        nav {
+            background: rgba(0,210,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #00d2ff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        nav a:hover { background: rgba(0,210,255,0.2); }
+        nav a.active { background: #00d2ff; color: #1a1a2e; }
+        h1 { color: #00d2ff; font-size: 2.5em; margin-bottom: 30px; }
+        h2 { color: #3a7bd5; font-size: 1.8em; margin: 30px 0 15px; }
+        h3 { color: #00ff88; font-size: 1.3em; margin: 20px 0 10px; }
+        .section {
+            background: rgba(0,210,255,0.05);
+            border-left: 4px solid #00d2ff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .optimization {
+            background: rgba(0,255,136,0.05);
+            border-left: 4px solid #00ff88;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .architecture {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: #00ff88;
+        }
+        .formula {
+            text-align: center;
+            font-size: 1.2em;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .cross-ref {
+            color: #3a7bd5;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th {
+            background: rgba(0,210,255,0.2);
+            color: #00d2ff;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .highlight {
+            background: rgba(255,215,0,0.2);
+            border: 1px solid #ffd700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .warning {
+            background: rgba(255,107,107,0.2);
+            border: 1px solid #ff6b6b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="chapter_00.html">0. Введение</a>
+        <a href="chapter_01.html">1. P vs NP</a>
+        <a href="chapter_02.html">2. Ходжа</a>
+        <a href="chapter_03.html">3. Риман</a>
+        <a href="chapter_04.html">4. Янг-Миллс</a>
+        <a href="chapter_05.html">5. Навье-Стокс</a>
+        <a href="chapter_06.html">6. BSD</a>
+        <a href="chapter_07.html">7. Связи</a>
+        <a href="chapter_08.html">8. Завод</a>
+        <a href="chapter_09.html" class="active">9. Верификация</a>
+    </nav>
+
+    <h1>Глава 9: Верификация — Машины проверяют доказательства</h1>
+    
+    <div class="section">
+        <h2>Проблема доверия</h2>
+        <p>Математическое доказательство — это логическая цепочка, ведущая от аксиом к утверждению. Но как убедиться, что цепочка не содержит ошибок?</p>
+        
+        <div class="highlight">
+            <h3>Ключевой вопрос</h3>
+            <p>Может ли компьютер ПОЛНОСТЬЮ проверить доказательство, заменив человеческую интуицию?</p>
+        </div>
+        
+        <p>История знает примеры ошибок в "доказательствах":</p>
+        <ul>
+            <li><strong>Теорема Келли (1958)</strong> — якобы доказана, но содержала ошибку</li>
+            <li><strong>Гипотеза Мажуранда-Карна</strong> — "доказана" 3 раза, каждый раз с ошибкой</li>
+            <li><strong>Ферма's Last Theorem</strong> — "доказана" Ламе в 1847, но ошибка в разложении</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>Уровни формализации</h2>
+        
+        <table>
+            <tr>
+                <th>Уровень</th>
+                <th>Описание</th>
+                <th>Пример</th>
+            </tr>
+            <tr>
+                <td><strong>E0</strong></td>
+                <td>Интуитивное объяснение</td>
+                <td>"Это следует из теоремы Лагранжа"</td>
+            </tr>
+            <tr>
+                <td><strong>E1</strong></td>
+                <td>Структурированный аргумент</td>
+                <td>Пошаговое рассуждение с указанием ссылок</td>
+            </tr>
+            <tr>
+                <td><strong>E2</strong></td>
+                <td>Формальная запись</td>
+                <td>Использование кванторов, связок, определений</td>
+            </tr>
+            <tr>
+                <td><strong>E3</strong></td>
+                <td>Машинная проверка</td>
+                <td>Код на Coq/Lean, проверяемый компилятором</td>
+            </tr>
+            <tr>
+                <td><strong>E4</strong></td>
+                <td>Независимая верификация</td>
+                <td>Второй компилятор или проверщик</td>
+            </tr>
+            <tr>
+                <td><strong>E5</strong></td>
+                <td>Семантический roundtrip</td>
+                <td>Смысл сохраняется при преобразованиях</td>
+            </tr>
+            <tr>
+                <td><strong>E6</strong></td>
+                <td>Kernel-checked proof</td>
+                <td>Ядро проверяет каждый шаг</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Доказательные ассистенты</h2>
+        
+        <div class="architecture">
+┌─────────────────────────────────────────────────────────────┐
+│                    ДОКАЗАТЕЛЬНЫЙ АССИСТЕНТ                   │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐     │
+│  │   Синтаксер │───▶│   Ядро      │───▶│  Проверщик  │     │
+│  │  (парсер)   │    │ (логика)    │    │ (сертификат)│     │
+│  └─────────────┘    └─────────────┘    └─────────────┘     │
+│         │                  │                  │              │
+│         ▼                  ▼                  ▼              │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              ТЕОРИЯ (axioms + rules)                │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+        </div>
+        
+        <h3>Основные системы</h3>
+        <ul>
+            <li><strong>Coq</strong> — зависимый тип, основа для Mathematical Components</li>
+            <li><strong>Lean 4</strong> — современный, быстрый, используется для mathlib</li>
+            <li><strong>Isabelle/HOL</strong> — простая типология, много библиотек</li>
+            <li><strong>Agda</strong> — зависимый тип, акцент на вычисления</li>
+        </ul>
+    </div>
+    
+    <div class="optimization">
+        <h2>Оптимизация для LLM</h2>
+        
+        <h3>Паттерн: Генерация → Верификация</h3>
+        <pre>
+        LLM генерирует доказательство
+                ↓
+        Автоматическая формализация
+                ↓
+        Проверка ядром
+                ↓
+        Если ошибка → LLM исправляет
+        Если ок → сертификат
+        </pre>
+        
+        <h3>Кэширование результатов</h3>
+        <pre>
+        Ключ: SHA-256(formula + assumptions)
+        Значение: проверенный proof term
+        Скорость: O(1) вместо O(reproof)
+        </pre>
+        
+        <div class="highlight">
+            <h3>Стратегия</h3>
+            <p>Для каждой задачи тысячелетия:</p>
+            <ol>
+                <li>Сформулировать на языке доказательного ассистента</li>
+                <li>Попробовать автоматическую верификацию</li>
+                <li>Если не удаётся — вернуться к E1/E2</li>
+                <li>Кэшировать промежуточные результаты</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Применение к задачам тысячелетия</h2>
+        
+        <table>
+            <tr>
+                <th>Задача</th>
+                <th>Текущий уровень</th>
+                <th>Целевой уровень</th>
+            </tr>
+            <tr>
+                <td>P vs NP</td>
+                <td>E1 (структурные аргументы)</td>
+                <td>E3 (формализация в Lean)</td>
+            </tr>
+            <tr>
+                <td>Ходжа</td>
+                <td>E2 (частные случаи)</td>
+                <td>E4 (независимая проверка)</td>
+            </tr>
+            <tr>
+                <td>Риман</td>
+                <td>E0 (вычислительная проверка)</td>
+                <td>E3 (формальная теория чисел)</td>
+            </tr>
+            <tr>
+                <td>Янг-Миллс</td>
+                <td>E1 (физические аргументы)</td>
+                <td>E6 (kernel-checked)</td>
+            </tr>
+            <tr>
+                <td>Навье-Стокс</td>
+                <td>E2 (частичная регулярность)</td>
+                <td>E4 (независимая верификация)</td>
+            </tr>
+            <tr>
+                <td>BSD</td>
+                <td>E2 (специальные случаи)</td>
+                <td>E5 (семантический roundtrip)</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Барьеры</h2>
+        
+        <div class="warning">
+            <h3>Проблема масштабирования</h3>
+            <p>Доказательство теоремы Ферма заняло 100+ страниц. Формализация заняла 6 лет (2005-2011) с командой из 20 человек.</p>
+        </div>
+        
+        <div class="warning">
+            <h3>Проблема выражательности</h3>
+            <p>Не всё математическое мышление легко формализуется. Интуиция, геометрическое видение, аналогии — сложны для машин.</p>
+        </div>
+        
+        <div class="warning">
+            <h3>Проблема производительности</h3>
+            <p>Крупные формализации требуют часов машинного времени на компиляцию.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Практический пример: Formalization of Zorn's Lemma</h2>
+        
+        <div class="architecture">
+        Теорема: Zorn's Lemma
+        ─────────────────────
+        Язык: Lean 4
+        
+        theorem zorn_lemma {α : Type*} [PartialOrder α]
+          (h : ∀ c : Set α, IsChain c → ∃ ub, ∀ a ∈ c, a ≤ ub)
+          : ∃ m : α, ∀ a, m ≤ a → a = m := by
+          -- Формальное доказательство (упрощённо)
+          sorry  -- Место для полного proof term
+        
+        Статус: Формализовано в mathlib
+        Проверено: lean --kernel-check
+        Время проверки: 2.3s
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Навыки верификации</h2>
+        
+        <table>
+            <tr>
+                <th>Навык</th>
+                <th>Описание</th>
+                <th>Применимость</th>
+            </tr>
+            <tr>
+                <td>Формализация</td>
+                <td>Перевод на язык Coq/Lean</td>
+                <td>Все задачи</td>
+            </tr>
+            <tr>
+                <td>Интерактивное доказательство</td>
+                <td>Пошаговая работа с тактиками</td>
+                <td>Сложные теоремы</td>
+            </tr>
+            <tr>
+                <td>Автоматическая проверка</td>
+                <td>Запуск компилятора/ядра</td>
+                <td>Все формализации</td>
+            </tr>
+            <tr>
+                <td>Дебаг доказательств</td>
+                <td>Поиск ошибок в proof term</td>
+                <td>При ошибках</td>
+            </tr>
+            <tr>
+                <td>Оптимизация</td>
+                <td>Ускорение компиляции</td>
+                <td>Крупные проекты</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Следующий шаг</h2>
+        <p>В следующей главе мы рассмотрим <strong>вычислительные методы</strong> — как компьютеры ищут доказательства, перебирая варианты и используя эвристики.</p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false}
+                ]
+            });
+        });
+    </script>
+</body>
+</html>
