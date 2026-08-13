@@ -1,0 +1,32 @@
+{
+  "habr": {
+    "platform": "Habr",
+    "files": 16,
+    "directory": "D:\\4\\PUBLICATIONS\\habr"
+  },
+  "github_pages": {
+    "platform": "GitHub Pages",
+    "files": 16,
+    "directory": "D:\\4\\PUBLICATIONS\\github_pages"
+  },
+  "osf": {
+    "platform": "Open Science Framework",
+    "files": 16,
+    "directory": "D:\\4\\PUBLICATIONS\\osf"
+  },
+  "arxiv": {
+    "platform": "arXiv",
+    "files": 16,
+    "directory": "D:\\4\\PUBLICATIONS\\arxiv"
+  },
+  "medium": {
+    "platform": "Medium",
+    "files": 16,
+    "directory": "D:\\4\\PUBLICATIONS\\medium"
+  },
+  "personal_site": {
+    "platform": "Personal Site",
+    "files": 16,
+    "directory": "D:\\4\\PUBLICATIONS\\personal_site"
+  }
+}
