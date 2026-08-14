@@ -410,10 +410,13 @@ const MIMO_MSGS = [
 // ===== Module renderers =====
 function tags(arr){return arr.map(t=>`<span class="tag">${t}</span>`).join('');}
 function renderSkills(){
-  return `<div class="wrap2">` + SKILLS.map(s=>`<div class="scard"><span class="cat">${s.cat}</span><div class="nm">${s.n}</div><div>${tags(s.t)}</div></div>`).join('') + `</div>`;
+  return `<div class="wrap2">` + SKILLS.map(s=>`<div class="scard"><span class="cat">${s.cat}</span><div class="nm">${s.n}</div>${s.desc?`<div class="trig">${s.desc}</div>`:''}<div>${tags(s.t||[])}</div></div>`).join('') + `</div>`;
 }
+function loadAgents(){ try{const v=JSON.parse(localStorage.getItem('artweb_agents')||'null'); if(Array.isArray(v)&&v.length) return v;}catch(e){} return AGENTS; }
+function saveAgents(list){ try{ localStorage.setItem('artweb_agents', JSON.stringify(list)); }catch(e){} }
 function renderAgents(){
-  return `<div class="wrap2">` + AGENTS.map(a=>`<div class="acard"><span class="role">${a.r}</span><div class="nm">${a.n}</div><div class="meta">модель: <b>${a.model}</b></div><div>${tags(a.skills.split(', '))}</div><div class="caps">${a.caps.map(capChip).join('')}</div></div>`).join('') + `</div>`;
+  const list = loadAgents();
+  return `<div class="wrap2">` + list.map((a,i)=>`<div class="acard"><span class="role">${a.r}</span><div class="nm" style="display:flex;justify-content:space-between;align-items:center">${a.n}<button class="x" data-agent-rm="${i}" title="удалить">×</button></div><div class="meta">модель: <b>${a.model}</b></div><div>${tags((a.skills||'').split(', '))}</div><div class="caps">${(a.caps||[]).map(capChip).join('')}</div></div>`).join('') + `</div><div class="card" style="margin-top:14px"><h3 style="margin-top:0">Добавить агента</h3><div class="wfadd"><input id="agName" placeholder="Имя"><input id="agRole" placeholder="Роль"><button class="btn" id="agAdd">+ Агент</button></div></div>`;
 }
 function wfNodesHTML(){
   return WF_STEPS.map((s,i)=>`<div class="wfnode"><div class="box"><span class="idx">${String(i+1).padStart(2,'0')}</span>${s}</div><button class="x" data-rm="${i}">×</button></div>${i<WF_STEPS.length-1?'<div class="wfline"></div>':''}`).join('');
@@ -491,16 +494,42 @@ document.addEventListener('click',e=>{
     const inp=document.getElementById('wfInput'); if(!inp.value.trim())return;
     WF_STEPS.push(inp.value.trim()); inp.value=''; document.getElementById('wfNodes').innerHTML=wfNodesHTML();
   }
+  if(e.target.id==='agAdd'){
+    const n=document.getElementById('agName').value.trim(); if(!n) return;
+    const r=document.getElementById('agRole').value.trim()||'агент';
+    const list=loadAgents(); list.push({n,r,model:'Qwen2.5 14B · Ollama',skills:'',caps:['tool_use']}); saveAgents(list);
+    show('agents');
+  }
+  if(e.target.classList&&e.target.classList.contains('x')&&e.target.dataset.agentRm!=null){
+    const list=loadAgents(); list.splice(+e.target.dataset.agentRm,1); saveAgents(list); show('agents');
+  }
   if(e.target.classList&&e.target.classList.contains('x')&&e.target.dataset.rm){
     WF_STEPS.splice(+e.target.dataset.rm,1); document.getElementById('wfNodes').innerHTML=wfNodesHTML();
   }
 });
+
+// ===== Live data (proxy :8890) — upgrade embedded seeds to real data =====
+function bootData(){
+  fetch('http://127.0.0.1:8890/api/catalog').then(r=>r.json()).then(list=>{
+    if(!Array.isArray(list)||!list.length) return;
+    MODELS.length=0;
+    list.forEach(m=>MODELS.push({id:m.id,name:m.name,provider:m.provider,caps:m.capabilities||[],free:!!m.free,tool:!!m.tool_use,q:m.quality??6,lat:m.latency_ms??600,cost:m.cost_per_mtok??0,ctx:m.context_k??0,mod:m.modality||'text',priv:m.privacy??5,avail:m.availability??9}));
+    if(active==='catalog'){renderCatalog();} renderSidebar();
+  }).catch(()=>{});
+  fetch('http://127.0.0.1:8890/api/skills').then(r=>r.json()).then(list=>{
+    if(!Array.isArray(list)||!list.length) return;
+    SKILLS.length=0;
+    list.forEach(s=>SKILLS.push({n:s.n,cat:s.cat||'general',t:s.t||[],desc:s.desc||''}));
+    if(active==='skills'){show('skills');}
+  }).catch(()=>{});
+}
 
 // ===== Boot =====
 const init = (location.hash||'#catalog').slice(1);
 show(routes[init]?init:'catalog');
 renderCapFilters();
 renderCatalog();
+bootData();
 </script>
 </body>
 </html>
