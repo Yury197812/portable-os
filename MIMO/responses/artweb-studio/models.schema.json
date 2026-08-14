@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Yury197812/portable-os/raw/master/MIMO/responses/models.schema.json",
+  "title": "ArtWeb Studio Model Catalog Entry",
+  "type": "object",
+  "required": ["id", "name", "provider", "capabilities", "free", "tool_use", "quality", "latency_ms", "cost_per_mtok", "context_k", "modality", "locality", "privacy", "availability"],
+  "properties": {
+    "id": { "type": "string", "description": "Machine-friendly slug." },
+    "name": { "type": "string", "description": "Display name." },
+    "provider": { "type": "string" },
+    "family": { "type": "string", "description": "Model family, used for grouping." },
+    "capabilities": {
+      "type": "array",
+      "items": { "enum": ["tool_use", "free", "reasoning", "vision", "audio", "web", "code", "memory", "safety", "speed"] },
+      "description": "icon-first capability set."
+    },
+    "free": { "type": "boolean", "description": "FREE is a subset of the catalog." },
+    "tool_use": { "type": "boolean", "description": "First-class tool calling." },
+    "quality": { "type": "number", "minimum": 0, "maximum": 10 },
+    "latency_ms": { "type": "number", "minimum": 0 },
+    "cost_per_mtok": { "type": "number", "minimum": 0, "description": "USD per 1M tokens; 0 when free." },
+    "context_k": { "type": "number", "minimum": 0, "description": "Context window in thousands of tokens; 0 = n/a." },
+    "modality": { "enum": ["text", "image", "audio", "embed"] },
+    "locality": { "enum": ["cloud", "local", "hybrid"] },
+    "privacy": { "type": "integer", "minimum": 0, "maximum": 10 },
+    "availability": { "type": "integer", "minimum": 0, "maximum": 10 }
+  },
+  "additionalProperties": true
+}
