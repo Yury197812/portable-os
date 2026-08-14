@@ -20,6 +20,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 KEYS_PATH = Path(r"D:\4\04_utilities\api_keys.json")
+SEED_DIR = Path(__file__).parent
 PORT = 8890
 
 # base already ends in /v1 (OpenAI-compatible); auth=False = no key needed
@@ -97,6 +98,18 @@ class H(BaseHTTPRequestHandler):
                 self.wfile.write(data)
             except Exception as e:
                 self._json({"error": f"orchestra dashboard unreachable: {str(e)[:200]}"}, 502)
+        elif self.path in ("/api/skills", "/api/catalog"):
+            fname = "skills.seed.json" if self.path == "/api/skills" else "models.seed.json"
+            try:
+                data = (SEED_DIR / fname).read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(data)))
+                self._cors()
+                self.end_headers()
+                self.wfile.write(data)
+            except Exception as e:
+                self._json({"error": str(e)[:200]}, 500)
         else:
             self._json({"error": "not found"}, 404)
 
