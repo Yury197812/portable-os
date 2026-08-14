@@ -35,8 +35,10 @@ MODELS = [
     {"provider": "ollama", "id": "qwen2.5:14b", "name": "Qwen2.5 14B · Ollama", "caps": ["tool_use", "code", "free", "speed"]},
     {"provider": "groq", "id": "llama-3.3-70b-versatile", "name": "Llama 3.3 70B · Groq", "caps": ["tool_use", "reasoning"]},
     {"provider": "groq", "id": "llama-3.1-8b-instant", "name": "Llama 3.1 8B · Groq", "caps": ["tool_use", "speed"]},
-    {"provider": "openrouter_free", "id": "mistralai/mistral-7b-instruct:free", "name": "Mistral 7B · OpenRouter", "caps": ["tool_use"]},
-    {"provider": "openrouter_free", "id": "deepseek/deepseek-chat-v3-0324:free", "name": "DeepSeek V3 · OpenRouter", "caps": ["tool_use", "code"]},
+    {"provider": "openrouter_free", "id": "openai/gpt-oss-20b:free", "name": "GPT-OSS 20B · OpenRouter", "caps": ["tool_use", "code"]},
+    {"provider": "openrouter_free", "id": "google/gemma-4-26b-a4b-it:free", "name": "Gemma 4 26B · OpenRouter", "caps": ["tool_use"]},
+    {"provider": "openrouter_free", "id": "liquid/lfm-2.5-2.6b:free", "name": "LFM 2.5 2.6B · OpenRouter", "caps": ["speed"]},
+    {"provider": "openrouter_free", "id": "nvidia/nemotron-nano-9b-v2:free", "name": "Nemotron Nano 9B · OpenRouter", "caps": ["tool_use"]},
 ]
 
 
