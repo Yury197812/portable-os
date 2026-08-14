@@ -146,14 +146,14 @@
     <div class="crumbs"><span>Studio</span><span class="sep">/</span><b id="crumb">Model Compare</b></div>
     <div class="cmd">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input id="cmdInput" placeholder="Command center — модель, модуль, capability…" autocomplete="off">
+      <input id="cmdInput" placeholder="Command center — модель, модуль, capability…" autocomplete="off" aria-label="Командный центр — поиск моделей и модулей">
     </div>
     <div class="statuspill"><span class="dot"></span>MIMO Sync · Live</div>
   </header>
   <div class="shell">
-    <nav class="sidebar" id="sidebar"></nav>
+    <nav class="sidebar" id="sidebar" aria-label="Основная навигация"></nav>
     <main class="main">
-      <div class="view" id="view-catalog"><div class="pagehead"><h1>Model Compare</h1><p>Каталог моделей с icon-first возможностями и динамическим routing. FREE — подмножество, tool_use — first-class.</p></div><div class="toolbar"><div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="catSearch" placeholder="Поиск по имени/провайдеру…"></div></div><div class="chips" id="capFilters"></div><div class="grid" id="catGrid" style="margin-top:16px"></div></div>
+      <div class="view" id="view-catalog"><div class="pagehead"><h1>Model Compare</h1><p>Каталог моделей с icon-first возможностями и динамическим routing. FREE — подмножество, tool_use — first-class.</p></div><div class="toolbar"><div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="catSearch" placeholder="Поиск по имени/провайдеру…" aria-label="Поиск моделей"></div></div><div class="chips" id="capFilters"></div><div class="grid" id="catGrid" style="margin-top:16px"></div></div>
       <div class="view" id="view-routing"><div class="pagehead"><h1>Routing Lab</h1><p>Динамический выбор модели по 8 осям: quality / latency / cost / context / modality / availability / privacy / locality / tool-compat.</p></div><div class="rl"><div class="card"><h3>Веса осей</h3><div id="routingSliders"></div></div><div class="card"><h3>Топ-5 по текущим весам</h3><div class="rank" id="routingRank"></div></div></div></div>
       <div class="view" id="view-dynamic"></div>
     </main>
@@ -244,7 +244,8 @@ let active = 'catalog';
 function renderSidebar(){
   sidebar.innerHTML = '<div class="side-sec">Модули</div>' + MODULES.map(m=>{
     const c = m.id==='catalog' ? MODELS.length : '';
-    return `<button class="navitem ${m.id===active?'active':''}" data-id="${m.id}">${ICON(m.icon)}<span>${m.name}</span>${c?`<span class="count">${c}</span>`:''}</button>`;
+    const cur = m.id===active ? 'aria-current="page"' : '';
+    return `<button class="navitem ${m.id===active?'active':''}" data-id="${m.id}" ${cur} aria-label="${m.name}">${ICON(m.icon)}<span>${m.name}</span>${c?`<span class="count">${c}</span>`:''}</button>`;
   }).join('');
 }
 function show(id){
@@ -276,9 +277,9 @@ const catGrid = document.getElementById('catGrid');
 let activeCaps = new Set();
 let catQuery = '';
 function renderCapFilters(){
-  capFilters.innerHTML = '<span class="chip on" data-cap="">Все</span>' + Object.keys(CAPS).map(c=>{
+  capFilters.innerHTML = '<button class="chip on" data-cap="" aria-pressed="true">Все</button>' + Object.keys(CAPS).map(c=>{
     const on = activeCaps.has(c);
-    return `<span class="chip ${on?'on':''}" data-cap="${c}">${CAPS[c].icon}${CAPS[c].label}</span>`;
+    return `<button class="chip ${on?'on':''}" data-cap="${c}" aria-pressed="${on}">${CAPS[c].icon}${CAPS[c].label}</button>`;
   }).join('');
 }
 capFilters.addEventListener('click',e=>{
@@ -416,16 +417,16 @@ function loadAgents(){ try{const v=JSON.parse(localStorage.getItem('artweb_agent
 function saveAgents(list){ try{ localStorage.setItem('artweb_agents', JSON.stringify(list)); }catch(e){} }
 function renderAgents(){
   const list = loadAgents();
-  return `<div class="wrap2">` + list.map((a,i)=>`<div class="acard"><span class="role">${a.r}</span><div class="nm" style="display:flex;justify-content:space-between;align-items:center">${a.n}<button class="x" data-agent-rm="${i}" title="удалить">×</button></div><div class="meta">модель: <b>${a.model}</b></div><div>${tags((a.skills||'').split(', '))}</div><div class="caps">${(a.caps||[]).map(capChip).join('')}</div></div>`).join('') + `</div><div class="card" style="margin-top:14px"><h3 style="margin-top:0">Добавить агента</h3><div class="wfadd"><input id="agName" placeholder="Имя"><input id="agRole" placeholder="Роль"><button class="btn" id="agAdd">+ Агент</button></div></div>`;
+  return `<div class="wrap2">` + list.map((a,i)=>`<div class="acard"><span class="role">${a.r}</span><div class="nm" style="display:flex;justify-content:space-between;align-items:center">${a.n}<button class="x" data-agent-rm="${i}" title="удалить" aria-label="Удалить агента">×</button></div><div class="meta">модель: <b>${a.model}</b></div><div>${tags((a.skills||'').split(', '))}</div><div class="caps">${(a.caps||[]).map(capChip).join('')}</div></div>`).join('') + `</div><div class="card" style="margin-top:14px"><h3 style="margin-top:0">Добавить агента</h3><div class="wfadd"><input id="agName" placeholder="Имя"><input id="agRole" placeholder="Роль"><button class="btn" id="agAdd">+ Агент</button></div></div>`;
 }
 function wfNodesHTML(){
-  return WF_STEPS.map((s,i)=>`<div class="wfnode"><div class="box"><span class="idx">${String(i+1).padStart(2,'0')}</span>${s}</div><button class="x" data-rm="${i}">×</button></div>${i<WF_STEPS.length-1?'<div class="wfline"></div>':''}`).join('');
+  return WF_STEPS.map((s,i)=>`<div class="wfnode"><div class="box"><span class="idx">${String(i+1).padStart(2,'0')}</span>${s}</div><button class="x" data-rm="${i}" aria-label="Удалить шаг">×</button></div>${i<WF_STEPS.length-1?'<div class="wfline"></div>':''}`).join('');
 }
 function renderWorkflow(){
   return `<div class="wf"><div id="wfNodes">${wfNodesHTML()}</div><div class="wfadd"><input id="wfInput" placeholder="Название шага…"><button class="btn" id="wfAdd">+ Шаг</button></div></div>`;
 }
 function renderPlayground(){
-  const html = `<div class="pg"><textarea id="pgPrompt" placeholder="Промпт…">Расскажи в двух предложениях, что такое ArtWeb Studio.</textarea><div class="controls"><select id="pgModel"><option>загрузка…</option></select><select id="pgTemp"><option>temp 0.2</option><option selected>temp 0.7</option><option>temp 1.0</option></select><button class="btn" id="pgRun">▶ Run</button></div><div class="out" id="pgOut">Загрузка моделей…</div></div>`;
+  const html = `<div class="pg"><textarea id="pgPrompt" placeholder="Промпт…" aria-label="Промпт для модели">Расскажи в двух предложениях, что такое ArtWeb Studio.</textarea><div class="controls"><select id="pgModel" aria-label="Модель"><option>загрузка…</option></select><select id="pgTemp" aria-label="Температура"><option>temp 0.2</option><option selected>temp 0.7</option><option>temp 1.0</option></select><button class="btn" id="pgRun">▶ Run</button></div><div class="out" id="pgOut" aria-live="polite">Загрузка моделей…</div></div>`;
   fetch('http://127.0.0.1:8890/api/models').then(r=>r.json()).then(list=>{
     const sel = document.getElementById('pgModel');
     if (sel) sel.innerHTML = list.map(m=>`<option value="${m.provider}|${m.id}">${m.name}</option>`).join('');
@@ -436,7 +437,7 @@ function renderMimo(){
   return `<div class="card" style="margin-bottom:14px"><h3 style="margin-top:0">Транспорт (заморожен)</h3><div class="kv"><b>GPT → MIMO</b><span class="mono">ntfy.sh/artweb-mimo-bus-20260814-8d3f2a761c4e</span></div><div class="kv"><b>MIMO → GPT</b><span class="mono">Yury197812/portable-os/master/MIMO/responses/</span></div><div class="kv"><b>Статус</b><span style="color:var(--emerald)">● CONNECTED — E2E подтверждён фактом</span></div></div><div class="card"><h3 style="margin-top:0">Последние сообщения</h3>` + MIMO_MSGS.map(m=>`<div class="kv"><b>${m.dir}</b><span>${m.txt}</span></div>`).join('') + `</div>`;
 }
 function renderObservatory(){
-  const html = `<div id="obs"><div class="placehold"><h3>Загрузка метрик оркестра…</h3><p>http://127.0.0.1:8890/api/orchestra</p></div></div>`;
+  const html = `<div id="obs" aria-live="polite"><div class="placehold"><h3>Загрузка метрик оркестра…</h3><p>http://127.0.0.1:8890/api/orchestra</p></div></div>`;
   fetch('http://127.0.0.1:8890/api/orchestra').then(r=>r.json()).then(s=>{
     const el=document.getElementById('obs'); if(!el) return;
     if(s.error){ el.innerHTML=`<div class="placehold"><h3>Дашборд оркестра недоступен</h3><p>${s.error}</p></div>`; return; }
