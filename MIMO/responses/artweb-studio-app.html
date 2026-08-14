@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtWeb Studio — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f172a; --bg2:#0b1120; --panel:#16213a; --panel2:#1e293b; --border:#26334d;
+    --accent:#7c3aed; --accent2:#8b5cf6; --accent-dim:rgba(124,58,237,.14);
+    --text:#f1f5f9; --text2:#9aa7bd; --text3:#64748b;
+    --head:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+    --body:'Inter','Segoe UI',system-ui,sans-serif;
+    --violet:#8b5cf6; --emerald:#34d399; --amber:#fbbf24; --cyan:#22d3ee; --pink:#f472b6;
+    --sky:#38bdf8; --lime:#a3e635; --teal:#2dd4bf; --rose:#fb7185; --orange:#fb923c;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:var(--body);color:var(--text);background:var(--bg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .app{display:grid;grid-template-rows:54px 1fr;height:100vh;overflow:hidden}
+  /* topbar */
+  .topbar{display:flex;align-items:center;gap:14px;padding:0 14px;border-bottom:1px solid var(--border);background:var(--bg2)}
+  .logo{display:flex;align-items:center;gap:9px;font-family:var(--head);font-weight:700;font-size:14.5px;white-space:nowrap}
+  .logo .mark{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:13px;font-weight:700}
+  .crumbs{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:12.5px;min-width:0}
+  .crumbs b{color:var(--text);font-weight:600}
+  .crumbs .sep{opacity:.5}
+  .cmd{flex:1;max-width:480px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:7px 12px;color:var(--text3)}
+  .cmd svg{width:15px;height:15px}
+  .cmd input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--body);font-size:13px}
+  .cmd input::placeholder{color:var(--text3)}
+  .statuspill{margin-left:auto;display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:20px;background:var(--panel);border:1px solid var(--border);font-size:12px;color:var(--text2);white-space:nowrap}
+  .statuspill .dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald)}
+  /* shell */
+  .shell{display:grid;grid-template-columns:206px 1fr;overflow:hidden;min-height:0}
+  .sidebar{border-right:1px solid var(--border);background:var(--bg2);padding:10px 8px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+  .side-sec{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--text3);padding:12px 10px 6px;font-weight:700}
+  .navitem{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:9px;color:var(--text2);cursor:pointer;border:none;background:none;font-family:var(--body);font-size:13.5px;font-weight:500;text-align:left;width:100%;transition:background .13s,color .13s}
+  .navitem svg{width:18px;height:18px;flex-shrink:0}
+  .navitem:hover{background:var(--panel);color:var(--text)}
+  .navitem.active{background:var(--accent-dim);color:var(--accent2)}
+  .navitem .count{margin-left:auto;font-size:11px;color:var(--text3);background:var(--panel);padding:1px 7px;border-radius:20px}
+  /* main */
+  .main{overflow-y:auto;padding:24px 26px 60px}
+  .pagehead{margin-bottom:20px}
+  .pagehead h1{margin:0 0 5px;font-family:var(--head);font-size:22px;font-weight:700;letter-spacing:-.2px}
+  .pagehead p{margin:0;color:var(--text2);font-size:13.5px}
+  .view{display:none}
+  .view.active{display:block}
+  /* toolbar */
+  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .search{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;flex:1;min-width:220px;color:var(--text3)}
+  .search input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--text2);cursor:pointer;font-size:12px;font-weight:600;transition:border-color .13s,color .13s,background .13s}
+  .chip svg{width:13px;height:13px}
+  .chip.on{background:var(--accent-dim);border-color:var(--accent);color:var(--accent2)}
+  /* model grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+  .mcard{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:15px;display:flex;flex-direction:column;gap:10px;transition:border-color .13s,transform .13s}
+  .mcard:hover{border-color:var(--accent2);transform:translateY(-1px)}
+  .mcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .mcard .name{font-family:var(--head);font-weight:600;font-size:14.5px;color:var(--text)}
+  .mcard .provider{font-size:11.5px;color:var(--text3)}
+  .mcard .caps{display:flex;gap:5px;flex-wrap:wrap}
+  .cap{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:600;border:1px solid}
+  .cap svg{width:12px;height:12px}
+  .mcard .meta{display:flex;gap:14px;font-size:11.5px;color:var(--text3);border-top:1px solid var(--border);padding-top:10px}
+  .mcard .meta b{color:var(--text2);font-weight:600}
+  .scorebar{height:4px;border-radius:2px;background:var(--panel2);overflow:hidden}
+  .scorebar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  /* routing lab */
+  .rl{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .rl .card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:16px}
+  .rl .card h3{margin:0 0 14px;font-family:var(--head);font-size:14px;font-weight:600}
+  .slider{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .slider label{width:130px;font-size:12px;color:var(--text2);flex-shrink:0}
+  .slider input[type=range]{flex:1;accent-color:var(--accent)}
+  .slider .w{width:36px;text-align:right;font-family:var(--head);font-weight:600;font-size:12.5px;color:var(--text)}
+  .rank{display:flex;flex-direction:column;gap:8px}
+  .rankrow{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--bg);border:1px solid var(--border);border-radius:10px}
+  .rankrow .pos{font-family:var(--head);font-weight:700;color:var(--accent2);width:20px}
+  .rankrow .nm{flex:1;font-weight:600;font-size:13px}
+  .rankrow .sc{font-family:var(--head);font-weight:700;font-size:13px;color:var(--emerald)}
+  /* placeholder module */
+  .placehold{background:var(--panel);border:1px dashed var(--border);border-radius:13px;padding:26px;text-align:center;color:var(--text3)}
+  .placehold h3{margin:0 0 6px;color:var(--text2);font-family:var(--head)}
+  .placehold p{margin:0;font-size:13px}
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:700;background:rgba(52,211,153,.14);color:var(--emerald);border:1px solid rgba(52,211,153,.3)}
+  button{font-family:var(--body)}
+  :focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  @media (max-width:900px){.shell{grid-template-columns:1fr}.sidebar{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border)}.rl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="logo"><span class="mark">A</span>ArtWeb Studio</div>
+    <div class="crumbs"><span>Studio</span><span class="sep">/</span><b id="crumb">Model Compare</b></div>
+    <div class="cmd">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="cmdInput" placeholder="Command center — модель, модуль, capability…" autocomplete="off">
+    </div>
+    <div class="statuspill"><span class="dot"></span>MIMO Sync · Live</div>
+  </header>
+  <div class="shell">
+    <nav class="sidebar" id="sidebar"></nav>
+    <main class="main">
+      <div class="view" id="view-catalog"><div class="pagehead"><h1>Model Compare</h1><p>Каталог моделей с icon-first возможностями и динамическим routing. FREE — подмножество, tool_use — first-class.</p></div><div class="toolbar"><div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="catSearch" placeholder="Поиск по имени/провайдеру…"></div></div><div class="chips" id="capFilters"></div><div class="grid" id="catGrid" style="margin-top:16px"></div></div>
+      <div class="view" id="view-routing"><div class="pagehead"><h1>Routing Lab</h1><p>Динамический выбор модели по 8 осям: quality / latency / cost / context / modality / availability / privacy / locality / tool-compat.</p></div><div class="rl"><div class="card"><h3>Веса осей</h3><div id="routingSliders"></div></div><div class="card"><h3>Топ-5 по текущим весам</h3><div class="rank" id="routingRank"></div></div></div></div>
+      <div class="view" id="view-placeholder"></div>
+    </main>
+  </div>
+</div>
+<script>
+// ===== Icon-first capability language =====
+const ICON = (p, fill=false) => `<svg viewBox="0 0 24 24" fill="${fill?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const CAPS = {
+  tool_use: {label:'tool_use', color:'#8b5cf6', icon: ICON('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>')},
+  free:     {label:'free',     color:'#34d399', icon: ICON('<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8M16.5 8a2.5 2.5 0 0 0 0-5C13 3 12 8 12 8"/>')},
+  reasoning:{label:'reasoning',color:'#fbbf24', icon: ICON('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/><path d="M5 15l.6 1.4L7 17l-1.4.6L5 19l-.6-1.4L3 17l1.4-.6z"/>')},
+  vision:   {label:'vision',   color:'#22d3ee', icon: ICON('<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>')},
+  audio:    {label:'audio',    color:'#f472b6', icon: ICON('<path d="M3 10v4M7 6v12M11 3v18M15 6v12M19 10v4"/>')},
+  web:      {label:'web',      color:'#38bdf8', icon: ICON('<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>')},
+  code:     {label:'code',     color:'#a3e635', icon: ICON('<path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>')},
+  memory:   {label:'memory',   color:'#2dd4bf', icon: ICON('<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>')},
+  safety:   {label:'safety',   color:'#fb7185', icon: ICON('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>')},
+  speed:    {label:'speed',    color:'#fb923c', icon: ICON('<path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>')}
+};
+function capChip(id){const c=CAPS[id]; if(!c)return ''; return `<span class="cap" style="color:${c.color};border-color:${c.color}44;background:${c.color}18">${c.icon}${c.label}</span>`;}
+
+// ===== Modules =====
+const MODULES = [
+  {id:'catalog',    name:'Model Compare',   icon:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>', desc:'Каталог моделей: FREE-подмножество, tool_use first-class, без лимита 29.'},
+  {id:'routing',    name:'Routing Lab',     icon:'<circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M6 16v-3a3 3 0 0 1 3-3h9"/>', desc:'Динамический выбор модели по quality/latency/cost/context/modality/availability/privacy/locality/tool-compat.'},
+  {id:'skills',     name:'Skills Registry', icon:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>', desc:'Реестр переиспользуемых скиллов (извлечённых из задач).'},
+  {id:'agents',     name:'Agents Studio',   icon:'<rect x="3" y="7" width="15" height="12" rx="2"/><path d="M10 3h7a2 2 0 0 1 2 2v2"/><circle cx="8" cy="13" r="1"/><circle cx="13" cy="13" r="1"/>', desc:'Сборка и настройка агентов поверх моделей и скиллов.'},
+  {id:'workflow',   name:'Workflow Builder',icon:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="12" r="3"/><path d="M6 9v6M9 12h6"/>', desc:'Визуальный конструктор цепочек шагов.'},
+  {id:'playground', name:'Playground',      icon:'<path d="M6 9l6-5 6 5v10l-6 5-6-5V9z"/><path d="M12 22V9"/>', desc:'Песочница для живых вызовов моделей.'},
+  {id:'mimo',       name:'MIMO Sync',       icon:'<path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/>', desc:'Двусторонняя связь MIMO↔GPT (ntfy → portable-os/MIMO/responses).'},
+  {id:'observatory',name:'Observatory',     icon:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>', desc:'Метрики, логи, дрифт и правдивость дашборда.'},
+  {id:'taskboard',  name:'Task Board',      icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h6M3 15h6M15 9h6M15 15h6"/>', desc:'Очередь задач оркестра и их статусы.'}
+];
+
+// ===== Model catalog (representative ~40; full ~400 in models.seed.json) =====
+const M = (id,name,provider,caps,o={})=>Object.assign({id,name,provider,caps,free:false,tool:false,q:6,lat:600,cost:1.5,ctx:128,mod:'text',loc:'cloud',priv:5,avail:9},o,{free:o.free||false,tool:o.tool||false});
+const MODELS = [
+  M('gpt-4o-mini','GPT-4o mini','OpenAI',['tool_use','vision','web','reasoning','safety'],{free:true,q:7,lat:700,cost:0.15,ctx:128}),
+  M('claude-haiku','Claude 3.5 Haiku','Anthropic',['tool_use','vision','safety'],{q:7,lat:600,cost:0.8,ctx:200}),
+  M('gemini-flash','Gemini 1.5 Flash','Google',['tool_use','vision','audio','web','free'],{free:true,q:7,lat:400,cost:0.075,ctx:1000}),
+  M('gemini-pro','Gemini 1.5 Pro','Google',['tool_use','vision','audio','web'],{q:8,lat:900,cost:1.25,ctx:2000}),
+  M('llama-3.1-70b','Llama 3.1 70B','Meta',['tool_use','reasoning'],{q:8,lat:800,cost:0.6,ctx:128}),
+  M('llama-3.1-8b','Llama 3.1 8B','Meta',['tool_use','free'],{free:true,q:6,lat:250,cost:0,ctx:128,loc:'local'}),
+  M('deepseek-chat','DeepSeek-V3','DeepSeek',['tool_use','code','reasoning'],{q:9,lat:900,cost:0.27,ctx:64}),
+  M('deepseek-r1','DeepSeek-R1','DeepSeek',['reasoning','code'],{q:9,lat:1200,cost:0.55,ctx:64}),
+  M('qwen2.5-72b','Qwen2.5 72B','Alibaba',['tool_use','code'],{q:8,lat:700,cost:0.4,ctx:128}),
+  M('qwen2.5-7b','Qwen2.5 7B','Alibaba',['tool_use','free'],{free:true,q:5,lat:200,cost:0,ctx:128,loc:'local'}),
+  M('mixtral-8x7b','Mixtral 8x7B','Mistral',['tool_use','free'],{free:true,q:6,lat:450,cost:0,ctx:32}),
+  M('mistral-large','Mistral Large','Mistral',['tool_use','code'],{q:8,lat:700,cost:2,ctx:128}),
+  M('groq-llama','Llama 3.3 70B','Groq',['tool_use','speed'],{q:7,lat:120,cost:0.59,ctx:128}),
+  M('groq-mixtral','Mixtral 8x7B','Groq',['tool_use','speed','free'],{free:true,q:6,lat:90,cost:0,ctx:32}),
+  M('codestral','Codestral','Mistral',['code','tool_use'],{q:8,lat:500,cost:0.2,ctx:32}),
+  M('o1-mini','o1-mini','OpenAI',['reasoning','code'],{q:9,lat:1500,cost:3,ctx:128}),
+  M('claude-opus','Claude 3.5 Opus','Anthropic',['tool_use','vision','reasoning','safety'],{q:10,lat:1200,cost:15,ctx:200}),
+  M('gemini-ultra','Gemini Ultra','Google',['tool_use','vision','audio','reasoning'],{q:9,lat:1100,cost:10,ctx:2000}),
+  M('whisper-large','Whisper Large','OpenAI',['audio','free'],{free:true,q:7,lat:900,cost:0,ctx:0,mod:'audio'}),
+  M('sdxl','SDXL','Stability',['vision','free'],{free:true,q:7,lat:2000,cost:0,ctx:0,mod:'image'}),
+  M('dall-e-3','DALL·E 3','OpenAI',['vision','safety'],{q:8,lat:2500,cost:4,ctx:0,mod:'image'}),
+  M('phi-3.5','Phi-3.5','Microsoft',['free','reasoning'],{free:true,q:5,lat:180,cost:0,ctx:128,loc:'local'}),
+  M('gemma-2-9b','Gemma 2 9B','Google',['tool_use','free'],{free:true,q:6,lat:220,cost:0,ctx:8,loc:'local'}),
+  M('command-r','Command R+','Cohere',['tool_use','web'],{q:7,lat:800,cost:0.15,ctx:128}),
+  M('cohere-embed','Embed v3','Cohere',['free'],{free:true,q:6,lat:80,cost:0,ctx:8,mod:'embed'}),
+  M('sonar-small','Sonar Small','Perplexity',['web','free'],{free:true,q:6,lat:500,cost:0,ctx:64}),
+  M('sonar-large','Sonar Large','Perplexity',['web','tool_use'],{q:7,lat:900,cost:1,ctx:128}),
+  M('titan-text','Titan Text','AWS',['safety'],{q:6,lat:700,cost:0.8,ctx:32,priv:8}),
+  M('nova-pro','Nova Pro','AWS',['tool_use','vision'],{q:8,lat:900,cost:0.8,ctx:300,priv:8}),
+  M('yi-large','Yi-Large','01.AI',['tool_use','code'],{q:8,lat:800,cost:1,ctx:32}),
+  M('glm-4','GLM-4','Zhipu',['tool_use','vision','free'],{free:true,q:7,lat:600,cost:0,ctx:128}),
+  M('ernie-4','ERNIE 4.0','Baidu',['tool_use','web'],{q:8,lat:800,cost:2,ctx:32,priv:4}),
+  M('llava-1.6','LLaVA 1.6','Open Community',['vision','free'],{free:true,q:5,lat:300,cost:0,ctx:32,loc:'local'}),
+  M('stable-code','Stable Code 3B','Stability',['code','free'],{free:true,q:5,lat:150,cost:0,ctx:16,loc:'local'}),
+  M('jamba-1.5','Jamba 1.5','AI21',['tool_use','free'],{free:true,q:6,lat:400,cost:0,ctx:256}),
+  M('ministral-8b','Ministral 8B','Mistral',['tool_use'],{q:6,lat:350,cost:0.1,ctx:128}),
+  M('grok-beta','Grok Beta','xAI',['web','reasoning'],{q:7,lat:900,cost:5,ctx:128}),
+  M('c4ai-command','C4AI Command R','Cohere',['tool_use','web','free'],{free:true,q:7,lat:700,cost:0,ctx:128}),
+  M('llama-3.2-3b','Llama 3.2 3B','Meta',['tool_use','free'],{free:true,q:4,lat:120,cost:0,ctx:128,loc:'local'}),
+  M('gemini-nano','Gemini Nano','Google',['free','audio'],{free:true,q:4,lat:60,cost:0,ctx:8,loc:'local'})
+];
+
+// ===== Router =====
+const routes = {};
+MODULES.forEach(m=>routes[m.id]=m);
+const sidebar = document.getElementById('sidebar');
+const crumb = document.getElementById('crumb');
+let active = 'catalog';
+
+function renderSidebar(){
+  sidebar.innerHTML = '<div class="side-sec">Модули</div>' + MODULES.map(m=>{
+    const c = m.id==='catalog' ? MODELS.length : '';
+    return `<button class="navitem ${m.id===active?'active':''}" data-id="${m.id}">${ICON(m.icon)}<span>${m.name}</span>${c?`<span class="count">${c}</span>`:''}</button>`;
+  }).join('');
+}
+function show(id){
+  active = id;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  if(id==='catalog'){ document.getElementById('view-catalog').classList.add('active'); }
+  else if(id==='routing'){ document.getElementById('view-routing').classList.add('active'); renderRouting(); }
+  else {
+    const m = routes[id];
+    const ph = document.getElementById('view-placeholder');
+    ph.innerHTML = `<div class="pagehead"><h1>${m.name}</h1><p>${m.desc}</p></div><div class="placehold"><h3>${m.name}</h3><p>Модуль готовится — каркас и навигация подключены.</p></div>`;
+    ph.classList.add('active');
+  }
+  crumb.textContent = routes[id].name;
+  renderSidebar();
+  location.hash = '#'+id;
+}
+sidebar.addEventListener('click',e=>{
+  const b = e.target.closest('.navitem'); if(!b) return; show(b.dataset.id);
+});
+window.addEventListener('hashchange',()=>{
+  const id = (location.hash||'#catalog').slice(1); if(routes[id]) show(id);
+});
+
+// ===== Catalog =====
+const capFilters = document.getElementById('capFilters');
+const catGrid = document.getElementById('catGrid');
+let activeCaps = new Set();
+let catQuery = '';
+function renderCapFilters(){
+  capFilters.innerHTML = '<span class="chip on" data-cap="">Все</span>' + Object.keys(CAPS).map(c=>{
+    const on = activeCaps.has(c);
+    return `<span class="chip ${on?'on':''}" data-cap="${c}">${CAPS[c].icon}${CAPS[c].label}</span>`;
+  }).join('');
+}
+capFilters.addEventListener('click',e=>{
+  const ch = e.target.closest('.chip'); if(!ch) return;
+  const c = ch.dataset.cap;
+  if(c==='') activeCaps.clear(); else activeCaps.has(c)?activeCaps.delete(c):activeCaps.add(c);
+  renderCapFilters(); renderCatalog();
+});
+document.getElementById('catSearch').addEventListener('input',e=>{catQuery=e.target.value.toLowerCase();renderCatalog();});
+function renderCatalog(){
+  const list = MODELS.filter(m=>{
+    const q = (m.name+' '+m.provider).toLowerCase();
+    const okQ = !catQuery || q.includes(catQuery);
+    const okC = activeCaps.size===0 || m.caps.some(c=>activeCaps.has(c));
+    return okQ && okC;
+  });
+  catGrid.innerHTML = list.map(m=>{
+    const chips = m.caps.map(capChip).join('');
+    const meta = `<div class="meta"><span><b>Q</b> ${m.q}/10</span><span><b>Lat</b> ${m.lat}ms</span><span><b>Cost</b> ${m.cost?('$'+m.cost):'0'}</span><span><b>Ctx</b> ${m.ctx?m.ctx+'K':'—'}</span></div>`;
+    return `<div class="mcard"><div class="top"><div><div class="name">${m.name}</div><div class="provider">${m.provider} · ${m.mod}</div></div>${m.free?`<span class="badge">FREE</span>`:''}</div><div class="caps">${chips}</div>${meta}<div class="scorebar"><i style="width:${Math.round(routeScore(m)/5*100)}%"></i></div></div>`;
+  }).join('') || '<div class="placehold"><h3>Ничего не найдено</h3><p>Измените фильтр или запрос.</p></div>';
+}
+
+// ===== Routing Lab =====
+const AXES = [
+  {id:'quality',label:'Quality'},
+  {id:'latency',label:'Latency (ниже лучше)'},
+  {id:'cost',label:'Cost (ниже лучше)'},
+  {id:'context',label:'Context'},
+  {id:'privacy',label:'Privacy'},
+  {id:'availability',label:'Availability'},
+  {id:'tool',label:'tool_use'},
+  {id:'free',label:'FREE'}
+];
+const weights = {quality:5,latency:5,cost:4,context:3,privacy:3,availability:3,tool:5,free:2};
+function renderRouting(){
+  const sl = document.getElementById('routingSliders');
+  sl.innerHTML = AXES.map(a=>`<div class="slider"><label>${a.label}</label><input type="range" min="0" max="10" value="${weights[a.id]}" data-axis="${a.id}"><span class="w">${weights[a.id]}</span></div>`).join('');
+  sl.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+    weights[e.target.dataset.axis]=+e.target.value;
+    e.target.parentElement.querySelector('.w').textContent=e.target.value;
+    renderRoutingRank();
+  }));
+  renderRoutingRank();
+}
+function routeScore(m){
+  const norm = (v,max,inv)=>{const x=Math.min(1,Math.max(0,v/max)); return inv?1-x:x;};
+  let s=0;
+  s+=weights.quality* (m.q/10);
+  s+=weights.latency* norm(m.lat,2500,true);
+  s+=weights.cost* (m.free?1:norm(m.cost,15,true));
+  s+=weights.context* norm(m.ctx||0,2000,false);
+  s+=weights.privacy* ((m.priv||5)/10);
+  s+=weights.availability* ((m.avail||9)/10);
+  s+=weights.tool* (m.tool?1:0);
+  s+=weights.free* (m.free?1:0);
+  return s;
+}
+function renderRoutingRank(){
+  const ranked = MODELS.map(m=>({m,sc:routeScore(m)})).sort((a,b)=>b.sc-a.sc).slice(0,5);
+  document.getElementById('routingRank').innerHTML = ranked.map((r,i)=>
+    `<div class="rankrow"><span class="pos">${i+1}</span><span class="nm">${r.m.name}</span><span class="sc">${r.sc.toFixed(1)}</span></div>`).join('');
+}
+
+// ===== Command center =====
+document.getElementById('cmdInput').addEventListener('input',e=>{
+  const q = e.target.value.toLowerCase();
+  if(!q){ return; }
+  const m = MODULES.find(x=>x.name.toLowerCase().includes(q));
+  if(m){ show(m.id); return; }
+  document.getElementById('catSearch').value = q; catQuery = q; show('catalog'); renderCatalog();
+});
+
+// ===== Boot =====
+const init = (location.hash||'#catalog').slice(1);
+show(routes[init]?init:'catalog');
+renderCapFilters();
+renderCatalog();
+</script>
+</body>
+</html>
