@@ -422,8 +422,12 @@ function renderWorkflow(){
   return `<div class="wf"><div id="wfNodes">${wfNodesHTML()}</div><div class="wfadd"><input id="wfInput" placeholder="Название шага…"><button class="btn" id="wfAdd">+ Шаг</button></div></div>`;
 }
 function renderPlayground(){
-  const opts = MODELS.slice(0,12).map(m=>`<option>${m.name}</option>`).join('');
-  return `<div class="pg"><textarea id="pgPrompt" placeholder="Промпт…">Сгенерируй тёмную премиум-карточку для ${MODELS[0].name}</textarea><div class="controls"><select id="pgModel">${opts}</select><select id="pgTemp"><option>temp 0.2</option><option selected>temp 0.7</option><option>temp 1.0</option></select><button class="btn" id="pgRun">▶ Run</button></div><div class="out" id="pgOut">Готов. Нажми Run (демо, без реального API).</div></div>`;
+  const html = `<div class="pg"><textarea id="pgPrompt" placeholder="Промпт…">Расскажи в двух предложениях, что такое ArtWeb Studio.</textarea><div class="controls"><select id="pgModel"><option>загрузка…</option></select><select id="pgTemp"><option>temp 0.2</option><option selected>temp 0.7</option><option>temp 1.0</option></select><button class="btn" id="pgRun">▶ Run</button></div><div class="out" id="pgOut">Загрузка моделей…</div></div>`;
+  fetch('http://127.0.0.1:8890/api/models').then(r=>r.json()).then(list=>{
+    const sel = document.getElementById('pgModel');
+    if (sel) sel.innerHTML = list.map(m=>`<option value="${m.provider}|${m.id}">${m.name}</option>`).join('');
+  }).catch(()=>{ const sel = document.getElementById('pgModel'); if (sel) sel.innerHTML = '<option value="ollama|qwen2.5:14b">Qwen2.5 14B · Ollama</option>'; });
+  return html;
 }
 function renderMimo(){
   return `<div class="card" style="margin-bottom:14px"><h3 style="margin-top:0">Транспорт (заморожен)</h3><div class="kv"><b>GPT → MIMO</b><span class="mono">ntfy.sh/artweb-mimo-bus-20260814-8d3f2a761c4e</span></div><div class="kv"><b>MIMO → GPT</b><span class="mono">Yury197812/portable-os/master/MIMO/responses/</span></div><div class="kv"><b>Статус</b><span style="color:var(--emerald)">● CONNECTED — E2E подтверждён фактом</span></div></div><div class="card"><h3 style="margin-top:0">Последние сообщения</h3>` + MIMO_MSGS.map(m=>`<div class="kv"><b>${m.dir}</b><span>${m.txt}</span></div>`).join('') + `</div>`;
@@ -442,8 +446,17 @@ const RENDER = {skills:renderSkills, agents:renderAgents, workflow:renderWorkflo
 // ===== Delegated events (dynamic module content) =====
 document.addEventListener('click',e=>{
   if(e.target.id==='pgRun'){
-    const m=document.getElementById('pgModel').value; const mm=MODELS.find(x=>x.name===m);
-    document.getElementById('pgOut').textContent=`[демо] ${m} (${mm?mm.latency:500}ms, ${mm&&mm.free?'FREE':'$'+mm.cost+'/1M'})\n— готово. Реальный API — следующий шаг.\nВозможности: ${mm?mm.capabilities.join(', '):''}`;
+    const out=document.getElementById('pgOut');
+    const sel=document.getElementById('pgModel');
+    const [provider, model]=(sel.value||'ollama|qwen2.5:14b').split('|');
+    const prompt=document.getElementById('pgPrompt').value;
+    const temp=parseFloat(document.getElementById('pgTemp').value.replace('temp ',''));
+    out.textContent='… запрос к '+model+' …';
+    fetch('http://127.0.0.1:8890/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider,model,messages:[{role:'user',content:prompt}],temperature:temp})})
+      .then(r=>r.json()).then(j=>{
+        if(j.error) out.textContent='Ошибка: '+j.error;
+        else out.textContent=`[${j.provider} · ${j.model} · ${j.latency_ms}ms]\n\n`+j.content;
+      }).catch(err=>{ out.textContent='Ошибка соединения с прокси (запусти playground_proxy.py на :8890): '+err; });
   }
   if(e.target.id==='wfAdd'){
     const inp=document.getElementById('wfInput'); if(!inp.value.trim())return;
