@@ -1,0 +1,1473 @@
+[
+ {
+  "n": "context-management",
+  "cat": "general",
+  "t": [
+   "Context Management"
+  ],
+  "desc": "Предотвращение потери контекста в multi-step workflows",
+  "priority": "P0"
+ },
+ {
+  "n": "intelligence-radar",
+  "cat": "general",
+  "t": [
+   "Intelligence Radar"
+  ],
+  "desc": "Почасовой мониторинг сигналов",
+  "priority": "P0"
+ },
+ {
+  "n": "knowledge-forge",
+  "cat": "general",
+  "t": [
+   "Knowledge Forge"
+  ],
+  "desc": "Document-to-Skill компиляция",
+  "priority": "P0"
+ },
+ {
+  "n": "model-config",
+  "cat": "general",
+  "t": [],
+  "desc": "Конфигурация моделей с Grok + fallback",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-economics",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Economics"
+  ],
+  "desc": "Экономическое принятие решений: EscalationWorthinessGate + EconomicConsistencyScore",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-eval",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Evaluation"
+  ],
+  "desc": "Boundary enforcement, negative transfer",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-evidence",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Evidence"
+  ],
+  "desc": "Pre-evidence failure detection: Retrieved ≠ Inspected ≠ Used",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-handoff",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Handoff"
+  ],
+  "desc": "Master handoff prompt",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-orchestrator",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Orchestrator"
+  ],
+  "desc": "Единый оркестратор: Economics + Evidence + Context Management",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-pipeline",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Pipeline"
+  ],
+  "desc": "Основной pipeline с интеграцией всех компонентов",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-runtime",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Runtime"
+  ],
+  "desc": "Runtime-цепочка от задачи до обучения",
+  "priority": "P0"
+ },
+ {
+  "n": "oculus-security",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Security"
+  ],
+  "desc": "Provenance, authority, taint tracking",
+  "priority": "P0"
+ },
+ {
+  "n": "skilljack-security",
+  "cat": "general",
+  "t": [
+   "SkillJack Security Patch"
+  ],
+  "desc": "Защита от Persistent Poisoning атак",
+  "priority": "P0"
+ },
+ {
+  "n": "artweb-planes",
+  "cat": "artweb",
+  "t": [
+   "ArtWeb Planes"
+  ],
+  "desc": "Четыре плоскости ArtWeb",
+  "priority": "P1"
+ },
+ {
+  "n": "model-comparison-grok-gemini",
+  "cat": "general",
+  "t": [
+   "Grok vs Gemini — Model Comparison"
+  ],
+  "desc": "Сравнение Grok и Gemini моделей",
+  "priority": "P1"
+ },
+ {
+  "n": "oculus-memory",
+  "cat": "oculus",
+  "t": [
+   "OCULUS Memory"
+  ],
+  "desc": "Authority-preserving consolidation",
+  "priority": "P1"
+ },
+ {
+  "n": "skill-evolution",
+  "cat": "general",
+  "t": [
+   "Skill Evolution"
+  ],
+  "desc": "Lifecycle management",
+  "priority": "P1"
+ },
+ {
+  "n": "dashboard-guard",
+  "cat": "инфра",
+  "t": [
+   "dashboard-guard",
+   "dashboard guard",
+   "regression guard"
+  ],
+  "desc": "Regression-guard for the truthful Orchestra Dashboard. Captures a snapshot, diffs against last saved baseline (structural + visual). Returns clean/minor_changes/regression verdict with exit codes 0/1/2.",
+  "priority": "P0"
+ },
+ {
+  "n": "lean-verify",
+  "cat": "инфра",
+  "t": [
+   "lean-verify",
+   "lean verify",
+   "verify lean"
+  ],
+  "desc": "Formal verification of Lean 4 source code. Wraps D:\\4\\OUT\\MIMO\\lean_chain\\lean_verify.py. Returns structured result with rc + theorems + errors + lean_version.",
+  "priority": "P0"
+ },
+ {
+  "n": "ui-chain",
+  "cat": "инфра",
+  "t": [
+   "ui-chain",
+   "ui chain",
+   "multi-step ui"
+  ],
+  "desc": "Multi-step UI flow executor that runs all steps in a single Playwright process (singleton browser). Closes the per-process limitation of skill:ui-operator by holding browser state across steps. Returns per-step results + pass/fail verdict.",
+  "priority": "P0"
+ },
+ {
+  "n": "ui-operator",
+  "cat": "инфра",
+  "t": [
+   "ui-operator",
+   "ui operator",
+   "browser"
+  ],
+  "desc": "Playwright-backed browser actions via Python. Wraps D:\\4\\OUT\\MIMO\\ui_operator\\ui_operator.py. Supports open/goto/snapshot/click/type/fill/press/screenshot/pdf/eval/tab-new/tab-list/tab-select/tracing-start/tracing-stop/close.",
+  "priority": "P0"
+ },
+ {
+  "n": "device-adapter",
+  "cat": "инфра",
+  "t": [
+   "device-adapter",
+   "device adapter",
+   "android"
+  ],
+  "desc": "Android / device adapters layer. Detects installed adapter binaries (adb, scrcpy, ffmpeg, fastboot) and enumerates connected portable/Android devices. Wraps D:\\4\\OUT\\MIMO\\device_adapters\\device_adapters.py. Honest-by-design: missing tool or absent device returns ok=false with precise error, never fabricated success.",
+  "priority": "P1"
+ },
+ {
+  "n": "genome-diff",
+  "cat": "инфра",
+  "t": [
+   "genome-diff",
+   "genome diff",
+   "compare chromosomes"
+  ],
+  "desc": "Compare two Orchestra products (chromosomes) by gene overlap, returning shared/unique sets + jaccard/overlap_pct. Wraps D:\\4\\OUT\\MIMO\\genome\\genome_diff.py.",
+  "priority": "P1"
+ },
+ {
+  "n": "mtime",
+  "cat": "инфра",
+  "t": [
+   "mtime",
+   "timestamp",
+   "file age"
+  ],
+  "desc": "ISO-8601 timestamp of file's last modification (UTC). Wraps D:\\4\\OUT\\MIMO\\shared.py:mtime(). Used by orchestra_status.py for drift calculations.",
+  "priority": "P2"
+ },
+ {
+  "n": "now-iso",
+  "cat": "инфра",
+  "t": [
+   "now-iso",
+   "now iso",
+   "current"
+  ],
+  "desc": "Returns the current UTC time as ISO-8601 string with microseconds. Wraps D:\\4\\OUT\\MIMO\\shared.py:now_iso(). Used by every Orchestra product for timestamps.",
+  "priority": "P2"
+ },
+ {
+  "n": "sha16",
+  "cat": "инфра",
+  "t": [
+   "sha16",
+   "sha256",
+   "hash"
+  ],
+  "desc": "First-16-hex SHA-256 of a file (content fingerprint). Wraps D:\\4\\OUT\\MIMO\\shared.py:sha16(). Used by Worker Engine for artifact identity and Component Genome for chromosome hashing.",
+  "priority": "P2"
+ },
+ {
+  "n": "api-keys",
+  "cat": "general",
+  "t": [
+   "API Keys Management"
+  ],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "artweb-server",
+  "cat": "artweb",
+  "t": [],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "arxiv",
+  "cat": "general",
+  "t": [
+   "arXiv Research",
+   "analyze",
+   "skill"
+  ],
+  "desc": "Use this skill whenever the user wants to find, read, cite, track, download, or analyze academic papers on arXiv. That includes: searching papers by topic, author, category, or arXiv ID; fetching abstracts or full metadata; generating BibTeX citations; downloading PDFs; listing the latest submissions in a field (e.g. cs.AI daily digest); checking a paper's citation impact; finding who cites a paper, what it references, or related-paper recommendations. Trigger on mentions of 'arXiv', an arXiv ID (e.g. 2601.02780 or hep-th/0601001), an arxiv.org URL, 'paper search', 'literature review', 'find papers about X', 'cite this paper', or 'what's new in cs.LG'.",
+  "priority": "?"
+ },
+ {
+  "n": "auth-system",
+  "cat": "general",
+  "t": [
+   "Authentication System"
+  ],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "background-process-handoff",
+  "cat": "general",
+  "t": [],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "batch-cleanup",
+  "cat": "batch",
+  "t": [
+   "Batch Cleanup",
+   "generate",
+   "batch"
+  ],
+  "desc": "Batch cleanup of duplicate files/directories. Use when finding and removing duplicates by pattern, deduplicating naming, or cleaning up generated artifacts. Triggers on 'cleanup', 'deduplicate', 'remove duplicates', 'clean up duplicates', 'очистить дубликаты'.",
+  "priority": "?"
+ },
+ {
+  "n": "batch-export-engine",
+  "cat": "batch",
+  "t": [
+   "Batch Export Engine",
+   "publish",
+   "engine"
+  ],
+  "desc": "Engine for batch exporting content to multiple formats. Use when exporting articles to HTML/PDF/DOCX, converting documents in bulk, or publishing content to multiple platforms. Triggers on 'batch export', 'движок экспорта', 'mass export', 'пакетный экспорт'.",
+  "priority": "?"
+ },
+ {
+  "n": "batch-habr-exporter",
+  "cat": "batch",
+  "t": [
+   "Batch Habr Exporter",
+   "publish",
+   "batch"
+  ],
+  "desc": "Batch export articles to Habr with parallel processing. Use when publishing multiple articles to Habr, converting markdown to HTML in bulk, or exporting content for Russian tech blog. Triggers on 'habr batch', 'пакетный экспорт хабр', 'batch publish', 'массовая публикация'.",
+  "priority": "?"
+ },
+ {
+  "n": "batch-processor",
+  "cat": "batch",
+  "t": [
+   "Batch Processor",
+   "build",
+   "transform"
+  ],
+  "desc": "Batch processing toolkit: file operations, text transformations, data pipelines. Use when processing multiple files, transforming data in bulk, or building automated workflows. Triggers on 'batch process', 'пакетная обработка', 'mass transform', 'групповая обработка'.",
+  "priority": "?"
+ },
+ {
+  "n": "batch-processor-v2",
+  "cat": "batch",
+  "t": [
+   "Batch Processor V2",
+   "build",
+   "transform"
+  ],
+  "desc": "Advanced batch processing with parallel execution and error recovery. Use when processing large file sets, transforming data in bulk, or building robust batch workflows. Triggers on 'batch processor v2', 'продвинутая пакетная обработка', 'parallel batch', 'параллельная обработка'.",
+  "priority": "?"
+ },
+ {
+  "n": "claude-tool-agent",
+  "cat": "general",
+  "t": [],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "compose-next",
+  "cat": "general",
+  "t": [
+   "Compose Next",
+   "design",
+   "invoke"
+  ],
+  "desc": "Use for multi-step feature work, bug fixes, or refactors where requirements need to settle, a feature document should carry design + tasks + delivery evidence, and the change deserves independent review before merge. Only start this when the user invoked `/compose-next` or asked for this workflow by name — never pick it up on your own, because the grill and spec phases interrupt a user who just wanted the change made. Not for one-shot edits, single-file tweaks, or answering questions — those need no orchestration overhead.",
+  "priority": "?"
+ },
+ {
+  "n": "data-analytics",
+  "cat": "general",
+  "t": [
+   "Data Analytics",
+   "design",
+   "invoke"
+  ],
+  "desc": "Use this skill for quantitative product or business analysis: data quality checks, metric diagnostics, KPI design and reporting, dashboards, analytical reports, charts, notebooks, market sizing, semantic layers, and evidence-backed recommendations. Also use it whenever Data Analytics is explicitly invoked.",
+  "priority": "?"
+ },
+ {
+  "n": "deep-research",
+  "cat": "general",
+  "t": [
+   "Deep Research",
+   "build",
+   "research"
+  ],
+  "desc": "Deep research on any topic using parallel sub-agents and built-in tools only (WebSearch/WebFetch + free APIs, no keys). Use when the user asks for a thorough multi-source investigation with a cited report — \"深度调研X\"、\"deep research\"、\"帮我全面研究一下\"、\"多方求证\"、\"写一份调研报告\". NOT for simple lookups (single WebSearch suffices) and NOT for academic literature surveys (use auto-research skill instead). Works in both Build and Compose modes.",
+  "priority": "?"
+ },
+ {
+  "n": "deep-research",
+  "cat": "general",
+  "t": [
+   "Deep Research",
+   "research",
+   "topic"
+  ],
+  "desc": "Deep research on any topic using parallel sub-agents and built-in tools only (WebSearch/WebFetch + free APIs, no keys). Use when the user asks for a thorough multi-source investigation with a cited report — \"深度调研X\"、\"deep research\"、\"帮我全面研究一下\"、\"多方求证\"、\"写一份调研报告\". NOT for simple lookups (single WebSearch suffices) and NOT for academic literature surveys (use auto-research skill instead).",
+  "priority": "?"
+ },
+ {
+  "n": "design-blueprint",
+  "cat": "general",
+  "t": [
+   "Design Blueprint",
+   "design",
+   "generate"
+  ],
+  "desc": "Produces a structured design specification (DESIGN.md + structural layout + Decision Trace) before any visual artifact is built — the \"blueprint\" phase that keeps AI-generated design from feeling templated. Use this skill whenever the user asks to design, plan, mock up, or restructure any visual output — PPT / slides / decks, landing pages, dashboards, posters, charts, infographics, marketing pages, UI components, prototypes, illustrations — even when they only say \"make a slide about X\" or \"help me put together a page for Y\". Also trigger on requests to critique or improve an existing design when the user wants a principled, spec-driven pass rather than just cosmetic tweaks. Do NOT trigger when the user has already handed you a completed DESIGN.md and only wants code implementation (defer to frontend-design or implement directly).",
+  "priority": "?"
+ },
+ {
+  "n": "docx-official",
+  "cat": "general",
+  "t": [
+   "DOCX Skill",
+   "transform",
+   "skill"
+  ],
+  "desc": "Use this skill whenever a Microsoft Word (.docx) file is being produced, opened, transformed, or read. That includes: drafting reports, letters, contracts, RFPs, technical documents, or any long-form written deliverable; extracting text or structure from an existing Word file; filling a Word template with values; converting Word to PDF or plain text; splitting or merging documents; inspecting styles, headings, sections, tables, images, comments, or tracked changes. Trigger on mentions of 'Word doc', 'DOCX', 'Office document', a filename ending in .docx, or requests like 'turn this into a Word report'.",
+  "priority": "?"
+ },
+ {
+  "n": "drive-mimo",
+  "cat": "general",
+  "t": [
+   "Drive MiMo",
+   "build",
+   "validate"
+  ],
+  "desc": "Use when you need to programmatically drive another MiMoCode (mimo) process — supports both headless `mimo run` with JSON events and interactive TUI via tmux for full terminal interaction testing. Covers driving either an installed `mimo` binary or a dev build launched from source with `bun dev` (for debugging mimocode itself). Reach for it to script, test, or automate a separate mimo instance and validate its behavior from parseable evidence.",
+  "priority": "?"
+ },
+ {
+  "n": "evolve",
+  "cat": "general",
+  "t": [
+   "Evolve — Total Self-Modification",
+   "modify",
+   "aspect"
+  ],
+  "desc": "Use when you want to modify ANY aspect of yourself — your capabilities (new/overridden tools), your behavior (hooks that intercept every tool call, LLM request, session and subagent lifecycle), your knowledge (skills that persist across sessions), your orchestration (workflow scripts), or even your UI (TUI panels, commands, dialogs). Nothing about you is fixed: every layer from what tools you expose, to how you react to events, to what the user sees on screen is rewritable through files in .mimocode/. Use proactively — repeated manual sequence 3+ times, repeated user correction, durable project knowledge, or any \"I wish I could...\" moment is a trigger to evolve.",
+  "priority": "?"
+ },
+ {
+  "n": "exact-sciences",
+  "cat": "general",
+  "t": [
+   "Exact Sciences Exercise Systems",
+   "exact",
+   "sciences"
+  ],
+  "desc": "Exact sciences exercise systems: mathematics, physics, chemistry, biology, astronomy, informatics, logic. Use when working with exercise banks, creating learning cycles, or generating problem sets for STEM subjects. Triggers on 'exact sciences', 'exercise bank', '100 cycles', 'упражнения', 'точные науки'.",
+  "priority": "?"
+ },
+ {
+  "n": "exercise-bank-generator",
+  "cat": "general",
+  "t": [
+   "Exercise Bank Generator",
+   "build",
+   "generate"
+  ],
+  "desc": "Generate exercise banks with 100 cycles × 5 problems. Use when creating problem sets, generating practice exercises, or building learning systems for STEM subjects. Triggers on 'exercise bank', 'генератор упражнений', '100 cycles', 'банк заданий'.",
+  "priority": "?"
+ },
+ {
+  "n": "exercise-generator",
+  "cat": "general",
+  "t": [
+   "Exercise Generator Skill",
+   "generate",
+   "thousands"
+  ],
+  "desc": "Generate thousands of educational exercises across all exact sciences using parallel Python engine",
+  "priority": "?"
+ },
+ {
+  "n": "formula-analyzer",
+  "cat": "general",
+  "t": [
+   "Formula Analyzer",
+   "analyze",
+   "extract"
+  ],
+  "desc": "Extract and analyze mathematical formulas from scraped content. Use when processing LaTeX formulas, mathematical content, or scientific articles. Trigger on \"formula\", \"LaTeX\", \"math\", \"equation\", \"theorem\".",
+  "priority": "?"
+ },
+ {
+  "n": "frontend-design",
+  "cat": "general",
+  "t": [
+   "Frontend Design",
+   "build",
+   "design"
+  ],
+  "desc": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Use whenever the task produces or modifies anything a user will see rendered — websites, landing pages, web apps, dashboards, React/HTML/Vue components, artifacts with visual output, style overhauls, or \"make this look better\" requests — even if the user never says the word \"design\". Covers aesthetic direction, typography, environment constraints (fonts, Tailwind, assets), and when to converge on convention instead of chasing distinctiveness. Works in both Build and Compose modes.",
+  "priority": "?"
+ },
+ {
+  "n": "frontend-design",
+  "cat": "general",
+  "t": [
+   "Frontend Design",
+   "build",
+   "design"
+  ],
+  "desc": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Use whenever the task produces or modifies anything a user will see rendered — websites, landing pages, web apps, dashboards, React/HTML/Vue components, artifacts with visual output, style overhauls, or \"make this look better\" requests — even if the user never says the word \"design\". Covers aesthetic direction, typography, environment constraints (fonts, Tailwind, assets), and when to converge on convention instead of chasing distinctiveness.",
+  "priority": "?"
+ },
+ {
+  "n": "github-auth",
+  "cat": "general",
+  "t": [
+   "GitHub Authentication Skill"
+  ],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "github-interagent-bridge",
+  "cat": "general",
+  "t": [
+   "GitHub Inter-Agent Bridge",
+   "reliable",
+   "github"
+  ],
+  "desc": "Reliable GitHub handoff protocol for two or more AI agents working on the same project with separate code and exchange repositories, immutable evidence, ACK/cursor semantics, duplicate suppression, conflict recovery, and ZIP fallback.",
+  "priority": "?"
+ },
+ {
+  "n": "grok-build",
+  "cat": "general",
+  "t": [
+   "Grok Build CLI",
+   "build",
+   "invoke"
+  ],
+  "desc": "Reference and workflow guidance for the Grok Build CLI (`grok`), including interactive and headless runs, authentication, sessions, worktrees, permissions, sandboxing, MCP servers, plugins, inspection, updates, and automation output. Invoke only when the user explicitly requests the `grok-build` skill, explicitly asks to use Grok Build CLI, or an already-selected workflow requires Grok Build; do not invoke for general coding, generic shell tasks, or other agent CLIs.",
+  "priority": "?"
+ },
+ {
+  "n": "habr-html-export",
+  "cat": "habr",
+  "t": [
+   "Habr HTML Export",
+   "publish",
+   "export"
+  ],
+  "desc": "Export articles to Habr-compatible HTML format. Use when converting markdown articles to HTML for Habr publishing, preparing first chapters for upload, or formatting scientific articles for Russian tech blog. Triggers on 'habr', 'export to habr', 'upload to habr', 'выгрузить на хабр'.",
+  "priority": "?"
+ },
+ {
+  "n": "habr-publishing-automation",
+  "cat": "habr",
+  "t": [
+   "Habr Publishing Automation",
+   "publish",
+   "automate"
+  ],
+  "desc": "Automate Habr article publishing: batch export, format conversion, tag generation, SEO optimization. Use when publishing multiple articles to Habr, converting markdown to Habr format, or optimizing articles for Russian tech blog. Triggers on 'habr publish', 'автопубликация', 'batch export habr', 'выгрузка на хабр'.",
+  "priority": "?"
+ },
+ {
+  "n": "habr-seo-optimizer",
+  "cat": "habr",
+  "t": [
+   "Habr SEO Optimizer",
+   "optimize",
+   "articles"
+  ],
+  "desc": "Optimize articles for Habr SEO: titles, descriptions, tags, keywords. Use when improving article visibility, generating meta tags, or optimizing content for Russian tech blog. Triggers on 'habr seo', 'оптимизация хабр', 'meta tags', 'seo optimization'.",
+  "priority": "?"
+ },
+ {
+  "n": "hermes-openclaw-integration",
+  "cat": "general",
+  "t": [
+   "Hermes & OpenClaw Integration"
+  ],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "html-to-video-pipeline",
+  "cat": "general",
+  "t": [
+   "build",
+   "compare",
+   "reliable"
+  ],
+  "desc": "Reliable HTML-to-MP4 rendering via headless browser recording (Playwright/Puppeteer) + ffmpeg — the ordering, gotchas, and verification steps you MUST get right or the output silently rots. Trigger whenever the user is building or debugging any pipeline that turns an HTML/CSS/JS page (single-file, multi-composition, GSAP-driven, or `@keyframes`-driven) into a video file, including headless recording, screen capture of a web page, deterministic frame-by-frame capture, multi-scene concatenation, or engine-mixed video output. Also trigger when the symptom sounds like: font swap flashing in the opening frames (FOUT), the first few seconds of the video are frozen/dead, animations play during page load and get truncated, concatenated segments produce a video whose duration is wildly wrong (e.g., 8s becomes 35s), `file://` loaded HTML fails to fetch its sub-scenes, the exported video is soft/blurry compared to the browser, or playback stutters/looks choppy despite passing a high `-r` fps to ffmpeg. Use even for one-off scripts — the failure modes here are subtle enough that starting from scratch usually reintroduces them.",
+  "priority": "?"
+ },
+ {
+  "n": "imagegen",
+  "cat": "general",
+  "t": [
+   "Image Generation Skill",
+   "build",
+   "transform"
+  ],
+  "desc": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+  "priority": "?"
+ },
+ {
+  "n": "l1-processing",
+  "cat": "general",
+  "t": [],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "learn-everything",
+  "cat": "general",
+  "t": [
+   "Learn Everything",
+   "uploaded",
+   "paper"
+  ],
+  "desc": "Turn an uploaded PDF, paper, book chapter, document, URL, or user-provided topic into a structured, interactive learning course. Use when the user wants to learn, study, understand, master, review, or practice a subject chapter by chapter; asks for a tutorial or curriculum from source material; wants exercises, quizzes, answer grading, hints, spaced review, or a final assessment; or says \"teach me this\", \"learn this PDF\", \"分章节教学\", \"带我学\", or similar; or returns to continue a previous course (\"continue my course\", \"接着上次学\") or supplies a saved course-state file or state block. Adapt explanations and practice to the learner's level, preserve page or section references for documents, and teach incrementally rather than dumping all content at once.",
+  "priority": "?"
+ },
+ {
+  "n": "llm-architectures",
+  "cat": "general",
+  "t": [
+   "LLM Architectures (2025-2026)",
+   "transform",
+   "design"
+  ],
+  "desc": "Reference for LLM architecture decisions in 2025-2026. Use when designing, evaluating, or choosing model architectures — covers hybrid SSM+Attention, MoE, attention optimizations, context extension, and inference efficiency. Trigger on \"architecture\", \"transformer alternatives\", \"Mamba\", \"MoE\", \"FlashAttention\", \"context window\", \"speculative decoding\", \"quantization\".",
+  "priority": "?"
+ },
+ {
+  "n": "lmstudio-architecture",
+  "cat": "general",
+  "t": [
+   "LM Studio Architecture"
+  ],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "lmstudio-tool-agent",
+  "cat": "general",
+  "t": [],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "local-agent",
+  "cat": "general",
+  "t": [
+   "Local Agent System"
+  ],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "loop",
+  "cat": "general",
+  "t": [
+   "/loop — schedule a recurring prompt",
+   "invoke",
+   "register"
+  ],
+  "desc": "Schedule a prompt to fire on a fixed cadence (recurring loop). Use when the user asks to \"run X every N minutes/hours/days\", \"loop X\", \"babysit Y\", \"be proactive about Y every N\", or invokes `/loop` directly. Parses `[interval] <prompt>`, picks a clean cron expression, registers the job via the `cron` tool, and executes the prompt once immediately so the user sees activity without waiting for the first cron tick.",
+  "priority": "?"
+ },
+ {
+  "n": "markdown-to-habr-converter",
+  "cat": "habr",
+  "t": [
+   "Markdown to Habr Converter",
+   "publish",
+   "convert"
+  ],
+  "desc": "Convert markdown articles to Habr-compatible HTML with Russian styling. Use when preparing articles for Habr publishing, converting markdown to HTML format, or styling content for Russian tech blog. Triggers on 'habr converter', 'конвертер хабр', 'md to habr', 'markdown to habr'.",
+  "priority": "?"
+ },
+ {
+  "n": "mathematical-knowledge",
+  "cat": "general",
+  "t": [
+   "Mathematical Knowledge Base",
+   "mathematical",
+   "knowledge"
+  ],
+  "desc": "Mathematical knowledge base extracted from algocosmos.com. Use when working with Millennium Prize Problems, mathematical formulas, or scientific content. Contains formulas, theorems, and proofs for P vs NP, Hodge, Riemann, Yang-Mills, Navier-Stokes, and BSD.",
+  "priority": "?"
+ },
+ {
+  "n": "memory-search",
+  "cat": "general",
+  "t": [
+   "execute",
+   "query",
+   "trajectory"
+  ],
+  "desc": "Query the raw trajectory SQLite database directly when the built-in memory and history tools are insufficient. Use when you need structured analysis across sessions: finding repeated errors, grouping tool calls by pattern, verifying what was actually executed, or locating specific past commands/decisions that text search cannot surface. Provides the database schema, ready-to-use SQL query templates, and per-goal strategies.",
+  "priority": "?"
+ },
+ {
+  "n": "mimocode-docs",
+  "cat": "general",
+  "t": [
+   "MiMoCode",
+   "build",
+   "whenever"
+  ],
+  "desc": "Use whenever the user asks about MiMoCode itself: features, TUI or CLI commands, keybindings, terminal compatibility, rendering glitches, TUI lag, SSH or remote rendering, agent modes (build / plan / compose) and how to switch between them, configuration, file locations, providers, models, authentication, or custom OpenAI-compatible or Anthropic-compatible API endpoints. Especially trigger when a prompt supplies or asks to configure a base URL/baseURL, API key/apiKey, model name or ID, provider, Anthropic Messages API, or global/project mimocode.json/jsonc, or when the user asks how to enter or leave plan mode. Use this skill to inspect existing config safely, make minimal changes, and verify them without guessing schema fields or model capabilities.",
+  "priority": "?"
+ },
+ {
+  "n": "model-training",
+  "cat": "general",
+  "t": [
+   "Model Training (2025-2026)",
+   "reference",
+   "model"
+  ],
+  "desc": "Reference for model training across all scales (2025-2026). Use when training, fine-tuning, or aligning language models — covers small on-device models, medium consumer-GPU training, large distributed training, frontier-scale, optimizers (Muon, ScheduleFree+), data curation, and fine-tuning (LoRA, GRPO, DPO). Trigger on \"training\", \"fine-tuning\", \"LoRA\", \"GRPO\", \"optimizer\", \"distillation\", \"pre-training\", \"alignment\".",
+  "priority": "?"
+ },
+ {
+  "n": "model-training-system",
+  "cat": "general",
+  "t": [
+   "Model Training System (2025-2026)",
+   "deploy",
+   "complete"
+  ],
+  "desc": "Complete model training system (2025-2026) — from small on-device models to frontier scale. Covers architecture selection, optimizers (Muon, ScheduleFree+), data curation (CQF, Nemotron-CC), fine-tuning (LoRA, GRPO, DPO), distributed training (FSDP, DualPipe), and cost optimization. Use when training, fine-tuning, aligning, or deploying language models at any scale. Trigger on \"training\", \"fine-tuning\", \"LoRA\", \"GRPO\", \"optimizer\", \"distillation\", \"pre-training\", \"alignment\", \"FSDP\", \"quantization\".",
+  "priority": "?"
+ },
+ {
+  "n": "modern-python-toolchain",
+  "cat": "general",
+  "t": [
+   "Modern Python Toolchain",
+   "modern",
+   "python"
+  ],
+  "desc": "Modern Python project setup with uv, ruff, and pyright. Use when initializing a new Python project, configuring the Python environment, setting up linting/formatting, or when a project needs uv (the fast Python package manager). Trigger on: 'set up Python', 'new Python project', 'configure uv', 'install uv', 'ruff', 'pyright', 'Python linting', 'Python formatting', or when a task requires Python and no pyproject.toml exists yet.",
+  "priority": "?"
+ },
+ {
+  "n": "openai-docs",
+  "cat": "general",
+  "t": [
+   "OpenAI Docs",
+   "codex",
+   "models"
+  ],
+  "desc": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+  "priority": "?"
+ },
+ {
+  "n": "optimization-iterations",
+  "cat": "general",
+  "t": [
+   "32 Итерации Оптимизации"
+  ],
+  "desc": "32 итерации оптимизации для максимальной скорости генерации",
+  "priority": "?"
+ },
+ {
+  "n": "pdf-official",
+  "cat": "general",
+  "t": [
+   "PDF skill",
+   "scan",
+   "transform"
+  ],
+  "desc": "Use this skill whenever a PDF file is being produced, opened, transformed, filled, or read. That includes: extracting text or tables from an existing PDF; combining, carving, rotating, cropping, or watermarking pages; composing a fresh PDF (report, invoice, certificate); filling AcroForm fields or overlaying text onto a non-fillable scanned form; encrypting or unlocking a PDF; running OCR over a scanned document; rendering pages to PNG/JPEG for visual analysis. Trigger on mentions of 'PDF', a filename ending in .pdf, requests like 'turn this into a PDF report', or references to AcroForm / form fields.",
+  "priority": "?"
+ },
+ {
+  "n": "pipeline-orchestrator",
+  "cat": "general",
+  "t": [
+   "Pipeline Orchestrator",
+   "build",
+   "orchestrate"
+  ],
+  "desc": "Orchestrate multi-step pipelines with parallel execution. Use when building automated workflows, coordinating multiple processing steps, or managing complex data pipelines. Triggers on 'pipeline', 'конвейер', 'оркестратор', 'workflow automation'.",
+  "priority": "?"
+ },
+ {
+  "n": "playwright",
+  "cat": "general",
+  "t": [
+   "Playwright CLI Skill",
+   "requires",
+   "automating"
+  ],
+  "desc": "Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging) via `playwright-cli` or the bundled wrapper script.",
+  "priority": "?"
+ },
+ {
+  "n": "plugin-creator",
+  "cat": "general",
+  "t": [
+   "Plugin Creator",
+   "generate",
+   "create"
+  ],
+  "desc": "Create and scaffold plugin directories for Codex with a required `.codex-plugin/plugin.json`, optional plugin folders/files, valid manifest defaults, and personal-marketplace entries by default. Use when Codex needs to create a new personal plugin, add optional plugin structure, generate or update marketplace entries for plugin ordering and availability metadata, or update an existing local plugin during development with the CLI-driven cachebuster and reinstall flow.",
+  "priority": "?"
+ },
+ {
+  "n": "pptx-official",
+  "cat": "general",
+  "t": [
+   "PPTX Skill",
+   "transform",
+   "skill"
+  ],
+  "desc": "Use this skill whenever a Microsoft PowerPoint (.pptx) file is being produced, opened, transformed, or read. That includes: authoring slide decks, pitch decks, executive readouts, training material, or any presentation deliverable; extracting text or structure from an existing .pptx; filling a .pptx template with values; converting a deck to PDF or images; splitting or merging decks; inspecting slides, layouts, masters, tables, images, charts, speaker notes, or comments. Trigger on words like 'deck', 'slides', 'presentation', 'pitch deck', 'keynote' (when a .pptx is expected as output), or any filename ending in .pptx. Do NOT trigger when the primary deliverable is a Word document, spreadsheet, PDF report, HTML site, or Google Slides API call, even if presentation-shaped content appears along the way.",
+  "priority": "?"
+ },
+ {
+  "n": "product-design",
+  "cat": "general",
+  "t": [
+   "Product Design",
+   "design",
+   "invoke"
+  ],
+  "desc": "Use this skill when Product Design is explicitly invoked or the main task is product design exploration, UX research, flow auditing or critique, visual ideation, cloning a live product surface, implementing a selected visual target, design QA, saved design context, or sharing a prototype.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-acceleration",
+  "cat": "recursive",
+  "t": [
+   "Recursive Acceleration Protocol",
+   "build",
+   "writing"
+  ],
+  "desc": "Use when writing code, training models, or building anything — always check if a speed block (Rust/Go/C/ASM) can replace Python for hot paths. Apply this recursively to accelerate everything.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-acceleration-pack",
+  "cat": "recursive",
+  "t": [
+   "Recursive Acceleration Pack",
+   "build",
+   "recursive"
+  ],
+  "desc": "Pack of recursive acceleration tools: speed blocks, batch processors, pipeline automators. Use when optimizing repetitive tasks, creating acceleration scripts, or building automated pipelines. Triggers on 'acceleration pack', 'speed blocks', 'пакет ускорения', 'рекурсивное ускорение'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-acceleration-pattern",
+  "cat": "recursive",
+  "t": [
+   "Recursive Acceleration Pattern",
+   "build",
+   "writing"
+  ],
+  "desc": "Use when writing code, training models, or building anything — always check if a speed block (Rust/Go/C/ASM) can replace Python for hot paths. Apply this recursively to accelerate everything.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-accelerator",
+  "cat": "recursive",
+  "t": [
+   "Recursive Accelerator",
+   "build",
+   "accelerate"
+  ],
+  "desc": "Accelerate development recursively through skill chains and speed blocks. Use when optimizing workflows, creating acceleration patterns, or building self-improving development processes. Triggers on 'recursive accelerator', 'рекурсивный ускоритель', 'self-improving', 'автоускорение'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-chain-executor",
+  "cat": "recursive",
+  "t": [
+   "Recursive Chain Executor",
+   "build",
+   "execute"
+  ],
+  "desc": "Execute recursive skill chains with self-improvement. Use when running chains that modify themselves, building adaptive workflows, or creating self-evolving systems. Triggers on 'recursive executor', 'рекурсивный исполнитель', 'self-modifying chain', 'адаптивная цепочка'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-development-accumulator",
+  "cat": "recursive",
+  "t": [
+   "Recursive Development Accumulator",
+   "build",
+   "accumulate"
+  ],
+  "desc": "Accumulate development progress recursively. Use when tracking skill development, accumulating improvements, or building self-improving systems. Triggers on 'accumulator', 'аккумулятор', 'progress tracker', 'отслеживание прогресса'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-development-pipeline",
+  "cat": "recursive",
+  "t": [
+   "Recursive Development Pipeline",
+   "build",
+   "recursive"
+  ],
+  "desc": "Build recursive development pipelines that improve themselves. Use when creating self-improving workflows, building adaptive development processes, or constructing evolutionary pipelines. Triggers on 'development pipeline', 'пайплайн разработки', 'recursive pipeline', 'рекурсивный пайплайн'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-accumulator",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Accumulator",
+   "build",
+   "accumulate"
+  ],
+  "desc": "Accumulate skill improvements recursively. Use when tracking skill evolution, accumulating optimization results, or building self-improving skill systems. Triggers on 'skill accumulator', 'аккумулятор навыков', 'recursive accumulation', 'рекурсивная аккумуляция'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-analyzer",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Analyzer",
+   "analyze",
+   "skill"
+  ],
+  "desc": "Analyze skill execution patterns recursively. Use when examining skill behavior over iterations, identifying improvement patterns, or assessing skill evolution. Triggers on 'skill analyzer', 'анализатор навыков', 'recursive analysis', 'рекурсивный анализ'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-chain",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Chain",
+   "build",
+   "chain"
+  ],
+  "desc": "Chain skills recursively for accelerated development. Use when building skill chains, creating recursive development patterns, or accelerating skill creation through self-reference. Triggers on 'skill chain', 'цепочка навыков', 'recursive skills', 'рекурсивные навыки'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-deployment",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Deployment",
+   "deploy",
+   "skills"
+  ],
+  "desc": "Deploy skills recursively with self-improvement. Use when deploying adaptive skill systems, managing recursive deployments, or orchestrating self-evolving skill releases. Triggers on 'skill deployment', 'деплой навыков', 'recursive deployment', 'рекурсивный деплой'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-designer",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Designer",
+   "build",
+   "design"
+  ],
+  "desc": "Design skills recursively from patterns. Use when creating skill variants, designing skill families, or building adaptive skill structures. Triggers on 'skill designer', 'дизайнер навыков', 'recursive design', 'рекурсивный дизайн'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-evolver",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Evolver",
+   "build",
+   "evolve"
+  ],
+  "desc": "Evolve skills recursively through mutation and selection. Use when improving skills through evolution, applying genetic algorithms to skill optimization, or building self-evolving skill systems. Triggers on 'skill evolver', 'эволюция навыков', 'recursive evolution', 'рекурсивная эволюция'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-executor",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Executor",
+   "build",
+   "execute"
+  ],
+  "desc": "Execute skills recursively with self-improvement. Use when running adaptive skill chains, building self-evolving workflows, or creating recursive development loops. Triggers on 'recursive executor', 'рекурсивный исполнитель', 'self-improving executor', 'самосовершенствующийся исполнитель'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-generator",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Generator",
+   "build",
+   "generate"
+  ],
+  "desc": "Generate skills recursively from existing skills. Use when creating new skills from patterns, auto-generating skill variants, or building skill families. Triggers on 'skill generator', 'генератор навыков', 'recursive generation', 'рекурсивная генерация'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-learner",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Learner",
+   "build",
+   "learn"
+  ],
+  "desc": "Learn skill patterns recursively from execution data. Use when building adaptive skill systems, learning skill configurations, or creating self-improving skill learners. Triggers on 'skill learner', 'обучение навыков', 'recursive learning', 'рекурсивное обучение'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-monitoring",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Monitoring",
+   "monitor",
+   "skill"
+  ],
+  "desc": "Monitor skill execution recursively over iterations. Use when tracking skill evolution, monitoring recursive improvement, or observing skill behavior over time. Triggers on 'skill monitoring', 'мониторинг навыков', 'recursive monitoring', 'рекурсивный мониторинг'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-optimizer",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Optimizer",
+   "build",
+   "optimize"
+  ],
+  "desc": "Optimize skills recursively through self-improvement. Use when improving skill performance, evolving skill quality, or building self-optimizing skill systems. Triggers on 'skill optimizer', 'оптимизатор навыков', 'recursive optimization', 'рекурсивная оптимизация'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-optimizer-v2",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Optimizer V2",
+   "build",
+   "advanced"
+  ],
+  "desc": "Advanced recursive skill optimization with machine learning. Use when optimizing skills through ML, applying advanced optimization algorithms, or building self-learning skill systems. Triggers on 'skill optimizer v2', 'оптимизатор навыков v2', 'recursive optimization v2', 'рекурсивная оптимизация v2'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-predictor",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Predictor",
+   "predict",
+   "skill"
+  ],
+  "desc": "Predict skill evolution recursively. Use when forecasting skill improvement, predicting optimization results, or estimating future skill performance. Triggers on 'skill predictor', 'предсказатель навыков', 'recursive prediction', 'рекурсивное предсказание'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-simulator",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Simulator",
+   "simulate",
+   "recursive"
+  ],
+  "desc": "Simulate recursive skill execution and evolution. Use when testing skill evolution, simulating recursive improvement, or predicting skill behavior over iterations. Triggers on 'skill simulator', 'симулятор навыков', 'recursive simulation', 'рекурсивная симуляция'.",
+  "priority": "?"
+ },
+ {
+  "n": "recursive-skill-testing",
+  "cat": "recursive",
+  "t": [
+   "Recursive Skill Testing",
+   "skills",
+   "recursively"
+  ],
+  "desc": "Test skills recursively through evolution. Use when validating skill improvements, testing recursive optimization, or verifying skill evolution. Triggers on 'skill testing', 'тестирование навыков', 'recursive testing', 'рекурсивное тестирование'.",
+  "priority": "?"
+ },
+ {
+  "n": "research-paper-writing",
+  "cat": "general",
+  "t": [
+   "Research Paper Writing",
+   "build",
+   "compile"
+  ],
+  "desc": "Write, rewrite, and polish academic papers (ML/CV/NLP style). Use when the user drafts or revises Abstract, Introduction, Related Work, Method, Experiments, or Conclusion; asks \"does this flow / 这段通顺吗 / polish this paragraph\"; turns bullet points or a Chinese draft into publication-quality English; runs a pre-submission self-review or reviewer-style critique; fixes paper figures/tables/LaTeX formatting; or compiles/converts the paper to PDF (LaTeX build, 编译PDF, 转成PDF). Trigger on mentions of paper, draft, camera-ready, rebuttal-facing revision, CVPR/ICCV/NeurIPS/ICLR/ACL-style venues, or .tex files being edited for a paper.",
+  "priority": "?"
+ },
+ {
+  "n": "review-agent",
+  "cat": "general",
+  "t": [
+   "Review Agent",
+   "perform",
+   "read-only"
+  ],
+  "desc": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+  "priority": "?"
+ },
+ {
+  "n": "sales",
+  "cat": "general",
+  "t": [
+   "Sales",
+   "invoke",
+   "skill"
+  ],
+  "desc": "Use this skill whenever Sales is explicitly invoked or the task involves customer meeting preparation, call follow-up, account prioritization, account signals, deal strategy, business cases, competitive briefs, forecasts, customer evidence, rep coaching, company research, CRM context, or company and contact enrichment.",
+  "priority": "?"
+ },
+ {
+  "n": "site-analyzer",
+  "cat": "general",
+  "t": [
+   "Site Analyzer",
+   "analyze",
+   "website"
+  ],
+  "desc": "Analyze website structure and extract skills from scraped data. Use when analyzing a website, extracting patterns, or creating reusable skills from site structure. Trigger on \"analyze site\", \"extract skills\", \"site structure\", \"content analysis\".",
+  "priority": "?"
+ },
+ {
+  "n": "skill-atom-generator",
+  "cat": "инфра",
+  "t": [
+   "Skill Atom Generator",
+   "generate",
+   "skill"
+  ],
+  "desc": "Generate skill atoms from YAML definitions. Use when creating skill atomization from specifications, decomposing skills into atoms/quarks/subquarks, or generating hierarchical skill structures. Triggers on 'atom generator', 'skill atoms', 'декомпозиция навыков', 'генерация атомов'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-chain-executor",
+  "cat": "general",
+  "t": [
+   "Skill Chain Executor",
+   "execute",
+   "skill"
+  ],
+  "desc": "Execute skill chains with parallel processing. Use when running multi-skill workflows, executing skill pipelines, or coordinating skill execution. Triggers on 'skill executor', 'исполнитель цепочки', 'run chain', 'выполнение цепочки'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-chain-optimizer",
+  "cat": "general",
+  "t": [
+   "Skill Chain Optimizer",
+   "optimize",
+   "skill"
+  ],
+  "desc": "Optimize skill chains for maximum performance. Use when analyzing skill bottlenecks, parallelizing independent steps, or improving chain throughput. Triggers on 'chain optimizer', 'оптимизатор цепочки', 'optimize chain', 'оптимизация цепочки'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-chain-visualizer",
+  "cat": "general",
+  "t": [
+   "Skill Chain Visualizer",
+   "visualize",
+   "skill"
+  ],
+  "desc": "Visualize skill chains and execution flows. Use when rendering skill dependencies, creating execution diagrams, or exploring skill relationships. Triggers on 'chain visualizer', 'визуализатор цепочки', 'visualize chain', 'визуализация цепочки'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-creator",
+  "cat": "general",
+  "t": [
+   "Skill Creator",
+   "build",
+   "guide"
+  ],
+  "desc": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends MiMoCode's capabilities with specialized knowledge, workflows, or tool integrations. Works in both Build and Compose modes.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-creator",
+  "cat": "general",
+  "t": [
+   "Skill Creator",
+   "build",
+   "validate"
+  ],
+  "desc": "Interactive guide for creating, reviewing, and improving agent skills (SKILL.md folders). Use when the user wants to build a new skill ('create a skill', 'make a skill for X', 'write a SKILL.md', 'turn this workflow into a skill'), review or improve an existing skill, fix a skill that never triggers or triggers too often, or validate a skill folder before sharing it. Do NOT use for general prompt writing, MCP server development, or editing arbitrary markdown files.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-creator",
+  "cat": "general",
+  "t": [
+   "Skill Creator",
+   "guide",
+   "creating"
+  ],
+  "desc": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-installer",
+  "cat": "general",
+  "t": [
+   "Skill Installer",
+   "install",
+   "codex"
+  ],
+  "desc": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-accumulator",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Accumulator",
+   "build",
+   "accumulate"
+  ],
+  "desc": "Accumulate skill mesh metrics and improvements. Use when tracking mesh performance, accumulating optimization results, or building mesh evolution history. Triggers on 'mesh accumulator', 'аккумулятор сети', 'accumulate mesh', 'аккумуляция сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-analyzer",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Analyzer",
+   "analyze",
+   "skill"
+  ],
+  "desc": "Analyze skill mesh structure and performance. Use when examining mesh properties, identifying bottlenecks, or assessing mesh quality. Triggers on 'mesh analyzer', 'анализатор сети', 'analyze mesh', 'анализ сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-deployment",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Deployment",
+   "deploy",
+   "skill"
+  ],
+  "desc": "Deploy skill meshes to production. Use when deploying mesh configurations, managing mesh releases, or orchestrating mesh rollouts. Triggers on 'mesh deployment', 'деплой сети', 'deploy mesh', 'деплой сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-designer",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Designer",
+   "build",
+   "design"
+  ],
+  "desc": "Design skill meshes from requirements. Use when creating mesh structures, designing skill networks, or building dependency graphs. Triggers on 'mesh designer', 'дизайнер сети', 'design mesh', 'дизайн сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-evolver",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Evolver",
+   "evolve",
+   "skill"
+  ],
+  "desc": "Evolve skill meshes through selection and mutation. Use when optimizing mesh structure, evolving skill networks, or applying genetic algorithms to skill optimization. Triggers on 'mesh evolver', 'эволюция сети', 'evolve mesh', 'эволюция сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-executor",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Executor",
+   "execute",
+   "skill"
+  ],
+  "desc": "Execute skill meshes with dependency resolution. Use when running complex skill networks, resolving skill dependencies, or executing parallel skill workflows. Triggers on 'mesh executor', 'исполнитель сети', 'execute mesh', 'выполнение сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-generator",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Generator",
+   "build",
+   "generate"
+  ],
+  "desc": "Generate skill meshes with cross-references and dependencies. Use when creating interconnected skill networks, mapping skill relationships, or building skill dependency graphs. Triggers on 'skill mesh', 'сетка навыков', 'cross-reference', 'зависимости навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-learner",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Learner",
+   "build",
+   "learn"
+  ],
+  "desc": "Learn optimal skill mesh configurations from data. Use when training mesh optimizers, learning mesh patterns, or building adaptive mesh systems. Triggers on 'mesh learner', 'обучение сети', 'learn mesh', 'обучение сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-logging",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Logging",
+   "skill",
+   "execution"
+  ],
+  "desc": "Log skill mesh execution and behavior. Use when recording mesh activity, logging skill execution, or capturing mesh events. Triggers on 'mesh logging', 'логирование сети', 'log mesh', 'логирование сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-monitor",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Monitor",
+   "monitor",
+   "skill"
+  ],
+  "desc": "Monitor skill mesh execution and health. Use when tracking skill performance, monitoring dependency chains, or observing mesh behavior. Triggers on 'mesh monitor', 'монитор сети', 'monitor mesh', 'мониторинг сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-monitoring",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Monitoring",
+   "monitor",
+   "skill"
+  ],
+  "desc": "Monitor skill mesh health and performance. Use when tracking mesh metrics, monitoring skill execution, or observing mesh behavior. Triggers on 'mesh monitoring', 'мониторинг сети', 'monitor mesh', 'мониторинг сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-optimizer",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Optimizer",
+   "optimize",
+   "skill"
+  ],
+  "desc": "Optimize skill meshes for minimal dependencies and maximum parallelism. Use when analyzing skill networks, reducing dependency chains, or optimizing skill graphs. Triggers on 'mesh optimizer', 'оптимизатор сети', 'optimize mesh', 'оптимизация сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-optimizer-v2",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Optimizer V2",
+   "advanced",
+   "skill"
+  ],
+  "desc": "Advanced skill mesh optimization with parallel processing. Use when optimizing complex meshes, parallelizing mesh execution, or improving mesh performance. Triggers on 'mesh optimizer v2', 'оптимизатор сети v2', 'optimize mesh v2', 'оптимизация сети v2'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-predictor",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Predictor",
+   "predict",
+   "skill"
+  ],
+  "desc": "Predict skill mesh performance and evolution. Use when forecasting mesh behavior, predicting optimization results, or estimating future performance. Triggers on 'mesh predictor', 'предсказатель сети', 'predict mesh', 'предсказание сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-simulator",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Simulator",
+   "simulate",
+   "skill"
+  ],
+  "desc": "Simulate skill mesh execution and behavior. Use when testing mesh configurations, simulating execution flows, or predicting mesh performance. Triggers on 'mesh simulator', 'симулятор сети', 'simulate mesh', 'симуляция сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-testing",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Testing",
+   "skill",
+   "execution"
+  ],
+  "desc": "Test skill mesh execution and behavior. Use when validating mesh functionality, testing error handling, or verifying mesh performance. Triggers on 'mesh testing', 'тестирование сети', 'test mesh', 'тестирование сети навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-mesh-visualizer",
+  "cat": "mesh",
+  "t": [
+   "Skill Mesh Visualizer",
+   "visualize",
+   "skill"
+  ],
+  "desc": "Visualize skill meshes and dependency graphs. Use when rendering skill networks, creating dependency diagrams, or exploring skill relationships visually. Triggers on 'skill visualization', 'визуализация навыков', 'dependency graph', 'граф зависимостей'.",
+  "priority": "?"
+ },
+ {
+  "n": "skill-validator",
+  "cat": "инфра",
+  "t": [
+   "Skill Validator",
+   "validate",
+   "skill"
+  ],
+  "desc": "Validate skill structure, frontmatter, and content. Use when checking skill quality, verifying SKILL.md format, or testing skill completeness. Triggers on 'skill validator', 'валидатор навыков', 'validate skill', 'проверка навыков'.",
+  "priority": "?"
+ },
+ {
+  "n": "speed-block-lookup",
+  "cat": "general",
+  "t": [
+   "Speed Block Lookup",
+   "writing",
+   "existing"
+  ],
+  "desc": "Use when writing any code — look up existing speed blocks before writing new Python. Check speed_blocks/ and ml_blocks/ for ready-made components.",
+  "priority": "?"
+ },
+ {
+  "n": "super-research",
+  "cat": "general",
+  "t": [
+   "Autonomous Research",
+   "analyze",
+   "compare"
+  ],
+  "desc": "Autonomous research skill for open-ended, high-volume research work — an agent left running for a while (minutes to overnight) that produces honest, comparable, auditable evidence instead of a single one-shot answer. Covers eight modes selected by the request: (1) experiment loop — iteratively edit code, run, measure a metric, keep or revert (baseline → hypothesize → run → keep/revert loop; use for \"optimize X\", \"tune hyperparameters\", \"run experiments overnight\", \"autonomously improve this model\", \"hill-climb a metric\", \"自动实验\"); (2) topic survey / 主题调研 — collect and synthesize sources on a question (use for \"survey the literature on X\", \"research topic Y\", \"调研 Z\", \"literature review\", \"deep research\", \"what's the state of the art in\", \"gather evidence about\"); (3) quantitative analysis / 量化分析 — reproducible, hypothesis-first data analysis with schema audit, effect sizes, and caveats (use for \"analyze this dataset\", \"量化分析\", \"test whether X correlates with Y\", \"compute the effect of\", \"investigate this data\"); (4) benchmark comparison / 对比评测 — pick among N candidates under a fair, fixed matrix (use for \"compare X vs Y\", \"which library/model/prompt is best for us\", \"benchmark these options\", \"选型\", \"对比评测\"); (5) root-cause investigation / 根因排查 — hypothesis-driven, two-way-reversal debugging of regressions, flakes, and perf drops (use for \"why is X broken\", \"root cause this\", \"debug the regression\", \"why is it flaky\", \"排查\", \"定位\", \"复盘\"); (6) ablation study / 消融实验 — leave-one-out attribution of a system's components against a measured noise floor (use for \"ablate X\", \"which parts of Y matter\", \"attribution study\", \"消融实验\", \"is component Z pulling its weight\"); (7) paper reproduction / 复现论文 — implement a paper's method as a working repo with logged ambiguities (use for \"复现这篇论文\", \"paper to code\", \"implement this method\", \"reproduce the main table of X\"); (8) paper writing + citation audit / 写论文 & 引用校验 — draft or polish an academic paper and verify every citation against real API records (use for \"write a paper on X\", \"polish this draft\", \"查引用\", \"citation check\", \"校验引用\", \"detect fabricated references\"). Ships with a zero-external-dependency toolbox (built-in tools + free scholarly APIs — arXiv, Semantic Scholar, OpenAlex, Crossref — no API keys). Trigger this skill whenever the user wants research work with volume + discipline — even without the words \"research\" or \"experiment\" — and pick the mode from the request.",
+  "priority": "?"
+ },
+ {
+  "n": "token-doi-management",
+  "cat": "general",
+  "t": [],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "unified-book-generator",
+  "cat": "general",
+  "t": [
+   "Unified Book Generator Skill"
+  ],
+  "desc": "Генерация единой книги со всеми направлениями наук",
+  "priority": "?"
+ },
+ {
+  "n": "windows-server-lifecycle",
+  "cat": "general",
+  "t": [],
+  "desc": "",
+  "priority": "?"
+ },
+ {
+  "n": "xlsx-official",
+  "cat": "general",
+  "t": [
+   "XLSX Skill",
+   "build",
+   "spreadsheet"
+  ],
+  "desc": "Spreadsheet toolkit. Reach for it whenever the artifact on either side of the conversation is a workbook file — .xlsx, .xlsm, .xltx, .csv, .tsv — and the user wants that artifact produced, changed, cleaned, or read. Typical triggers: 'build me a model', 'update this sheet', 'add a column', 'compute the totals as formulas', 'sanity-check this xlsx', 'export sheet 2 to CSV', 'render the workbook as PDF', 'the spreadsheet in ~/Downloads is a mess, fix it'. Applies equally to financial models, ops reports, data cleanups, and template fills. Skip it when the workbook is only source material and the real output is a Word doc, an HTML page, a Python script that runs standalone, a Google Sheets integration, or an ingestion pipeline into a database — in those cases the spreadsheet is a means, not the deliverable.",
+  "priority": "?"
+ },
+ {
+  "n": "yaml-to-skill",
+  "cat": "инфра",
+  "t": [
+   "YAML to SKILL.md Generator",
+   "generate",
+   "skill"
+  ],
+  "desc": "Generate SKILL.md files from YAML atom definitions. Use when converting YAML skill definitions to markdown SKILL.md format, bulk-creating skills from specs, or generating skill documentation. Triggers on 'generate skill', 'yaml to skill', 'create SKILL.md', 'создать навык'.",
+  "priority": "?"
+ }
+]
