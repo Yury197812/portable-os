@@ -93,6 +93,50 @@
   button{font-family:var(--body)}
   :focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
   @media (max-width:900px){.shell{grid-template-columns:1fr}.sidebar{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border)}.rl{grid-template-columns:1fr}}
+  /* module cards */
+  .wrap2{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .scard,.acard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:7px}
+  .scard .nm,.acard .nm{font-family:var(--head);font-weight:600;font-size:14px;color:var(--text)}
+  .scard .cat,.acard .role{font-size:10.5px;color:var(--accent2);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+  .scard .trig,.acard .meta{font-size:11.5px;color:var(--text3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;background:var(--panel2);color:var(--text2);font-size:10.5px;margin:2px 4px 0 0;border:1px solid var(--border)}
+  /* kanban */
+  .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .kcol{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;min-height:220px}
+  .kcol h3{margin:0 0 10px;font-family:var(--head);font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px}
+  .task{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:10px;margin-bottom:8px;font-size:12.5px}
+  .task .t{font-weight:600;color:var(--text)}
+  .task .d{color:var(--text3);font-size:11.5px;margin-top:4px}
+  .task .p{margin-top:6px;font-size:10.5px;color:var(--accent2);font-weight:700}
+  /* workflow */
+  .wf{display:flex;flex-direction:column;max-width:560px}
+  .wfnode{display:flex;align-items:center;gap:10px}
+  .wfnode .box{flex:1;background:var(--panel);border:1px solid var(--accent);border-radius:10px;padding:11px 14px;font-weight:600;font-size:13.5px;display:flex;align-items:center;gap:9px}
+  .wfnode .box .idx{font-family:var(--head);color:var(--accent2);font-weight:700}
+  .wfnode .x{background:none;border:1px solid var(--border);color:var(--text3);border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:13px}
+  .wfnode .x:hover{color:var(--rose);border-color:var(--rose)}
+  .wfline{width:2px;height:16px;background:var(--accent2);margin-left:19px;opacity:.5}
+  .wfadd{display:flex;gap:8px;margin-top:14px}
+  .wfadd input{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:9px;color:var(--text);padding:9px 12px;font-size:13px}
+  /* observatory */
+  .statgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px}
+  .stat .v{font-family:var(--head);font-size:24px;font-weight:700;color:var(--text)}
+  .stat .l{font-size:11.5px;color:var(--text3)}
+  .chart{display:flex;flex-direction:column;gap:7px;max-width:520px}
+  .chart .row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2)}
+  .chart .row .lb{width:92px;text-align:right;flex-shrink:0}
+  .chart .row .bar{height:10px;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  /* playground */
+  .pg textarea{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);padding:12px;font-family:var(--body);font-size:13px;resize:vertical;min-height:120px}
+  .pg .controls{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap;align-items:center}
+  .pg select{background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:8px 12px;font-family:var(--body);font-size:13px;max-width:280px}
+  .pg .out{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;min-height:80px;color:var(--text2);font-size:13px;white-space:pre-wrap}
+  .btn{background:var(--accent);border:1px solid var(--accent);color:#fff;border-radius:9px;padding:9px 16px;font-weight:600;font-size:13px;cursor:pointer}
+  .btn:hover{background:var(--accent2)}
+  .kv{display:grid;grid-template-columns:170px 1fr;gap:6px 12px;font-size:12.5px;margin-bottom:8px}
+  .kv b{color:var(--text2);font-weight:600}
+  .mono{font-family:Consolas,monospace;font-size:11.5px;color:var(--teal)}
 </style>
 </head>
 <body>
@@ -111,7 +155,7 @@
     <main class="main">
       <div class="view" id="view-catalog"><div class="pagehead"><h1>Model Compare</h1><p>Каталог моделей с icon-first возможностями и динамическим routing. FREE — подмножество, tool_use — first-class.</p></div><div class="toolbar"><div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="catSearch" placeholder="Поиск по имени/провайдеру…"></div></div><div class="chips" id="capFilters"></div><div class="grid" id="catGrid" style="margin-top:16px"></div></div>
       <div class="view" id="view-routing"><div class="pagehead"><h1>Routing Lab</h1><p>Динамический выбор модели по 8 осям: quality / latency / cost / context / modality / availability / privacy / locality / tool-compat.</p></div><div class="rl"><div class="card"><h3>Веса осей</h3><div id="routingSliders"></div></div><div class="card"><h3>Топ-5 по текущим весам</h3><div class="rank" id="routingRank"></div></div></div></div>
-      <div class="view" id="view-placeholder"></div>
+      <div class="view" id="view-dynamic"></div>
     </main>
   </div>
 </div>
@@ -210,9 +254,10 @@ function show(id){
   else if(id==='routing'){ document.getElementById('view-routing').classList.add('active'); renderRouting(); }
   else {
     const m = routes[id];
-    const ph = document.getElementById('view-placeholder');
-    ph.innerHTML = `<div class="pagehead"><h1>${m.name}</h1><p>${m.desc}</p></div><div class="placehold"><h3>${m.name}</h3><p>Модуль готовится — каркас и навигация подключены.</p></div>`;
-    ph.classList.add('active');
+    const dyn = document.getElementById('view-dynamic');
+    const r = RENDER[id];
+    dyn.innerHTML = `<div class="pagehead"><h1>${m.name}</h1><p>${m.desc}</p></div>` + (r ? r() : '<div class="placehold"><h3>Готовится</h3><p>Модуль в очереди.</p></div>');
+    dyn.classList.add('active');
   }
   crumb.textContent = routes[id].name;
   renderSidebar();
@@ -305,6 +350,108 @@ document.getElementById('cmdInput').addEventListener('input',e=>{
   const m = MODULES.find(x=>x.name.toLowerCase().includes(q));
   if(m){ show(m.id); return; }
   document.getElementById('catSearch').value = q; catQuery = q; show('catalog'); renderCatalog();
+});
+
+// ===== Module seed data =====
+const SKILLS = [
+  {n:'frontend-design',cat:'дизайн',t:['сайт','лендинг','UI']},
+  {n:'product-design',cat:'дизайн',t:['продукт','UX','прототип']},
+  {n:'design-blueprint',cat:'дизайн',t:['спека','DESIGN.md','макет']},
+  {n:'imagegen',cat:'дизайн',t:['изображение','иллюстрация']},
+  {n:'data-analytics',cat:'данные',t:['метрики','KPI','дашборд']},
+  {n:'xlsx-official',cat:'офис',t:['xlsx','таблица','csv']},
+  {n:'docx-official',cat:'офис',t:['docx','отчёт','word']},
+  {n:'pptx-official',cat:'офис',t:['презентация','слайды']},
+  {n:'pdf-official',cat:'офис',t:['pdf','OCR','выписка']},
+  {n:'arxiv',cat:'research',t:['arxiv','статья','цитата']},
+  {n:'deep-research',cat:'research',t:['исследование','источники']},
+  {n:'super-research',cat:'research',t:['эксперимент','абляция']},
+  {n:'lean-verify',cat:'инфра',t:['lean','теорема','proof']},
+  {n:'genome-diff',cat:'инфра',t:['геном','хромосома']},
+  {n:'device-adapter',cat:'инфра',t:['adb','android']},
+  {n:'ui-operator',cat:'инфра',t:['браузер','click','shot']},
+  {n:'ui-chain',cat:'инфра',t:['многошаговый','flow']},
+  {n:'dashboard-guard',cat:'инфра',t:['регрессия','снимок']},
+  {n:'now-iso',cat:'инфра',t:['время','ISO']},
+  {n:'sha16',cat:'инфра',t:['хеш','sha256']},
+  {n:'mtime',cat:'инфра',t:['mtime','дата']},
+  {n:'playwright',cat:'инфра',t:['браузер','автоматизация']},
+  {n:'skill-creator',cat:'мета',t:['новый скилл']},
+  {n:'memory-search',cat:'мета',t:['траектория','SQL']}
+];
+const AGENTS = [
+  {n:'Web Designer',r:'дизайн сайтов',model:'GPT-4o mini',skills:'frontend-design, product-design, imagegen',caps:['vision','tool_use']},
+  {n:'Data Analyst',r:'аналитика',model:'DeepSeek-V3',skills:'data-analytics, xlsx-official',caps:['code','tool_use']},
+  {n:'Code Reviewer',r:'ревью кода',model:'Claude 3.5 Haiku',skills:'lean-verify',caps:['code','tool_use','safety']},
+  {n:'Researcher',r:'исследования',model:'GPT-4o mini',skills:'arxiv, deep-research, super-research',caps:['web','reasoning','tool_use']},
+  {n:'UI Tester',r:'автотесты UI',model:'Gemini 1.5 Flash',skills:'ui-operator, ui-chain, playwright',caps:['vision','tool_use']},
+  {n:'Doc Writer',r:'документы',model:'Claude 3.5 Opus',skills:'docx-official, pptx-official',caps:['tool_use','reasoning']}
+];
+const TASKS = [
+  {c:'done',t:'Связь GPT↔MIMO (E2E)',d:'ntfy → portable-os/MIMO/responses'},
+  {c:'done',t:'App-shell каркас',d:'9 модулей, icon-first UI, hash-роутер'},
+  {c:'done',t:'Каталог 400 моделей',d:'models.seed.json + schema + генератор'},
+  {c:'done',t:'capability-icons.svg',d:'спрайт 10 способностей'},
+  {c:'in',t:'router.py',d:'8-осевой routing (запушен)'},
+  {c:'in',t:'Наполнение 7 модулей',d:'Skills/Agents/Workflow/Playground/MIMO/Observatory/Task Board'},
+  {c:'back',t:'Извлечение скиллов',d:'в .mimocode/skills/ из задач'},
+  {c:'back',t:'Playground live API',d:'подключить реальный провайдер'},
+  {c:'back',t:'Observatory лайв-метрики',d:'подключить orchestra_status.py'},
+  {c:'back',t:'Agents Studio CRUD',d:'сохранение агентов'}
+];
+let WF_STEPS = ['Ingest','Clean','Analyze','Report'];
+const MIMO_MSGS = [
+  {dir:'→ GPT', txt:'ACK_MIMO_20260814.md — E2E закрыт'},
+  {dir:'→ GPT', txt:'STATUS_ARTWEB_ORCHESTRA_20260814.md'},
+  {dir:'→ GPT', txt:'RESULT: app-shell + catalog(400) + router.py'},
+  {dir:'← GPT', txt:'GPT-MIMO-ARTWEB-ORCHESTRA-LIVE-20260814-001 (7 приоритетов)'}
+];
+
+// ===== Module renderers =====
+function tags(arr){return arr.map(t=>`<span class="tag">${t}</span>`).join('');}
+function renderSkills(){
+  return `<div class="wrap2">` + SKILLS.map(s=>`<div class="scard"><span class="cat">${s.cat}</span><div class="nm">${s.n}</div><div>${tags(s.t)}</div></div>`).join('') + `</div>`;
+}
+function renderAgents(){
+  return `<div class="wrap2">` + AGENTS.map(a=>`<div class="acard"><span class="role">${a.r}</span><div class="nm">${a.n}</div><div class="meta">модель: <b>${a.model}</b></div><div>${tags(a.skills.split(', '))}</div><div class="caps">${a.caps.map(capChip).join('')}</div></div>`).join('') + `</div>`;
+}
+function wfNodesHTML(){
+  return WF_STEPS.map((s,i)=>`<div class="wfnode"><div class="box"><span class="idx">${String(i+1).padStart(2,'0')}</span>${s}</div><button class="x" data-rm="${i}">×</button></div>${i<WF_STEPS.length-1?'<div class="wfline"></div>':''}`).join('');
+}
+function renderWorkflow(){
+  return `<div class="wf"><div id="wfNodes">${wfNodesHTML()}</div><div class="wfadd"><input id="wfInput" placeholder="Название шага…"><button class="btn" id="wfAdd">+ Шаг</button></div></div>`;
+}
+function renderPlayground(){
+  const opts = MODELS.slice(0,12).map(m=>`<option>${m.name}</option>`).join('');
+  return `<div class="pg"><textarea id="pgPrompt" placeholder="Промпт…">Сгенерируй тёмную премиум-карточку для ${MODELS[0].name}</textarea><div class="controls"><select id="pgModel">${opts}</select><select id="pgTemp"><option>temp 0.2</option><option selected>temp 0.7</option><option>temp 1.0</option></select><button class="btn" id="pgRun">▶ Run</button></div><div class="out" id="pgOut">Готов. Нажми Run (демо, без реального API).</div></div>`;
+}
+function renderMimo(){
+  return `<div class="card" style="margin-bottom:14px"><h3 style="margin-top:0">Транспорт (заморожен)</h3><div class="kv"><b>GPT → MIMO</b><span class="mono">ntfy.sh/artweb-mimo-bus-20260814-8d3f2a761c4e</span></div><div class="kv"><b>MIMO → GPT</b><span class="mono">Yury197812/portable-os/master/MIMO/responses/</span></div><div class="kv"><b>Статус</b><span style="color:var(--emerald)">● CONNECTED — E2E подтверждён фактом</span></div></div><div class="card"><h3 style="margin-top:0">Последние сообщения</h3>` + MIMO_MSGS.map(m=>`<div class="kv"><b>${m.dir}</b><span>${m.txt}</span></div>`).join('') + `</div>`;
+}
+function renderObservatory(){
+  const counts={}; MODELS.forEach(m=>{counts[m.provider]=(counts[m.provider]||0)+1;});
+  const bars=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([p,c])=>`<div class="row"><span class="lb">${p}</span><div class="bar" style="width:${Math.round(c/MODELS.length*280)}px"></div><span>${c}</span></div>`).join('');
+  return `<div class="statgrid"><div class="stat"><div class="v">${MODELS.length}</div><div class="l">моделей</div></div><div class="stat"><div class="v">${SKILLS.length}</div><div class="l">скиллов</div></div><div class="stat"><div class="v">${AGENTS.length}</div><div class="l">агентов</div></div><div class="stat"><div class="v">9</div><div class="l">модулей</div></div><div class="stat"><div class="v">${TASKS.filter(t=>t.c==='done').length}/${TASKS.length}</div><div class="l">задач готово</div></div></div><h3 style="font-family:var(--head)">Модели по провайдерам</h3><div class="chart">${bars}</div>`;
+}
+function renderTaskboard(){
+  const col=c=>TASKS.filter(t=>t.c===c).map(t=>`<div class="task"><div class="t">${t.t}</div><div class="d">${t.d}</div><div class="p">${t.c==='done'?'DONE':t.c==='in'?'IN PROGRESS':'BACKLOG'}</div></div>`).join('')||'<div style="color:var(--text3);font-size:12px">пусто</div>';
+  return `<div class="kanban"><div class="kcol"><h3>Backlog</h3>${col('back')}</div><div class="kcol"><h3>In Progress</h3>${col('in')}</div><div class="kcol"><h3>Done</h3>${col('done')}</div></div>`;
+}
+const RENDER = {skills:renderSkills, agents:renderAgents, workflow:renderWorkflow, playground:renderPlayground, mimo:renderMimo, observatory:renderObservatory, taskboard:renderTaskboard};
+
+// ===== Delegated events (dynamic module content) =====
+document.addEventListener('click',e=>{
+  if(e.target.id==='pgRun'){
+    const m=document.getElementById('pgModel').value; const mm=MODELS.find(x=>x.name===m);
+    document.getElementById('pgOut').textContent=`[демо] ${m} (${mm?mm.latency:500}ms, ${mm&&mm.free?'FREE':'$'+mm.cost+'/1M'})\n— готово. Реальный API — следующий шаг.\nВозможности: ${mm?mm.capabilities.join(', '):''}`;
+  }
+  if(e.target.id==='wfAdd'){
+    const inp=document.getElementById('wfInput'); if(!inp.value.trim())return;
+    WF_STEPS.push(inp.value.trim()); inp.value=''; document.getElementById('wfNodes').innerHTML=wfNodesHTML();
+  }
+  if(e.target.classList&&e.target.classList.contains('x')&&e.target.dataset.rm){
+    WF_STEPS.splice(+e.target.dataset.rm,1); document.getElementById('wfNodes').innerHTML=wfNodesHTML();
+  }
 });
 
 // ===== Boot =====
