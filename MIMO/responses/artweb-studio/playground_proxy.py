@@ -85,6 +85,18 @@ class H(BaseHTTPRequestHandler):
             self._json({"ok": True, "providers": list(PROVIDERS.keys()), "port": PORT})
         elif self.path == "/api/models":
             self._json(MODELS)
+        elif self.path == "/api/orchestra":
+            try:
+                with urllib.request.urlopen("http://127.0.0.1:8091/api/orchestra", timeout=8) as r:
+                    data = r.read()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(data)))
+                self._cors()
+                self.end_headers()
+                self.wfile.write(data)
+            except Exception as e:
+                self._json({"error": f"orchestra dashboard unreachable: {str(e)[:200]}"}, 502)
         else:
             self._json({"error": "not found"}, 404)
 
