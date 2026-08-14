@@ -433,9 +433,38 @@ function renderMimo(){
   return `<div class="card" style="margin-bottom:14px"><h3 style="margin-top:0">Транспорт (заморожен)</h3><div class="kv"><b>GPT → MIMO</b><span class="mono">ntfy.sh/artweb-mimo-bus-20260814-8d3f2a761c4e</span></div><div class="kv"><b>MIMO → GPT</b><span class="mono">Yury197812/portable-os/master/MIMO/responses/</span></div><div class="kv"><b>Статус</b><span style="color:var(--emerald)">● CONNECTED — E2E подтверждён фактом</span></div></div><div class="card"><h3 style="margin-top:0">Последние сообщения</h3>` + MIMO_MSGS.map(m=>`<div class="kv"><b>${m.dir}</b><span>${m.txt}</span></div>`).join('') + `</div>`;
 }
 function renderObservatory(){
-  const counts={}; MODELS.forEach(m=>{counts[m.provider]=(counts[m.provider]||0)+1;});
-  const bars=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([p,c])=>`<div class="row"><span class="lb">${p}</span><div class="bar" style="width:${Math.round(c/MODELS.length*280)}px"></div><span>${c}</span></div>`).join('');
-  return `<div class="statgrid"><div class="stat"><div class="v">${MODELS.length}</div><div class="l">моделей</div></div><div class="stat"><div class="v">${SKILLS.length}</div><div class="l">скиллов</div></div><div class="stat"><div class="v">${AGENTS.length}</div><div class="l">агентов</div></div><div class="stat"><div class="v">9</div><div class="l">модулей</div></div><div class="stat"><div class="v">${TASKS.filter(t=>t.c==='done').length}/${TASKS.length}</div><div class="l">задач готово</div></div></div><h3 style="font-family:var(--head)">Модели по провайдерам</h3><div class="chart">${bars}</div>`;
+  const html = `<div id="obs"><div class="placehold"><h3>Загрузка метрик оркестра…</h3><p>http://127.0.0.1:8890/api/orchestra</p></div></div>`;
+  fetch('http://127.0.0.1:8890/api/orchestra').then(r=>r.json()).then(s=>{
+    const el=document.getElementById('obs'); if(!el) return;
+    if(s.error){ el.innerHTML=`<div class="placehold"><h3>Дашборд оркестра недоступен</h3><p>${s.error}</p></div>`; return; }
+    el.innerHTML = obsHTML(s);
+  }).catch(e=>{ const el=document.getElementById('obs'); if(el) el.innerHTML=`<div class="placehold"><h3>Дашборд оркестра недоступен</h3><p>${e}</p></div>`; });
+  return html;
+}
+function obsHTML(s){
+  const t=s.tracks||{}; const d=s.drift_check||{};
+  const stat=(v,l)=>`<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+  const rows=Object.entries(t).map(([k,v])=>{
+    const dr=d.drift_minutes_per_track?.[k];
+    const drs=dr==null?'—':(dr>120?Math.round(dr)+'м':dr.toFixed(1)+'м');
+    const w=Math.min(200,(dr||0));
+    return `<div class="row"><span class="lb">${k}</span><div class="bar" style="width:${w}px;background:${dr>120?'var(--rose)':'var(--accent)'}"></div><span style="color:${dr>120?'var(--rose)':'var(--text2)'}">${drs}</span></div>`;
+  }).join('');
+  const g=t.T4_atom_graph||{}, lean=t.T5_lean_chain||{}, sup=t.T1_supervisor||{};
+  const statgrid = `<div class="statgrid">`
+    + stat(s.results_for_gpt?.length??0,'RESULT для GPT')
+    + stat(t.T3_registry?.total_workers??0,'воркеров в реестре')
+    + stat(t.T2_inventory?.total_capabilities??0,'capabilities')
+    + stat(`${g.atoms||0}+${g.quarks||0}`,'атомы + кварки')
+    + stat(`${lean.claims_proved||0}/${lean.claims_total||0}`,'Lean доказано')
+    + stat(sup.seen_count??0,'событий supervisor')
+    + `</div>`;
+  const verdict = d.verdict||'—';
+  const vc = verdict==='stale'?'var(--rose)':'var(--emerald)';
+  return statgrid
+    + `<h3 style="font-family:var(--head)">Дрифт треков (мин, порог 120)</h3><div class="chart">${rows}</div>`
+    + `<div class="kv" style="margin-top:14px"><b>Вердикт</b><span style="color:${vc}">${verdict} · бакет ${d.bucket_minutes} мин</span></div>`
+    + `<div class="kv"><b>Обновлено</b><span class="mono">${(s.generated_at||'').slice(0,19)}Z</span></div>`;
 }
 function renderTaskboard(){
   const col=c=>TASKS.filter(t=>t.c===c).map(t=>`<div class="task"><div class="t">${t.t}</div><div class="d">${t.d}</div><div class="p">${t.c==='done'?'DONE':t.c==='in'?'IN PROGRESS':'BACKLOG'}</div></div>`).join('')||'<div style="color:var(--text3);font-size:12px">пусто</div>';
