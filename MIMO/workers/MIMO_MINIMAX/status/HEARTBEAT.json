@@ -6,8 +6,12 @@
     "model":  "MiniMax",
     "engine":  "MIMO",
     "capabilities_verified":  [
-                                  "failure_rate"
+                                  "latency_ms",
+                                  "failure_rate",
+                                  "code",
+                                  "quality",
+                                  "long_context"
                               ],
     "last_error":  null,
-    "timestamp":  "2026-08-15T17:39:14.2649565Z"
+    "timestamp":  "2026-08-15T17:55:14.2104400Z"
 }
