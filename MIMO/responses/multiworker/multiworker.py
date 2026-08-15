@@ -394,3 +394,174 @@ def broker_route(task: dict, available_workers: list[str]) -> dict:
         # pick first available (routing policy refinement owned by Control Tower)
         return {"mode": mode, "route": "exclusive", "worker": available_workers[0] if available_workers else None}
     return {"mode": mode, "route": "unknown_mode"}
+
+
+# ---------------------------------------------------------------------------
+# Inbox / outbox protocol (Control Tower <-> workers)
+# ---------------------------------------------------------------------------
+
+def post_task_to_inbox(worker_id: str, task: dict) -> dict:
+    """Control Tower posts a task envelope to a worker's inbox."""
+    if worker_id not in WORKERS:
+        return {"ok": False, "error": f"unknown worker {worker_id}"}
+    ensure_worker_dirs(worker_id)
+    env = make_task_envelope(**task)
+    env["worker_id"] = worker_id
+    env["recipient"] = worker_id
+    env["status"] = "QUEUED"
+    inbox = _subdirs(worker_id)["inbox"]
+    f = _file_lock(inbox / ".lock")
+    try:
+        _atomic_write(inbox / f"{env['task_id']}.json", json.dumps(env, ensure_ascii=False, indent=2))
+    finally:
+        _file_unlock(f)
+    return {"ok": True, "task": env}
+
+
+def read_inbox(worker_id: str) -> list[dict]:
+    """Worker reads its queued inbox tasks (QUEUED only)."""
+    inbox = _subdirs(worker_id)["inbox"]
+    if not inbox.exists():
+        return []
+    out = []
+    for p in sorted(inbox.glob("*.json")):
+        if p.name == ".lock":
+            continue
+        try:
+            env = json.loads(p.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        if env.get("status") == "QUEUED":
+            out.append(env)
+    return out
+
+
+def write_result(worker_id: str, task_id: str, result: dict, status: str = "SUCCEEDED") -> dict:
+    """Worker writes its result to its outbox. Fenced via the task's token:
+    the result carries the token that must match what the Control Tower issued."""
+    outbox = _subdirs(worker_id)["outbox"]
+    outbox.mkdir(parents=True, exist_ok=True)
+    rec = {
+        "worker_id": worker_id,
+        "task_id": task_id,
+        "status": status,
+        "result": result,
+        "completed_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    f = _file_lock(outbox / ".lock")
+    try:
+        _atomic_write(outbox / f"{task_id}.json", json.dumps(rec, ensure_ascii=False, indent=2))
+    finally:
+        _file_unlock(f)
+    return {"ok": True, "worker_id": worker_id, "task_id": task_id, "status": status}
+
+
+def read_outbox(worker_id: str, task_id: str) -> dict:
+    p = _subdirs(worker_id)["outbox"] / f"{task_id}.json"
+    if not p.exists():
+        return None
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+# ---------------------------------------------------------------------------
+# FAN_OUT
+# ---------------------------------------------------------------------------
+
+def fan_out(task: dict, workers: list[str], executor) -> dict:
+    """Broadcast one task to N workers and collect results.
+
+    `executor(worker_id, task) -> dict` runs the task for a worker. For a
+    worker that is NOT live (WORKER_B), executor should return None and we
+    record the worker as SKIPPED/WaitingHeartbeat — never fabricate a result.
+
+    Returns a per-worker report plus the merged result."""
+    if task.get("mode") not in ("FAN_OUT", "BATTLECHECK"):
+        return {"ok": False, "error": "fan_out requires mode FAN_OUT or BATTLECHECK"}
+
+    per_worker = {}
+    results = []
+    for wid in workers:
+        if wid not in WORKERS:
+            per_worker[wid] = {"status": "UNKNOWN_WORKER"}
+            continue
+        st = worker_status(wid)
+        if st["status"] == "PREPARED/WAITING_HEARTBEAT":
+            per_worker[wid] = {"status": "SKIPPED", "reason": "waiting heartbeat (not live)"}
+            continue
+        try:
+            result = executor(wid, task)
+        except Exception as e:
+            per_worker[wid] = {"status": "FAILED", "error": str(e)[:200]}
+            continue
+        if result is None:
+            per_worker[wid] = {"status": "SKIPPED", "reason": "executor returned None"}
+            continue
+        per_worker[wid] = {"status": "SUCCEEDED", "result": result}
+        results.append({"worker_id": wid, "task_id": task.get("task_id"), "output_refs": result.get("output_refs"), "provenance": result.get("provenance", []), "fencing_token": result.get("fencing_token"), "result": result})
+
+    merged = merge_results(results)
+    return {
+        "mode": task.get("mode"),
+        "task_id": task.get("task_id"),
+        "per_worker": per_worker,
+        "merged": merged,
+    }
+
+
+# ---------------------------------------------------------------------------
+# BATTLECHECK
+# ---------------------------------------------------------------------------
+
+def battlecheck(results_by_worker: dict[str, dict]) -> dict:
+    """Compare two workers' results on observed metrics (latency, failure,
+    output presence). Verdict: A_WINS / B_WINS / TIE / INCOMPLETE (if either
+    side is missing). Only observed numbers, never brand assumptions."""
+    a = results_by_worker.get("MIMO_DEEPSEEK")
+    b = results_by_worker.get("MIMO_MINIMAX")
+
+    if a is None and b is None:
+        return {"verdict": "INCOMPLETE", "reason": "no results"}
+    if a is None:
+        return {"verdict": "INCOMPLETE", "reason": "WORKER_A result missing"}
+    if b is None:
+        return {"verdict": "INCOMPLETE", "reason": "WORKER_B not live (waiting heartbeat)"}
+
+    metrics = {}
+    score_a = score_b = 0
+
+    # latency: lower is better
+    la = a.get("latency_ms")
+    lb = b.get("latency_ms")
+    if la is not None and lb is not None:
+        metrics["latency_ms"] = {"A": la, "B": lb}
+        if la < lb:
+            score_a += 1
+        elif lb < la:
+            score_b += 1
+
+    # failure: lower is better
+    fa = a.get("failure_rate")
+    fb = b.get("failure_rate")
+    if fa is not None and fb is not None:
+        metrics["failure_rate"] = {"A": fa, "B": fb}
+        if fa < fb:
+            score_a += 1
+        elif fb < fa:
+            score_b += 1
+
+    # output presence
+    oa = bool(a.get("output"))
+    ob = bool(b.get("output"))
+    metrics["has_output"] = {"A": oa, "B": ob}
+    if oa and not ob:
+        score_a += 1
+    elif ob and not oa:
+        score_b += 1
+
+    verdict = "TIE" if score_a == score_b else ("A_WINS" if score_a > score_b else "B_WINS")
+    return {
+        "verdict": verdict,
+        "score": {"MIMO_DEEPSEEK": score_a, "MIMO_MINIMAX": score_b},
+        "metrics": metrics,
+        "note": "Control Tower owns final acceptance; this is advisory",
+    }
