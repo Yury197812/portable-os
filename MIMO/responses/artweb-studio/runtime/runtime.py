@@ -51,6 +51,11 @@ PUBLIC_KEY_HEX = "6c63fc13105cef70020e44bb05657aef4a28d12687fa1300502b1246b84480
 MANIFEST_PATH = RUNTIME_DIR / "MANIFEST.json"
 MANIFEST_SIG_PATH = RUNTIME_DIR / "MANIFEST.sig"
 
+# State schema + snapshots (migration with auto-restore + offline-gated rollback)
+STATE_SCHEMA_VERSION = 1
+SNAPSHOT_DIR = RUNTIME_DIR / "snapshots"
+_serving = False  # True while the HTTP server is running
+
 
 def now_iso() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -89,13 +94,66 @@ def log_event(run_id: str, node: str, status: str, **fields) -> dict:
 
 def load_state() -> dict:
     if STATE_PATH.exists():
-        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
-    return {"runs_total": 0}
+        state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+        if state.get("schema_version", 0) < STATE_SCHEMA_VERSION:
+            return migrate_state()
+        return state
+    return {"schema_version": STATE_SCHEMA_VERSION, "runs_total": 0}
 
 
 def save_state(state: dict) -> None:
     state["updated_at"] = now_iso()
+    state.setdefault("schema_version", STATE_SCHEMA_VERSION)
     STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def snapshot_state() -> Path | None:
+    """Copy current state.json into snapshots/ (pre-migration snapshot)."""
+    if not STATE_PATH.exists():
+        return None
+    SNAPSHOT_DIR.mkdir(exist_ok=True)
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    snap = SNAPSHOT_DIR / f"state.{ts}.json"
+    snap.write_bytes(STATE_PATH.read_bytes())
+    return snap
+
+
+def latest_snapshot() -> Path | None:
+    if not SNAPSHOT_DIR.exists():
+        return None
+    snaps = sorted(SNAPSHOT_DIR.glob("state.*.json"))
+    return snaps[-1] if snaps else None
+
+
+def migrate_state() -> dict:
+    """Migrate state.json to the latest schema. Pre-migration snapshot + auto-restore."""
+    state = json.loads(STATE_PATH.read_text(encoding="utf-8")) if STATE_PATH.exists() else {"runs_total": 0}
+    version = state.get("schema_version", 0)
+    if version >= STATE_SCHEMA_VERSION:
+        return state
+    snap = snapshot_state()
+    try:
+        # v0 -> v1: tag schema_version, keep existing fields (no transform needed)
+        state["schema_version"] = STATE_SCHEMA_VERSION
+        state["updated_at"] = now_iso()
+        STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+        return state
+    except Exception:
+        # auto-restore from the pre-migration snapshot
+        if snap and snap.exists():
+            STATE_PATH.write_bytes(snap.read_bytes())
+        raise
+
+
+def rollback_state() -> dict:
+    """Restore the latest snapshot. Offline-gated: refuse while serving."""
+    if _serving:
+        raise RuntimeError("rollback refused: runtime is serving (offline-gated)")
+    snap = latest_snapshot()
+    if not snap:
+        raise FileNotFoundError("no snapshot to roll back to")
+    STATE_PATH.write_bytes(snap.read_bytes())
+    return json.loads(STATE_PATH.read_text(encoding="utf-8"))
 
 
 def route_backend(payload: dict) -> str:
@@ -241,6 +299,9 @@ def main() -> int:
     sub.add_parser("graph", help="print the DAG")
     sub.add_parser("state", help="print current state")
     sub.add_parser("verify", help="verify MANIFEST signature + hashes")
+    sub.add_parser("snapshot", help="snapshot current state.json")
+    sub.add_parser("migrate", help="migrate state to latest schema")
+    sub.add_parser("rollback", help="restore latest snapshot (offline-gated)")
 
     args = p.parse_args()
 
@@ -265,6 +326,8 @@ def main() -> int:
         return 0 if result.get("status") == "ok" else 1
 
     if args.cmd == "serve":
+        global _serving
+        _serving = True
         print(f"runtime /api/runs on http://127.0.0.1:{args.port}", flush=True)
         ThreadingHTTPServer(("127.0.0.1", args.port), H).serve_forever()
 
@@ -273,6 +336,26 @@ def main() -> int:
 
     if args.cmd == "state":
         print(json.dumps(load_state(), ensure_ascii=False, indent=2))
+
+    if args.cmd == "snapshot":
+        snap = snapshot_state()
+        print(f"snapshot: {snap if snap else 'no state.json to snapshot'}")
+
+    if args.cmd == "migrate":
+        try:
+            state = migrate_state()
+            print("migrated to schema", state.get("schema_version"))
+        except Exception as e:
+            print(f"migrate failed (auto-restored): {e}", file=sys.stderr)
+            return 1
+
+    if args.cmd == "rollback":
+        try:
+            state = rollback_state()
+            print("rolled back:", json.dumps(state, ensure_ascii=False))
+        except (RuntimeError, FileNotFoundError) as e:
+            print(f"rollback failed: {e}", file=sys.stderr)
+            return 1
 
     return 0
 
