@@ -124,19 +124,37 @@ def _probe_long_context(model: str, rounds: int) -> dict:
     return {"ok": ok == rounds, "passed": ok, "total": rounds}
 
 
+def _probe_quality(model: str, rounds: int) -> dict:
+    """Model must answer a factual question correctly (objectively checkable).
+
+    We use arithmetic with a deterministic answer — quality = correct answer,
+    not brand reputation."""
+    ok = 0
+    for _ in range(rounds):
+        try:
+            r = chat_once(model, [{"role": "user", "content": "What is 12 * 13? Reply with only the number."}])
+            if "156" in r["content"]:
+                ok += 1
+        except Exception:
+            continue
+    return {"ok": ok == rounds, "passed": ok, "total": rounds}
+
+
 PROBES = {
     "latency_ms": _probe_latency,
     "failure_rate": _probe_failure_rate,
     "code": _probe_code,
     "tool_use": _probe_tool_use,
     "long_context": _probe_long_context,
+    "quality": _probe_quality,
 }
 
 
-def measure(worker_id: str, model: str, rounds: int = 3, dimensions: list[str] | None = None) -> dict:
+def measure(worker_id: str, model: str, rounds: int = 3, dimensions: list[str] | None = None, persist: bool = True) -> dict:
     """Run battle probes for the requested dimensions and record observations.
 
-    VERIFIED only when ALL rounds verify; partial = UNVERIFIED."""
+    VERIFIED only when ALL rounds verify; partial = UNVERIFIED. Persists the
+    capability registry to the worker's state dir by default."""
     if worker_id not in mw.WORKERS:
         return {"ok": False, "error": f"unknown worker {worker_id}"}
     rounds = max(1, rounds)
@@ -167,6 +185,8 @@ def measure(worker_id: str, model: str, rounds: int = 3, dimensions: list[str] |
             report["results"][dim] = {"ok": False, "error": str(e)[:200]}
 
     report["capability_status"] = mw.capability_status(worker_id)
+    if persist:
+        report["persisted"] = mw.save_capabilities(worker_id)
     return report
 
 
@@ -177,9 +197,10 @@ def main() -> int:
     p.add_argument("--model", default="qwen2.5:14b")
     p.add_argument("--rounds", type=int, default=3)
     p.add_argument("--dims", default=None, help="comma-separated dimensions")
+    p.add_argument("--no-persist", action="store_true", help="do not write capabilities to disk")
     args = p.parse_args()
     dims = args.dims.split(",") if args.dims else None
-    report = measure(args.worker_id, args.model, args.rounds, dims)
+    report = measure(args.worker_id, args.model, args.rounds, dims, persist=not args.no_persist)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
