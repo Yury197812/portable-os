@@ -1,0 +1,13 @@
+{
+    "worker_id":  "MIMO_MINIMAX",
+    "status":  "IDLE",
+    "current_task_id":  null,
+    "queue_depth":  0,
+    "model":  "MiniMax",
+    "engine":  "MIMO",
+    "capabilities_verified":  [
+
+                              ],
+    "last_error":  null,
+    "timestamp":  "2026-08-15T16:53:17.9652880Z"
+}
