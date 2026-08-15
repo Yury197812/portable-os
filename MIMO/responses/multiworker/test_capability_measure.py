@@ -110,3 +110,40 @@ def test_measure_records_observations(monkeypatch):
 def test_measure_unknown_worker():
     r = cm.measure("NOPE", "m")
     assert r["ok"] is False
+
+
+def test_probe_quality_correct(monkeypatch):
+    def fake_chat(model, messages, temperature=0.0):
+        return {"content": "156", "latency_ms": 30}
+    monkeypatch.setattr(cm, "chat_once", fake_chat)
+    r = cm._probe_quality("m", 3)
+    assert r["ok"] is True
+    assert r["passed"] == 3
+
+
+def test_probe_quality_wrong(monkeypatch):
+    def fake_chat(model, messages, temperature=0.0):
+        return {"content": "155", "latency_ms": 30}
+    monkeypatch.setattr(cm, "chat_once", fake_chat)
+    r = cm._probe_quality("m", 3)
+    assert r["ok"] is False
+
+
+def test_capability_persistence_roundtrip(monkeypatch):
+    def fake_chat(model, messages, temperature=0.0):
+        return {"content": "156", "latency_ms": 30}
+    monkeypatch.setattr(cm, "chat_once", fake_chat)
+    cm.measure("MIMO_DEEPSEEK", "m", rounds=3, dimensions=["quality"], persist=True)
+    # simulate process restart: clear in-memory, then reload from disk
+    mw._CAPABILITIES.clear()
+    r = mw.load_capabilities("MIMO_DEEPSEEK")
+    assert r["ok"] is True
+    st = mw.capability_status("MIMO_DEEPSEEK")
+    assert st["calibrated"]["quality"]["verdict"] == "VERIFIED"
+    assert st["calibrated"]["quality"]["count"] == 3
+
+
+def test_load_capabilities_missing():
+    r = mw.load_capabilities("MIMO_MINIMAX")
+    assert r["ok"] is False
+    assert "no persisted" in r["reason"]
