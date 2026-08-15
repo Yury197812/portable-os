@@ -1,0 +1,15 @@
+{
+  "worker_id": "MIMO_MINIMAX",
+  "engine": "MIMO",
+  "model": "MiniMax",
+  "role": "WORKER_B",
+  "status": "REGISTERED",
+  "project": "ArtWeb Studio + Orchestra",
+  "control_tower": "GPT/OCULUS",
+  "peer_worker": "WORKER_A/MIMO_DEEPSEEK",
+  "inbox_topic": "artweb-mimo-minimax-bus-20260815-e50aec37c62f",
+  "response_path": "MIMO/workers/MIMO_MINIMAX/responses/",
+  "work_root": "D:\\4\\OUT\\MIMO_MINIMAX",
+  "capabilities_claimed": [],
+  "timestamp": "2026-08-15T16:31:30Z"
+}
