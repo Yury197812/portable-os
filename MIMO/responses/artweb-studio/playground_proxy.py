@@ -13,15 +13,20 @@ Endpoints:
 from __future__ import annotations
 
 import json
+import sqlite3
+import threading
 import time
 import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 KEYS_PATH = Path(r"D:\4\04_utilities\api_keys.json")
 SEED_DIR = Path(__file__).parent
 PORT = 8890
+REVIEWS_DB = SEED_DIR / "reviews.db"
+_DB_LOCK = threading.Lock()
 
 # base already ends in /v1 (OpenAI-compatible); auth=False = no key needed
 PROVIDERS = {
@@ -63,10 +68,76 @@ def call_chat(provider, model, messages, temperature, api_key):
             "latency_ms": latency, "provider": provider}
 
 
+def _init_db():
+    with _DB_LOCK:
+        con = sqlite3.connect(REVIEWS_DB)
+        try:
+            con.execute(
+                "CREATE TABLE IF NOT EXISTS reviews ("
+                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                "model TEXT NOT NULL,"
+                "author TEXT NOT NULL DEFAULT 'Аноним',"
+                "rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),"
+                "text TEXT NOT NULL,"
+                "ts TEXT NOT NULL DEFAULT (datetime('now')))"
+            )
+            con.execute("CREATE INDEX IF NOT EXISTS idx_reviews_model ON reviews(model)")
+            con.commit()
+        finally:
+            con.close()
+
+
+def get_reviews(model=None):
+    _init_db()
+    con = sqlite3.connect(REVIEWS_DB)
+    try:
+        con.row_factory = sqlite3.Row
+        if model:
+            rows = con.execute(
+                "SELECT id, model, author, rating, text, ts FROM reviews WHERE model = ? ORDER BY id DESC",
+                (model,),
+            ).fetchall()
+        else:
+            rows = con.execute("SELECT id, model, author, rating, text, ts FROM reviews ORDER BY id DESC").fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        con.close()
+
+
+def add_review(model, author, rating, text):
+    _init_db()
+    with _DB_LOCK:
+        con = sqlite3.connect(REVIEWS_DB)
+        try:
+            cur = con.execute(
+                "INSERT INTO reviews (model, author, rating, text) VALUES (?, ?, ?, ?)",
+                (model, author, rating, text),
+            )
+            con.commit()
+            rid = cur.lastrowid
+            con.row_factory = sqlite3.Row
+            row = con.execute("SELECT id, model, author, rating, text, ts FROM reviews WHERE id = ?", (rid,)).fetchone()
+            return dict(row)
+        finally:
+            con.close()
+
+
+def delete_review(rid):
+    _init_db()
+    with _DB_LOCK:
+        con = sqlite3.connect(REVIEWS_DB)
+        try:
+            cur = con.execute("DELETE FROM reviews WHERE id = ?", (rid,))
+            con.commit()
+            return cur.rowcount > 0
+        finally:
+            con.close()
+
+
 class H(BaseHTTPRequestHandler):
     def _cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
     def _json(self, obj, code=200):
@@ -112,32 +183,92 @@ class H(BaseHTTPRequestHandler):
                 self.wfile.write(data)
             except Exception as e:
                 self._json({"error": str(e)[:200]}, 500)
+        elif self.path == "/api/openrouter":
+            try:
+                key = load_keys().get("openrouter_free")
+                if not key:
+                    self._json({"error": "no openrouter key"}, 400)
+                    return
+                req = urllib.request.Request("https://openrouter.ai/api/v1/models", headers={"Authorization": f"Bearer {key}"})
+                with urllib.request.urlopen(req, timeout=30) as r:
+                    data = r.read()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(data)))
+                self._cors()
+                self.end_headers()
+                self.wfile.write(data)
+            except Exception as e:
+                self._json({"error": f"openrouter unreachable: {str(e)[:200]}"}, 502)
+        elif self.path.startswith("/api/reviews"):
+            q = parse_qs(urlparse(self.path).query)
+            model = (q.get("model") or [None])[0]
+            self._json({"model": model, "reviews": get_reviews(model)})
         else:
             self._json({"error": "not found"}, 404)
 
     def do_POST(self):
-        if self.path != "/api/chat":
-            return self._json({"error": "not found"}, 404)
         n = int(self.headers.get("Content-Length", 0))
         try:
             payload = json.loads(self.rfile.read(n).decode())
         except Exception:
             return self._json({"error": "bad json"}, 400)
-        provider = payload.get("provider", "ollama")
-        if provider not in PROVIDERS:
-            return self._json({"error": f"unknown provider {provider}"}, 400)
-        model = payload.get("model")
-        messages = payload.get("messages", [])
-        temperature = payload.get("temperature", 0.7)
-        api_key = load_keys().get(provider) if PROVIDERS[provider]["auth"] else None
-        if PROVIDERS[provider]["auth"] and not api_key:
-            return self._json({"error": f"no key for provider {provider}"}, 400)
-        try:
-            self._json(call_chat(provider, model, messages, temperature, api_key))
-        except urllib.error.HTTPError as e:
-            self._json({"error": f"provider {e.code}: {e.read().decode()[:300]}"}, 502)
-        except Exception as e:
-            self._json({"error": str(e)[:300]}, 500)
+
+        if self.path == "/api/chat":
+            provider = payload.get("provider", "ollama")
+            if provider not in PROVIDERS:
+                return self._json({"error": f"unknown provider {provider}"}, 400)
+            model = payload.get("model")
+            messages = payload.get("messages", [])
+            temperature = payload.get("temperature", 0.7)
+            api_key = load_keys().get(provider) if PROVIDERS[provider]["auth"] else None
+            if PROVIDERS[provider]["auth"] and not api_key:
+                return self._json({"error": f"no key for provider {provider}"}, 400)
+            try:
+                self._json(call_chat(provider, model, messages, temperature, api_key))
+            except urllib.error.HTTPError as e:
+                self._json({"error": f"provider {e.code}: {e.read().decode()[:300]}"}, 502)
+            except Exception as e:
+                self._json({"error": str(e)[:300]}, 500)
+
+        elif self.path == "/api/reviews":
+            model = (payload.get("model") or "").strip()
+            author = (payload.get("author") or "").strip()[:80] or "Аноним"
+            text = (payload.get("text") or "").strip()[:2000]
+            try:
+                rating = int(payload.get("rating", 0))
+            except (TypeError, ValueError):
+                rating = 0
+            if not model:
+                return self._json({"error": "model is required"}, 400)
+            if not text:
+                return self._json({"error": "text is required"}, 400)
+            if not (1 <= rating <= 5):
+                return self._json({"error": "rating must be 1..5"}, 400)
+            try:
+                self._json(add_review(model, author, rating, text), 201)
+            except Exception as e:
+                self._json({"error": str(e)[:300]}, 500)
+
+        else:
+            self._json({"error": "not found"}, 404)
+
+    def do_DELETE(self):
+        parts = self.path.split("/")
+        if len(parts) == 4 and parts[1] == "api" and parts[2] == "reviews":
+            try:
+                rid = int(parts[3])
+            except ValueError:
+                return self._json({"error": "bad id"}, 400)
+            try:
+                if delete_review(rid):
+                    self._json({"ok": True, "deleted": rid})
+                else:
+                    self._json({"error": "not found"}, 404)
+            except Exception as e:
+                self._json({"error": str(e)[:300]}, 500)
+        else:
+            self._json({"error": "not found"}, 404)
 
     def log_message(self, *a):
         pass
