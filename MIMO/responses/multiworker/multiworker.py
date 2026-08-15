@@ -59,6 +59,21 @@ WORKERS = {
         "ntfy_topic": "artweb-mimo-minimax-bus-20260815-e50aec37c62f",
         "live": False,
     },
+    # WORKER_C: NON-CANON / TEST worker (user override, not top-level). No
+    # canon promotion rights, no namespace writes — used only for a 3-way
+    # FAN_OUT stress test. Removable. Backend = OpenRouter free model on the
+    # user's own key.
+    "MIMO_OPENROUTER_C": {
+        "worker_id": "MIMO_OPENROUTER_C",
+        "role": "WORKER_C (TEST/NON-CANON)",
+        "engine": "MIMO",
+        "model_backend": "OpenRouter openai/gpt-oss-20b:free",
+        "local_root": str(Path(r"D:\4\OUT\MIMO_WORKERC")),
+        "github_namespace": None,  # no namespace rights
+        "ntfy_topic": None,
+        "live": False,
+        "canon": False,
+    },
 }
 
 # live heartbeat map: worker_id -> {instance_id, last_heartbeat_ts}
