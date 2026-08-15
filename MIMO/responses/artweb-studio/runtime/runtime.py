@@ -173,6 +173,64 @@ def chat(provider: str, model: str, messages: list, temperature: float = 0.7) ->
         return json.loads(r.read().decode())
 
 
+def diagnose() -> list[dict]:
+    """First-run diagnostics, classified BLOCKER vs WARN."""
+    results = []
+
+    ok, err = verify_integrity()
+    results.append({"check": "integrity", "severity": "ok" if ok else "BLOCKER", "detail": err if not ok else "ok"})
+
+    g = load_graph()
+    if not g.get("nodes") or not g.get("edges"):
+        results.append({"check": "graph", "severity": "BLOCKER", "detail": "empty graph"})
+    else:
+        results.append({"check": "graph", "severity": "ok", "detail": f"{len(g['nodes'])} nodes"})
+
+    try:
+        with urlopen(CHAT_URL.replace("/api/chat", "/api/health"), timeout=5) as r:
+            r.read()
+        results.append({"check": "backend", "severity": "ok", "detail": "proxy reachable"})
+    except Exception as e:
+        results.append({"check": "backend", "severity": "BLOCKER", "detail": str(e)[:120]})
+
+    try:
+        with urlopen("http://127.0.0.1:11434/v1/models", timeout=4) as r:
+            data = json.loads(r.read().decode())
+        ids = [m.get("id", "") for m in data.get("data", [])]
+        if any("qwen2.5" in i for i in ids):
+            results.append({"check": "local_model", "severity": "ok", "detail": "qwen2.5 present"})
+        else:
+            results.append({"check": "local_model", "severity": "WARN", "detail": "qwen2.5:14b not in Ollama"})
+    except Exception as e:
+        results.append({"check": "local_model", "severity": "WARN", "detail": f"ollama unreachable: {str(e)[:80]}"})
+
+    return results
+
+
+def chat_probe() -> dict:
+    """LIVE chat probe: a real completion over the backend (not just a health ping)."""
+    t0 = time.time()
+    try:
+        resp = chat("ollama", "qwen2.5:14b", [{"role": "user", "content": "Reply with the single word OK"}], 0.0)
+        content = (resp.get("content") or "").strip()
+        return {"ok": bool(content), "content": content[:80],
+                "latency_ms": resp.get("latency_ms") or int((time.time() - t0) * 1000)}
+    except Exception as e:
+        return {"ok": False, "error": str(e)[:120], "latency_ms": int((time.time() - t0) * 1000)}
+
+
+def onboard() -> dict:
+    """Onboarding: diagnostics (BLOCKER/WARN) + LIVE chat probe."""
+    diags = diagnose()
+    blockers = [d for d in diags if d["severity"] == "BLOCKER"]
+    return {
+        "diagnostics": diags,
+        "blockers": len(blockers),
+        "live_probe": chat_probe(),
+        "ready": not blockers,
+    }
+
+
 def run(payload: dict) -> dict:
     """Execute one run over the graph. Returns the result dict."""
     run_id = uuid.uuid4().hex[:12]
@@ -302,6 +360,8 @@ def main() -> int:
     sub.add_parser("snapshot", help="snapshot current state.json")
     sub.add_parser("migrate", help="migrate state to latest schema")
     sub.add_parser("rollback", help="restore latest snapshot (offline-gated)")
+    sub.add_parser("diagnose", help="first-run diagnostics (BLOCKER/WARN)")
+    sub.add_parser("onboard", help="onboarding: diagnostics + LIVE chat probe")
 
     args = p.parse_args()
 
@@ -310,10 +370,23 @@ def main() -> int:
         print(f"integrity: {'OK' if ok else 'FAIL'} ({err})")
         return 0 if ok else 2
 
-    ok, err = verify_integrity()
-    if not ok:
-        print(f"INTEGRITY FAIL (fail-closed, refusing to run): {err}", file=sys.stderr)
-        return 2
+    if args.cmd == "diagnose":
+        for d in diagnose():
+            print(f"{d['severity']:>7}  {d['check']}: {d['detail']}")
+        return 0
+
+    if args.cmd == "onboard":
+        result = onboard()
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result["ready"] else 1
+
+    # startup: fail-closed on BLOCKER diagnostics
+    for d in diagnose():
+        if d["severity"] == "BLOCKER":
+            print(f"BLOCKER: {d['check']}: {d['detail']} (refusing to run)", file=sys.stderr)
+            return 2
+        if d["severity"] == "WARN":
+            print(f"WARN: {d['check']}: {d['detail']}", file=sys.stderr)
 
     if args.cmd == "run":
         result = run({"model": args.model, "prompt": args.prompt, "provider": args.provider})
