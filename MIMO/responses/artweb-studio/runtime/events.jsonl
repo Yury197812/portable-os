@@ -1,0 +1,16 @@
+{"run_id": "e1da8afabb77", "node": "validate", "status": "ok", "ts": "2026-08-15T05:04:25Z", "model": "qwen2.5:14b", "message_count": 1}
+{"run_id": "e1da8afabb77", "node": "route", "status": "ok", "ts": "2026-08-15T05:04:25Z", "backend": "ollama"}
+{"run_id": "e1da8afabb77", "node": "execute", "status": "ok", "ts": "2026-08-15T05:04:32Z", "backend": "ollama", "latency_ms": 7270}
+{"run_id": "e1da8afabb77", "node": "record", "status": "ok", "ts": "2026-08-15T05:04:32Z", "total_elapsed_ms": 7280}
+{"run_id": "c47d7e2f20da", "node": "validate", "status": "ok", "ts": "2026-08-15T05:05:07Z", "model": "qwen2.5:14b", "message_count": 1}
+{"run_id": "c47d7e2f20da", "node": "route", "status": "ok", "ts": "2026-08-15T05:05:07Z", "backend": "ollama"}
+{"run_id": "c47d7e2f20da", "node": "execute", "status": "ok", "ts": "2026-08-15T05:05:08Z", "backend": "ollama", "latency_ms": 689}
+{"run_id": "c47d7e2f20da", "node": "record", "status": "ok", "ts": "2026-08-15T05:05:08Z", "total_elapsed_ms": 704}
+{"run_id": "a11475670ca6", "node": "validate", "status": "ok", "ts": "2026-08-15T05:06:28Z", "model": "qwen2.5:14b", "message_count": 1}
+{"run_id": "a11475670ca6", "node": "route", "status": "ok", "ts": "2026-08-15T05:06:28Z", "backend": "ollama"}
+{"run_id": "a11475670ca6", "node": "execute", "status": "ok", "ts": "2026-08-15T05:06:29Z", "backend": "ollama", "latency_ms": 708}
+{"run_id": "a11475670ca6", "node": "record", "status": "ok", "ts": "2026-08-15T05:06:29Z", "total_elapsed_ms": 721}
+{"run_id": "9f07185ba2b4", "node": "validate", "status": "ok", "ts": "2026-08-15T05:11:36Z", "model": "qwen2.5:14b", "message_count": 1}
+{"run_id": "9f07185ba2b4", "node": "route", "status": "ok", "ts": "2026-08-15T05:11:36Z", "backend": "ollama"}
+{"run_id": "9f07185ba2b4", "node": "execute", "status": "ok", "ts": "2026-08-15T05:11:45Z", "backend": "ollama", "latency_ms": 8512}
+{"run_id": "9f07185ba2b4", "node": "record", "status": "ok", "ts": "2026-08-15T05:11:45Z", "total_elapsed_ms": 8535}
