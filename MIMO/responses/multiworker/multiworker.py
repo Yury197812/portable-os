@@ -280,26 +280,66 @@ def init_capability(worker_id: str) -> dict:
     return _CAPABILITIES[worker_id]
 
 
+def _dim_stats(worker_id: str, dim: str) -> dict:
+    """Running stats for one dimension: count, mean, min, max, last."""
+    caps = init_capability(worker_id)
+    s = caps.get(f"_stats_{dim}")
+    if not s:
+        return {"dim": dim, "count": 0, "mean": None, "min": None, "max": None, "last": caps.get(dim)}
+    n = s["count"]
+    return {
+        "dim": dim,
+        "count": n,
+        "mean": s["sum"] / n,
+        "min": s["min"],
+        "max": s["max"],
+        "last": caps.get(dim),
+    }
+
+
 def record_observation(worker_id: str, dim: str, value: float) -> dict:
-    """Record one empirical observation. DISCOVERED ≠ VERIFIED — a single
-    observation does not establish a capability; only repeated calibration."""
+    """Record one empirical observation with running stats. DISCOVERED ≠
+    VERIFIED — a single observation does not establish a capability; only
+    repeated calibration (min 3 rounds) does."""
     init_capability(worker_id)
     caps = _CAPABILITIES[worker_id]
     if dim not in capability_dimensions():
         return {"ok": False, "error": f"unknown dimension {dim}"}
-    caps[dim] = value  # latest observation (running stats could be added)
+    key = f"_stats_{dim}"
+    s = caps.get(key) or {"count": 0, "sum": 0.0, "min": None, "max": None}
+    s["count"] += 1
+    s["sum"] += value
+    s["min"] = value if s["min"] is None else min(s["min"], value)
+    s["max"] = value if s["max"] is None else max(s["max"], value)
+    caps[key] = s
+    caps[dim] = value  # last observation
     caps["samples"] = caps.get("samples", 0) + 1
-    return {"ok": True, "worker_id": worker_id, "dim": dim, "value": value}
+    return {"ok": True, "worker_id": worker_id, "dim": dim, "value": value, "stats": _dim_stats(worker_id, dim)}
+
+
+def dimension_verdict(worker_id: str, dim: str, min_rounds: int = 3) -> str:
+    """VERIFIED only when >= min_rounds observations exist. Otherwise
+    UNVERIFIED (partial) or NOT_RUN (zero)."""
+    stats = _dim_stats(worker_id, dim)
+    n = stats["count"]
+    if n == 0:
+        return "NOT_RUN"
+    if n >= min_rounds:
+        return "VERIFIED"
+    return "UNVERIFIED"
 
 
 def capability_status(worker_id: str | None = None) -> dict:
-    """Capability registry snapshot. Dimensions with None = NOT measured.
-    Never infer strengths from brand — empty means empty."""
+    """Capability registry snapshot with per-dimension running stats + verdict.
+    Dimensions with count=0 = NOT measured. Never infer strengths from brand."""
     def one(wid: str) -> dict:
-        return {"worker_id": wid, "calibrated": init_capability(wid)}
+        dims = {}
+        for dim in capability_dimensions():
+            dims[dim] = {**_dim_stats(wid, dim), "verdict": dimension_verdict(wid, dim)}
+        return {"worker_id": wid, "calibrated": dims, "samples": init_capability(wid).get("samples", 0)}
     if worker_id:
         return one(worker_id) if worker_id in WORKERS else {"error": "unknown worker"}
-    return {"capabilities": {w: init_capability(w) for w in WORKERS}}
+    return {"capabilities": {w: one(w) for w in WORKERS}}
 
 
 # ---------------------------------------------------------------------------
