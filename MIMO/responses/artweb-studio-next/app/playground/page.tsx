@@ -9,6 +9,7 @@ interface PlayModel {
 }
 
 const PROXY = 'http://127.0.0.1:8890';
+const RUNTIME = 'http://127.0.0.1:8891';
 
 export default function PlaygroundPage() {
   const [models, setModels] = useState<PlayModel[]>([]);
@@ -28,15 +29,16 @@ export default function PlaygroundPage() {
     const [provider, model] = sel.split('|');
     setOut(`… запрос к ${model} …`);
     try {
-      const r = await fetch(`${PROXY}/api/chat`, {
+      const r = await fetch(`${RUNTIME}/api/runs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ provider, model, messages: [{ role: 'user', content: prompt }], temperature: parseFloat(temp) }),
       });
       const j = await r.json();
-      setOut(j.error ? `Ошибка: ${j.error}` : `[${j.provider} · ${j.model} · ${j.latency_ms}ms]\n\n${j.content}`);
+      setOut(j.status === 'error' ? `Ошибка: ${j.error || 'runtime error'}`
+        : `[run ${j.run_id} · ${j.backend} · ${j.model} · ${j.latency_ms}ms]\n\n${j.output}`);
     } catch (e) {
-      setOut(`Ошибка соединения с прокси (запусти playground_proxy.py на :8890): ${e}`);
+      setOut(`Ошибка соединения с рантаймом (запусти runtime.py serve на :8891): ${e}`);
     }
   };
 
