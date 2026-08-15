@@ -42,6 +42,7 @@ import sys
 import threading
 import time
 import uuid
+from collections import deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -350,6 +351,188 @@ def chat(provider: str, model: str, messages: list, temperature: float = 0.7) ->
         return json.loads(r.read().decode())
 
 
+# ---------------------------------------------------------------------------
+# PASS023: general persisted workflow DAG execution + SUBWORKFLOW lineage
+# ---------------------------------------------------------------------------
+
+def topo_sort(nodes: list, edges: list) -> list[str]:
+    """Kahn's topological sort. node ids may be strings or {id: ...} dicts."""
+    node_ids = [n["id"] if isinstance(n, dict) else n for n in nodes]
+    idset = set(node_ids)
+    adj = {n: [] for n in node_ids}
+    indeg = {n: 0 for n in node_ids}
+    for e in edges:
+        f, t = e["from"], e["to"]
+        if f in idset and t in idset:
+            adj[f].append(t)
+            indeg[t] += 1
+    q = deque([n for n in node_ids if indeg[n] == 0])
+    order = []
+    while q:
+        n = q.popleft()
+        order.append(n)
+        for m in adj[n]:
+            indeg[m] -= 1
+            if indeg[m] == 0:
+                q.append(m)
+    if len(order) != len(node_ids):
+        raise RuntimeError("graph has a cycle")
+    return order
+
+
+def _node_exec(run_id: str, node: str, ctx: dict) -> None:
+    """Execute one DAG node. ctx carries payload/model/backend/result across nodes."""
+    _set_node_status(run_id, node, "RUNNING")
+
+    if node == "validate":
+        messages = ctx["messages"]
+        if not messages or not any((m.get("content") or "").strip() for m in messages):
+            raise ValueError("empty prompt")
+        ctx["model"] = ctx["payload"].get("model", "qwen2.5:14b")
+        log_event(run_id, node, "ok", model=ctx["model"], message_count=len(messages))
+        return
+
+    if node == "route":
+        ctx["backend"] = route_backend(ctx["payload"])
+        log_event(run_id, node, "ok", backend=ctx["backend"])
+        return
+
+    if node == "execute":
+        resp = chat(ctx["backend"], ctx["model"], ctx["messages"], float(ctx["payload"].get("temperature", 0.7)))
+        ctx["content"] = resp.get("content", "")
+        ctx["latency"] = resp.get("latency_ms")
+        log_event(run_id, node, "ok", backend=ctx["backend"], latency_ms=ctx["latency"])
+        return
+
+    if node == "record":
+        result = {
+            "run_id": run_id,
+            "model": ctx["model"],
+            "backend": ctx["backend"],
+            "prompt": ctx["messages"][-1].get("content", ""),
+            "output": ctx["content"],
+            "latency_ms": ctx["latency"],
+            "status": "ok",
+            "ts": now_iso(),
+        }
+        write_run_result(run_id, result)
+        log_event(run_id, node, "ok", total_elapsed_ms=int((time.time() - ctx["t0"]) * 1000))
+        return
+
+    # unknown node: treat as a no-op passthrough (graph extensibility), but log it
+    log_event(run_id, node, "ok", passthrough=True)
+
+
+def run_dag(payload: dict, run_id: str | None = None) -> dict:
+    """Execute a persisted workflow DAG (nodes from graph.json, topo-sorted).
+
+    Returns the terminal result. Unlike the legacy fixed 4-step run(), this
+    iterates the graph in topological order, so arbitrary persisted DAGs are
+    supported. `run()` delegates here for backward compatibility.
+    """
+    run_id = run_id or uuid.uuid4().hex[:12]
+    graph = load_graph()
+    node_ids = [n["id"] if isinstance(n, dict) else n for n in graph.get("nodes", [])]
+    order = topo_sort(graph.get("nodes", []), graph.get("edges", []))
+
+    ctx = {
+        "run_id": run_id,
+        "payload": payload,
+        "model": payload.get("model", "qwen2.5:14b"),
+        "messages": payload.get("messages") or [{"role": "user", "content": payload.get("prompt", "")}],
+        "backend": None,
+        "content": "",
+        "latency": None,
+        "t0": time.time(),
+    }
+
+    run_dir(run_id)
+    write_graph_snapshot(run_id)
+    _set_run_status(run_id, RUN_CREATED, model=ctx["model"], graph=graph.get("id"), node_count=len(node_ids))
+    log_event(run_id, "run", RUN_CREATED, model=ctx["model"], graph=graph.get("id"))
+    _set_run_status(run_id, RUN_RUNNING)
+    log_event(run_id, "run", RUN_RUNNING)
+
+    for node in order:
+        try:
+            _node_exec(run_id, node, ctx)
+            _set_node_status(run_id, node, "SUCCEEDED")
+        except Exception as e:
+            return _fail(run_id, node, str(e)[:200])
+
+    result = read_run_result(run_id) or {
+        "run_id": run_id, "status": "ok", "ts": now_iso(),
+    }
+    _set_run_status(run_id, RUN_SUCCEEDED)
+    log_event(run_id, "run", RUN_SUCCEEDED)
+    _bump_aggregate(run_id, RUN_SUCCEEDED)
+    return result
+
+
+def run(payload: dict) -> dict:
+    """Backward-compatible entrypoint: delegates to run_dag."""
+    return run_dag(payload)
+
+
+def run_subworkflow(parent_payload: dict, children: list[dict]) -> dict:
+    """Execute a parent workflow and then N nested SUBWORKFLOW children.
+
+    Persists lineage: each child's state records parent_run_id; the parent
+    result records child_run_ids. Returns the parent result augmented with
+    `subworkflow` lineage.
+    """
+    parent = run_dag(parent_payload)
+    if parent.get("status") != "ok":
+        parent["subworkflow"] = {"parent_run_id": parent["run_id"], "child_run_ids": []}
+        write_run_result(parent["run_id"], parent)
+        return parent
+
+    child_ids = []
+    for child in children:
+        child = dict(child)
+        child["parent_run_id"] = parent["run_id"]
+        cr = run_dag(child)
+        # record lineage in child state
+        cstate = read_run_state(cr["run_id"])
+        cstate["parent_run_id"] = parent["run_id"]
+        write_run_state(cr["run_id"], cstate)
+        child_ids.append({"run_id": cr["run_id"], "status": cr.get("status")})
+
+    parent["subworkflow"] = {"parent_run_id": parent["run_id"], "child_run_ids": child_ids}
+    write_run_result(parent["run_id"], parent)
+    return parent
+
+
+def read_lineage(run_id: str) -> dict:
+    """Lineage tree: ancestors (parent chain) + descendants (children chain)."""
+    ancestors = []
+    current = run_id
+    seen = set()
+    while current and current not in seen:
+        seen.add(current)
+        st = read_run_state(current)
+        parent = st.get("parent_run_id")
+        if parent:
+            ancestors.append(parent)
+            current = parent
+        else:
+            break
+
+    descendants = []
+    stack = [run_id]
+    while stack:
+        rid = stack.pop()
+        for d in RUNS_DIR.iterdir() if RUNS_DIR.exists() else []:
+            if not d.is_dir():
+                continue
+            st = read_run_state(d.name)
+            if st.get("parent_run_id") == rid:
+                descendants.append(d.name)
+                stack.append(d.name)
+
+    return {"run_id": run_id, "ancestors": ancestors, "descendants": descendants}
+
+
 def diagnose() -> list[dict]:
     """First-run diagnostics, classified BLOCKER vs WARN."""
     results = []
@@ -551,6 +734,10 @@ class H(BaseHTTPRequestHandler):
                 self._json(res)
             else:
                 self._json({"error": "autoswitch decision not found"}, 404)
+        elif self.path.endswith("/lineage"):
+            # GET /api/runs/<id>/lineage -> ancestors + descendants tree
+            run_id = self.path.split("/")[-2]
+            self._json(read_lineage(run_id))
         elif self.path.startswith("/api/runs/"):
             run_id = self.path.split("/")[-1]
             res = read_run_result(run_id)
@@ -574,6 +761,15 @@ class H(BaseHTTPRequestHandler):
 
         if self.path == "/api/runs":
             result = run(payload)
+            self._json(result, 201 if result.get("status") == "ok" else 500)
+            return
+
+        if self.path == "/api/subworkflow":
+            parent = payload.get("parent", {})
+            children = payload.get("children", [])
+            if not isinstance(parent, dict) or not isinstance(children, list):
+                return self._json({"error": "parent must be object, children must be list"}, 400)
+            result = run_subworkflow(parent, children)
             self._json(result, 201 if result.get("status") == "ok" else 500)
             return
 
