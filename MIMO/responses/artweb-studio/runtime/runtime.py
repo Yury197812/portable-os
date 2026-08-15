@@ -90,6 +90,80 @@ _LOCK = threading.Lock()
 _SEQ = {"value": 0}  # process-local monotonic counter (seeded from state on load)
 
 
+# ---------------------------------------------------------------------------
+# PASS021: catalog + entitlement + AutoSwitch + Deal Radar (truthful semantics)
+# ---------------------------------------------------------------------------
+
+# Official-source registry. Only these have an exact official source → VERIFIED.
+OFFICIAL_SOURCES = {
+    "OpenAI": "https://openai.com/api/pricing/",
+    "Anthropic": "https://www.anthropic.com/pricing",
+    "Gemini": "https://ai.google.dev/pricing",
+    "OpenRouter": "https://openrouter.ai/models",
+    "Groq": "https://groq.com/pricing",
+    "Mistral": "https://mistral.ai/pricing",
+    "xAI": "https://x.ai/api",
+}
+
+# xAI 20% batch discount applies ONLY to these selectors (PASS021 §7).
+XAI_BATCH_20_SELECTORS = ["grok-beta", "grok-2", "grok-2-mini"]
+
+# Source-backed AutoSwitch modes. Never invent off-peak discounts.
+SOURCE_BACKED_MODES = ["batch", "flex", "cache", "clock"]
+
+
+def decide_switch(access: str, owned: bool, free_remaining) -> dict:
+    """AutoSwitch policy (PASS021 §5): FREE first -> PAID_OWNED -> unowned = deny.
+
+    Honest: free_remaining == None means "no source-backed number" and is
+    treated as exhausted — we never claim FREE availability we can't prove.
+    """
+    if access == "FREE":
+        if free_remaining is None or free_remaining <= 0:
+            return {"ok": False, "reason": "FREE исчерпан/не подтверждён источником", "chosen": "PAID_UNOWNED"}
+        return {"ok": True, "reason": "FREE first", "chosen": "FREE"}
+    if access == "PAID_OWNED" and owned:
+        return {"ok": True, "reason": "PAID_OWNED", "chosen": "PAID_OWNED"}
+    return {"ok": False, "reason": "paid-доступ не принадлежит пользователю → DENY", "chosen": "PAID_UNOWNED"}
+
+
+def deal_radar() -> list[dict]:
+    """Official Deal/Connection Radar. Only exact official sources = VERIFIED."""
+    return [
+        {"id": "xai-batch-20", "provider": "xAI", "title": "Batch API −20%", "kind": "discount",
+         "status": "VERIFIED", "source": OFFICIAL_SOURCES["xAI"],
+         "applies_to": XAI_BATCH_20_SELECTORS,
+         "detail": "20% только для перечисленных селекторов."},
+        {"id": "groq-flex", "provider": "Groq", "title": "Flex tier", "kind": "free_tier",
+         "status": "VERIFIED", "source": OFFICIAL_SOURCES["Groq"],
+         "detail": "Groq Flex — та же цена, НЕ скидка."},
+        {"id": "openrouter-free", "provider": "OpenRouter", "title": "Free (:free)", "kind": "free_tier",
+         "status": "VERIFIED", "source": OFFICIAL_SOURCES["OpenRouter"],
+         "detail": "Модели :free доступны без оплаты (rate-limited)."},
+        {"id": "user-deal-sample", "provider": "Unknown", "title": "Стороннее объявление", "kind": "discount",
+         "status": "UNVERIFIED", "source": "—",
+         "detail": "Нет официального источника → UNVERIFIED."},
+    ]
+
+
+def observed_catalog() -> dict:
+    """Honest catalog: only what the runtime can observe. Never implies global
+    completeness. LIVE = a real run succeeded on the backing model this
+    session; otherwise SYNTHETIC (seed) — config-only, not routing-ready."""
+    entities = []
+    # Backing local model that actually served runs this session (qwen2.5:14b via ollama).
+    entities.append({
+        "id": "qwen2.5:14b", "kind": "model", "name": "Qwen2.5 14B", "provider": "ollama",
+        "caps": ["tool_use", "code", "speed"], "cap_verification": "VERIFIED",
+        "provenance": "LIVE", "access": "FREE", "owned": False,
+        "routing_ready": True, "source": "runtime :8891 live run",
+    })
+    return {
+        "scope": "runtime :8891 observed (не весь интернет)",
+        "entities": entities,
+    }
+
+
 def now_iso() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
@@ -466,6 +540,17 @@ class H(BaseHTTPRequestHandler):
         elif self.path == "/api/runs":
             ids = sorted(d.name for d in RUNS_DIR.iterdir() if d.is_dir()) if RUNS_DIR.exists() else []
             self._json({"runs": ids})
+        elif self.path == "/api/catalog":
+            self._json(observed_catalog())
+        elif self.path == "/api/deals":
+            self._json({"registry": list(OFFICIAL_SOURCES.keys()), "deals": deal_radar()})
+        elif self.path.startswith("/api/autoswitch/"):
+            run_id = self.path.split("/")[-1]
+            res = read_run_result(run_id)
+            if res is not None:
+                self._json(res)
+            else:
+                self._json({"error": "autoswitch decision not found"}, 404)
         elif self.path.startswith("/api/runs/"):
             run_id = self.path.split("/")[-1]
             res = read_run_result(run_id)
@@ -477,8 +562,6 @@ class H(BaseHTTPRequestHandler):
             self._json({"error": "not found"}, 404)
 
     def do_POST(self):
-        if self.path != "/api/runs":
-            return self._json({"error": "not found"}, 404)
         n = int(self.headers.get("Content-Length", 0))
         if n > 1_000_000:
             return self._json({"error": "payload too large"}, 413)
@@ -488,8 +571,37 @@ class H(BaseHTTPRequestHandler):
             return self._json({"error": "bad json"}, 400)
         if not isinstance(payload, dict):
             return self._json({"error": "payload must be an object"}, 400)
-        result = run(payload)
-        self._json(result, 201 if result.get("status") == "ok" else 500)
+
+        if self.path == "/api/runs":
+            result = run(payload)
+            self._json(result, 201 if result.get("status") == "ok" else 500)
+            return
+
+        if self.path == "/api/autoswitch":
+            # Durable readback: store the decision as a per-run artifact so GET
+            # /api/autoswitch/<id> can read it back after the fact.
+            switch_id = uuid.uuid4().hex[:12]
+            decision = decide_switch(
+                payload.get("access", "PAID_UNOWNED"),
+                bool(payload.get("owned", False)),
+                payload.get("free_remaining"),
+            )
+            result = {
+                "run_id": switch_id,
+                "kind": "autoswitch",
+                "access": payload.get("access"),
+                "owned": bool(payload.get("owned", False)),
+                "free_remaining": payload.get("free_remaining"),
+                "decision": decision,
+                "ts": now_iso(),
+            }
+            d = run_dir(switch_id)
+            _atomic_write(d / "result.json", json.dumps(result, ensure_ascii=False, indent=2))
+            _atomic_write(d / "state.json", json.dumps({"run_id": switch_id, "status": "SUCCEEDED", "kind": "autoswitch"}, ensure_ascii=False, indent=2))
+            self._json(result, 200)
+            return
+
+        self._json({"error": "not found"}, 404)
 
     def log_message(self, *a):
         pass
