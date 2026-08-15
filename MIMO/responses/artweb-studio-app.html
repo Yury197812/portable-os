@@ -697,11 +697,11 @@ document.addEventListener('click',e=>{
     const prompt=document.getElementById('pgPrompt').value;
     const temp=parseFloat(document.getElementById('pgTemp').value.replace('temp ',''));
     out.textContent='… запрос к '+model+' …';
-    fetch('http://127.0.0.1:8890/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider,model,messages:[{role:'user',content:prompt}],temperature:temp})})
+    fetch('http://127.0.0.1:8891/api/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider,model,messages:[{role:'user',content:prompt}],temperature:temp})})
       .then(r=>r.json()).then(j=>{
-        if(j.error) out.textContent='Ошибка: '+j.error;
-        else out.textContent=`[${j.provider} · ${j.model} · ${j.latency_ms}ms]\n\n`+j.content;
-      }).catch(err=>{ out.textContent='Ошибка соединения с прокси (запусти playground_proxy.py на :8890): '+err; });
+        if(j.status==='error') out.textContent='Ошибка: '+(j.error||'runtime error');
+        else out.textContent=`[run ${j.run_id} · ${j.backend} · ${j.model} · ${j.latency_ms}ms]\n\n`+j.output;
+      }).catch(err=>{ out.textContent='Ошибка соединения с рантаймом (запусти runtime.py serve на :8891): '+err; });
   }
   if(e.target.id==='wfAdd'){
     const inp=document.getElementById('wfInput'); if(!inp.value.trim())return;
