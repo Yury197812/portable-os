@@ -1,0 +1,47 @@
+{
+  "worker_id": "MIMO_MINIMAX",
+  "model": "MiniMax-M3",
+  "rounds": 3,
+  "timestamp": "2026-08-15T17:27:36Z",
+  "results": {
+    "latency_ms": {
+      "ok": true,
+      "values": [
+        1566,
+        1725,
+        1616
+      ],
+      "mean": 1635.6666666666667,
+      "min": 1566,
+      "max": 1725
+    },
+    "failure_rate": {
+      "ok": true,
+      "failures": 0,
+      "total": 3,
+      "failure_rate": 0.0
+    },
+    "code": {
+      "ok": true,
+      "passed": 3,
+      "total": 3
+    },
+    "quality": {
+      "ok": true,
+      "passed": 3,
+      "total": 3
+    },
+    "long_context": {
+      "ok": true,
+      "passed": 3,
+      "total": 3
+    }
+  },
+  "verified": [
+    "latency_ms",
+    "failure_rate",
+    "code",
+    "quality",
+    "long_context"
+  ]
+}
