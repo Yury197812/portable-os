@@ -80,6 +80,71 @@ def call_chat(provider, model, messages, temperature, api_key):
             "latency_ms": latency, "provider": provider}
 
 
+# Provider health tracking: circuit breaker + exponential backoff (reconnect).
+_PROVIDER_STATE: dict = {}
+_STATE_LOCK = threading.Lock()
+BACKOFF_CAP = 60.0  # seconds
+
+
+def _st(provider):
+    return _PROVIDER_STATE.setdefault(
+        provider,
+        {"consec_failures": 0, "backoff_until": 0.0, "last_success": 0.0, "last_error": None},
+    )
+
+
+def provider_ok(provider):
+    with _STATE_LOCK:
+        s = _st(provider)
+        s["consec_failures"] = 0
+        s["backoff_until"] = 0.0
+        s["last_success"] = time.time()
+        s["last_error"] = None
+
+
+def provider_fail(provider, err):
+    with _STATE_LOCK:
+        s = _st(provider)
+        s["consec_failures"] += 1
+        s["backoff_until"] = time.time() + min(BACKOFF_CAP, 2 ** s["consec_failures"])
+        s["last_error"] = str(err)[:200]
+
+
+def provider_available(provider):
+    with _STATE_LOCK:
+        s = _st(provider)
+        return time.time() >= s["backoff_until"]
+
+
+def provider_status():
+    with _STATE_LOCK:
+        now = time.time()
+        return {
+            p: {
+                "consec_failures": s["consec_failures"],
+                "cooling_down": now < s["backoff_until"],
+                "retry_in_s": max(0.0, round(s["backoff_until"] - now, 1)),
+                "last_success": s["last_success"],
+                "last_error": s["last_error"],
+            }
+            for p, s in _PROVIDER_STATE.items()
+        }
+
+
+def chat_with_reconnect(provider, model, messages, temperature, api_key):
+    """Circuit-breaker + exponential backoff around call_chat."""
+    if not provider_available(provider):
+        s = provider_status().get(provider, {})
+        return {"error": f"provider {provider} circuit-open (cooling down), retry in {s.get('retry_in_s', 0)}s"}
+    try:
+        result = call_chat(provider, model, messages, temperature, api_key)
+        provider_ok(provider)
+        return result
+    except Exception as e:
+        provider_fail(provider, e)
+        raise
+
+
 def _init_db():
     with _DB_LOCK:
         con = sqlite3.connect(REVIEWS_DB)
@@ -171,7 +236,9 @@ class H(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/api/health":
-            self._json({"ok": True, "providers": list(PROVIDERS.keys()), "port": PORT})
+            self._json({"ok": True, "providers": list(PROVIDERS.keys()), "port": PORT, "provider_status": provider_status()})
+        elif self.path == "/api/providers":
+            self._json(provider_status())
         elif self.path == "/api/models":
             self._json(MODELS)
         elif self.path == "/api/orchestra":
@@ -244,7 +311,11 @@ class H(BaseHTTPRequestHandler):
             if PROVIDERS[provider]["auth"] and not api_key:
                 return self._json({"error": f"no key for provider {provider}"}, 400)
             try:
-                self._json(call_chat(provider, model, messages, temperature, api_key))
+                result = chat_with_reconnect(provider, model, messages, temperature, api_key)
+                if "error" in result:
+                    self._json(result, 503)
+                else:
+                    self._json(result)
             except urllib.error.HTTPError as e:
                 self._json({"error": f"provider {e.code}: {e.read().decode()[:300]}"}, 502)
             except Exception as e:
