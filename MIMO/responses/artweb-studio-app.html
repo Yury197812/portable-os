@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtWeb Studio — Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f172a; --bg2:#0b1120; --panel:#16213a; --panel2:#1e293b; --border:#26334d;
+    --accent:#7c3aed; --accent2:#8b5cf6; --accent-dim:rgba(124,58,237,.14);
+    --text:#f1f5f9; --text2:#9aa7bd; --text3:#64748b;
+    --head:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+    --body:'Inter','Segoe UI',system-ui,sans-serif;
+    --violet:#8b5cf6; --emerald:#34d399; --amber:#fbbf24; --cyan:#22d3ee; --pink:#f472b6;
+    --sky:#38bdf8; --lime:#a3e635; --teal:#2dd4bf; --rose:#fb7185; --orange:#fb923c;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:var(--body);color:var(--text);background:var(--bg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .app{display:grid;grid-template-rows:54px 1fr;height:100vh;overflow:hidden}
+  /* topbar */
+  .topbar{display:flex;align-items:center;gap:14px;padding:0 14px;border-bottom:1px solid var(--border);background:var(--bg2)}
+  .logo{display:flex;align-items:center;gap:9px;font-family:var(--head);font-weight:700;font-size:14.5px;white-space:nowrap}
+  .logo .mark{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:13px;font-weight:700}
+  .crumbs{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:12.5px;min-width:0}
+  .crumbs b{color:var(--text);font-weight:600}
+  .crumbs .sep{opacity:.5}
+  .cmd{flex:1;max-width:480px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:7px 12px;color:var(--text3)}
+  .cmd svg{width:15px;height:15px}
+  .cmd input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:var(--body);font-size:13px}
+  .cmd input::placeholder{color:var(--text3)}
+  .statuspill{margin-left:auto;display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:20px;background:var(--panel);border:1px solid var(--border);font-size:12px;color:var(--text2);white-space:nowrap}
+  .statuspill .dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald)}
+  /* shell */
+  .shell{display:grid;grid-template-columns:206px 1fr;overflow:hidden;min-height:0}
+  .sidebar{border-right:1px solid var(--border);background:var(--bg2);padding:10px 8px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+  .side-sec{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:var(--text3);padding:12px 10px 6px;font-weight:700}
+  .navitem{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:9px;color:var(--text2);cursor:pointer;border:none;background:none;font-family:var(--body);font-size:13.5px;font-weight:500;text-align:left;width:100%;transition:background .13s,color .13s}
+  .navitem svg{width:18px;height:18px;flex-shrink:0}
+  .navitem:hover{background:var(--panel);color:var(--text)}
+  .navitem.active{background:var(--accent-dim);color:var(--accent2)}
+  .navitem .count{margin-left:auto;font-size:11px;color:var(--text3);background:var(--panel);padding:1px 7px;border-radius:20px}
+  /* main */
+  .main{overflow-y:auto;padding:24px 26px 60px}
+  .pagehead{margin-bottom:20px}
+  .pagehead h1{margin:0 0 5px;font-family:var(--head);font-size:22px;font-weight:700;letter-spacing:-.2px}
+  .pagehead p{margin:0;color:var(--text2);font-size:13.5px}
+  .view{display:none}
+  .view.active{display:block}
+  /* toolbar */
+  .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .search{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;flex:1;min-width:220px;color:var(--text3)}
+  .search input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--text2);cursor:pointer;font-size:12px;font-weight:600;transition:border-color .13s,color .13s,background .13s}
+  .chip svg{width:13px;height:13px}
+  .chip.on{background:var(--accent-dim);border-color:var(--accent);color:var(--accent2)}
+  /* model grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+  .mcard{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:15px;display:flex;flex-direction:column;gap:10px;transition:border-color .13s,transform .13s}
+  .mcard:hover{border-color:var(--accent2);transform:translateY(-1px)}
+  .mcard .top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .mcard .name{font-family:var(--head);font-weight:600;font-size:14.5px;color:var(--text)}
+  .mcard .provider{font-size:11.5px;color:var(--text3)}
+  .mcard .caps{display:flex;gap:5px;flex-wrap:wrap}
+  .cap{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:600;border:1px solid}
+  .cap svg{width:12px;height:12px}
+  .mcard .meta{display:flex;gap:14px;font-size:11.5px;color:var(--text3);border-top:1px solid var(--border);padding-top:10px}
+  .mcard .meta b{color:var(--text2);font-weight:600}
+  .scorebar{height:4px;border-radius:2px;background:var(--panel2);overflow:hidden}
+  .scorebar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  /* routing lab */
+  .rl{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .rl .card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:16px}
+  .rl .card h3{margin:0 0 14px;font-family:var(--head);font-size:14px;font-weight:600}
+  .slider{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .slider label{width:130px;font-size:12px;color:var(--text2);flex-shrink:0}
+  .slider input[type=range]{flex:1;accent-color:var(--accent)}
+  .slider .w{width:36px;text-align:right;font-family:var(--head);font-weight:600;font-size:12.5px;color:var(--text)}
+  .rank{display:flex;flex-direction:column;gap:8px}
+  .rankrow{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--bg);border:1px solid var(--border);border-radius:10px}
+  .rankrow .pos{font-family:var(--head);font-weight:700;color:var(--accent2);width:20px}
+  .rankrow .nm{flex:1;font-weight:600;font-size:13px}
+  .rankrow .sc{font-family:var(--head);font-weight:700;font-size:13px;color:var(--emerald)}
+  /* placeholder module */
+  .placehold{background:var(--panel);border:1px dashed var(--border);border-radius:13px;padding:26px;text-align:center;color:var(--text3)}
+  .placehold h3{margin:0 0 6px;color:var(--text2);font-family:var(--head)}
+  .placehold p{margin:0;font-size:13px}
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:700;background:rgba(52,211,153,.14);color:var(--emerald);border:1px solid rgba(52,211,153,.3)}
+  button{font-family:var(--body)}
+  :focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  @media (max-width:900px){.shell{grid-template-columns:1fr}.sidebar{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border)}.rl{grid-template-columns:1fr}}
+  /* module cards */
+  .wrap2{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+  .scard,.acard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:7px}
+  .scard .nm,.acard .nm{font-family:var(--head);font-weight:600;font-size:14px;color:var(--text)}
+  .scard .cat,.acard .role{font-size:10.5px;color:var(--accent2);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+  .scard .trig,.acard .meta{font-size:11.5px;color:var(--text3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;background:var(--panel2);color:var(--text2);font-size:10.5px;margin:2px 4px 0 0;border:1px solid var(--border)}
+  /* kanban */
+  .kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .kcol{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px;min-height:220px}
+  .kcol h3{margin:0 0 10px;font-family:var(--head);font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px}
+  .task{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:10px;margin-bottom:8px;font-size:12.5px}
+  .task .t{font-weight:600;color:var(--text)}
+  .task .d{color:var(--text3);font-size:11.5px;margin-top:4px}
+  .task .p{margin-top:6px;font-size:10.5px;color:var(--accent2);font-weight:700}
+  /* workflow */
+  .wf{display:flex;flex-direction:column;max-width:560px}
+  .wfnode{display:flex;align-items:center;gap:10px}
+  .wfnode .box{flex:1;background:var(--panel);border:1px solid var(--accent);border-radius:10px;padding:11px 14px;font-weight:600;font-size:13.5px;display:flex;align-items:center;gap:9px}
+  .wfnode .box .idx{font-family:var(--head);color:var(--accent2);font-weight:700}
+  .wfnode .x{background:none;border:1px solid var(--border);color:var(--text3);border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:13px}
+  .wfnode .x:hover{color:var(--rose);border-color:var(--rose)}
+  .wfline{width:2px;height:16px;background:var(--accent2);margin-left:19px;opacity:.5}
+  .wfadd{display:flex;gap:8px;margin-top:14px}
+  .wfadd input{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:9px;color:var(--text);padding:9px 12px;font-size:13px}
+  /* observatory */
+  .statgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px}
+  .stat .v{font-family:var(--head);font-size:24px;font-weight:700;color:var(--text)}
+  .stat .l{font-size:11.5px;color:var(--text3)}
+  .chart{display:flex;flex-direction:column;gap:7px;max-width:520px}
+  .chart .row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2)}
+  .chart .row .lb{width:92px;text-align:right;flex-shrink:0}
+  .chart .row .bar{height:10px;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  /* playground */
+  .pg textarea{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;color:var(--text);padding:12px;font-family:var(--body);font-size:13px;resize:vertical;min-height:120px}
+  .pg .controls{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap;align-items:center}
+  .pg select{background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:8px 12px;font-family:var(--body);font-size:13px;max-width:280px}
+  .pg .out{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;min-height:80px;color:var(--text2);font-size:13px;white-space:pre-wrap}
+  .btn{background:var(--accent);border:1px solid var(--accent);color:#fff;border-radius:9px;padding:9px 16px;font-weight:600;font-size:13px;cursor:pointer}
+  .btn:hover{background:var(--accent2)}
+  .kv{display:grid;grid-template-columns:170px 1fr;gap:6px 12px;font-size:12.5px;margin-bottom:8px}
+  .kv b{color:var(--text2);font-weight:600}
+  .mono{font-family:Consolas,monospace;font-size:11.5px;color:var(--teal)}
+  /* compare + reviews */
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:16px}
+  .cmp-select{background:var(--panel);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:8px 12px;font-family:var(--body);font-size:13px;min-width:220px}
+  .sep2{color:var(--text3);font-family:var(--head);font-weight:700}
+  .cmp{width:100%;border-collapse:collapse;margin-bottom:18px;background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .cmp th,.cmp td{text-align:left;padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border)}
+  .cmp th{font-family:var(--head);color:var(--text2);background:var(--bg2)}
+  .cmp td:first-child{color:var(--text3);width:140px}
+  .cmp .caps{display:flex;gap:5px;flex-wrap:wrap}
+  .reviews{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .reviews h3{margin:0 0 4px;font-family:var(--head);font-size:14px}
+  .rnote{color:var(--text3);font-size:11px;margin-bottom:10px}
+  .review{border-top:1px solid var(--border);padding:10px 0}
+  .review .rh{display:flex;align-items:center;gap:8px;font-size:12px}
+  .review .stars{color:var(--amber);letter-spacing:1px}
+  .review .rd{margin-left:auto;color:var(--text3);font-size:11px}
+  .review .rt{margin-top:4px;color:var(--text2);font-size:12.5px}
+  .rev-del{background:none;border:1px solid var(--border);color:var(--text3);border-radius:7px;width:24px;height:24px;cursor:pointer;font-size:13px;flex-shrink:0}
+  .rev-del:hover{color:var(--rose);border-color:var(--rose)}
+  .rev-form{border-top:1px solid var(--border);margin-top:10px;padding-top:12px;display:flex;flex-direction:column;gap:8px}
+  .stars-input{display:flex;gap:2px}
+  .star-btn{background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;padding:0 2px;line-height:1;transition:color .12s}
+  .star-btn.on,.star-btn:hover{color:var(--amber)}
+  .rev-input,.rev-textarea{background:var(--bg2);border:1px solid var(--border);border-radius:9px;color:var(--text);padding:9px 12px;font-size:13px;font-family:var(--body);width:100%}
+  .rev-textarea{resize:vertical;min-height:64px}
+  .rev-row{display:flex;align-items:center;gap:10px}
+  .rev-err{color:var(--rose);font-size:12px}
+  @media (max-width:900px){.reviews{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="logo"><span class="mark">A</span>ArtWeb Studio</div>
+    <div class="crumbs"><span>Studio</span><span class="sep">/</span><b id="crumb">Model Compare</b></div>
+    <div class="cmd">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="cmdInput" placeholder="Command center — модель, модуль, capability…" autocomplete="off" aria-label="Командный центр — поиск моделей и модулей">
+    </div>
+    <div class="statuspill"><span class="dot"></span>MIMO Sync · Live</div>
+  </header>
+  <div class="shell">
+    <nav class="sidebar" id="sidebar" aria-label="Основная навигация"></nav>
+    <main class="main">
+      <div class="view" id="view-catalog"><div class="pagehead"><h1>Model Compare</h1><p>Каталог моделей с icon-first возможностями и динамическим routing. FREE — подмножество, tool_use — first-class.</p></div><div class="toolbar"><div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="catSearch" placeholder="Поиск по имени/провайдеру…" aria-label="Поиск моделей"></div></div><div class="chips" id="capFilters"></div><div class="grid" id="catGrid" style="margin-top:16px"></div></div>
+      <div class="view" id="view-routing"><div class="pagehead"><h1>Routing Lab</h1><p>Динамический выбор модели по 8 осям: quality / latency / cost / context / modality / availability / privacy / locality / tool-compat.</p></div><div class="rl"><div class="card"><h3>Веса осей</h3><div id="routingSliders"></div></div><div class="card"><h3>Топ-5 по текущим весам</h3><div class="rank" id="routingRank"></div></div></div></div>
+      <div class="view" id="view-dynamic"></div>
+    </main>
+  </div>
+</div>
+<script>
+// ===== Icon-first capability language =====
+const ICON = (p, fill=false) => `<svg viewBox="0 0 24 24" fill="${fill?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const CAPS = {
+  tool_use: {label:'tool_use', color:'#8b5cf6', icon: ICON('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>')},
+  free:     {label:'free',     color:'#34d399', icon: ICON('<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8M16.5 8a2.5 2.5 0 0 0 0-5C13 3 12 8 12 8"/>')},
+  reasoning:{label:'reasoning',color:'#fbbf24', icon: ICON('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/><path d="M5 15l.6 1.4L7 17l-1.4.6L5 19l-.6-1.4L3 17l1.4-.6z"/>')},
+  vision:   {label:'vision',   color:'#22d3ee', icon: ICON('<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>')},
+  audio:    {label:'audio',    color:'#f472b6', icon: ICON('<path d="M3 10v4M7 6v12M11 3v18M15 6v12M19 10v4"/>')},
+  web:      {label:'web',      color:'#38bdf8', icon: ICON('<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>')},
+  code:     {label:'code',     color:'#a3e635', icon: ICON('<path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>')},
+  memory:   {label:'memory',   color:'#2dd4bf', icon: ICON('<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>')},
+  safety:   {label:'safety',   color:'#fb7185', icon: ICON('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>')},
+  speed:    {label:'speed',    color:'#fb923c', icon: ICON('<path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>')}
+};
+function capChip(id){const c=CAPS[id]; if(!c)return ''; return `<span class="cap" style="color:${c.color};border-color:${c.color}44;background:${c.color}18">${c.icon}${c.label}</span>`;}
+
+// ===== Modules =====
+const MODULES = [
+  {id:'catalog',    name:'Model Compare',   icon:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>', desc:'Каталог моделей: FREE-подмножество, tool_use first-class, без лимита 29.'},
+  {id:'routing',    name:'Routing Lab',     icon:'<circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M6 16v-3a3 3 0 0 1 3-3h9"/>', desc:'Динамический выбор модели по quality/latency/cost/context/modality/availability/privacy/locality/tool-compat.'},
+  {id:'skills',     name:'Skills Registry', icon:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>', desc:'Реестр переиспользуемых скиллов (извлечённых из задач).'},
+  {id:'agents',     name:'Agents Studio',   icon:'<rect x="3" y="7" width="15" height="12" rx="2"/><path d="M10 3h7a2 2 0 0 1 2 2v2"/><circle cx="8" cy="13" r="1"/><circle cx="13" cy="13" r="1"/>', desc:'Сборка и настройка агентов поверх моделей и скиллов.'},
+  {id:'workflow',   name:'Workflow Builder',icon:'<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="12" r="3"/><path d="M6 9v6M9 12h6"/>', desc:'Визуальный конструктор цепочек шагов.'},
+  {id:'playground', name:'Playground',      icon:'<path d="M6 9l6-5 6 5v10l-6 5-6-5V9z"/><path d="M12 22V9"/>', desc:'Песочница для живых вызовов моделей.'},
+  {id:'mimo',       name:'MIMO Sync',       icon:'<path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/>', desc:'Двусторонняя связь MIMO↔GPT (ntfy → portable-os/MIMO/responses).'},
+  {id:'observatory',name:'Observatory',     icon:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>', desc:'Метрики, логи, дрифт и правдивость дашборда.'},
+  {id:'taskboard',  name:'Task Board',      icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h6M3 15h6M15 9h6M15 15h6"/>', desc:'Очередь задач оркестра и их статусы.'},
+  {id:'compare',    name:'Сравнить',        icon:'<path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/>', desc:'Сравнение двух моделей + отзывы пользователей.'},
+  {id:'about',      name:'О проекте',       icon:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>', desc:'Описание проекта и контакты.'}
+];
+
+// ===== Model catalog (representative ~40; full ~400 in models.seed.json) =====
+const M = (id,name,provider,caps,o={})=>Object.assign({id,name,provider,caps,free:false,tool:false,q:6,lat:600,cost:1.5,ctx:128,mod:'text',loc:'cloud',priv:5,avail:9},o,{free:o.free||false,tool:o.tool||false});
+const MODELS = [
+  M('gpt-4o-mini','GPT-4o mini','OpenAI',['tool_use','vision','web','reasoning','safety'],{free:true,q:7,lat:700,cost:0.15,ctx:128}),
+  M('claude-haiku','Claude 3.5 Haiku','Anthropic',['tool_use','vision','safety'],{q:7,lat:600,cost:0.8,ctx:200}),
+  M('gemini-flash','Gemini 1.5 Flash','Google',['tool_use','vision','audio','web','free'],{free:true,q:7,lat:400,cost:0.075,ctx:1000}),
+  M('gemini-pro','Gemini 1.5 Pro','Google',['tool_use','vision','audio','web'],{q:8,lat:900,cost:1.25,ctx:2000}),
+  M('llama-3.1-70b','Llama 3.1 70B','Meta',['tool_use','reasoning'],{q:8,lat:800,cost:0.6,ctx:128}),
+  M('llama-3.1-8b','Llama 3.1 8B','Meta',['tool_use','free'],{free:true,q:6,lat:250,cost:0,ctx:128,loc:'local'}),
+  M('deepseek-chat','DeepSeek-V3','DeepSeek',['tool_use','code','reasoning'],{q:9,lat:900,cost:0.27,ctx:64}),
+  M('deepseek-r1','DeepSeek-R1','DeepSeek',['reasoning','code'],{q:9,lat:1200,cost:0.55,ctx:64}),
+  M('qwen2.5-72b','Qwen2.5 72B','Alibaba',['tool_use','code'],{q:8,lat:700,cost:0.4,ctx:128}),
+  M('qwen2.5-7b','Qwen2.5 7B','Alibaba',['tool_use','free'],{free:true,q:5,lat:200,cost:0,ctx:128,loc:'local'}),
+  M('mixtral-8x7b','Mixtral 8x7B','Mistral',['tool_use','free'],{free:true,q:6,lat:450,cost:0,ctx:32}),
+  M('mistral-large','Mistral Large','Mistral',['tool_use','code'],{q:8,lat:700,cost:2,ctx:128}),
+  M('groq-llama','Llama 3.3 70B','Groq',['tool_use','speed'],{q:7,lat:120,cost:0.59,ctx:128}),
+  M('groq-mixtral','Mixtral 8x7B','Groq',['tool_use','speed','free'],{free:true,q:6,lat:90,cost:0,ctx:32}),
+  M('codestral','Codestral','Mistral',['code','tool_use'],{q:8,lat:500,cost:0.2,ctx:32}),
+  M('o1-mini','o1-mini','OpenAI',['reasoning','code'],{q:9,lat:1500,cost:3,ctx:128}),
+  M('claude-opus','Claude 3.5 Opus','Anthropic',['tool_use','vision','reasoning','safety'],{q:10,lat:1200,cost:15,ctx:200}),
+  M('gemini-ultra','Gemini Ultra','Google',['tool_use','vision','audio','reasoning'],{q:9,lat:1100,cost:10,ctx:2000}),
+  M('whisper-large','Whisper Large','OpenAI',['audio','free'],{free:true,q:7,lat:900,cost:0,ctx:0,mod:'audio'}),
+  M('sdxl','SDXL','Stability',['vision','free'],{free:true,q:7,lat:2000,cost:0,ctx:0,mod:'image'}),
+  M('dall-e-3','DALL·E 3','OpenAI',['vision','safety'],{q:8,lat:2500,cost:4,ctx:0,mod:'image'}),
+  M('phi-3.5','Phi-3.5','Microsoft',['free','reasoning'],{free:true,q:5,lat:180,cost:0,ctx:128,loc:'local'}),
+  M('gemma-2-9b','Gemma 2 9B','Google',['tool_use','free'],{free:true,q:6,lat:220,cost:0,ctx:8,loc:'local'}),
+  M('command-r','Command R+','Cohere',['tool_use','web'],{q:7,lat:800,cost:0.15,ctx:128}),
+  M('cohere-embed','Embed v3','Cohere',['free'],{free:true,q:6,lat:80,cost:0,ctx:8,mod:'embed'}),
+  M('sonar-small','Sonar Small','Perplexity',['web','free'],{free:true,q:6,lat:500,cost:0,ctx:64}),
+  M('sonar-large','Sonar Large','Perplexity',['web','tool_use'],{q:7,lat:900,cost:1,ctx:128}),
+  M('titan-text','Titan Text','AWS',['safety'],{q:6,lat:700,cost:0.8,ctx:32,priv:8}),
+  M('nova-pro','Nova Pro','AWS',['tool_use','vision'],{q:8,lat:900,cost:0.8,ctx:300,priv:8}),
+  M('yi-large','Yi-Large','01.AI',['tool_use','code'],{q:8,lat:800,cost:1,ctx:32}),
+  M('glm-4','GLM-4','Zhipu',['tool_use','vision','free'],{free:true,q:7,lat:600,cost:0,ctx:128}),
+  M('ernie-4','ERNIE 4.0','Baidu',['tool_use','web'],{q:8,lat:800,cost:2,ctx:32,priv:4}),
+  M('llava-1.6','LLaVA 1.6','Open Community',['vision','free'],{free:true,q:5,lat:300,cost:0,ctx:32,loc:'local'}),
+  M('stable-code','Stable Code 3B','Stability',['code','free'],{free:true,q:5,lat:150,cost:0,ctx:16,loc:'local'}),
+  M('jamba-1.5','Jamba 1.5','AI21',['tool_use','free'],{free:true,q:6,lat:400,cost:0,ctx:256}),
+  M('ministral-8b','Ministral 8B','Mistral',['tool_use'],{q:6,lat:350,cost:0.1,ctx:128}),
+  M('grok-beta','Grok Beta','xAI',['web','reasoning'],{q:7,lat:900,cost:5,ctx:128}),
+  M('c4ai-command','C4AI Command R','Cohere',['tool_use','web','free'],{free:true,q:7,lat:700,cost:0,ctx:128}),
+  M('llama-3.2-3b','Llama 3.2 3B','Meta',['tool_use','free'],{free:true,q:4,lat:120,cost:0,ctx:128,loc:'local'}),
+  M('gemini-nano','Gemini Nano','Google',['free','audio'],{free:true,q:4,lat:60,cost:0,ctx:8,loc:'local'})
+];
+
+// ===== Router =====
+const routes = {};
+MODULES.forEach(m=>routes[m.id]=m);
+const sidebar = document.getElementById('sidebar');
+const crumb = document.getElementById('crumb');
+let active = 'catalog';
+
+function renderSidebar(){
+  sidebar.innerHTML = '<div class="side-sec">Модули</div>' + MODULES.map(m=>{
+    const c = m.id==='catalog' ? MODELS.length : '';
+    const cur = m.id===active ? 'aria-current="page"' : '';
+    return `<button class="navitem ${m.id===active?'active':''}" data-id="${m.id}" ${cur} aria-label="${m.name}">${ICON(m.icon)}<span>${m.name}</span>${c?`<span class="count">${c}</span>`:''}</button>`;
+  }).join('');
+}
+function show(id){
+  active = id;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  if(id==='catalog'){ document.getElementById('view-catalog').classList.add('active'); }
+  else if(id==='routing'){ document.getElementById('view-routing').classList.add('active'); renderRouting(); }
+  else {
+    const m = routes[id];
+    const dyn = document.getElementById('view-dynamic');
+    const r = RENDER[id];
+    dyn.innerHTML = `<div class="pagehead"><h1>${m.name}</h1><p>${m.desc}</p></div>` + (r ? r() : '<div class="placehold"><h3>Готовится</h3><p>Модуль в очереди.</p></div>');
+    dyn.classList.add('active');
+  }
+  crumb.textContent = routes[id].name;
+  renderSidebar();
+  location.hash = '#'+id;
+}
+sidebar.addEventListener('click',e=>{
+  const b = e.target.closest('.navitem'); if(!b) return; show(b.dataset.id);
+});
+window.addEventListener('hashchange',()=>{
+  const id = (location.hash||'#catalog').slice(1); if(routes[id]) show(id);
+});
+
+// ===== Catalog =====
+const capFilters = document.getElementById('capFilters');
+const catGrid = document.getElementById('catGrid');
+let activeCaps = new Set();
+let catQuery = '';
+function renderCapFilters(){
+  capFilters.innerHTML = '<button class="chip on" data-cap="" aria-pressed="true">Все</button>' + Object.keys(CAPS).map(c=>{
+    const on = activeCaps.has(c);
+    return `<button class="chip ${on?'on':''}" data-cap="${c}" aria-pressed="${on}">${CAPS[c].icon}${CAPS[c].label}</button>`;
+  }).join('');
+}
+capFilters.addEventListener('click',e=>{
+  const ch = e.target.closest('.chip'); if(!ch) return;
+  const c = ch.dataset.cap;
+  if(c==='') activeCaps.clear(); else activeCaps.has(c)?activeCaps.delete(c):activeCaps.add(c);
+  renderCapFilters(); renderCatalog();
+});
+document.getElementById('catSearch').addEventListener('input',e=>{catQuery=e.target.value.toLowerCase();renderCatalog();});
+function renderCatalog(){
+  const list = MODELS.filter(m=>{
+    const q = (m.name+' '+m.provider).toLowerCase();
+    const okQ = !catQuery || q.includes(catQuery);
+    const okC = activeCaps.size===0 || m.caps.some(c=>activeCaps.has(c));
+    return okQ && okC;
+  });
+  catGrid.innerHTML = list.map(m=>{
+    const chips = m.caps.map(capChip).join('');
+    const meta = `<div class="meta"><span><b>Q</b> ${m.q}/10</span><span><b>Lat</b> ${m.lat}ms</span><span><b>Cost</b> ${m.cost?('$'+m.cost):'0'}</span><span><b>Ctx</b> ${m.ctx?m.ctx+'K':'—'}</span></div>`;
+    return `<div class="mcard"><div class="top"><div><div class="name">${m.name}</div><div class="provider">${m.provider} · ${m.mod}</div></div>${m.free?`<span class="badge">FREE</span>`:''}</div><div class="caps">${chips}</div>${meta}<div class="scorebar"><i style="width:${Math.round(routeScore(m)/5*100)}%"></i></div></div>`;
+  }).join('') || '<div class="placehold"><h3>Ничего не найдено</h3><p>Измените фильтр или запрос.</p></div>';
+}
+
+// ===== Routing Lab =====
+const AXES = [
+  {id:'quality',label:'Quality'},
+  {id:'latency',label:'Latency (ниже лучше)'},
+  {id:'cost',label:'Cost (ниже лучше)'},
+  {id:'context',label:'Context'},
+  {id:'privacy',label:'Privacy'},
+  {id:'availability',label:'Availability'},
+  {id:'tool',label:'tool_use'},
+  {id:'free',label:'FREE'}
+];
+const weights = {quality:5,latency:5,cost:4,context:3,privacy:3,availability:3,tool:5,free:2};
+function renderRouting(){
+  const sl = document.getElementById('routingSliders');
+  sl.innerHTML = AXES.map(a=>`<div class="slider"><label>${a.label}</label><input type="range" min="0" max="10" value="${weights[a.id]}" data-axis="${a.id}"><span class="w">${weights[a.id]}</span></div>`).join('');
+  sl.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+    weights[e.target.dataset.axis]=+e.target.value;
+    e.target.parentElement.querySelector('.w').textContent=e.target.value;
+    renderRoutingRank();
+  }));
+  renderRoutingRank();
+}
+function routeScore(m){
+  const norm = (v,max,inv)=>{const x=Math.min(1,Math.max(0,v/max)); return inv?1-x:x;};
+  let s=0;
+  s+=weights.quality* (m.q/10);
+  s+=weights.latency* norm(m.lat,2500,true);
+  s+=weights.cost* (m.free?1:norm(m.cost,15,true));
+  s+=weights.context* norm(m.ctx||0,2000,false);
+  s+=weights.privacy* ((m.priv||5)/10);
+  s+=weights.availability* ((m.avail||9)/10);
+  s+=weights.tool* (m.tool?1:0);
+  s+=weights.free* (m.free?1:0);
+  return s;
+}
+function renderRoutingRank(){
+  const ranked = MODELS.map(m=>({m,sc:routeScore(m)})).sort((a,b)=>b.sc-a.sc).slice(0,5);
+  document.getElementById('routingRank').innerHTML = ranked.map((r,i)=>
+    `<div class="rankrow"><span class="pos">${i+1}</span><span class="nm">${r.m.name}</span><span class="sc">${r.sc.toFixed(1)}</span></div>`).join('');
+}
+
+// ===== Command center =====
+document.getElementById('cmdInput').addEventListener('input',e=>{
+  const q = e.target.value.toLowerCase();
+  if(!q){ return; }
+  const m = MODULES.find(x=>x.name.toLowerCase().includes(q));
+  if(m){ show(m.id); return; }
+  document.getElementById('catSearch').value = q; catQuery = q; show('catalog'); renderCatalog();
+});
+
+// ===== Module seed data =====
+const SKILLS = [
+  {n:'frontend-design',cat:'дизайн',t:['сайт','лендинг','UI']},
+  {n:'product-design',cat:'дизайн',t:['продукт','UX','прототип']},
+  {n:'design-blueprint',cat:'дизайн',t:['спека','DESIGN.md','макет']},
+  {n:'imagegen',cat:'дизайн',t:['изображение','иллюстрация']},
+  {n:'data-analytics',cat:'данные',t:['метрики','KPI','дашборд']},
+  {n:'xlsx-official',cat:'офис',t:['xlsx','таблица','csv']},
+  {n:'docx-official',cat:'офис',t:['docx','отчёт','word']},
+  {n:'pptx-official',cat:'офис',t:['презентация','слайды']},
+  {n:'pdf-official',cat:'офис',t:['pdf','OCR','выписка']},
+  {n:'arxiv',cat:'research',t:['arxiv','статья','цитата']},
+  {n:'deep-research',cat:'research',t:['исследование','источники']},
+  {n:'super-research',cat:'research',t:['эксперимент','абляция']},
+  {n:'lean-verify',cat:'инфра',t:['lean','теорема','proof']},
+  {n:'genome-diff',cat:'инфра',t:['геном','хромосома']},
+  {n:'device-adapter',cat:'инфра',t:['adb','android']},
+  {n:'ui-operator',cat:'инфра',t:['браузер','click','shot']},
+  {n:'ui-chain',cat:'инфра',t:['многошаговый','flow']},
+  {n:'dashboard-guard',cat:'инфра',t:['регрессия','снимок']},
+  {n:'now-iso',cat:'инфра',t:['время','ISO']},
+  {n:'sha16',cat:'инфра',t:['хеш','sha256']},
+  {n:'mtime',cat:'инфра',t:['mtime','дата']},
+  {n:'playwright',cat:'инфра',t:['браузер','автоматизация']},
+  {n:'skill-creator',cat:'мета',t:['новый скилл']},
+  {n:'memory-search',cat:'мета',t:['траектория','SQL']}
+];
+const AGENTS = [
+  {n:'Web Designer',r:'дизайн сайтов',model:'GPT-4o mini',skills:'frontend-design, product-design, imagegen',caps:['vision','tool_use']},
+  {n:'Data Analyst',r:'аналитика',model:'DeepSeek-V3',skills:'data-analytics, xlsx-official',caps:['code','tool_use']},
+  {n:'Code Reviewer',r:'ревью кода',model:'Claude 3.5 Haiku',skills:'lean-verify',caps:['code','tool_use','safety']},
+  {n:'Researcher',r:'исследования',model:'GPT-4o mini',skills:'arxiv, deep-research, super-research',caps:['web','reasoning','tool_use']},
+  {n:'UI Tester',r:'автотесты UI',model:'Gemini 1.5 Flash',skills:'ui-operator, ui-chain, playwright',caps:['vision','tool_use']},
+  {n:'Doc Writer',r:'документы',model:'Claude 3.5 Opus',skills:'docx-official, pptx-official',caps:['tool_use','reasoning']}
+];
+const TASKS = [
+  {c:'done',t:'Связь GPT↔MIMO (E2E)',d:'ntfy → portable-os/MIMO/responses'},
+  {c:'done',t:'App-shell каркас',d:'9 модулей, icon-first UI, hash-роутер'},
+  {c:'done',t:'Каталог 400 моделей',d:'models.seed.json + schema + генератор'},
+  {c:'done',t:'capability-icons.svg',d:'спрайт 10 способностей'},
+  {c:'in',t:'router.py',d:'8-осевой routing (запушен)'},
+  {c:'in',t:'Наполнение 7 модулей',d:'Skills/Agents/Workflow/Playground/MIMO/Observatory/Task Board'},
+  {c:'back',t:'Извлечение скиллов',d:'в .mimocode/skills/ из задач'},
+  {c:'back',t:'Playground live API',d:'подключить реальный провайдер'},
+  {c:'back',t:'Observatory лайв-метрики',d:'подключить orchestra_status.py'},
+  {c:'back',t:'Agents Studio CRUD',d:'сохранение агентов'}
+];
+let WF_STEPS = ['Ingest','Clean','Analyze','Report'];
+const MIMO_MSGS = [
+  {dir:'→ GPT', txt:'ACK_MIMO_20260814.md — E2E закрыт'},
+  {dir:'→ GPT', txt:'STATUS_ARTWEB_ORCHESTRA_20260814.md'},
+  {dir:'→ GPT', txt:'RESULT: app-shell + catalog(400) + router.py'},
+  {dir:'← GPT', txt:'GPT-MIMO-ARTWEB-ORCHESTRA-LIVE-20260814-001 (7 приоритетов)'}
+];
+
+// ===== Module renderers =====
+function tags(arr){return arr.map(t=>`<span class="tag">${t}</span>`).join('');}
+function renderSkills(){
+  return `<div class="wrap2">` + SKILLS.map(s=>`<div class="scard"><span class="cat">${s.cat}</span><div class="nm">${s.n}</div>${s.desc?`<div class="trig">${s.desc}</div>`:''}<div>${tags(s.t||[])}</div></div>`).join('') + `</div>`;
+}
+function loadAgents(){ try{const v=JSON.parse(localStorage.getItem('artweb_agents')||'null'); if(Array.isArray(v)&&v.length) return v;}catch(e){} return AGENTS; }
+function saveAgents(list){ try{ localStorage.setItem('artweb_agents', JSON.stringify(list)); }catch(e){} }
+function renderAgents(){
+  const list = loadAgents();
+  return `<div class="wrap2">` + list.map((a,i)=>`<div class="acard"><span class="role">${a.r}</span><div class="nm" style="display:flex;justify-content:space-between;align-items:center">${a.n}<button class="x" data-agent-rm="${i}" title="удалить" aria-label="Удалить агента">×</button></div><div class="meta">модель: <b>${a.model}</b></div><div>${tags((a.skills||'').split(', '))}</div><div class="caps">${(a.caps||[]).map(capChip).join('')}</div></div>`).join('') + `</div><div class="card" style="margin-top:14px"><h3 style="margin-top:0">Добавить агента</h3><div class="wfadd"><input id="agName" placeholder="Имя"><input id="agRole" placeholder="Роль"><button class="btn" id="agAdd">+ Агент</button></div></div>`;
+}
+function wfNodesHTML(){
+  return WF_STEPS.map((s,i)=>`<div class="wfnode"><div class="box"><span class="idx">${String(i+1).padStart(2,'0')}</span>${s}</div><button class="x" data-rm="${i}" aria-label="Удалить шаг">×</button></div>${i<WF_STEPS.length-1?'<div class="wfline"></div>':''}`).join('');
+}
+function renderWorkflow(){
+  return `<div class="wf"><div id="wfNodes">${wfNodesHTML()}</div><div class="wfadd"><input id="wfInput" placeholder="Название шага…"><button class="btn" id="wfAdd">+ Шаг</button></div></div>`;
+}
+function renderPlayground(){
+  const html = `<div class="pg"><textarea id="pgPrompt" placeholder="Промпт…" aria-label="Промпт для модели">Расскажи в двух предложениях, что такое ArtWeb Studio.</textarea><div class="controls"><select id="pgModel" aria-label="Модель"><option>загрузка…</option></select><select id="pgTemp" aria-label="Температура"><option>temp 0.2</option><option selected>temp 0.7</option><option>temp 1.0</option></select><button class="btn" id="pgRun">▶ Run</button></div><div class="out" id="pgOut" aria-live="polite">Загрузка моделей…</div></div>`;
+  fetch('http://127.0.0.1:8890/api/models').then(r=>r.json()).then(list=>{
+    const sel = document.getElementById('pgModel');
+    if (sel) sel.innerHTML = list.map(m=>`<option value="${m.provider}|${m.id}">${m.name}</option>`).join('');
+  }).catch(()=>{ const sel = document.getElementById('pgModel'); if (sel) sel.innerHTML = '<option value="ollama|qwen2.5:14b">Qwen2.5 14B · Ollama</option>'; });
+  return html;
+}
+function renderMimo(){
+  return `<div class="card" style="margin-bottom:14px"><h3 style="margin-top:0">Транспорт (заморожен)</h3><div class="kv"><b>GPT → MIMO</b><span class="mono">ntfy.sh/artweb-mimo-bus-20260814-8d3f2a761c4e</span></div><div class="kv"><b>MIMO → GPT</b><span class="mono">Yury197812/portable-os/master/MIMO/responses/</span></div><div class="kv"><b>Статус</b><span style="color:var(--emerald)">● CONNECTED — E2E подтверждён фактом</span></div></div><div class="card"><h3 style="margin-top:0">Последние сообщения</h3>` + MIMO_MSGS.map(m=>`<div class="kv"><b>${m.dir}</b><span>${m.txt}</span></div>`).join('') + `</div>`;
+}
+function renderObservatory(){
+  const html = `<div id="obs" aria-live="polite"><div class="placehold"><h3>Загрузка метрик оркестра…</h3><p>http://127.0.0.1:8890/api/orchestra</p></div></div>`;
+  fetch('http://127.0.0.1:8890/api/orchestra').then(r=>r.json()).then(s=>{
+    const el=document.getElementById('obs'); if(!el) return;
+    if(s.error){ el.innerHTML=`<div class="placehold"><h3>Дашборд оркестра недоступен</h3><p>${s.error}</p></div>`; return; }
+    el.innerHTML = obsHTML(s);
+  }).catch(e=>{ const el=document.getElementById('obs'); if(el) el.innerHTML=`<div class="placehold"><h3>Дашборд оркестра недоступен</h3><p>${e}</p></div>`; });
+  return html;
+}
+function obsHTML(s){
+  const t=s.tracks||{}; const d=s.drift_check||{};
+  const stat=(v,l)=>`<div class="stat"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+  const rows=Object.entries(t).map(([k,v])=>{
+    const dr=d.drift_minutes_per_track?.[k];
+    const drs=dr==null?'—':(dr>120?Math.round(dr)+'м':dr.toFixed(1)+'м');
+    const w=Math.min(200,(dr||0));
+    return `<div class="row"><span class="lb">${k}</span><div class="bar" style="width:${w}px;background:${dr>120?'var(--rose)':'var(--accent)'}"></div><span style="color:${dr>120?'var(--rose)':'var(--text2)'}">${drs}</span></div>`;
+  }).join('');
+  const g=t.T4_atom_graph||{}, lean=t.T5_lean_chain||{}, sup=t.T1_supervisor||{};
+  const statgrid = `<div class="statgrid">`
+    + stat(s.results_for_gpt?.length??0,'RESULT для GPT')
+    + stat(t.T3_registry?.total_workers??0,'воркеров в реестре')
+    + stat(t.T2_inventory?.total_capabilities??0,'capabilities')
+    + stat(`${g.atoms||0}+${g.quarks||0}`,'атомы + кварки')
+    + stat(`${lean.claims_proved||0}/${lean.claims_total||0}`,'Lean доказано')
+    + stat(sup.seen_count??0,'событий supervisor')
+    + `</div>`;
+  const verdict = d.verdict||'—';
+  const vc = verdict==='stale'?'var(--rose)':'var(--emerald)';
+  return statgrid
+    + `<h3 style="font-family:var(--head)">Дрифт треков (мин, порог 120)</h3><div class="chart">${rows}</div>`
+    + `<div class="kv" style="margin-top:14px"><b>Вердикт</b><span style="color:${vc}">${verdict} · бакет ${d.bucket_minutes} мин</span></div>`
+    + `<div class="kv"><b>Обновлено</b><span class="mono">${(s.generated_at||'').slice(0,19)}Z</span></div>`;
+}
+function renderTaskboard(){
+  const col=c=>TASKS.filter(t=>t.c===c).map(t=>`<div class="task"><div class="t">${t.t}</div><div class="d">${t.d}</div><div class="p">${t.c==='done'?'DONE':t.c==='in'?'IN PROGRESS':'BACKLOG'}</div></div>`).join('')||'<div style="color:var(--text3);font-size:12px">пусто</div>';
+  return `<div class="kanban"><div class="kcol"><h3>Backlog</h3>${col('back')}</div><div class="kcol"><h3>In Progress</h3>${col('in')}</div><div class="kcol"><h3>Done</h3>${col('done')}</div></div>`;
+}
+function renderAbout(){
+  const feats = [
+    ['Model Compare','Каталог моделей с icon-first возможностями.'],
+    ['Routing Lab','Динамический выбор модели по 8 осям.'],
+    ['Playground','Живые вызовы моделей через локальный прокси.'],
+    ['Observatory','Реальные метрики оркестра.'],
+    ['Skills Registry','Реестр переиспользуемых скиллов.'],
+    ['Agents Studio','Сборка агентов поверх моделей.'],
+    ['Workflow Builder','Визуальный конструктор цепочек.'],
+    ['MIMO Sync','Двусторонняя связь MIMO↔GPT.'],
+    ['Task Board','Канбан задач оркестра.'],
+    ['Сравнить','Сравнение моделей + отзывы.']
+  ];
+  return `<div class="card" style="margin-bottom:16px"><p style="margin:0;color:var(--text2);font-size:14px">ArtWeb Studio — командный центр конструктора сайтов и оркестра моделей. Тёмный премиум-интерфейс, icon-first язык способностей (tool_use / free / reasoning / vision / audio / web / code / memory / safety / speed) и живые подключения к локальным и облачным моделям через прокси.</p></div>
+    <h3 style="font-family:var(--head)">Что внутри (${MODULES.length-1} модулей)</h3>
+    <div class="wrap2" style="margin-bottom:16px">${feats.map(([t,d])=>`<div class="scard"><span class="cat">модуль</span><div class="nm">${t}</div><div class="trig">${d}</div></div>`).join('')}</div>
+    <div class="card"><h3 style="margin-top:0">Контакты</h3>
+      <div class="kv"><b>GitHub</b><span class="mono">github.com/Yury197812/portable-os</span></div>
+      <div class="kv"><b>Email</b><span class="mono">apohob5@gmail.com</span></div>
+      <div class="kv"><b>Канал MIMO↔GPT</b><span class="mono">ntfy: artweb-mimo-bus-20260814-8d3f2a761c4e</span></div>
+    </div>`;
+}
+const RENDER = {skills:renderSkills, agents:renderAgents, workflow:renderWorkflow, playground:renderPlayground, mimo:renderMimo, observatory:renderObservatory, taskboard:renderTaskboard, compare:renderCompare, about:renderAbout};
+
+// ===== Compare + Reviews (vanilla) =====
+const PROXY = 'http://127.0.0.1:8890';
+let cmpA = 'gpt-4o-mini', cmpB = 'claude-haiku';
+let cmpRating = {a:0, b:0};
+let myReviews = new Set();
+let orList = [];
+
+function loadMyReviews(){
+  try { const v = JSON.parse(localStorage.getItem('my_review_ids')||'[]'); if(Array.isArray(v)) myReviews = new Set(v.map(Number)); } catch(e){}
+}
+
+function modelById(id){ return MODELS.find(m=>m.id===id) || MODELS[0]; }
+
+function starsHTML(slot, n){
+  return [1,2,3,4,5].map(i=>`<button type="button" class="star-btn ${i<=n?'on':''}" data-stars="${slot}" data-n="${i}" aria-label="${i} из 5">★</button>`).join('');
+}
+
+function reviewFormHTML(slot){
+  return `
+    <div class="rev-list" id="revlist-${slot}"><div class="rnote">Загрузка отзывов…</div></div>
+    <div class="rev-form">
+      <div class="stars-input">${starsHTML(slot, cmpRating[slot])}</div>
+      <input class="rev-input" id="author-${slot}" placeholder="Ваше имя (необязательно)" aria-label="Имя">
+      <textarea class="rev-textarea" id="text-${slot}" placeholder="Текст отзыва…" aria-label="Текст отзыва"></textarea>
+      <div class="rev-row">
+        <button class="btn" id="send-${slot}">Отправить отзыв</button>
+        <span class="rev-err" id="err-${slot}"></span>
+      </div>
+    </div>`;
+}
+
+function renderCompare(){
+  const opts = MODELS.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+  setTimeout(()=>{ renderCmpTable(); loadOR('a'); loadOR('b'); loadReviews('a'); loadReviews('b'); }, 0);
+  return `
+    <div class="toolbar">
+      <select class="cmp-select" id="cmpA" aria-label="Модель A">${opts}</select>
+      <span class="sep2">vs</span>
+      <select class="cmp-select" id="cmpB" aria-label="Модель B">${opts}</select>
+    </div>
+    <div class="reviews">
+      <div class="card">
+        <h3 id="cmpTitleA">${modelById(cmpA).name}</h3>
+        <div id="ordata-a"><div class="rnote">Загрузка данных OpenRouter…</div></div>
+        <div class="rnote">Оставляйте отзывы — они сохраняются в SQLite и видны всем.</div>
+        ${reviewFormHTML('a')}
+      </div>
+      <div class="card">
+        <h3 id="cmpTitleB">${modelById(cmpB).name}</h3>
+        <div id="ordata-b"><div class="rnote">Загрузка данных OpenRouter…</div></div>
+        <div class="rnote">Оставляйте отзывы — они сохраняются в SQLite и видны всем.</div>
+        ${reviewFormHTML('b')}
+      </div>
+    </div>
+    <table class="cmp" id="cmpTable" style="margin-top:18px"></table>`;
+}
+
+function renderCmpTable(){
+  const ma = modelById(cmpA), mb = modelById(cmpB);
+  const rows = [
+    ['Провайдер', ma.provider, mb.provider],
+    ['Модальность', ma.mod, mb.mod],
+    ['Качество', ma.q+'/10', mb.q+'/10'],
+    ['Латентность', ma.lat+'ms', mb.lat+'ms'],
+    ['Цена', ma.free?'FREE':'$'+ma.cost+'/1M', mb.free?'FREE':'$'+mb.cost+'/1M'],
+    ['Контекст', ma.ctx?ma.ctx+'K':'—', mb.ctx?mb.ctx+'K':'—']
+  ];
+  const t = document.getElementById('cmpTable');
+  if(!t) return;
+  t.innerHTML = `<thead><tr><th>Параметр</th><th>${ma.name}</th><th>${mb.name}</th></tr></thead><tbody>`
+    + rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')
+    + `<tr><td>Возможности</td><td><div class="caps">${ma.caps.map(capChip).join('')}</div></td><td><div class="caps">${mb.caps.map(capChip).join('')}</div></td></tr></tbody>`;
+}
+
+function loadReviews(slot){
+  const id = slot==='a' ? cmpA : cmpB;
+  fetch(`${PROXY}/api/reviews?model=${id}`).then(r=>r.json()).then(d=>{
+    const el = document.getElementById('revlist-'+slot);
+    if(!el) return;
+    const rs = d.reviews || [];
+    el.innerHTML = rs.length ? rs.map(r=>`
+      <div class="review">
+        <div class="rh">
+          <b>${r.author}</b>
+          <span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+          <span class="rd">${r.ts}</span>
+          ${myReviews.has(r.id) ? `<button class="rev-del" data-del="${r.id}" data-slot="${slot}" aria-label="Удалить отзыв">×</button>` : ''}
+        </div>
+        <div class="rt">${r.text}</div>
+      </div>`).join('') : '<div class="rnote">Отзывов пока нет — будьте первым.</div>';
+  }).catch(()=>{});
+}
+
+function submitReview(slot){
+  const id = slot==='a' ? cmpA : cmpB;
+  const author = document.getElementById('author-'+slot).value.trim();
+  const text = document.getElementById('text-'+slot).value.trim();
+  const err = document.getElementById('err-'+slot);
+  if(!text){ err.textContent='Напишите текст отзыва.'; return; }
+  if(!cmpRating[slot]){ err.textContent='Поставьте оценку.'; return; }
+  err.textContent='';
+  fetch(`${PROXY}/api/reviews`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:id,author,rating:cmpRating[slot],text})})
+    .then(r=>r.json()).then(j=>{
+      if(j.error){ err.textContent=j.error; return; }
+      myReviews.add(j.id);
+      try{ localStorage.setItem('my_review_ids', JSON.stringify([...myReviews])); }catch(e){}
+      document.getElementById('author-'+slot).value='';
+      document.getElementById('text-'+slot).value='';
+      cmpRating[slot]=0;
+      document.querySelectorAll(`[data-stars="${slot}"]`).forEach(b=>b.classList.remove('on'));
+      loadReviews(slot);
+    }).catch(e=>{ err.textContent='Ошибка соединения: '+e; });
+}
+
+function deleteReview(id, slot){
+  fetch(`${PROXY}/api/reviews/${id}`,{method:'DELETE'}).then(r=>{
+    if(r.ok){ myReviews.delete(id); try{ localStorage.setItem('my_review_ids', JSON.stringify([...myReviews])); }catch(e){} loadReviews(slot); }
+  }).catch(()=>{});
+}
+
+// ===== OpenRouter real data =====
+function findOR(name){
+  const tokens = name.toLowerCase().split(/[^a-z0-9]+/).filter(t=>t.length>=2);
+  let best=null, bestScore=0;
+  for(const m of orList){
+    const hay = `${m.id} ${m.name||''}`.toLowerCase();
+    let s=0;
+    for(const t of tokens) if(hay.includes(t)) s++;
+    if(s>bestScore){ bestScore=s; best=m; }
+  }
+  return bestScore >= Math.min(2, tokens.length) ? best : null;
+}
+
+function orHTML(or){
+  if(!or) return '<div class="rnote">Не найдено соответствие в каталоге OpenRouter.</div>';
+  const p = or.pricing || {};
+  const perM = v => v ? '$'+(parseFloat(v)*1e6).toFixed(2)+'/1M' : '—';
+  return `
+    <div class="rnote">Реальные данные OpenRouter API.</div>
+    <div class="kv"><b>Описание</b><span style="color:var(--text2)">${or.description||'—'}</span></div>
+    <div class="kv"><b>Цена</b><span class="mono">prompt ${perM(p.prompt)} · completion ${perM(p.completion)}</span></div>
+    <div class="kv"><b>Контекст</b><span>${or.context_length?or.context_length.toLocaleString()+' токенов':'—'}</span></div>
+    <div class="kv"><b>Макс. токенов ответа</b><span>${(or.top_provider&&or.top_provider.max_completion_tokens)?or.top_provider.max_completion_tokens.toLocaleString():'—'}</span></div>
+    <div class="kv"><b>Knowledge cutoff</b><span>${or.knowledge_cutoff||'—'}</span></div>`;
+}
+
+function loadOR(slot){
+  const id = slot==='a' ? cmpA : cmpB;
+  const el = document.getElementById('ordata-'+slot);
+  if(!el) return;
+  if(!orList.length){ el.innerHTML = '<div class="rnote">Каталог OpenRouter не загружен.</div>'; return; }
+  el.innerHTML = orHTML(findOR(modelById(id).name));
+}
+
+function loadORList(){
+  fetch(`${PROXY}/api/openrouter`).then(r=>r.json()).then(d=>{
+    if(Array.isArray(d.data)){ orList = d.data; if(active==='compare'){ loadOR('a'); loadOR('b'); } }
+  }).catch(()=>{});
+}
+
+// ===== Delegated events (dynamic module content) =====
+document.addEventListener('click',e=>{
+  if(e.target.id==='pgRun'){
+    const out=document.getElementById('pgOut');
+    const sel=document.getElementById('pgModel');
+    const [provider, model]=(sel.value||'ollama|qwen2.5:14b').split('|');
+    const prompt=document.getElementById('pgPrompt').value;
+    const temp=parseFloat(document.getElementById('pgTemp').value.replace('temp ',''));
+    out.textContent='… запрос к '+model+' …';
+    fetch('http://127.0.0.1:8891/api/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider,model,messages:[{role:'user',content:prompt}],temperature:temp})})
+      .then(r=>r.json()).then(j=>{
+        if(j.status==='error') out.textContent='Ошибка: '+(j.error||'runtime error');
+        else out.textContent=`[run ${j.run_id} · ${j.backend} · ${j.model} · ${j.latency_ms}ms]\n\n`+j.output;
+      }).catch(err=>{ out.textContent='Ошибка соединения с рантаймом (запусти runtime.py serve на :8891): '+err; });
+  }
+  if(e.target.id==='wfAdd'){
+    const inp=document.getElementById('wfInput'); if(!inp.value.trim())return;
+    WF_STEPS.push(inp.value.trim()); inp.value=''; document.getElementById('wfNodes').innerHTML=wfNodesHTML();
+  }
+  if(e.target.id==='agAdd'){
+    const n=document.getElementById('agName').value.trim(); if(!n) return;
+    const r=document.getElementById('agRole').value.trim()||'агент';
+    const list=loadAgents(); list.push({n,r,model:'Qwen2.5 14B · Ollama',skills:'',caps:['tool_use']}); saveAgents(list);
+    show('agents');
+  }
+  if(e.target.classList&&e.target.classList.contains('x')&&e.target.dataset.agentRm!=null){
+    const list=loadAgents(); list.splice(+e.target.dataset.agentRm,1); saveAgents(list); show('agents');
+  }
+  if(e.target.classList&&e.target.classList.contains('x')&&e.target.dataset.rm){
+    WF_STEPS.splice(+e.target.dataset.rm,1); document.getElementById('wfNodes').innerHTML=wfNodesHTML();
+  }
+  if(e.target.classList&&e.target.classList.contains('star-btn')){
+    const slot=e.target.dataset.stars, n=+e.target.dataset.n;
+    cmpRating[slot]=n;
+    document.querySelectorAll(`[data-stars="${slot}"]`).forEach(b=>b.classList.toggle('on', +b.dataset.n<=n));
+  }
+  if(e.target.id==='send-a'||e.target.id==='send-b'){ submitReview(e.target.id==='send-a'?'a':'b'); }
+  if(e.target.classList&&e.target.classList.contains('rev-del')){ deleteReview(+e.target.dataset.del, e.target.dataset.slot); }
+});
+
+document.addEventListener('change',e=>{
+  if(e.target.id==='cmpA'){ cmpA=e.target.value; document.getElementById('cmpTitleA').textContent=modelById(cmpA).name; renderCmpTable(); loadOR('a'); loadReviews('a'); }
+  if(e.target.id==='cmpB'){ cmpB=e.target.value; document.getElementById('cmpTitleB').textContent=modelById(cmpB).name; renderCmpTable(); loadOR('b'); loadReviews('b'); }
+});
+
+// ===== Live data (proxy :8890) — upgrade embedded seeds to real data =====
+function bootData(){
+  fetch('http://127.0.0.1:8890/api/catalog').then(r=>r.json()).then(list=>{
+    if(!Array.isArray(list)||!list.length) return;
+    MODELS.length=0;
+    list.forEach(m=>MODELS.push({id:m.id,name:m.name,provider:m.provider,caps:m.capabilities||[],free:!!m.free,tool:!!m.tool_use,q:m.quality??6,lat:m.latency_ms??600,cost:m.cost_per_mtok??0,ctx:m.context_k??0,mod:m.modality||'text',priv:m.privacy??5,avail:m.availability??9}));
+    if(active==='catalog'){renderCatalog();} renderSidebar();
+  }).catch(()=>{});
+  fetch('http://127.0.0.1:8890/api/skills').then(r=>r.json()).then(list=>{
+    if(!Array.isArray(list)||!list.length) return;
+    SKILLS.length=0;
+    list.forEach(s=>SKILLS.push({n:s.n,cat:s.cat||'general',t:s.t||[],desc:s.desc||''}));
+    if(active==='skills'){show('skills');}
+  }).catch(()=>{});
+}
+
+// ===== Boot =====
+const init = (location.hash||'#catalog').slice(1);
+show(routes[init]?init:'catalog');
+renderCapFilters();
+renderCatalog();
+loadMyReviews();
+loadORList();
+bootData();
+</script>
+</body>
+</html>

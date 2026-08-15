@@ -1,0 +1,10 @@
+{
+  "run_id": "820d94c4d88c",
+  "model": "qwen2.5:14b",
+  "backend": "ollama",
+  "prompt": "Say OK in one word",
+  "output": "OK",
+  "latency_ms": 7380,
+  "status": "ok",
+  "ts": "2026-08-15T05:24:58Z"
+}

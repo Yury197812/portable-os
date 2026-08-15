@@ -1,0 +1,16 @@
+{
+  "id": "artweb-chat-run",
+  "version": 1,
+  "description": "Workflow graph for a chat run: validate -> route -> execute -> record.",
+  "nodes": [
+    { "id": "validate", "label": "Validate payload" },
+    { "id": "route", "label": "Route to backend provider" },
+    { "id": "execute", "label": "Execute chat via backend" },
+    { "id": "record", "label": "Record result and state" }
+  ],
+  "edges": [
+    { "from": "validate", "to": "route" },
+    { "from": "route", "to": "execute" },
+    { "from": "execute", "to": "record" }
+  ]
+}
