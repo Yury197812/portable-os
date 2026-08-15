@@ -301,6 +301,92 @@ def discover_local_models() -> dict:
     return {"scope": "local discovery (no capability inference)", "discovered": discovered}
 
 
+# ---------------------------------------------------------------------------
+# PASS025: capability quarantine with dependency-graph propagation
+# ---------------------------------------------------------------------------
+#
+# Quarantine propagates along TOOL/SKILL/CAPABILITY -> AGENT -> WORKFLOW edges:
+# quarantining a capability also quarantines every agent that depends on it,
+# and every workflow that depends on those agents. Fail-closed: a quarantined
+# node may not be routed until explicitly cleared.
+
+# dependency graph: capability -> agents -> workflows
+_CAP_DEPS = {
+    "tool_use": {"agents": ["web-designer", "data-analyst", "ui-tester"], "workflows": ["chat-run", "agent-loop"]},
+    "code": {"agents": ["code-reviewer"], "workflows": ["code-review"]},
+    "vision": {"agents": ["ui-tester"], "workflows": ["ui-e2e"]},
+    "web": {"agents": ["researcher"], "workflows": ["deep-research"]},
+    "speed": {"agents": [], "workflows": ["fast-chat"]},
+}
+
+# current quarantine state: capability -> {reason, since, propagated}
+_QUARANTINE: dict[str, dict] = {}
+
+
+def _quarantine_cap(cap: str, reason: str) -> dict:
+    entry = {"reason": reason, "since": now_iso(), "propagated": {"agents": [], "workflows": []}}
+    deps = _CAP_DEPS.get(cap, {"agents": [], "workflows": []})
+    entry["propagated"]["agents"] = list(deps.get("agents", []))
+    entry["propagated"]["workflows"] = list(deps.get("workflows", []))
+    _QUARANTINE[cap] = entry
+    return entry
+
+
+def quarantine(cap: str, reason: str) -> dict:
+    """Quarantine a capability and propagate to dependent agents + workflows.
+
+    Returns the full propagation result. Quarantining is idempotent; clearing
+    is separate (unquarantine)."""
+    deps = _CAP_DEPS.get(cap)
+    if deps is None:
+        return {"ok": False, "error": f"unknown capability {cap}", "known": sorted(_CAP_DEPS.keys())}
+    entry = _quarantine_cap(cap, reason)
+    return {
+        "ok": True,
+        "capability": cap,
+        "reason": reason,
+        "quarantined_agents": entry["propagated"]["agents"],
+        "quarantined_workflows": entry["propagated"]["workflows"],
+    }
+
+
+def unquarantine(cap: str) -> dict:
+    """Clear a quarantine. Only clears the capability itself; dependent agents
+    and workflows that were independently quarantined stay quarantined."""
+    if cap not in _QUARANTINE:
+        return {"ok": False, "error": f"{cap} not quarantined"}
+    del _QUARANTINE[cap]
+    return {"ok": True, "capability": cap, "cleared": True}
+
+
+def quarantine_status() -> dict:
+    """Full quarantine state: which capabilities/agents/workflows are blocked."""
+    caps = {}
+    blocked_agents = set()
+    blocked_workflows = set()
+    for cap, e in _QUARANTINE.items():
+        caps[cap] = {"reason": e["reason"], "since": e["since"], "propagated": e["propagated"]}
+        blocked_agents.update(e["propagated"]["agents"])
+        blocked_workflows.update(e["propagated"]["workflows"])
+    return {
+        "quarantined_capabilities": caps,
+        "blocked_agents": sorted(blocked_agents),
+        "blocked_workflows": sorted(blocked_workflows),
+        "policy": "fail-closed: quarantined node cannot be routed until cleared",
+    }
+
+
+def is_quarantined(kind: str, key: str) -> bool:
+    """Fail-closed routing gate: is this agent/workflow/capability blocked?"""
+    if kind == "capability":
+        return key in _QUARANTINE
+    st = quarantine_status()
+    if kind == "agent":
+        return key in st["blocked_agents"]
+    if kind == "workflow":
+        return key in st["blocked_workflows"]
+    return False
+
 
 def now_iso() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -874,6 +960,8 @@ class H(BaseHTTPRequestHandler):
             self._json(reconcile_inventory(_INVENTORY))
         elif self.path == "/api/discover":
             self._json(discover_local_models())
+        elif self.path == "/api/quarantine":
+            self._json(quarantine_status())
         elif self.path.startswith("/api/autoswitch/"):
             run_id = self.path.split("/")[-1]
             res = read_run_result(run_id)
@@ -932,6 +1020,16 @@ class H(BaseHTTPRequestHandler):
 
         if self.path == "/api/vault/unbind":
             result = unbind_secret(payload.get("provider", ""))
+            self._json(result, 200 if result.get("ok") else 400)
+            return
+
+        if self.path == "/api/quarantine":
+            result = quarantine(payload.get("capability", ""), payload.get("reason", "unspecified"))
+            self._json(result, 200 if result.get("ok") else 400)
+            return
+
+        if self.path == "/api/unquarantine":
+            result = unquarantine(payload.get("capability", ""))
             self._json(result, 200 if result.get("ok") else 400)
             return
 
