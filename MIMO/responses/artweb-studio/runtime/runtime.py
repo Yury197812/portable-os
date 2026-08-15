@@ -19,12 +19,14 @@ Usage:
   python runtime.py serve [--port 8891]      # HTTP /api/runs
   python runtime.py graph                    # print the DAG
   python runtime.py state                    # print current state
+  python runtime.py verify                   # verify MANIFEST signature + hashes
 
-Stdlib-only.
+Depends on `cryptography` for Ed25519 signature verification (fail-closed).
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -32,6 +34,8 @@ import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.request import Request, urlopen
+
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 
 RUNTIME_DIR = Path(__file__).parent
 GRAPH_PATH = RUNTIME_DIR / "graph.json"
@@ -42,9 +46,32 @@ RESULT_PATH = RUNTIME_DIR / "result.json"
 CHAT_URL = "http://127.0.0.1:8890/api/chat"
 DEFAULT_PORT = 8891
 
+# Signed-update verification (fail-closed)
+PUBLIC_KEY_HEX = "6c63fc13105cef70020e44bb05657aef4a28d12687fa1300502b1246b8448077"
+MANIFEST_PATH = RUNTIME_DIR / "MANIFEST.json"
+MANIFEST_SIG_PATH = RUNTIME_DIR / "MANIFEST.sig"
+
 
 def now_iso() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+
+def verify_integrity() -> tuple[bool, str]:
+    """Fail-closed: verify MANIFEST Ed25519 signature + file hashes."""
+    try:
+        if not MANIFEST_PATH.exists() or not MANIFEST_SIG_PATH.exists():
+            return False, "MANIFEST or signature missing"
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        canonical = json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()
+        pub = Ed25519PublicKey.from_public_bytes(bytes.fromhex(PUBLIC_KEY_HEX))
+        pub.verify(MANIFEST_SIG_PATH.read_bytes(), canonical)
+        for f in manifest.get("files", []):
+            actual = hashlib.sha256((RUNTIME_DIR / f["path"]).read_bytes()).hexdigest()
+            if actual != f["sha256"]:
+                return False, f"hash mismatch: {f['path']}"
+        return True, "ok"
+    except Exception as e:
+        return False, str(e)[:120]
 
 
 def load_graph() -> dict:
@@ -213,8 +240,19 @@ def main() -> int:
 
     sub.add_parser("graph", help="print the DAG")
     sub.add_parser("state", help="print current state")
+    sub.add_parser("verify", help="verify MANIFEST signature + hashes")
 
     args = p.parse_args()
+
+    if args.cmd == "verify":
+        ok, err = verify_integrity()
+        print(f"integrity: {'OK' if ok else 'FAIL'} ({err})")
+        return 0 if ok else 2
+
+    ok, err = verify_integrity()
+    if not ok:
+        print(f"INTEGRITY FAIL (fail-closed, refusing to run): {err}", file=sys.stderr)
+        return 2
 
     if args.cmd == "run":
         result = run({"model": args.model, "prompt": args.prompt, "provider": args.provider})
