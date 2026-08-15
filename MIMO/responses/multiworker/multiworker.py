@@ -548,7 +548,7 @@ def battlecheck(results_by_worker: dict[str, dict]) -> dict:
     if a is None:
         return {"verdict": "INCOMPLETE", "reason": "WORKER_A result missing"}
     if b is None:
-        return {"verdict": "INCOMPLETE", "reason": "WORKER_B not live (waiting heartbeat)"}
+        return {"verdict": "INCOMPLETE", "reason": "WORKER_B not calibrated (no verified numbers) or not live"}
 
     metrics = {}
     score_a = score_b = 0
