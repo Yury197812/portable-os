@@ -1,4 +1,5 @@
 """Tests for the ArtWeb Studio runtime engine (runtime.py)."""
+import json
 import sys
 from pathlib import Path
 
@@ -16,6 +17,7 @@ def isolated(tmp_path, monkeypatch):
     monkeypatch.setattr(runtime, "STATE_PATH", tmp_path / "state.json")
     monkeypatch.setattr(runtime, "EVENTS_PATH", tmp_path / "events.jsonl")
     monkeypatch.setattr(runtime, "RESULT_PATH", tmp_path / "result.json")
+    monkeypatch.setattr(runtime, "SNAPSHOT_DIR", tmp_path / "snapshots")
     return tmp_path
 
 
@@ -47,6 +49,47 @@ def test_state_roundtrip(isolated):
     assert st["runs_total"] == 3
     assert st["last_run_id"] == "abc"
     assert "updated_at" in st
+
+
+def test_migration_adds_schema_version(isolated):
+    state_path = Path(str(runtime.STATE_PATH))
+    state_path.write_text(json.dumps({"runs_total": 3}))
+    state = runtime.migrate_state()
+    assert state["schema_version"] == 1
+    assert state["runs_total"] == 3
+    assert runtime.latest_snapshot() is not None
+
+
+def test_rollback_restores_snapshot(isolated):
+    state_path = Path(str(runtime.STATE_PATH))
+    state_path.write_text(json.dumps({"runs_total": 3, "schema_version": 1}))
+    runtime.snapshot_state()
+    state_path.write_text(json.dumps({"runs_total": 99, "schema_version": 1}))
+    assert runtime.rollback_state()["runs_total"] == 3
+
+
+def test_rollback_refused_while_serving(isolated):
+    runtime._serving = True
+    try:
+        with pytest.raises(RuntimeError):
+            runtime.rollback_state()
+    finally:
+        runtime._serving = False
+
+
+def test_migration_auto_restore_on_failure(isolated, monkeypatch):
+    state_path = Path(str(runtime.STATE_PATH))
+    state_path.write_text(json.dumps({"runs_total": 3}))
+    runtime.snapshot_state()
+
+    def boom(self, *a, **k):
+        raise OSError("disk full")
+
+    monkeypatch.setattr(Path, "write_text", boom)
+    with pytest.raises(OSError):
+        runtime.migrate_state()
+    monkeypatch.undo()
+    assert json.loads(state_path.read_text())["runs_total"] == 3
 
 
 def test_integrity_ok():
