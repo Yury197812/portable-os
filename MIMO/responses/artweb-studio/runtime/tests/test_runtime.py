@@ -97,6 +97,11 @@ def test_integrity_ok():
     assert ok, err
 
 
+def test_diagnose_returns_expected_checks():
+    checks = {d["check"] for d in runtime.diagnose()}
+    assert {"integrity", "graph", "backend", "local_model"} <= checks
+
+
 @pytest.mark.integration
 def test_run_live():
     """Live run via the proxy + local Ollama; skipped if backend is down."""
@@ -110,3 +115,17 @@ def test_run_live():
     assert result["run_id"]
     assert result["output"]
     assert result["latency_ms"] > 0
+
+
+@pytest.mark.integration
+def test_onboard_live():
+    """Onboarding with LIVE chat probe; skipped if backend is down."""
+    import urllib.request
+    try:
+        urllib.request.urlopen(runtime.CHAT_URL.replace("/api/chat", "/api/health"), timeout=5)
+    except Exception:
+        pytest.skip("backend proxy not available")
+    result = runtime.onboard()
+    assert result["ready"] is True
+    assert result["live_probe"]["ok"] is True
+    assert result["live_probe"]["content"]
