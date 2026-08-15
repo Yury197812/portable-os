@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-runtime.py — ArtWeb Studio executable runtime (durable core).
+runtime.py — ArtWeb Studio executable runtime (durable core + security layer).
 
 A "run" executes a workflow graph (validate -> route -> execute -> record)
 over the model catalog. Every run is a first-class entity with a run_id and
@@ -11,8 +11,10 @@ durable per-run artifacts stored under runs/<run_id>/:
   runs/<run_id>/events.jsonl — append-only event log, globally monotonic `seq`
   runs/<run_id>/result.json  — terminal result (ok OR error), durable
 
-A global aggregate state.json (runs_total, last_run_id, last_status) is kept
-for convenience; it is NOT the source of truth — per-run artifacts are.
+A global aggregate state.json (schema_version, runs_total, last_run_id,
+last_status) is kept for convenience; it is NOT the source of truth —
+per-run artifacts are. Signed-update verification (Ed25519 over MANIFEST)
+and state migration/snapshot/rollback are fail-closed.
 
 Chat inference is delegated over HTTP to the playground proxy
 (http://127.0.0.1:8890/api/chat), which owns the provider keys. This is an
@@ -24,12 +26,16 @@ Usage:
   python runtime.py serve [--port 8891]      # HTTP /api/runs
   python runtime.py graph                    # print the DAG
   python runtime.py state                    # print current state
+  python runtime.py verify                   # verify MANIFEST signature + hashes
+  python runtime.py snapshot / migrate / rollback
+  python runtime.py diagnose / onboard
 
-Stdlib-only.
+Depends on `cryptography` for Ed25519 signature verification (fail-closed).
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -40,6 +46,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.request import Request, urlopen
 
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+
 RUNTIME_DIR = Path(__file__).parent
 RUNS_DIR = RUNTIME_DIR / "runs"
 GRAPH_PATH = RUNTIME_DIR / "graph.json"
@@ -47,6 +55,16 @@ STATE_PATH = RUNTIME_DIR / "state.json"
 
 CHAT_URL = "http://127.0.0.1:8890/api/chat"
 DEFAULT_PORT = 8891
+
+# Signed-update verification (fail-closed)
+PUBLIC_KEY_HEX = "6c63fc13105cef70020e44bb05657aef4a28d12687fa1300502b1246b8448077"
+MANIFEST_PATH = RUNTIME_DIR / "MANIFEST.json"
+MANIFEST_SIG_PATH = RUNTIME_DIR / "MANIFEST.sig"
+
+# State schema + snapshots (migration with auto-restore + offline-gated rollback)
+STATE_SCHEMA_VERSION = 1
+SNAPSHOT_DIR = RUNTIME_DIR / "snapshots"
+_serving = False  # True while the HTTP server is running
 
 # CORS: localhost-only allowlist. Never wildcard — a hostile origin must be
 # rejected by the browser, not granted.
@@ -88,6 +106,24 @@ def _read_json(path: Path, default=None):
     return default
 
 
+def verify_integrity() -> tuple[bool, str]:
+    """Fail-closed: verify MANIFEST Ed25519 signature + file hashes."""
+    try:
+        if not MANIFEST_PATH.exists() or not MANIFEST_SIG_PATH.exists():
+            return False, "MANIFEST or signature missing"
+        manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        canonical = json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()
+        pub = Ed25519PublicKey.from_public_bytes(bytes.fromhex(PUBLIC_KEY_HEX))
+        pub.verify(MANIFEST_SIG_PATH.read_bytes(), canonical)
+        for f in manifest.get("files", []):
+            actual = hashlib.sha256((RUNTIME_DIR / f["path"]).read_bytes()).hexdigest()
+            if actual != f["sha256"]:
+                return False, f"hash mismatch: {f['path']}"
+        return True, "ok"
+    except Exception as e:
+        return False, str(e)[:120]
+
+
 def load_graph() -> dict:
     return _read_json(GRAPH_PATH) or {
         "id": "artweb-chat-run",
@@ -106,13 +142,14 @@ def _seed_seq() -> None:
     """Restore the monotonic counter past any already-persisted events."""
     with _LOCK:
         hi = 0
-        for ev_path in RUNS_DIR.glob("*/events.jsonl"):
-            for line in ev_path.read_text(encoding="utf-8").splitlines():
-                try:
-                    rec = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                hi = max(hi, int(rec.get("seq", 0)))
+        if RUNS_DIR.exists():
+            for ev_path in RUNS_DIR.glob("*/events.jsonl"):
+                for line in ev_path.read_text(encoding="utf-8").splitlines():
+                    try:
+                        rec = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    hi = max(hi, int(rec.get("seq", 0)))
         _SEQ["value"] = max(_SEQ["value"], hi)
 
 
@@ -159,12 +196,67 @@ def read_run_events(run_id: str) -> list[dict]:
 
 
 def load_state() -> dict:
-    return _read_json(STATE_PATH) or {"runs_total": 0}
+    if STATE_PATH.exists():
+        state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+        if state.get("schema_version", 0) < STATE_SCHEMA_VERSION:
+            return migrate_state()
+        return state
+    return {"schema_version": STATE_SCHEMA_VERSION, "runs_total": 0}
 
 
 def save_state(state: dict) -> None:
     state["updated_at"] = now_iso()
+    state.setdefault("schema_version", STATE_SCHEMA_VERSION)
     _atomic_write(STATE_PATH, json.dumps(state, ensure_ascii=False, indent=2))
+
+
+def snapshot_state() -> Path | None:
+    """Copy current state.json into snapshots/ (pre-migration snapshot)."""
+    if not STATE_PATH.exists():
+        return None
+    SNAPSHOT_DIR.mkdir(exist_ok=True)
+    ts = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    snap = SNAPSHOT_DIR / f"state.{ts}.json"
+    snap.write_bytes(STATE_PATH.read_bytes())
+    return snap
+
+
+def latest_snapshot() -> Path | None:
+    if not SNAPSHOT_DIR.exists():
+        return None
+    snaps = sorted(SNAPSHOT_DIR.glob("state.*.json"))
+    return snaps[-1] if snaps else None
+
+
+def migrate_state() -> dict:
+    """Migrate state.json to the latest schema. Pre-migration snapshot + auto-restore."""
+    state = json.loads(STATE_PATH.read_text(encoding="utf-8")) if STATE_PATH.exists() else {"runs_total": 0}
+    version = state.get("schema_version", 0)
+    if version >= STATE_SCHEMA_VERSION:
+        return state
+    snap = snapshot_state()
+    try:
+        # v0 -> v1: tag schema_version, keep existing fields (no transform needed)
+        state["schema_version"] = STATE_SCHEMA_VERSION
+        state["updated_at"] = now_iso()
+        STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+        return state
+    except Exception:
+        # auto-restore from the pre-migration snapshot
+        if snap and snap.exists():
+            STATE_PATH.write_bytes(snap.read_bytes())
+        raise
+
+
+def rollback_state() -> dict:
+    """Restore the latest snapshot. Offline-gated: refuse while serving."""
+    if _serving:
+        raise RuntimeError("rollback refused: runtime is serving (offline-gated)")
+    snap = latest_snapshot()
+    if not snap:
+        raise FileNotFoundError("no snapshot to roll back to")
+    STATE_PATH.write_bytes(snap.read_bytes())
+    return json.loads(STATE_PATH.read_text(encoding="utf-8"))
 
 
 def route_backend(payload: dict) -> str:
@@ -182,6 +274,64 @@ def chat(provider: str, model: str, messages: list, temperature: float = 0.7) ->
     req = Request(CHAT_URL, data=body, method="POST", headers={"Content-Type": "application/json"})
     with urlopen(req, timeout=120) as r:
         return json.loads(r.read().decode())
+
+
+def diagnose() -> list[dict]:
+    """First-run diagnostics, classified BLOCKER vs WARN."""
+    results = []
+
+    ok, err = verify_integrity()
+    results.append({"check": "integrity", "severity": "ok" if ok else "BLOCKER", "detail": err if not ok else "ok"})
+
+    g = load_graph()
+    if not g.get("nodes") or not g.get("edges"):
+        results.append({"check": "graph", "severity": "BLOCKER", "detail": "empty graph"})
+    else:
+        results.append({"check": "graph", "severity": "ok", "detail": f"{len(g['nodes'])} nodes"})
+
+    try:
+        with urlopen(CHAT_URL.replace("/api/chat", "/api/health"), timeout=5) as r:
+            r.read()
+        results.append({"check": "backend", "severity": "ok", "detail": "proxy reachable"})
+    except Exception as e:
+        results.append({"check": "backend", "severity": "BLOCKER", "detail": str(e)[:120]})
+
+    try:
+        with urlopen("http://127.0.0.1:11434/v1/models", timeout=4) as r:
+            data = json.loads(r.read().decode())
+        ids = [m.get("id", "") for m in data.get("data", [])]
+        if any("qwen2.5" in i for i in ids):
+            results.append({"check": "local_model", "severity": "ok", "detail": "qwen2.5 present"})
+        else:
+            results.append({"check": "local_model", "severity": "WARN", "detail": "qwen2.5:14b not in Ollama"})
+    except Exception as e:
+        results.append({"check": "local_model", "severity": "WARN", "detail": f"ollama unreachable: {str(e)[:80]}"})
+
+    return results
+
+
+def chat_probe() -> dict:
+    """LIVE chat probe: a real completion over the backend (not just a health ping)."""
+    t0 = time.time()
+    try:
+        resp = chat("ollama", "qwen2.5:14b", [{"role": "user", "content": "Reply with the single word OK"}], 0.0)
+        content = (resp.get("content") or "").strip()
+        return {"ok": bool(content), "content": content[:80],
+                "latency_ms": resp.get("latency_ms") or int((time.time() - t0) * 1000)}
+    except Exception as e:
+        return {"ok": False, "error": str(e)[:120], "latency_ms": int((time.time() - t0) * 1000)}
+
+
+def onboard() -> dict:
+    """Onboarding: diagnostics (BLOCKER/WARN) + LIVE chat probe."""
+    diags = diagnose()
+    blockers = [d for d in diags if d["severity"] == "BLOCKER"]
+    return {
+        "diagnostics": diags,
+        "blockers": len(blockers),
+        "live_probe": chat_probe(),
+        "ready": not blockers,
+    }
 
 
 def _bump_aggregate(run_id: str, status: str) -> None:
@@ -314,7 +464,7 @@ class H(BaseHTTPRequestHandler):
         elif self.path == "/api/state":
             self._json(load_state())
         elif self.path == "/api/runs":
-            ids = sorted(d.name for d in RUNS_DIR.iterdir() if d.is_dir())
+            ids = sorted(d.name for d in RUNS_DIR.iterdir() if d.is_dir()) if RUNS_DIR.exists() else []
             self._json({"runs": ids})
         elif self.path.startswith("/api/runs/"):
             run_id = self.path.split("/")[-1]
@@ -364,8 +514,37 @@ def main() -> int:
 
     sub.add_parser("graph", help="print the DAG")
     sub.add_parser("state", help="print current state")
+    sub.add_parser("verify", help="verify MANIFEST signature + hashes")
+    sub.add_parser("snapshot", help="snapshot current state.json")
+    sub.add_parser("migrate", help="migrate state to latest schema")
+    sub.add_parser("rollback", help="restore latest snapshot (offline-gated)")
+    sub.add_parser("diagnose", help="first-run diagnostics (BLOCKER/WARN)")
+    sub.add_parser("onboard", help="onboarding: diagnostics + LIVE chat probe")
 
     args = p.parse_args()
+
+    if args.cmd == "verify":
+        ok, err = verify_integrity()
+        print(f"integrity: {'OK' if ok else 'FAIL'} ({err})")
+        return 0 if ok else 2
+
+    if args.cmd == "diagnose":
+        for d in diagnose():
+            print(f"{d['severity']:>7}  {d['check']}: {d['detail']}")
+        return 0
+
+    if args.cmd == "onboard":
+        result = onboard()
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result["ready"] else 1
+
+    # startup: fail-closed on BLOCKER diagnostics
+    for d in diagnose():
+        if d["severity"] == "BLOCKER":
+            print(f"BLOCKER: {d['check']}: {d['detail']} (refusing to run)", file=sys.stderr)
+            return 2
+        if d["severity"] == "WARN":
+            print(f"WARN: {d['check']}: {d['detail']}", file=sys.stderr)
 
     if args.cmd == "run":
         result = run({"model": args.model, "prompt": args.prompt, "provider": args.provider})
@@ -378,6 +557,8 @@ def main() -> int:
         return 0 if result.get("status") == "ok" else 1
 
     if args.cmd == "serve":
+        global _serving
+        _serving = True
         _seed_seq()
         print(f"runtime /api/runs on http://127.0.0.1:{args.port}", flush=True)
         ThreadingHTTPServer(("127.0.0.1", args.port), H).serve_forever()
@@ -387,6 +568,26 @@ def main() -> int:
 
     if args.cmd == "state":
         print(json.dumps(load_state(), ensure_ascii=False, indent=2))
+
+    if args.cmd == "snapshot":
+        snap = snapshot_state()
+        print(f"snapshot: {snap if snap else 'no state.json to snapshot'}")
+
+    if args.cmd == "migrate":
+        try:
+            state = migrate_state()
+            print("migrated to schema", state.get("schema_version"))
+        except Exception as e:
+            print(f"migrate failed (auto-restored): {e}", file=sys.stderr)
+            return 1
+
+    if args.cmd == "rollback":
+        try:
+            state = rollback_state()
+            print("rolled back:", json.dumps(state, ensure_ascii=False))
+        except (RuntimeError, FileNotFoundError) as e:
+            print(f"rollback failed: {e}", file=sys.stderr)
+            return 1
 
     return 0
 
