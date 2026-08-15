@@ -1,0 +1,32 @@
+{
+  "worker_id": "MIMO_MINIMAX",
+  "status": "SCORED",
+  "scale": {
+    "quality": "0..10",
+    "reliability": "0..1",
+    "latency_ms": "observed",
+    "cost": "observed_or_UNKNOWN",
+    "confidence": "0..1"
+  },
+  "scores": {
+    "latency_ms": {"ok": true, "values": [1566, 1725, 1616], "mean": 1635.67, "min": 1566, "max": 1725},
+    "failure_rate": {"ok": true, "failures": 0, "total": 3, "rate": 0.0},
+    "code": {"ok": true, "passed": 3, "total": 3},
+    "quality": {"ok": true, "passed": 3, "total": 3},
+    "long_context": {"ok": true, "passed": 3, "total": 3}
+  },
+  "routing_eligibility": {
+    "solo": true,
+    "reviewer": true,
+    "fan_out": true,
+    "battlecheck": true,
+    "failover": true,
+    "critical_path": "PENDING_CONTROL_TOWER_DECISION"
+  },
+  "notes": [
+    "Calibration completed with 5 verified capabilities per round-3 result (sha 86cac237).",
+    "Source: D:\\4\\OUT\\MIMO_MINIMAX\\results\\CALIBRATION.json (timestamp 2026-08-15T17:27:36Z).",
+    "User override executed by WORKER_A at 2026-08-15T17:55:23Z; see MIMO/responses/USER_OVERRIDE_PUSH_RESULTS_WORKER_B.md.",
+    "Critical-path eligibility held PENDING until Control Tower advisory review of override provenance."
+  ]
+}
