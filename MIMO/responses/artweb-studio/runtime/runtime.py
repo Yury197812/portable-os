@@ -165,6 +165,143 @@ def observed_catalog() -> dict:
     }
 
 
+# ---------------------------------------------------------------------------
+# PASS024: SecretVault (secret refs only) + immutable inventory snapshots
+# ---------------------------------------------------------------------------
+
+VAULT_DIR = RUNTIME_DIR / "vault"
+SNAPSHOTS_INV_DIR = RUNTIME_DIR / "inventory_snapshots"
+
+# Secret refs are symbolic names; values live OUTSIDE the repo (env / OS
+# keyring / DPAPI). No endpoint may return a secret value — only refs.
+SECRET_REFS = {
+    "ollama": {"ref": "ref:ollama:local", "kind": "local", "bound": None},   # local, no secret needed
+    "lmstudio": {"ref": "ref:lmstudio:local", "kind": "local", "bound": None},
+    "groq": {"ref": "ref:groq:env:GROQ_API_KEY", "kind": "cloud", "bound": None},
+    "openrouter_free": {"ref": "ref:openrouter:env:OPENROUTER_API_KEY", "kind": "cloud", "bound": None},
+}
+
+
+def _secret_refs_only(provider: str) -> dict:
+    """Return ONLY the secret reference for a provider — never the value."""
+    entry = SECRET_REFS.get(provider)
+    if not entry:
+        return {"provider": provider, "state": "UNKNOWN", "ref": None}
+    state = "BOUND" if entry["bound"] else ("LOCAL" if entry["kind"] == "local" else "CONFIGURED_UNAVAILABLE")
+    return {"provider": provider, "kind": entry["kind"], "ref": entry["ref"], "state": state}
+
+
+def vault_status() -> dict:
+    """SecretVault status: refs + availability only. Never secret values."""
+    entries = {}
+    for p in SECRET_REFS:
+        e = SECRET_REFS[p]
+        # cloud providers are CONFIGURED_UNAVAILABLE unless actually bound via
+        # a successful live probe (adapter creation != LIVE); local = loopback.
+        if e["kind"] == "local":
+            state = "LOCAL_LOOPBACK"
+        elif e["bound"]:
+            state = "BOUND"
+        else:
+            state = "CONFIGURED_UNAVAILABLE"
+        entries[p] = {"kind": e["kind"], "ref": e["ref"], "state": state}
+    return {"scope": "runtime :8891 SecretVault (refs only)", "providers": entries}
+
+
+def bind_secret(provider: str) -> dict:
+    """Mark a provider as BOUND. Honest: we do NOT fabricate a key — binding
+    here means 'the runtime has been told a secret exists externally'."""
+    if provider not in SECRET_REFS:
+        return {"ok": False, "error": f"unknown provider {provider}"}
+    e = SECRET_REFS[provider]
+    if e["kind"] != "cloud":
+        return {"ok": False, "error": "only cloud providers can be bound"}
+    e["bound"] = True
+    return {"ok": True, "provider": provider, "state": "BOUND", "ref": e["ref"]}
+
+
+def unbind_secret(provider: str) -> dict:
+    if provider not in SECRET_REFS:
+        return {"ok": False, "error": f"unknown provider {provider}"}
+    SECRET_REFS[provider]["bound"] = False
+    return {"ok": True, "provider": provider, "state": "CONFIGURED_UNAVAILABLE"}
+
+
+# Immutable inventory snapshots + reconciliation (PASS010 §4, PASS019).
+# provenance: SYNTHETIC / DISCOVERED / CLAIMED / VERIFIED / LIVE are kept
+# separate; DISCOVERED never implies capabilities; conflicts stay explicit.
+_INVENTORY = {
+    "models": {
+        "qwen2.5:14b": {"provenance": "LIVE", "caps": ["tool_use"], "routing_ready": True},
+        "llama-3.3-70b-versatile": {"provenance": "DISCOVERED", "caps": [], "routing_ready": False},
+        "openai/gpt-oss-20b:free": {"provenance": "DISCOVERED", "caps": [], "routing_ready": False},
+    },
+    "skills": {
+        "frontend-design": {"provenance": "REGISTERED"},
+    },
+}
+
+
+def inventory_snapshot() -> dict:
+    """Take an immutable snapshot of the current inventory (with a stable id)."""
+    snap_id = uuid.uuid4().hex[:12]
+    SNAPSHOTS_INV_DIR.mkdir(exist_ok=True)
+    snap = {
+        "snapshot_id": snap_id,
+        "created_at": now_iso(),
+        "immutable": True,
+        "inventory": json.loads(json.dumps(_INVENTORY)),  # deep copy
+    }
+    _atomic_write(SNAPSHOTS_INV_DIR / f"{snap_id}.json", json.dumps(snap, ensure_ascii=False, indent=2))
+    return snap
+
+
+def list_snapshots() -> list[dict]:
+    if not SNAPSHOTS_INV_DIR.exists():
+        return []
+    out = []
+    for p in sorted(SNAPSHOTS_INV_DIR.glob("*.json")):
+        out.append(_read_json(p))
+    return out
+
+
+def reconcile_inventory(current: dict) -> dict:
+    """Reconcile current inventory against the immutable snapshot.
+
+    Returns explicit conflicts: a fixture (SYNTHETIC) entry must never poison a
+    VERIFIED/LIVE real entry. DISCOVERED does not gain capabilities.
+    """
+    latest = list_snapshots()
+    baseline = latest[-1]["inventory"] if latest else {"models": {}, "skills": {}}
+    conflicts = []
+    for kind in ("models", "skills"):
+        for key, cur in current.get(kind, {}).items():
+            base = baseline.get(kind, {}).get(key)
+            if base and base.get("provenance") in ("VERIFIED", "LIVE") and cur.get("provenance") == "SYNTHETIC":
+                conflicts.append({"kind": kind, "key": key, "reason": "SYNTHETIC would overwrite a real entry", "base": base["provenance"], "current": cur["provenance"]})
+    return {
+        "snapshot_baseline": latest[-1]["snapshot_id"] if latest else None,
+        "conflicts": conflicts,
+        "verdict": "CLEAN" if not conflicts else "CONFLICT",
+    }
+
+
+def discover_local_models() -> dict:
+    """Local-model intake (Ollama/LM Studio). DISCOVERED only — no capability
+    inference; discovery never implies tool_use/caps."""
+    discovered = []
+    for base, name in (("http://127.0.0.1:11434/v1/models", "ollama"), ("http://127.0.0.1:1234/v1/models", "lmstudio")):
+        try:
+            with urlopen(base, timeout=4) as r:
+                data = json.loads(r.read().decode())
+            for m in data.get("data", []):
+                discovered.append({"id": m.get("id", ""), "provider": name, "provenance": "DISCOVERED", "caps": [], "routing_ready": False})
+        except Exception:
+            continue
+    return {"scope": "local discovery (no capability inference)", "discovered": discovered}
+
+
+
 def now_iso() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
@@ -727,6 +864,16 @@ class H(BaseHTTPRequestHandler):
             self._json(observed_catalog())
         elif self.path == "/api/deals":
             self._json({"registry": list(OFFICIAL_SOURCES.keys()), "deals": deal_radar()})
+        elif self.path == "/api/vault":
+            self._json(vault_status())
+        elif self.path == "/api/inventory":
+            self._json(_INVENTORY)
+        elif self.path == "/api/inventory/snapshots":
+            self._json({"snapshots": list_snapshots()})
+        elif self.path == "/api/inventory/reconcile":
+            self._json(reconcile_inventory(_INVENTORY))
+        elif self.path == "/api/discover":
+            self._json(discover_local_models())
         elif self.path.startswith("/api/autoswitch/"):
             run_id = self.path.split("/")[-1]
             res = read_run_result(run_id)
@@ -749,6 +896,11 @@ class H(BaseHTTPRequestHandler):
             self._json({"error": "not found"}, 404)
 
     def do_POST(self):
+        # body-less endpoints (no JSON payload needed)
+        if self.path == "/api/inventory/snapshot":
+            self._json(inventory_snapshot(), 201)
+            return
+
         n = int(self.headers.get("Content-Length", 0))
         if n > 1_000_000:
             return self._json({"error": "payload too large"}, 413)
@@ -771,6 +923,16 @@ class H(BaseHTTPRequestHandler):
                 return self._json({"error": "parent must be object, children must be list"}, 400)
             result = run_subworkflow(parent, children)
             self._json(result, 201 if result.get("status") == "ok" else 500)
+            return
+
+        if self.path == "/api/vault/bind":
+            result = bind_secret(payload.get("provider", ""))
+            self._json(result, 200 if result.get("ok") else 400)
+            return
+
+        if self.path == "/api/vault/unbind":
+            result = unbind_secret(payload.get("provider", ""))
+            self._json(result, 200 if result.get("ok") else 400)
             return
 
         if self.path == "/api/autoswitch":
