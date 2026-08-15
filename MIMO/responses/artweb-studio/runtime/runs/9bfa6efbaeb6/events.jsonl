@@ -1,0 +1,7 @@
+{"seq": 8, "run_id": "9bfa6efbaeb6", "node": "run", "status": "CREATED", "ts": "2026-08-15T14:47:53Z", "model": "qwen2.5:14b"}
+{"seq": 9, "run_id": "9bfa6efbaeb6", "node": "run", "status": "RUNNING", "ts": "2026-08-15T14:47:53Z"}
+{"seq": 10, "run_id": "9bfa6efbaeb6", "node": "validate", "status": "ok", "ts": "2026-08-15T14:47:53Z", "model": "qwen2.5:14b", "message_count": 1}
+{"seq": 11, "run_id": "9bfa6efbaeb6", "node": "route", "status": "ok", "ts": "2026-08-15T14:47:53Z", "backend": "ollama"}
+{"seq": 12, "run_id": "9bfa6efbaeb6", "node": "execute", "status": "ok", "ts": "2026-08-15T14:47:54Z", "backend": "ollama", "latency_ms": 755}
+{"seq": 13, "run_id": "9bfa6efbaeb6", "node": "record", "status": "ok", "ts": "2026-08-15T14:47:54Z", "total_elapsed_ms": 795}
+{"seq": 14, "run_id": "9bfa6efbaeb6", "node": "run", "status": "SUCCEEDED", "ts": "2026-08-15T14:47:54Z"}
