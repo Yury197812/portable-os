@@ -1,0 +1,24 @@
+{
+  "project": "ArtWeb Studio + Orchestra",
+  "purpose": "Cross-worker calibration comparison",
+  "workers": {
+    "WORKER_A_MIMO_DEEPSEEK": {
+      "status": "EXISTING_WORKER",
+      "scores": {}
+    },
+    "WORKER_B_MIMO_MINIMAX": {
+      "status": "CALIBRATED_ROUND_1",
+      "verified_capabilities": ["latency_ms","failure_rate","code","quality","long_context"],
+      "rounds": 3,
+      "failure_rate": 0.0,
+      "latency_mean_ms": 1635.67,
+      "scores_source": "MIMO/workers/MIMO_MINIMAX/results/CALIBRATION.json (sha 86cac237)",
+      "override_note": "USER_OVERRIDE pushed by WORKER_A at 2026-08-15T17:55:23Z; see MIMO/responses/USER_OVERRIDE_PUSH_RESULTS_WORKER_B.md"
+    }
+  },
+  "decision_policy": {
+    "dispatch_by_observed_score_not_brand": true,
+    "critical_tasks_require_review_or_fanout": true,
+    "cost_speed_are_secondary_to_hard_quality_gates": true
+  }
+}
