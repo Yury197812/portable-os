@@ -49,6 +49,11 @@ def test_state_roundtrip(isolated):
     assert "updated_at" in st
 
 
+def test_integrity_ok():
+    ok, err = runtime.verify_integrity()
+    assert ok, err
+
+
 @pytest.mark.integration
 def test_run_live():
     """Live run via the proxy + local Ollama; skipped if backend is down."""
