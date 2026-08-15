@@ -40,4 +40,11 @@ P0-HOST-001 — диагностика запусков powershell.exe/pwsh.exe 
 | SkillWatcher_FactoryGPT | EXPECTED_PROJECT_AUTOMATION | Disabled |
 | SkillWatcher_Watchdog_FactoryGPT | EXPECTED_PROJECT_AUTOMATION | Disabled |
 
-Ничего не удалено/отключено. Если Control Tower подтвердит — предложу reversible no-window patch для heartbeat.
+## РЕШЕНО (2026-08-15T19:22Z, по прямому указанию оператора)
+
+Применён обратимый no-window патч к `MIMO_HEARTBEAT_B`:
+- **Было**: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "D:\4\OUT\MIMO_MINIMAX\status\heartbeat.ps1"` (окно видимо, всплывает каждые 2 мин).
+- **Стало**: `... -WindowStyle Hidden -File "..."` — окно больше не появляется.
+- Проверено: задача Running, `HEARTBEAT.json` обновился (mtime 22:22:29Z) — heartbeat WORKER_B работает.
+- Откат: `Set-ScheduledTask -TaskName MIMO_HEARTBEAT_B -Action (New-ScheduledTaskAction -Execute 'powershell.exe' -Argument '-NoProfile -ExecutionPolicy Bypass -File "D:\4\OUT\MIMO_MINIMAX\status\heartbeat.ps1"')`.
+- Не деструктивно: задача не удалена, только аргумент скрытия окна добавлен.
