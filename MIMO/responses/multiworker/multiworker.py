@@ -342,6 +342,30 @@ def capability_status(worker_id: str | None = None) -> dict:
     return {"capabilities": {w: one(w) for w in WORKERS}}
 
 
+def _capabilities_path(worker_id: str) -> Path:
+    return _subdirs(worker_id)["state"] / "capabilities.json"
+
+
+def save_capabilities(worker_id: str) -> dict:
+    """Persist the in-memory capability registry to the worker's state dir.
+    Survives process restart."""
+    ensure_worker_dirs(worker_id)
+    caps = init_capability(worker_id)
+    data = {"worker_id": worker_id, "saved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "capabilities": caps}
+    _atomic_write(_capabilities_path(worker_id), json.dumps(data, ensure_ascii=False, indent=2))
+    return {"ok": True, "worker_id": worker_id, "path": str(_capabilities_path(worker_id))}
+
+
+def load_capabilities(worker_id: str) -> dict:
+    """Restore the capability registry from disk (if present)."""
+    p = _capabilities_path(worker_id)
+    if not p.exists():
+        return {"ok": False, "reason": "no persisted capabilities yet"}
+    data = json.loads(p.read_text(encoding="utf-8"))
+    _CAPABILITIES[worker_id] = data.get("capabilities", {})
+    return {"ok": True, "worker_id": worker_id, "restored": data.get("saved_at")}
+
+
 # ---------------------------------------------------------------------------
 # Result merge protocol
 # ---------------------------------------------------------------------------
