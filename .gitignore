@@ -1,0 +1,92 @@
+# ===== OS / editor =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ===== Node / Next.js =====
+node_modules/
+.next/
+out/
+next.log
+next-dev.log
+npm-debug.log*
+
+# ===== Secrets / credentials — NEVER commit =====
+.env
+.env.*
+!.env.example
+api_keys.json
+service_account.json
+.git-credentials
+*credentials*.json
+*_keys.json
+04_utilities/
+
+# ===== Logs =====
+*.log
+08_logs/
+
+# ===== Local databases =====
+*.db
+*.sqlite
+*.sqlite3
+reviews.db
+webapp.db
+database.sqlite
+
+# ===== Archives / exchange artifacts =====
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+OUT_GPT/
+OUT_MIMO/
+OUT_MIMO_*/
+GPT_MIMO_EXCHANGE*.zip*
+
+# ===== Scratch / temp / derived dirs =====
+01_projects_active/
+02_projects_archived/
+03_literature_data/
+05_models/
+06_screenshots_images/
+07_temp_scratch/
+09_other/
+.playwright-cli/
+browser_data/
+unsloth_compiled_cache/
+RLM_12M/
+TRANSFER_TO_GITHUB_INTERACTION_CHAT/
+_SCRATCH/
+_SELF_IMPROVE_*/
+tmp/
+temp/
+__temp__/
+
+# ===== Publications / reports (kept locally, removed from git) =====
+docs/
+PUBLICATIONS/
+OCULUS_RADAR_CLOSED_20260813/
+
+# ===== Local infra / non-repo apps =====
+artweb_studio/
+artweb_studio.zip
+artweb_v320a2/
+gh-pages/
+web/
+evals/
+mimocode_config.json
+lmstudio_*.py
+auto_*.bat
+auto_*.ps1
+start_*.bat
+setup_*.ps1
+install_*.ps1
