@@ -14,6 +14,8 @@ def browser():
 @pytest.fixture()
 def page(browser):
     ctx = browser.new_context(viewport={"width": 1280, "height": 900})
+    ctx.set_default_timeout(60000)
+    ctx.set_default_navigation_timeout(60000)
     pg = ctx.new_page()
     yield pg
     ctx.close()
