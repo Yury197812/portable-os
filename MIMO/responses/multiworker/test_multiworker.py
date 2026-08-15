@@ -79,19 +79,21 @@ def test_per_worker_dirs_isolated(tmp_path):
 def test_capability_not_assumed_from_brand():
     st = mw.capability_status("MIMO_DEEPSEEK")
     dims = st["calibrated"]
-    # all dimensions start UNMEASURED (None), never brand-assumed
-    assert dims["samples"] == 0
-    assert dims["quality"] is None
-    assert dims["tool_use"] is None
+    # all dimensions start UNMEASURED (count=0), never brand-assumed
+    assert st["samples"] == 0
+    assert dims["quality"]["count"] == 0
+    assert dims["quality"]["verdict"] == "NOT_RUN"
+    assert dims["tool_use"]["count"] == 0
 
 
 def test_observation_records_empirically():
     mw.record_observation("MIMO_DEEPSEEK", "latency_ms", 850)
     st = mw.capability_status("MIMO_DEEPSEEK")
-    assert st["calibrated"]["latency_ms"] == 850
-    assert st["calibrated"]["samples"] == 1
+    assert st["calibrated"]["latency_ms"]["last"] == 850
+    assert st["calibrated"]["latency_ms"]["count"] == 1
+    assert st["samples"] == 1
     # other dims still unmeasured
-    assert st["calibrated"]["quality"] is None
+    assert st["calibrated"]["quality"]["count"] == 0
 
 
 def test_observation_unknown_dimension_rejected():
