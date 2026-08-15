@@ -47,6 +47,11 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.request import Request, urlopen
 
+try:
+    import msvcrt  # Windows file locking (IPC)
+except ImportError:  # pragma: no cover - non-Windows fallback
+    msvcrt = None
+
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
 
 RUNTIME_DIR = Path(__file__).parent
@@ -386,6 +391,216 @@ def is_quarantined(kind: str, key: str) -> bool:
     if kind == "workflow":
         return key in st["blocked_workflows"]
     return False
+
+
+# ---------------------------------------------------------------------------
+# PASS026: durable cross-process work queue + lease fencing
+# ---------------------------------------------------------------------------
+#
+# A queue of jobs persisted to disk, safe across processes via file locks.
+# Each job carries a monotonically increasing fencing token. A worker leases a
+# job with the CURRENT token; if the job is reclaimed (stale worker), the
+# token is bumped and the stale worker can no longer complete/fail it — the
+# side effect is fenced off.
+
+QUEUE_DIR = RUNTIME_DIR / "queue"
+QUEUE_LOCK_PATH = QUEUE_DIR / "queue.lock"
+
+# process-local monotonic fencing token (seeded from disk on load)
+_FENCE = {"value": 0}
+_QUEUE_LOCK = threading.Lock()  # in-process lock (cross-process via file lock below)
+
+
+def _file_lock() -> None:
+    """Acquire a cross-process lock on the queue lock file (best-effort)."""
+    QUEUE_DIR.mkdir(parents=True, exist_ok=True)
+    f = open(QUEUE_LOCK_PATH, "a+b")
+    try:
+        if msvcrt is not None:
+            # lock 1 byte; blocks until acquired
+            msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)
+        return f
+    except Exception:
+        f.close()
+        raise
+
+
+def _file_unlock(f) -> None:
+    try:
+        if msvcrt is not None:
+            f.seek(0)
+            msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
+    except Exception:
+        pass
+    finally:
+        f.close()
+
+
+def next_fence() -> int:
+    with _QUEUE_LOCK:
+        _FENCE["value"] += 1
+        return _FENCE["value"]
+
+
+def _seed_fence() -> None:
+    """Restore the fence past any persisted jobs' tokens."""
+    with _QUEUE_LOCK:
+        hi = 0
+        if QUEUE_DIR.exists():
+            for p in QUEUE_DIR.glob("job-*.json"):
+                try:
+                    j = json.loads(p.read_text(encoding="utf-8"))
+                    hi = max(hi, int(j.get("fence", 0)))
+                except (json.JSONDecodeError, OSError):
+                    continue
+        _FENCE["value"] = max(_FENCE["value"], hi)
+
+
+def _job_path(job_id: str) -> Path:
+    return QUEUE_DIR / f"job-{job_id}.json"
+
+
+def enqueue_job(payload: dict) -> dict:
+    """Enqueue a job. Returns the job record with its fencing token."""
+    job_id = uuid.uuid4().hex[:12]
+    fence = next_fence()
+    job = {
+        "job_id": job_id,
+        "status": "QUEUED",
+        "fence": fence,
+        "payload": payload,
+        "worker": None,
+        "leased_at": None,
+        "created_at": now_iso(),
+        "result": None,
+        "error": None,
+    }
+    f = _file_lock()
+    try:
+        _atomic_write(_job_path(job_id), json.dumps(job, ensure_ascii=False, indent=2))
+    finally:
+        _file_unlock(f)
+    return job
+
+
+def _read_job(job_id: str) -> dict:
+    p = _job_path(job_id)
+    if not p.exists():
+        return {"job_id": job_id, "status": "MISSING"}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def _write_job(job: dict) -> None:
+    _atomic_write(_job_path(job["job_id"]), json.dumps(job, ensure_ascii=False, indent=2))
+
+
+def lease_job(worker: str) -> dict:
+    """Lease the next QUEUED job to a worker. Returns job + its current fence.
+
+    The worker must present this fence token on complete/fail; if the lease is
+    later reclaimed, the token changes and the stale worker is fenced out."""
+    f = _file_lock()
+    try:
+        jobs = _list_jobs_unsafe()
+        for job in jobs:
+            if job["status"] == "QUEUED":
+                job["status"] = "LEASED"
+                job["worker"] = worker
+                job["leased_at"] = now_iso()
+                job["fence"] = next_fence()  # new token for THIS lease
+                _write_job(job)
+                return job
+    finally:
+        _file_unlock(f)
+    return {"job_id": None, "status": "EMPTY"}
+
+
+def _list_jobs_unsafe() -> list[dict]:
+    out = []
+    if not QUEUE_DIR.exists():
+        return out
+    for p in sorted(QUEUE_DIR.glob("job-*.json")):
+        try:
+            out.append(json.loads(p.read_text(encoding="utf-8")))
+        except (json.JSONDecodeError, OSError):
+            continue
+    return out
+
+
+def list_jobs() -> list[dict]:
+    return _list_jobs_unsafe()
+
+
+def reclaim_stale(max_age_seconds: float) -> dict:
+    """Reclaim LEASED/RUNNING jobs whose lease is older than max_age.
+
+    Bumps the job's fencing token so the stale worker can no longer complete
+    it. Sensitive side effects require the CURRENT token."""
+    reclaimed = []
+    now = time.time()
+    f = _file_lock()
+    try:
+        for job in _list_jobs_unsafe():
+            if job["status"] in ("LEASED", "RUNNING") and job.get("leased_at"):
+                try:
+                    t = time.mktime(time.strptime(job["leased_at"], "%Y-%m-%dT%H:%M:%SZ"))
+                except ValueError:
+                    continue
+                if now - t > max_age_seconds:
+                    job["status"] = "RECLAIMED"
+                    job["fence"] = next_fence()  # invalidate stale worker's token
+                    job["reclaimed_at"] = now_iso()
+                    _write_job(job)
+                    reclaimed.append({"job_id": job["job_id"], "fence": job["fence"]})
+    finally:
+        _file_unlock(f)
+    return {"reclaimed": reclaimed, "count": len(reclaimed)}
+
+
+def complete_job(job_id: str, fence: int, result: dict) -> dict:
+    """Complete a leased job. FAILS if the presented fence != current token.
+
+    This is the fencing gate: a stale worker (whose lease was reclaimed) holds
+    an old token and cannot write the terminal side effect."""
+    f = _file_lock()
+    try:
+        job = _read_job(job_id)
+        if job.get("status") == "MISSING":
+            return {"ok": False, "error": "job not found", "fenced": False}
+        if job.get("fence") != fence:
+            return {"ok": False, "error": f"stale fence {fence} != current {job.get('fence')} — side effect fenced", "fenced": True}
+        job["status"] = "SUCCEEDED"
+        job["result"] = result
+        job["completed_at"] = now_iso()
+        _write_job(job)
+        return {"ok": True, "job_id": job_id, "status": "SUCCEEDED", "fenced": False}
+    finally:
+        _file_unlock(f)
+
+
+def fail_job(job_id: str, fence: int, error: str) -> dict:
+    """Fail a leased job, fenced the same way as complete."""
+    f = _file_lock()
+    try:
+        job = _read_job(job_id)
+        if job.get("status") == "MISSING":
+            return {"ok": False, "error": "job not found", "fenced": False}
+        if job.get("fence") != fence:
+            return {"ok": False, "error": f"stale fence {fence} != current {job.get('fence')} — side effect fenced", "fenced": True}
+        job["status"] = "FAILED"
+        job["error"] = error[:200]
+        job["completed_at"] = now_iso()
+        _write_job(job)
+        return {"ok": True, "job_id": job_id, "status": "FAILED", "fenced": False}
+    finally:
+        _file_unlock(f)
+
+
+def queue_status() -> dict:
+    counts = {}
+    for j in _list_jobs_unsafe():
+        counts[j["status"]] = counts.get(j["status"], 0) + 1
+    return {"jobs": counts, "fence_high_water": _FENCE["value"], "jobs_dir": str(QUEUE_DIR)}
 
 
 def now_iso() -> str:
@@ -962,6 +1177,10 @@ class H(BaseHTTPRequestHandler):
             self._json(discover_local_models())
         elif self.path == "/api/quarantine":
             self._json(quarantine_status())
+        elif self.path == "/api/queue":
+            self._json(queue_status())
+        elif self.path == "/api/queue/jobs":
+            self._json({"jobs": list_jobs()})
         elif self.path.startswith("/api/autoswitch/"):
             run_id = self.path.split("/")[-1]
             res = read_run_result(run_id)
@@ -1031,6 +1250,30 @@ class H(BaseHTTPRequestHandler):
         if self.path == "/api/unquarantine":
             result = unquarantine(payload.get("capability", ""))
             self._json(result, 200 if result.get("ok") else 400)
+            return
+
+        if self.path == "/api/queue/enqueue":
+            self._json(enqueue_job(payload.get("payload", {})), 201)
+            return
+
+        if self.path == "/api/queue/lease":
+            result = lease_job(payload.get("worker", "anonymous"))
+            self._json(result, 200 if result.get("status") == "LEASED" else 200)
+            return
+
+        if self.path == "/api/queue/complete":
+            result = complete_job(payload.get("job_id", ""), int(payload.get("fence", -1)), payload.get("result", {}))
+            self._json(result, 200 if result.get("ok") else 409)
+            return
+
+        if self.path == "/api/queue/fail":
+            result = fail_job(payload.get("job_id", ""), int(payload.get("fence", -1)), payload.get("error", "unspecified"))
+            self._json(result, 200 if result.get("ok") else 409)
+            return
+
+        if self.path == "/api/queue/reclaim":
+            result = reclaim_stale(float(payload.get("max_age_seconds", 60)))
+            self._json(result, 200)
             return
 
         if self.path == "/api/autoswitch":
