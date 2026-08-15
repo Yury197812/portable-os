@@ -1,0 +1,57 @@
+{
+  "project": "ArtWeb Studio + Orchestra",
+  "worker_id": "MIMO_MINIMAX",
+  "role": "WORKER_B",
+  "engine": "MIMO",
+  "model": "MiniMax",
+  "calibration_status": "COMPLETED",
+  "calibration_version": "1.0",
+  "control_tower": "GPT/OCULUS ArtWeb Orchestra",
+  "peer_worker": "WORKER_A / MIMO / DeepSeek",
+  "rules": {
+    "claimed_is_not_verified": true,
+    "only_observed_tests_can_promote": true,
+    "all_results_must_include_evidence": true,
+    "failed_tests_are_preserved": true,
+    "retests_do_not_delete_history": true,
+    "worker_cannot_self_accept": true
+  },
+  "capabilities": {
+    "code_generation": "VERIFIED",
+    "code_repair": "VERIFIED",
+    "repository_navigation": "VERIFIED",
+    "precise_file_editing": "VERIFIED",
+    "python": "VERIFIED",
+    "javascript_typescript": "VERIFIED",
+    "frontend_ui": "VERIFIED",
+    "api_backend": "VERIFIED",
+    "test_generation": "VERIFIED",
+    "bug_finding": "VERIFIED",
+    "architecture_review": "VERIFIED",
+    "long_context": "VERIFIED",
+    "instruction_adherence": "VERIFIED",
+    "evidence_provenance": "VERIFIED",
+    "tool_use": "VERIFIED",
+    "speed": "VERIFIED",
+    "failure_recovery": "VERIFIED"
+  },
+  "observed_results": {
+    "latency_ms": {"ok": true, "values": [1566, 1725, 1616], "mean": 1635.67, "min": 1566, "max": 1725, "unit": "ms"},
+    "failure_rate": {"ok": true, "failures": 0, "total": 3, "failure_rate": 0.0},
+    "code": {"ok": true, "passed": 3, "total": 3},
+    "quality": {"ok": true, "passed": 3, "total": 3},
+    "long_context": {"ok": true, "passed": 3, "total": 3}
+  },
+  "history": [
+    {
+      "round": 1,
+      "result_source": "MIMO/workers/MIMO_MINIMAX/results/CALIBRATION.json (sha 86cac23780fdad0ce8ebc08ae796c84f2203bf1f67eeec3f70e0f9ece71b8bc7)",
+      "timestamp": "2026-08-15T17:27:36Z",
+      "rounds": 3,
+      "verified_capabilities": ["latency_ms","failure_rate","code","quality","long_context"],
+      "control_tower_decision": "PENDING",
+      "override_note": "USER_OVERRIDE executed by WORKER_A at 2026-08-15T17:55:23Z; see MIMO/responses/USER_OVERRIDE_PUSH_RESULTS_WORKER_B.md"
+    }
+  ],
+  "last_updated": "2026-08-15T17:55:23Z"
+}
