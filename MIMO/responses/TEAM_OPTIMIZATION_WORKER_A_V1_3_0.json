@@ -1,0 +1,23 @@
+{
+  "worker_id": "MIMO_DEEPSEEK",
+  "directive": "OCULUS v1.3.0",
+  "priority_score": 88,
+  "identity_attestation": {
+    "worker_shell": "MIMO (MiMoCode CLI)",
+    "actual_model_backend": "deepseek-v4-pro (api.deepseek.com)",
+    "runtime_provider": "deepseek (OpenAI-compatible /v1/chat/completions)",
+    "policy_version": "OCULUS v1.3.0",
+    "deepseek_reachable": true,
+    "deepseek_executable": true,
+    "evidence": {
+      "models_endpoint": "GET https://api.deepseek.com/v1/models -> [deepseek-v4-flash, deepseek-v4-pro]",
+      "chat_probe": "POST /v1/chat/completions model=deepseek-v4-pro prompt='Reply with exactly: OK' -> content='OK', latency_ms=3232",
+      "timestamp": "2026-08-15T18:25:00Z"
+    }
+  },
+  "correction": "Previous WORKER_A calibration in this session measured qwen2.5:14b (Ollama :11434), NOT DeepSeek V4-Pro. Those Qwen numbers MUST NOT be reported as DeepSeek performance. Qwen is a SEPARATE candidate configuration.",
+  "pending_calibration": {
+    "status": "NOT_RUN_YET",
+    "note": "Fresh calibration on actual deepseek-v4-pro backend for quality/critical_errors/code_debug/long_context/latency/failure_rate/tool_use_execution/recovery/review_catch_rate is the next step after this attestation."
+  }
+}
