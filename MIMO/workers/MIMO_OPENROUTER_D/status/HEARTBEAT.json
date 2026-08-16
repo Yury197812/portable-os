@@ -1,0 +1,28 @@
+{
+    "worker_id":  "MIMO_OPENROUTER_D",
+    "role":  "WORKER_D",
+    "status":  "LIVE",
+    "instance_id":  "a52c6d9410ad42f89d36e60da3e5a64d",
+    "model_backend":  "OpenRouter openai/gpt-4o-mini",
+    "engine":  "MIMO",
+    "github_namespace":  "MIMO/workers/MIMO_OPENROUTER_D/",
+    "ntfy_topic":  "artweb-mimo-openrouter-d-bus-20260816-e720900ef95b",
+    "capabilities_verified":  [
+                                  "latency_ms",
+                                  "failure_rate",
+                                  "code_generation",
+                                  "code_repair",
+                                  "long_context",
+                                  "tool_use",
+                                  "recovery_checkpoint",
+                                  "review_catch_rate",
+                                  "instruction_adherence"
+                              ],
+    "calibration_ref":  "MIMO/responses/TEAM_OPTIMIZATION/WORKER_D_GPT4O_MINI_EVIDENCE.md",
+    "notes":  "BENCH-D. quality_reasoning 0/3 (answers 40/40/48 vs 45) -\u003e excluded. latency 1285 ms.",
+    "activity":  "IDLE",
+    "current_task_id":  null,
+    "queue_depth":  0,
+    "last_error":  null,
+    "timestamp":  "2026-08-16T06:23:05.5158945Z"
+}
