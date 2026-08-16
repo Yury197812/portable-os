@@ -41,15 +41,17 @@ ALLOWED_ORIGINS = {
 }
 
 # base already ends in /v1 (OpenAI-compatible); auth=False = no key needed
+# 2026-08-16 WORKER_A: ollama + lmstudio disabled per user directive "С него не запускаем нейронки" (disk C: 84% used).
+# Disabled by commenting out — restore by uncomment if user changes mind.
 PROVIDERS = {
-    "ollama":          {"base": "http://127.0.0.1:11434/v1", "auth": False},
-    "lmstudio":        {"base": "http://127.0.0.1:1234/v1", "auth": False},
+    # "ollama":          {"base": "http://127.0.0.1:11434/v1", "auth": False},
+    # "lmstudio":        {"base": "http://127.0.0.1:1234/v1", "auth": False},
     "groq":            {"base": "https://api.groq.com/openai/v1", "auth": True},
     "openrouter_free": {"base": "https://openrouter.ai/api/v1", "auth": True},
 }
 
 MODELS = [
-    {"provider": "ollama", "id": "qwen2.5:14b", "name": "Qwen2.5 14B · Ollama", "caps": ["tool_use", "code", "free", "speed"]},
+    # {"provider": "ollama", "id": "qwen2.5:14b", "name": "Qwen2.5 14B · Ollama", "caps": ["tool_use", "code", "free", "speed"]},
     {"provider": "groq", "id": "llama-3.3-70b-versatile", "name": "Llama 3.3 70B · Groq", "caps": ["tool_use", "reasoning"]},
     {"provider": "groq", "id": "llama-3.1-8b-instant", "name": "Llama 3.1 8B · Groq", "caps": ["tool_use", "speed"]},
     {"provider": "openrouter_free", "id": "openai/gpt-oss-20b:free", "name": "GPT-OSS 20B · OpenRouter", "caps": ["tool_use", "code"]},
@@ -129,6 +131,37 @@ def provider_status():
             }
             for p, s in _PROVIDER_STATE.items()
         }
+
+
+def observed_catalog():
+    """Honest catalog: provenance + access, never implies capabilities from discovery.
+
+    LIVE   = provider has a live health/probe signal this session.
+    DISCOVERED = configured in proxy but no probe → not routing-ready.
+    Synthetic 400-seed (models.seed.json) is deliberately EXCLUDED here.
+    """
+    ps = provider_status()
+    out = []
+    for m in MODELS:
+        prov = m["provider"]
+        st = ps.get(prov, {})
+        # LIVE only if we actually saw a success this session, else DISCOVERED.
+        provenance = "LIVE" if st.get("last_success") else "DISCOVERED"
+        # ollama is loopback-only (local); free tiers are rate-limited but usable;
+        # paid cloud without a key is PAID_UNOWNED (AutoSwitch denies).
+        access = "FREE" if m.get("caps") and "free" in m["caps"] else ("PAID_UNOWNED" if prov in ("groq", "openrouter_free") else "FREE")
+        out.append({
+            "id": m["id"],
+            "name": m["name"],
+            "provider": prov,
+            "provenance": provenance,
+            "access": access,
+            "caps": m.get("caps", []),
+            "cap_verification": "CONFIG",  # config-only; no per-cap probe this session
+            "routing_ready": provenance == "LIVE",
+            "source": "proxy :8890 observed",
+        })
+    return {"scope": "proxy :8890 observed (не весь интернет)", "entities": out}
 
 
 def chat_with_reconnect(provider, model, messages, temperature, api_key):
@@ -265,6 +298,11 @@ class H(BaseHTTPRequestHandler):
                 self.wfile.write(data)
             except Exception as e:
                 self._json({"error": str(e)[:200]}, 500)
+        elif self.path == "/api/catalog/v2":
+            # Honest catalog with provenance + access classification (PASS021).
+            # DISCOVERED = configured in proxy but NOT probed → not routing-ready.
+            # LIVE = has a live health/probe signal. Synthetic seed stays separate.
+            self._json(observed_catalog())
         elif self.path == "/api/openrouter":
             try:
                 key = load_keys().get("openrouter_free")
