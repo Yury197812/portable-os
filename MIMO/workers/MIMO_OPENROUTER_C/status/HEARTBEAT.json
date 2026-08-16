@@ -1,0 +1,29 @@
+{
+    "worker_id":  "MIMO_OPENROUTER_C",
+    "role":  "WORKER_C",
+    "status":  "LIVE",
+    "instance_id":  "d3753b314c0444198d2183b84b53051c",
+    "model_backend":  "OpenRouter openai/gpt-oss-20b (paid; free :free variant 429s)",
+    "engine":  "MIMO",
+    "github_namespace":  "MIMO/workers/MIMO_OPENROUTER_C/",
+    "ntfy_topic":  "artweb-mimo-openrouter-c-bus-20260816-85a62ec86a3d",
+    "capabilities_verified":  [
+                                  "latency_ms",
+                                  "failure_rate",
+                                  "code_generation",
+                                  "code_repair",
+                                  "quality_reasoning",
+                                  "long_context",
+                                  "tool_use",
+                                  "recovery_checkpoint",
+                                  "review_catch_rate",
+                                  "instruction_adherence"
+                              ],
+    "calibration_ref":  "MIMO/responses/TEAM_OPTIMIZATION/WORKER_C_GPT_OSS_EVIDENCE.md",
+    "notes":  "BENCH-C. code_repair 2/3 bench, 6/6 re-test (noise). latency 2624 ms.",
+    "activity":  "IDLE",
+    "current_task_id":  null,
+    "queue_depth":  0,
+    "last_error":  null,
+    "timestamp":  "2026-08-16T05:29:09.7723564Z"
+}
