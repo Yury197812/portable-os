@@ -2,7 +2,7 @@
     "worker_id":  "MIMO_DEEPSEEK",
     "role":  "WORKER_A",
     "status":  "LIVE",
-    "instance_id":  null,
+    "instance_id":  "0fcd31bdf4f74e3db21c9803b4a5e8bd",
     "model_backend":  "DeepSeek V4-Pro 0813",
     "engine":  "MIMO",
     "github_namespace":  "MIMO/responses/",
@@ -25,5 +25,5 @@
     "current_task_id":  null,
     "queue_depth":  0,
     "last_error":  null,
-    "timestamp":  "2026-08-16T05:29:04.4929835Z"
+    "timestamp":  "2026-08-16T05:39:37.9791503Z"
 }
