@@ -8,10 +8,14 @@
     "capabilities_verified":  [
                                   "latency_ms",
                                   "failure_rate",
-                                  "code",
-                                  "quality",
-                                  "long_context"
+                                  "code_generation",
+                                  "code_repair",
+                                  "quality_reasoning",
+                                  "tool_use",
+                                  "recovery_checkpoint",
+                                  "review_catch_rate",
+                                  "instruction_adherence"
                               ],
     "last_error":  null,
-    "timestamp":  "2026-08-15T20:27:14.7844749Z"
+    "timestamp":  "2026-08-16T04:41:14.4215943Z"
 }
