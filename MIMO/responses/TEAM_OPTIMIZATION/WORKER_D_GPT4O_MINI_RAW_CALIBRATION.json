@@ -1,0 +1,23 @@
+{
+  "worker_id": "MIMO_OPENROUTER_D",
+  "directive": "P0 BENCH-D (OCULUS v1.3.0)",
+  "model": "openai/gpt-4o-mini",
+  "backend": "openrouter.ai (WORKER_D, paid gpt-4o-mini)",
+  "rounds": 3,
+  "timestamp": "2026-08-16T06:20:17Z",
+  "results": {
+    "latency_failure": {"latency_values": [1297, 1397, 1161], "latency_mean_ms": 1285.0, "failures": 0, "failure_rate": 0.0},
+    "code_generation": {"passed": 3, "total": 3},
+    "code_repair": {"passed": 3, "total": 3},
+    "quality_reasoning": {"passed": 0, "total": 3, "expected": 45, "raw": ["40", "40", "48"], "note": "real weakness (verified raw), not heuristic artifact"},
+    "long_context": {"passed": 3, "total": 3},
+    "tool_use": {"selection": 3, "args": 3, "execution": 3, "readback": 3, "total": 3, "supported": true},
+    "recovery_checkpoint": {"passed": 3, "total": 3},
+    "review_catch_rate": {"caught": 3, "total": 3},
+    "instruction_adherence": {"passed": 3, "total": 3}
+  },
+  "raw_evidence": true,
+  "self_scored": false,
+  "harness": "bench_d_openrouter.py (9 dims, mirrors BENCH-A/B/C)",
+  "highlight": "quality_reasoning 0/3 (answers 40/40/48 vs correct 45) — REAL weakness of the small model on multi-step math. All other 8 dims 3/3."
+}
