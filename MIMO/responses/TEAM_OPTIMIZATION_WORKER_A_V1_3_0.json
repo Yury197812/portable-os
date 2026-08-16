@@ -1,0 +1,32 @@
+{
+  "worker_id": "MIMO_DEEPSEEK",
+  "directive": "OCULUS v1.3.0",
+  "priority_score": 88,
+  "identity_attestation": {
+    "worker_shell": "MIMO (MiMoCode CLI)",
+    "actual_model_backend": "deepseek-v4-pro (api.deepseek.com)",
+    "runtime_provider": "deepseek (OpenAI-compatible /v1/chat/completions)",
+    "policy_version": "OCULUS v1.3.0",
+    "deepseek_reachable": true,
+    "deepseek_executable": true
+  },
+  "calibration": {
+    "model": "deepseek-v4-pro",
+    "backend": "api.deepseek.com (real DeepSeek, NOT Qwen proxy)",
+    "rounds": 3,
+    "timestamp": "2026-08-15T18:24:57Z",
+    "results": {
+      "latency": {"ok": true, "values": [2436, 1583, 2407], "mean": 2142.0, "min": 1583, "max": 2436},
+      "failure_rate": {"ok": true, "failures": 0, "failure_rate": 0.0},
+      "quality": {"ok": true, "passed": 3, "total": 3},
+      "code_debug": {"ok": true, "passed": 3, "total": 3},
+      "long_context": {"ok": true, "passed": 3, "total": 3},
+      "tool_use": {"ok": true, "passed": 3, "total": 3, "supported": true}
+    },
+    "verified": ["latency", "failure_rate", "quality", "code_debug", "long_context", "tool_use"]
+  },
+  "qwen_separate_candidate": {
+    "note": "qwen2.5:14b (Ollama :11434) is a SEPARATE candidate config. Its earlier numbers (latency ~605ms, tool_use NOT_VERIFIED) are NOT DeepSeek performance.",
+    "tool_use_contrast": "DeepSeek v4-pro: tool_use supported (native tool_calls 3/3). Qwen2.5:14b: tool_use NOT verified."
+  }
+}

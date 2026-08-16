@@ -1,0 +1,23 @@
+{
+  "worker_id": "MIMO_MINIMAX",
+  "directive": "P0 BENCH-B (OCULUS v1.3.0)",
+  "model": "MiniMax-M3",
+  "backend": "api.minimax.io (MiniMax-M3)",
+  "rounds": 3,
+  "timestamp": "2026-08-16T03:55:56Z",
+  "results": {
+    "latency_failure": {"latency_values": [2967, 1631, 1617], "latency_mean_ms": 2071.7, "failures": 0, "failure_rate": 0.0},
+    "code_generation": {"passed": 3, "total": 3},
+    "code_repair": {"passed": 3, "total": 3, "note": "off-by-one fixed 3/3 (whitespace-normalized heuristic)"},
+    "quality_reasoning": {"passed": 3, "total": 3, "expected": 45},
+    "long_context": {"passed": 2, "total": 3, "note": "one miss retrieving 'Paris' from 5K-token prompt"},
+    "tool_use": {"selection": 3, "args": 3, "execution": 3, "readback": 3, "total": 3, "supported": true},
+    "recovery_checkpoint": {"passed": 3, "total": 3},
+    "review_catch_rate": {"caught": 3, "total": 3},
+    "instruction_adherence": {"passed": 3, "total": 3}
+  },
+  "raw_evidence": true,
+  "self_scored": false,
+  "harness": "bench_b_minimax.py (mirrors bench_a_deepseek.py, 9 dims; <think> stripped; base_resp error checked)",
+  "highlight": "long_context is the weakest dimension (2/3). All other dimensions 3/3, including tool_use (supported)."
+}

@@ -1,0 +1,24 @@
+{
+  "worker_id": "MIMO_OPENROUTER_C",
+  "directive": "P0 BENCH-C (OCULUS v1.3.0) — PRELIMINARY",
+  "model": "openai/gpt-oss-20b",
+  "backend": "openrouter.ai (PAID variant; free :free variant 429s under load)",
+  "rounds": 3,
+  "timestamp": "2026-08-16T04:44:58Z",
+  "results": {
+    "latency_failure": {"latency_values": [5517, 1103, 1253], "latency_mean_ms": 2624.3, "failures": 0, "failure_rate": 0.0},
+    "code_generation": {"passed": 3, "total": 3},
+    "code_repair": {"passed": 2, "total": 3, "note": "2/3 in 3-round bench; 6/6 in a 6-round re-test -> flaky/noise, not a reliable weakness"},
+    "quality_reasoning": {"passed": 3, "total": 3, "expected": 45},
+    "long_context": {"passed": 3, "total": 3},
+    "tool_use": {"selection": 3, "args": 3, "execution": 3, "readback": 3, "total": 3, "supported": true},
+    "recovery_checkpoint": {"passed": 3, "total": 3},
+    "review_catch_rate": {"caught": 3, "total": 3},
+    "instruction_adherence": {"passed": 3, "total": 3}
+  },
+  "raw_evidence": true,
+  "self_scored": false,
+  "status": "PRELIMINARY (NON-CANON worker, pending Control Tower accept/reject)",
+  "harness": "bench_c_openrouter.py (9 dims; 429 backoff; paid variant to bypass free-tier rate limit)",
+  "highlight": "All 9 dimensions effectively 3/3. code_repair showed 2/3 once but 6/6 in re-test (noise). latency mean 2624 ms (cold-start spike 5517 then ~1.1-1.25s)."
+}
