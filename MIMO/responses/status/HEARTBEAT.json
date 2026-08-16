@@ -1,0 +1,29 @@
+{
+    "worker_id":  "MIMO_DEEPSEEK",
+    "role":  "WORKER_A",
+    "status":  "LIVE",
+    "instance_id":  null,
+    "model_backend":  "DeepSeek V4-Pro 0813",
+    "engine":  "MIMO",
+    "github_namespace":  "MIMO/responses/",
+    "ntfy_topic":  "artweb-mimo-bus-20260814-8d3f2a761c4e",
+    "capabilities_verified":  [
+                                  "latency_ms",
+                                  "failure_rate",
+                                  "code_generation",
+                                  "code_repair",
+                                  "quality_reasoning",
+                                  "long_context",
+                                  "tool_use",
+                                  "recovery_checkpoint",
+                                  "review_catch_rate",
+                                  "instruction_adherence"
+                              ],
+    "calibration_ref":  "MIMO/responses/TEAM_OPTIMIZATION/DEEPSEEK_V4_PRO_EVIDENCE.md",
+    "notes":  "BENCH-A 9/9. code_repair 3/3 after heuristic fix (was false 1/3). latency 2014 ms.",
+    "activity":  "IDLE",
+    "current_task_id":  null,
+    "queue_depth":  0,
+    "last_error":  null,
+    "timestamp":  "2026-08-16T05:29:04.4929835Z"
+}
