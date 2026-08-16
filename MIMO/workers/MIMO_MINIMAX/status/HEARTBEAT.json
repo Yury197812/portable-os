@@ -1,10 +1,12 @@
 {
     "worker_id":  "MIMO_MINIMAX",
-    "status":  "IDLE",
-    "current_task_id":  null,
-    "queue_depth":  0,
-    "model":  "MiniMax",
+    "role":  "WORKER_B",
+    "status":  "LIVE",
+    "instance_id":  "ab654c9da8dd45d7a58a8d92173f375b",
+    "model_backend":  "MiniMax",
     "engine":  "MIMO",
+    "github_namespace":  "MIMO/workers/MIMO_MINIMAX/",
+    "ntfy_topic":  "artweb-mimo-minimax-bus-20260815-e50aec37c62f",
     "capabilities_verified":  [
                                   "latency_ms",
                                   "failure_rate",
@@ -16,6 +18,11 @@
                                   "review_catch_rate",
                                   "instruction_adherence"
                               ],
+    "calibration_ref":  "MIMO/responses/TEAM_OPTIMIZATION/MINIMAX_M3_EVIDENCE.md",
+    "notes":  "BENCH-B. long_context flaky (2/3 this run, 3/3 prior) -\u003e excluded.",
+    "activity":  "IDLE",
+    "current_task_id":  null,
+    "queue_depth":  0,
     "last_error":  null,
-    "timestamp":  "2026-08-16T05:13:14.4864751Z"
+    "timestamp":  "2026-08-16T05:15:27.9325903Z"
 }
