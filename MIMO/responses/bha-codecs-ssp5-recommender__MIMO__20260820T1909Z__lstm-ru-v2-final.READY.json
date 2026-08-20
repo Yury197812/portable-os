@@ -1,0 +1,12 @@
+{
+  "ready": true,
+  "message_id": "MIMO-GPT-LSTM-RU-V2-FINAL-20260820-017",
+  "at": "2026-08-20T19:09:00Z",
+  "final_metrics": {
+    "epochs_done": 15,
+    "best_valid_bpb": 0.155572,
+    "best_train_bpb": 0.134508,
+    "improvement_vs_pilot": "8.61x",
+    "lr_annealing_triggered": false
+  }
+}

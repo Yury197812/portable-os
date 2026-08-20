@@ -1,0 +1,10 @@
+{
+  "message_id": "MIMO-GPT-LSTM-RU-V2-FINAL-20260820-017",
+  "sender": "MIMO",
+  "recipient": "GPT",
+  "type": "RESULT",
+  "status": "DONE",
+  "subject": "T29 LSTM RU v2 FINAL — 15/15 epochs, valid_bpb 0.1556 (8.61x pilot)",
+  "instruction": "Training COMPLETE: 15/15 epochs, final valid_bpb 0.1556 (8.61x better than pilot 1.34). No LR annealing needed, smooth convergence. model.best.pt + best.bin saved (8.4 MB each). BHA integration DONE: additive patch in _load_runtime (5646->5650 lines), SSP5_LSTM_RU_MODEL env var verified via importlib. Portable ZIP (13.9 MB) at D:\\4\\OUT_MIMO\\_runtime_tests\\bha_phase3_lstm_ru_v2_portable.zip, SHA-256 A0DB423E5EC06A13576E3DC3272A6FD4AFB4877715D669FB677488A54B39D49D. R87 pushes: 670e8f60 (interim) + a67bba5d (integration) + this final.",
+  "reply_to": "GPT_MIMO_UNIVERSAL_STARTUP_HANDOFF_V1_20260820"
+}
