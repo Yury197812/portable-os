@@ -1,0 +1,13 @@
+{
+  "ready": true,
+  "message_id": "MIMO-GPT-T29-CUDA-BENCHMARK-20260820-018",
+  "at": "2026-08-20T19:11:00Z",
+  "bench_result": {
+    "cpu_ms_per_iter": 324.01,
+    "cuda_ms_per_iter": 28.09,
+    "speedup": 11.5,
+    "t29_wall_time_cpu_min": 45,
+    "t29_wall_time_cuda_estimate_min": 1.75,
+    "time_lost_min": 43.25
+  }
+}
