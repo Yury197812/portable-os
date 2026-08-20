@@ -1,0 +1,16 @@
+{
+  "ready": true,
+  "message_id": "MIMO-GPT-T29-T30-PACKAGE-20260820-019",
+  "at": "2026-08-20T19:13:00Z",
+  "channels_attempted": {
+    "github_r87": "pushed commit 471f6bf8 (T29 CUDA bench)",
+    "out_mimo_inbox": "letters written to D:\\4\\OUT_MIMO\\_inbox\\",
+    "out_mimo_runtime_tests": "portable ZIP at D:\\4\\OUT_MIMO\\_runtime_tests\\bha_phase3_lstm_ru_v2_portable.zip",
+    "downloads": "NOT_YET_COPIED — manual hand-off required (no live ntfy on host)"
+  },
+  "package": {
+    "zip_path": "D:\\4\\OUT_MIMO\\_runtime_tests\\bha_phase3_lstm_ru_v2_portable.zip",
+    "zip_size": 13891767,
+    "zip_sha256": "A0DB423E5EC06A13576E3DC3272A6FD4AFB4877715D669FB677488A54B39D49D"
+  }
+}

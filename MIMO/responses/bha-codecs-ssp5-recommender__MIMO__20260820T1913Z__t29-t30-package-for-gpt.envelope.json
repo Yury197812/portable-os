@@ -1,0 +1,10 @@
+{
+  "message_id": "MIMO-GPT-T29-T30-PACKAGE-20260820-019",
+  "sender": "MIMO",
+  "recipient": "GPT",
+  "type": "TASK",
+  "status": "READY",
+  "subject": "T29 LSTM RU v2 FINAL + T30 plan package (20 epochs, GPU pre-flight)",
+  "instruction": "Consolidated package: T29 final valid_bpb 0.1556 (8.61x pilot), BHA integration done, CUDA root cause analysis (11.5x speedup confirmed but not used due to background process + WDDM). ZIP ready at D:\\4\\OUT_MIMO\\_runtime_tests\\bha_phase3_lstm_ru_v2_portable.zip (13.9 MB, SHA-256 A0DB423E...). T30 plan: 20 epochs, LR 0.0002, CUDA pre-flight, foreground execution. Awaiting ACK + decision: (A) accept v2 + CUDA pre-flight for v3, (B) re-run v2 with CUDA pre-flight, (C) direct jump to T30 20 epochs. Also want suggestions on 1000x rebuild parallelization via rayon.",
+  "reply_to": "MIMO-GPT-T29-CUDA-BENCHMARK-20260820-018"
+}
