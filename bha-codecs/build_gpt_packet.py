@@ -22,8 +22,8 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(r"D:\4\bha-codecs")
 OUT_MIMO = Path(r"D:\4\OUT_MIMO")
-TIMESTAMP = "20260820T1100Z"
-PACKET_NAME = f"bha-codecs-ssp5-recommender__MIMO__{TIMESTAMP}__v1to9"
+TIMESTAMP = "20260820T1200Z"
+PACKET_NAME = f"bha-codecs-ssp5-recommender__MIMO__{TIMESTAMP}__v1to9b"
 
 
 # ---------------------------------------------------------------------------
@@ -48,7 +48,7 @@ SCRIPTS = [
     "investigate_ssp5_multipass.py",
     "investigate_ssp5_vs_bha.py",
     "investigate_recommender_corpus.py",
-    # Recommenders v1..v9
+    # Recommenders v1..v9b
     "investigate_ssp5_recommender.py",
     "investigate_ssp5_recommender_v2.py",
     "investigate_ssp5_recommender_v3.py",
@@ -58,6 +58,7 @@ SCRIPTS = [
     "investigate_ssp5_recommender_v7.py",
     "investigate_ssp5_recommender_v8.py",
     "investigate_ssp5_recommender_v9.py",
+    "investigate_ssp5_recommender_v9b.py",
 ]
 
 BENCHMARK_DIRS = [
@@ -76,6 +77,7 @@ BENCHMARK_DIRS = [
     "benchmark/ssp5-recommender-v7",
     "benchmark/ssp5-recommender-v8",
     "benchmark/ssp5-recommender-v9",
+    "benchmark/ssp5-recommender-v9b",
     "benchmark/ssp5-vs-bha",
     "benchmark/recommender-corpus",
 ]
@@ -103,31 +105,33 @@ def build_index_md() -> str:
     out.append("")
     out.append("## Codec registry evolution")
     out.append("")
-    out.append("| Version | Codecs in registry | New additions |")
-    out.append("|---------|--------------------|---------------|")
-    out.append("| v1      | 14 hand-coded KB   | —             |")
-    out.append("| v2      | 13 sources × 5 top | k=5 NN        |")
-    out.append("| v3      | 65 weighted points | top-5 augm.   |")
-    out.append("| v4      | 37 sources × 6 stdlib | extended synthetic |")
-    out.append("| v5      | 30 (23 BH env + 6 stdlib) | BHA envelope size model |")
-    out.append("| v6      | 79 (5 pp × 10 env + 6 stdlib) | delta_i64 / transpose / dedup_lines / json_extract |")
-    out.append("| v7      | 74 (8 pp × 5 env + 6 stdlib) | + nul_split / text_dict / collate_keys + class-bal. |")
-    out.append("| v8      | 74 + 50 real-corpus points | train on real bha_magic labels |")
-    out.append("| v9      | 74 + 50 + IDF locality | log(1+N/df) per neighbour |")
+    out.append("| Version | Codecs in registry | New additions | Status |")
+    out.append("|---------|--------------------|---------------|--------|")
+    out.append("| v1      | 14 hand-coded KB   | —             | reference |")
+    out.append("| v2      | 13 sources × 5 top | k=5 NN        | superseded |")
+    out.append("| v3      | 65 weighted points | top-5 augm.   | superseded |")
+    out.append("| v4      | 37 sources × 6 stdlib | extended synthetic | superseded |")
+    out.append("| v5      | 30 (23 BH env + 6 stdlib) | BHA envelope size model | superseded |")
+    out.append("| v6      | 79 (5 pp × 10 env + 6 stdlib) | delta_i64 / transpose / dedup_lines / json_extract | superseded |")
+    out.append("| v7      | 74 (8 pp × 5 env + 6 stdlib) | + nul_split / text_dict / collate_keys + class-bal. | superseded |")
+    out.append("| v8      | 74 + 50 real-corpus points | train on real bha_magic labels | superseded |")
+    out.append("| v9      | 74 + 50 + IDF locality | log(1+N/df) per neighbour | broken (raw locality wrong) |")
+    out.append("| **v9b** | **74 + 50 + BHA-dominant locality** | **locality only for BHA codecs** | **STABLE** |")
     out.append("")
     out.append("## LOO + 50-file corpus metrics")
     out.append("")
-    out.append("| Ver | LOO top-1 (synth) | LOO top-1 (real) | LOO top-3 (real) | LOO top-5 (real) | 50-file BH-family |")
-    out.append("|-----|--------------------|------------------|------------------|------------------|-------------------|")
-    out.append("| v1  | 14/14 overfit     | —                | —                | —                | 11/50 |")
-    out.append("| v2  | 5/13 = 38.5%      | —                | —                | —                | 0/50 |")
-    out.append("| v3  | 4/13 = 30.8%      | —                | —                | —                | 5/50 |")
-    out.append("| v4  | 21/37 = 56.8%     | —                | —                | —                | 0/50 |")
-    out.append("| v5  | 19/37 = 51.4%     | —                | —                | —                | 0/50 |")
-    out.append("| v6  | 18/37 = 48.6%     | —                | —                | —                | 2/50 |")
-    out.append("| v7  | 18/37 = 48.6%     | —                | —                | —                | 1/50 |")
-    out.append("| v8  | 1/37 = 2.7%       | **17/50 = 34.0%**| 28/50 = 56.0%    | 29/50 = 58.0%    | 19/50 |")
-    out.append("| v9  | 4/37 = 10.8%      | 15/50 = 30.0%    | 25/50 = 50.0%    | 28/50 = 56.0%    | 16/50 |")
+    out.append("| Ver | LOO top-1 (synth) | LOO top-1 (real) | LOO top-3 (real) | LOO top-5 (real) |")
+    out.append("|-----|--------------------|------------------|------------------|------------------|")
+    out.append("| v1  | 14/14 overfit     | —                | —                | —                |")
+    out.append("| v2  | 5/13 = 38.5%      | —                | —                | —                |")
+    out.append("| v3  | 4/13 = 30.8%      | —                | —                | —                |")
+    out.append("| v4  | 21/37 = 56.8%     | —                | —                | —                |")
+    out.append("| v5  | 19/37 = 51.4%     | —                | —                | —                |")
+    out.append("| v6  | 18/37 = 48.6%     | —                | —                | —                |")
+    out.append("| v7  | 18/37 = 48.6%     | —                | —                | —                |")
+    out.append("| v8  | 1/37 = 2.7%       | 17/50 = 34.0%    | 28/50 = 56.0%    | 29/50 = 58.0%    |")
+    out.append("| v9  | 4/37 = 10.8%      | 15/50 = 30.0%    | 25/50 = 50.0%    | 28/50 = 56.0%    |")
+    out.append("| **v9b** | **1/37 = 2.7%** | **21/50 = 42.0%** | **26/50 = 52.0%** | **30/50 = 60.0%** |")
     out.append("")
     out.append("## BHA-envelope codecs modelled (size model + preprocessor)")
     out.append("")
@@ -210,6 +214,10 @@ def build_index_md() -> str:
     out.append("9. **IDF locality weight log(1+N/df(label))** — v9. Amplifies codecs")
     out.append("   rare in local k-NN window. Slight top-1 regression vs v8 (30% vs 34%)")
     out.append("   because BHA's actual picks don't always match locally-rare labels.")
+    out.append("10. **BHA-dominant-restricted locality fixes v9** — v9b. Restrict")
+    out.append("    locality amplification to BHA file_codec magics (lzma2/BHTC1/BHVT1/")
+    out.append("    BHRT1/BHJA1/...). Non-dominant labels (brotli/bz2/zlib) get locality=1.0")
+    out.append("    (neutral). Real-only LOO top-1 jumps 17/50 → **21/50 = 42.0%** (vs v8's 34%).")
     out.append("")
     out.append("## File layout in this packet")
     out.append("")
@@ -235,7 +243,8 @@ def build_index_md() -> str:
     out.append("  ssp5-recommender-v6/ — + 5 preprocessors (delta/transpose/...)")
     out.append("  ssp5-recommender-v7/ — + 3 more pp + class-balanced voting")
     out.append("  ssp5-recommender-v8/ — + 50 real-corpus training points")
-    out.append("  ssp5-recommender-v9/ — + IDF locality log(1+N/df)")
+    out.append("  ssp5-recommender-v9/ — + IDF locality log(1+N/df) [broken]")
+    out.append("  ssp5-recommender-v9b/ — + BHA-dominant locality [STABLE]")
     out.append("README_INDEX.md       — this file")
     out.append("```")
     return "\n".join(out) + "\n"
