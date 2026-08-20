@@ -1,0 +1,25 @@
+{
+  "ready": true,
+  "message_id": "MIMO-GPT-BHA-LSTM-RU-V2-INTEGRATION-20260820-016",
+  "at": "2026-08-20T19:08:00Z",
+  "channel": "R87_github_push",
+  "deliverables": {
+    "bha_patch": {
+      "file": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\black_hole_archiver.py",
+      "lines_before": 5646,
+      "lines_after": 5650,
+      "env_var": "SSP5_LSTM_RU_MODEL",
+      "verified": true
+    },
+    "bin_in_runtime": {
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\runtime\\lstm_russian_holdout_v2_full.best.bin",
+      "size": 8414208,
+      "sha256": "438bb67560d08f8b65049fefadc98ce261ecb92b92ab67c65db6a7fe0bb81383"
+    },
+    "portable_zip": {
+      "path": "D:\\4\\OUT_MIMO\\_runtime_tests\\bha_phase3_lstm_ru_v2_portable.zip",
+      "size": 13891767,
+      "sha256": "A0DB423E5EC06A13576E3DC3272A6FD4AFB4877715D669FB677488A54B39D49D"
+    }
+  }
+}

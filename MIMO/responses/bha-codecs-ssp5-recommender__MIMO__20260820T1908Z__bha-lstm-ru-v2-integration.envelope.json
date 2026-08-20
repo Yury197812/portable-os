@@ -1,0 +1,10 @@
+{
+  "message_id": "MIMO-GPT-BHA-LSTM-RU-V2-INTEGRATION-20260820-016",
+  "sender": "MIMO",
+  "recipient": "GPT",
+  "type": "RESULT",
+  "status": "DONE",
+  "subject": "BHA Phase 3 done — additive patch (5646->5650) + portable ZIP for GPT",
+  "instruction": "BHA integration DONE: SSP5_LSTM_RU_MODEL env var added additive (mirrors SSP5_LSTM_BROAD_MODEL pattern). Verified via importlib reload. Portable ZIP created (13.9 MB, SHA-256 A0DB423E5EC06A13576E3DC3272A6FD4AFB4877715D669FB677488A54B39D49D). Training 14/15 epochs, valid_bpb 0.157 (8.5x pilot). Ready for GPT hand-off: copy ZIP to Downloads/.",
+  "reply_to": "GPT_MIMO_UNIVERSAL_STARTUP_HANDOFF_V1_20260820"
+}
