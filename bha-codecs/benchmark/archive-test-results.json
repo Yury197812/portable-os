@@ -1,0 +1,105 @@
+﻿{
+  "n_samples": 9,
+  "results": [
+    {
+      "file": "data_csv_100k.csv",
+      "original": 101647,
+      "lzma_ratio": 26.28,
+      "gzip_ratio": 31.71
+    },
+    {
+      "file": "data_json_100k.json",
+      "original": 100000,
+      "lzma_ratio": 5.51,
+      "gzip_ratio": 8.48
+    },
+    {
+      "file": "log_long_repeated_512k.log",
+      "original": 524288,
+      "lzma_ratio": 2.92,
+      "gzip_ratio": 9.94
+    },
+    {
+      "file": "random_lcg_256k.bin",
+      "original": 262144,
+      "lzma_ratio": 100.03,
+      "gzip_ratio": 100.04
+    },
+    {
+      "file": "truncated_partial_last_block.bin",
+      "original": 32895,
+      "lzma_ratio": 100.19,
+      "gzip_ratio": 100.09
+    },
+    {
+      "file": "html_inline_data_uri_200k.html",
+      "original": 204800,
+      "lzma_ratio": 0.39,
+      "gzip_ratio": 1.42
+    },
+    {
+      "file": "css_repeated_150k.css",
+      "original": 153600,
+      "lzma_ratio": 10.58,
+      "gzip_ratio": 18.64
+    },
+    {
+      "file": "xml_attrs_300k.xml",
+      "original": 307200,
+      "lzma_ratio": 4.04,
+      "gzip_ratio": 13.53
+    },
+    {
+      "file": "ini_config_128k.ini",
+      "original": 131072,
+      "lzma_ratio": 2.33,
+      "gzip_ratio": 9.53
+    }
+  ],
+  "recompress": [
+    {
+      "file": "data_csv_100k.csv",
+      "original": 101647,
+      "first_lzma": 26712,
+      "first_lzma_ratio": 26.28,
+      "second_lzma_of_lzma": 26772,
+      "second_lzma_ratio": 100.22,
+      "first_gzip": 32237,
+      "first_gzip_ratio": 31.71,
+      "second_lzma_of_gzip": 32300,
+      "second_lzma_of_gzip_ratio": 100.2
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "original": 524288,
+      "first_lzma": 143416,
+      "first_lzma_ratio": 27.35,
+      "second_lzma_of_lzma": 143484,
+      "second_lzma_ratio": 100.05,
+      "first_gzip": 172315,
+      "first_gzip_ratio": 32.87,
+      "second_lzma_of_gzip": 152820,
+      "second_lzma_of_gzip_ratio": 88.69
+    },
+    {
+      "file": "binary_header_text_payload.log",
+      "original": 5308493,
+      "first_lzma": 68116,
+      "first_lzma_ratio": 1.28,
+      "second_lzma_of_lzma": 68180,
+      "second_lzma_ratio": 100.09,
+      "first_gzip": 445566,
+      "first_gzip_ratio": 8.39,
+      "second_lzma_of_gzip": 93884,
+      "second_lzma_of_gzip_ratio": 21.07
+    }
+  ],
+  "pre_archived": [
+    {
+      "file": "archive_zip_100k.zip",
+      "type": "pre-archived",
+      "original": 109848,
+      "lzma_ratio": 22.73
+    }
+  ]
+}

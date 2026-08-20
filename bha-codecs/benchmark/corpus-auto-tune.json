@@ -1,0 +1,417 @@
+{
+  "elapsed_seconds": 64.1,
+  "total_compressions": 350,
+  "variants_tested": [
+    "lzma_fast",
+    "lzma_default",
+    "lzma_extreme",
+    "gzip_default",
+    "zip_default",
+    "atomized_lzma",
+    "atomized_gzip"
+  ],
+  "rounds": 1,
+  "best_per_file": {
+    "archive_zip_100k.zip": {
+      "variant": "lzma_extreme",
+      "compressed_size": 24796,
+      "ratio_pct": 22.573,
+      "compress_ms": 33,
+      "decompress_ms": 2,
+      "original_size": 109848
+    },
+    "binary_embedded.txt": {
+      "variant": "lzma_fast",
+      "compressed_size": 2428,
+      "ratio_pct": 2.474,
+      "compress_ms": 8,
+      "decompress_ms": 0,
+      "original_size": 98158
+    },
+    "binary_header_text_payload.log": {
+      "variant": "lzma_fast",
+      "compressed_size": 53628,
+      "ratio_pct": 1.01,
+      "compress_ms": 276,
+      "decompress_ms": 17,
+      "original_size": 5308493
+    },
+    "cr_only_lines_128k.txt": {
+      "variant": "lzma_fast",
+      "compressed_size": 5840,
+      "ratio_pct": 4.456,
+      "compress_ms": 9,
+      "decompress_ms": 1,
+      "original_size": 131072
+    },
+    "crlf_lf_bom_mixed_struct.txt": {
+      "variant": "lzma_fast",
+      "compressed_size": 14096,
+      "ratio_pct": 3.988,
+      "compress_ms": 19,
+      "decompress_ms": 2,
+      "original_size": 353503
+    },
+    "css_repeated_150k.css": {
+      "variant": "lzma_extreme",
+      "compressed_size": 16252,
+      "ratio_pct": 10.581,
+      "compress_ms": 72,
+      "decompress_ms": 2,
+      "original_size": 153600
+    },
+    "csv_optional_cols_1m.csv": {
+      "variant": "lzma_extreme",
+      "compressed_size": 60096,
+      "ratio_pct": 5.731,
+      "compress_ms": 744,
+      "decompress_ms": 9,
+      "original_size": 1048531
+    },
+    "data_csv_100k.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 26712,
+      "ratio_pct": 26.279,
+      "compress_ms": 44,
+      "decompress_ms": 2,
+      "original_size": 101647
+    },
+    "data_json_100k.json": {
+      "variant": "lzma_extreme",
+      "compressed_size": 5396,
+      "ratio_pct": 5.396,
+      "compress_ms": 85,
+      "decompress_ms": 1,
+      "original_size": 100000
+    },
+    "deep_nested_flat_mimic.json": {
+      "variant": "lzma_extreme",
+      "compressed_size": 20492,
+      "ratio_pct": 3.514,
+      "compress_ms": 898,
+      "decompress_ms": 7,
+      "original_size": 583153
+    },
+    "dense_numeric_csv_300k.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 59408,
+      "ratio_pct": 19.339,
+      "compress_ms": 128,
+      "decompress_ms": 8,
+      "original_size": 307200
+    },
+    "empty_rows_sparse.csv": {
+      "variant": "lzma_extreme",
+      "compressed_size": 12812,
+      "ratio_pct": 9.438,
+      "compress_ms": 52,
+      "decompress_ms": 2,
+      "original_size": 135750
+    },
+    "fake_zip_header_text.zip": {
+      "variant": "lzma_default",
+      "compressed_size": 224,
+      "ratio_pct": 0.122,
+      "compress_ms": 8,
+      "decompress_ms": 0,
+      "original_size": 184324
+    },
+    "fixed_aligned_log_256k.log": {
+      "variant": "lzma_fast",
+      "compressed_size": 3384,
+      "ratio_pct": 1.291,
+      "compress_ms": 14,
+      "decompress_ms": 1,
+      "original_size": 262170
+    },
+    "fixed_db_dump_512k.txt": {
+      "variant": "lzma_fast",
+      "compressed_size": 29108,
+      "ratio_pct": 5.552,
+      "compress_ms": 42,
+      "decompress_ms": 5,
+      "original_size": 524295
+    },
+    "fixed_width_short_128k.log": {
+      "variant": "lzma_fast",
+      "compressed_size": 7064,
+      "ratio_pct": 5.389,
+      "compress_ms": 10,
+      "decompress_ms": 1,
+      "original_size": 131072
+    },
+    "html_inline_data_uri_200k.html": {
+      "variant": "lzma_default",
+      "compressed_size": 792,
+      "ratio_pct": 0.387,
+      "compress_ms": 18,
+      "decompress_ms": 0,
+      "original_size": 204800
+    },
+    "img_smooth_256x256.raw": {
+      "variant": "lzma_default",
+      "compressed_size": 40708,
+      "ratio_pct": 62.115,
+      "compress_ms": 22,
+      "decompress_ms": 4,
+      "original_size": 65536
+    },
+    "ini_config_128k.ini": {
+      "variant": "lzma_default",
+      "compressed_size": 3056,
+      "ratio_pct": 2.332,
+      "compress_ms": 63,
+      "decompress_ms": 0,
+      "original_size": 131072
+    },
+    "js_minified_200k.js": {
+      "variant": "lzma_default",
+      "compressed_size": 9048,
+      "ratio_pct": 4.418,
+      "compress_ms": 95,
+      "decompress_ms": 2,
+      "original_size": 204800
+    },
+    "json_lines_200k.jsonl": {
+      "variant": "lzma_extreme",
+      "compressed_size": 11792,
+      "ratio_pct": 5.758,
+      "compress_ms": 321,
+      "decompress_ms": 2,
+      "original_size": 204800
+    },
+    "latin1_text_200k.txt": {
+      "variant": "lzma_fast",
+      "compressed_size": 216,
+      "ratio_pct": 0.105,
+      "compress_ms": 4,
+      "decompress_ms": 0,
+      "original_size": 204800
+    },
+    "log_high_entropy_tail_512k.log": {
+      "variant": "lzma_fast",
+      "compressed_size": 142288,
+      "ratio_pct": 27.139,
+      "compress_ms": 49,
+      "decompress_ms": 7,
+      "original_size": 524288
+    },
+    "log_long_repeated_512k.log": {
+      "variant": "lzma_fast",
+      "compressed_size": 13772,
+      "ratio_pct": 2.627,
+      "compress_ms": 26,
+      "decompress_ms": 3,
+      "original_size": 524288
+    },
+    "markdown_tables_256k.md": {
+      "variant": "lzma_default",
+      "compressed_size": 10384,
+      "ratio_pct": 3.961,
+      "compress_ms": 114,
+      "decompress_ms": 2,
+      "original_size": 262144
+    },
+    "mixed_delimiter_switch.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 23812,
+      "ratio_pct": 8.684,
+      "compress_ms": 147,
+      "decompress_ms": 6,
+      "original_size": 274204
+    },
+    "mixed_delimiters.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 18796,
+      "ratio_pct": 10.316,
+      "compress_ms": 94,
+      "decompress_ms": 3,
+      "original_size": 182205
+    },
+    "nested_arrays_300k.json": {
+      "variant": "lzma_default",
+      "compressed_size": 14876,
+      "ratio_pct": 4.842,
+      "compress_ms": 142,
+      "decompress_ms": 2,
+      "original_size": 307200
+    },
+    "nested_quotes.tsv": {
+      "variant": "lzma_default",
+      "compressed_size": 8424,
+      "ratio_pct": 5.308,
+      "compress_ms": 89,
+      "decompress_ms": 1,
+      "original_size": 158707
+    },
+    "pipe_kv_transition_256k.log": {
+      "variant": "lzma_default",
+      "compressed_size": 16852,
+      "ratio_pct": 6.429,
+      "compress_ms": 104,
+      "decompress_ms": 2,
+      "original_size": 262144
+    },
+    "pipe_sparse_many_cols_256k.log": {
+      "variant": "lzma_default",
+      "compressed_size": 18140,
+      "ratio_pct": 6.92,
+      "compress_ms": 132,
+      "decompress_ms": 3,
+      "original_size": 262144
+    },
+    "quoted_csv_escape_heavy.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 10260,
+      "ratio_pct": 3.79,
+      "compress_ms": 116,
+      "decompress_ms": 2,
+      "original_size": 270682
+    },
+    "random_lcg_256k.bin": {
+      "variant": "lzma_fast",
+      "compressed_size": 262216,
+      "ratio_pct": 100.027,
+      "compress_ms": 46,
+      "decompress_ms": 0,
+      "original_size": 262144
+    },
+    "repeating_binary_pattern.bin": {
+      "variant": "lzma_fast",
+      "compressed_size": 176,
+      "ratio_pct": 0.09,
+      "compress_ms": 4,
+      "decompress_ms": 0,
+      "original_size": 196608
+    },
+    "semicolon_sparse_300k.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 18116,
+      "ratio_pct": 5.897,
+      "compress_ms": 122,
+      "decompress_ms": 2,
+      "original_size": 307200
+    },
+    "single_giant_line_record.dat": {
+      "variant": "lzma_fast",
+      "compressed_size": 1688,
+      "ratio_pct": 0.016,
+      "compress_ms": 100,
+      "decompress_ms": 44,
+      "original_size": 10485760
+    },
+    "small_threshold_4k.txt": {
+      "variant": "gzip_default",
+      "compressed_size": 48,
+      "ratio_pct": 7.143,
+      "compress_ms": 0,
+      "decompress_ms": 0,
+      "original_size": 672
+    },
+    "sparse_dense_transition.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 25596,
+      "ratio_pct": 5.897,
+      "compress_ms": 205,
+      "decompress_ms": 4,
+      "original_size": 434015
+    },
+    "sparse_many_columns_300k.csv": {
+      "variant": "lzma_default",
+      "compressed_size": 18180,
+      "ratio_pct": 5.918,
+      "compress_ms": 157,
+      "decompress_ms": 2,
+      "original_size": 307200
+    },
+    "tab_sparse_quotes.tsv": {
+      "variant": "lzma_default",
+      "compressed_size": 9532,
+      "ratio_pct": 11.76,
+      "compress_ms": 27,
+      "decompress_ms": 1,
+      "original_size": 81052
+    },
+    "telemetry_logs_1m.log": {
+      "variant": "lzma_default",
+      "compressed_size": 33764,
+      "ratio_pct": 3.22,
+      "compress_ms": 725,
+      "decompress_ms": 7,
+      "original_size": 1048543
+    },
+    "toml_config_128k.toml": {
+      "variant": "lzma_fast",
+      "compressed_size": 1816,
+      "ratio_pct": 1.385,
+      "compress_ms": 6,
+      "decompress_ms": 0,
+      "original_size": 131072
+    },
+    "truncated_partial_last_block.bin": {
+      "variant": "gzip_default",
+      "compressed_size": 32926,
+      "ratio_pct": 100.094,
+      "compress_ms": 1,
+      "decompress_ms": 0,
+      "original_size": 32895
+    },
+    "unicode_filename_ru.txt": {
+      "variant": "lzma_default",
+      "compressed_size": 2028,
+      "ratio_pct": 1.547,
+      "compress_ms": 17,
+      "decompress_ms": 0,
+      "original_size": 131072
+    },
+    "unquoted_delimiter_in_value.tsv": {
+      "variant": "lzma_extreme",
+      "compressed_size": 8464,
+      "ratio_pct": 2.667,
+      "compress_ms": 170,
+      "decompress_ms": 2,
+      "original_size": 317406
+    },
+    "utf16_like_control.bin": {
+      "variant": "lzma_default",
+      "compressed_size": 700,
+      "ratio_pct": 0.427,
+      "compress_ms": 9,
+      "decompress_ms": 0,
+      "original_size": 163840
+    },
+    "utf8_cyrillic_200k.txt": {
+      "variant": "lzma_default",
+      "compressed_size": 2368,
+      "ratio_pct": 1.156,
+      "compress_ms": 31,
+      "decompress_ms": 0,
+      "original_size": 204800
+    },
+    "xml_attrs_300k.xml": {
+      "variant": "lzma_default",
+      "compressed_size": 12424,
+      "ratio_pct": 4.044,
+      "compress_ms": 176,
+      "decompress_ms": 3,
+      "original_size": 307200
+    },
+    "yaml_mixed_indent_200k.yaml": {
+      "variant": "lzma_extreme",
+      "compressed_size": 6800,
+      "ratio_pct": 3.32,
+      "compress_ms": 207,
+      "decompress_ms": 1,
+      "original_size": 204800
+    },
+    "zero_sparse_binary_128k.bin": {
+      "variant": "lzma_fast",
+      "compressed_size": 656,
+      "ratio_pct": 0.5,
+      "compress_ms": 5,
+      "decompress_ms": 0,
+      "original_size": 131072
+    }
+  },
+  "average_best_ratio_pct": 10.747
+}

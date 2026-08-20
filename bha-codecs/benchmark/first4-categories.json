@@ -1,0 +1,137 @@
+{
+  "0,0,0,0": {
+    "category": "constant_sequences",
+    "count": 105,
+    "description": "constant zero sequence"
+  },
+  "1,1,1,1": {
+    "category": "constant_sequences",
+    "count": 104,
+    "description": "constant 1 sequence"
+  },
+  "1,2,3,4": {
+    "category": "arithmetic_progression",
+    "count": 87,
+    "description": "AP starting at 1, difference 1"
+  },
+  "0,1,2,3": {
+    "category": "arithmetic_progression",
+    "count": 64,
+    "description": "AP starting at 0, difference 1"
+  },
+  "1,1,1,2": {
+    "category": "constant_with_jump",
+    "count": 54,
+    "description": "constant 1 then diverges"
+  },
+  "1,0,0,0": {
+    "category": "sparse",
+    "count": 52,
+    "description": "1 followed by zeros"
+  },
+  "1,1,2,3": {
+    "category": "slow_growth",
+    "count": 48,
+    "description": "slow growth pattern"
+  },
+  "1,2,3,5": {
+    "category": "primes_sequences",
+    "count": 33,
+    "description": "primes at indices 1,2,3,4 \u2014 usually prime numbers"
+  },
+  "1,1,2,2": {
+    "category": "alternating",
+    "count": 32,
+    "description": "alternating 1,2 pattern"
+  },
+  "2,3,5,7": {
+    "category": "primes_sequences",
+    "count": 28,
+    "description": "first four primes"
+  },
+  "1,1,2,1": {
+    "category": "alternating",
+    "count": 27,
+    "description": "alternating u-curve"
+  },
+  "0,0,1,0": {
+    "category": "triangular",
+    "count": 26,
+    "description": "triangular-like pattern"
+  },
+  "0,1,1,1": {
+    "category": "discrete_step",
+    "count": 25,
+    "description": "step function"
+  },
+  "1,2,4,6": {
+    "category": "factorials",
+    "count": 24,
+    "description": "factorial-like doubling"
+  },
+  "0,1,1,2": {
+    "category": "binomial",
+    "count": 24,
+    "description": "binomial-like"
+  },
+  "1,0,1,0": {
+    "category": "alternating_parity",
+    "count": 23,
+    "description": "alternating parity"
+  },
+  "1,0,1,1": {
+    "category": "alternating",
+    "count": 22,
+    "description": "alternating"
+  },
+  "1,0,0,1": {
+    "category": "sparse",
+    "count": 21,
+    "description": "sparse with 1 at start and end"
+  },
+  "0,0,0,1": {
+    "category": "step",
+    "count": 21,
+    "description": "step-like pattern"
+  },
+  "0,0,1,1": {
+    "category": "step",
+    "count": 21,
+    "description": "step-like"
+  },
+  "0,1,2,4": {
+    "category": "exponential",
+    "count": 20,
+    "description": "exponential growth early"
+  },
+  "1,2,2,3": {
+    "category": "exponential",
+    "count": 20,
+    "description": "exponential growth early"
+  },
+  "1,1,2,6": {
+    "category": "exponential",
+    "count": 17,
+    "description": "factorial-like"
+  },
+  "1,1,2,4": {
+    "category": "exponential",
+    "count": 16,
+    "description": "2^n-like"
+  },
+  "1,2,4,8": {
+    "category": "power_sequences",
+    "count": 16,
+    "description": "2^n sequence"
+  },
+  "0,1,4,9": {
+    "category": "power_sequences",
+    "count": 9,
+    "description": "n^2 sequence"
+  },
+  "1,2,3,6": {
+    "category": "factorials",
+    "count": 10,
+    "description": "divisor sum-like"
+  }
+}

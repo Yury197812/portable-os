@@ -1,0 +1,23 @@
+{
+  "method": "k-NN, distance-weighted vote, sample weight=1.0",
+  "training_set": "37 sources x 79 codecs",
+  "preprocessors": [
+    "identity",
+    "delta",
+    "delta_i64",
+    "transpose",
+    "dedup_lines",
+    "json_extract"
+  ],
+  "total_sources": 37,
+  "unique_codecs": 7,
+  "label_distribution": {
+    "BHCC1__delta_i64": 4,
+    "raw": 1,
+    "lzma2": 3,
+    "brotli": 21,
+    "BHCC1__json_extract": 1,
+    "BHCC1__transpose": 2,
+    "bz2": 5
+  }
+}

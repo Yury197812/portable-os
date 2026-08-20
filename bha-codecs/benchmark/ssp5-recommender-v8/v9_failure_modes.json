@@ -1,0 +1,107 @@
+{
+  "total_v9_losses": 5,
+  "modes_ranked": [
+    {
+      "mode": "A_lzma2_to_bz2",
+      "count": 3,
+      "files": [
+        {
+          "file": "binary_header_text_payload.log",
+          "bha_magic": "lzma2",
+          "v8_pred": "lzma2",
+          "v9_pred": "bz2",
+          "v8_top3": [
+            "lzma2",
+            "brotli",
+            "bz2"
+          ],
+          "v9_top3": [
+            "bz2",
+            "lzma2",
+            "brotli"
+          ],
+          "v8_bha_in_top3": true,
+          "v9_bha_in_top3": true
+        },
+        {
+          "file": "small_threshold_4k.txt",
+          "bha_magic": "lzma2",
+          "v8_pred": "lzma2",
+          "v9_pred": "bz2",
+          "v8_top3": [
+            "lzma2",
+            "brotli",
+            "bz2"
+          ],
+          "v9_top3": [
+            "bz2",
+            "lzma2",
+            "brotli"
+          ],
+          "v8_bha_in_top3": true,
+          "v9_bha_in_top3": true
+        },
+        {
+          "file": "utf16_like_control.bin",
+          "bha_magic": "lzma2",
+          "v8_pred": "lzma2",
+          "v9_pred": "bz2",
+          "v8_top3": [
+            "lzma2",
+            "brotli",
+            "bz2"
+          ],
+          "v9_top3": [
+            "bz2",
+            "lzma2",
+            "brotli"
+          ],
+          "v8_bha_in_top3": true,
+          "v9_bha_in_top3": true
+        }
+      ]
+    },
+    {
+      "mode": "D_lzma2_to_brotli",
+      "count": 2,
+      "files": [
+        {
+          "file": "img_smooth_256x256.raw",
+          "bha_magic": "lzma2",
+          "v8_pred": "lzma2",
+          "v9_pred": "brotli",
+          "v8_top3": [
+            "lzma2",
+            "brotli",
+            "bz2"
+          ],
+          "v9_top3": [
+            "brotli",
+            "bz2",
+            "lzma2"
+          ],
+          "v8_bha_in_top3": true,
+          "v9_bha_in_top3": true
+        },
+        {
+          "file": "js_minified_200k.js",
+          "bha_magic": "lzma2",
+          "v8_pred": "lzma2",
+          "v9_pred": "brotli",
+          "v8_top3": [
+            "lzma2",
+            "brotli",
+            "BHRT1"
+          ],
+          "v9_top3": [
+            "brotli",
+            "lzma2",
+            "bz2"
+          ],
+          "v8_bha_in_top3": true,
+          "v9_bha_in_top3": true
+        }
+      ]
+    }
+  ]
+}

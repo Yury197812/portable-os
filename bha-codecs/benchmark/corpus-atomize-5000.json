@@ -1,0 +1,557 @@
+{
+  "n_attempted": 5000,
+  "n_successful": 5000,
+  "elapsed_seconds": 40.3,
+  "strategies": [
+    "raw",
+    "terms_only",
+    "diff_first",
+    "formulas_first",
+    "keyvalue",
+    "xml_flat",
+    "json_struct"
+  ],
+  "ratio_distribution": {
+    "5-9%": 1,
+    "10-14%": 113,
+    "15-19%": 244,
+    "20-24%": 307,
+    "25-29%": 200,
+    "30-34%": 440,
+    "35-39%": 499,
+    "40-44%": 482,
+    "45-49%": 341,
+    "50-54%": 290,
+    "55-59%": 325,
+    "60-64%": 411,
+    "65-69%": 455,
+    "70-74%": 244,
+    "75-79%": 203,
+    "80-84%": 101,
+    "85-89%": 52,
+    "90-94%": 44,
+    "95-99%": 36,
+    "100-104%": 22,
+    "105-109%": 27,
+    "110-114%": 19,
+    "115-119%": 19,
+    "120-124%": 17,
+    "125-129%": 15,
+    "130-134%": 15,
+    "135-139%": 11,
+    "140-144%": 11,
+    "145-149%": 8,
+    "150-154%": 14,
+    "155-159%": 3,
+    "160-164%": 6,
+    "165-169%": 5,
+    "170-174%": 4,
+    "175-179%": 5,
+    "180-184%": 2,
+    "185-189%": 1,
+    "190-194%": 2,
+    "195-199%": 3,
+    "200-204%": 3
+  },
+  "top_30_best": [
+    {
+      "a_id": "A058342",
+      "ratio": 8.274,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A079998",
+      "ratio": 11.176,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A081168",
+      "ratio": 11.281,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A082204",
+      "ratio": 11.281,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A093719",
+      "ratio": 11.608,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A055641",
+      "ratio": 11.641,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A079416",
+      "ratio": 11.751,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A076620",
+      "ratio": 11.751,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A067018",
+      "ratio": 11.751,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A076824",
+      "ratio": 11.751,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A072629",
+      "ratio": 11.751,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A062356",
+      "ratio": 11.751,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A048271",
+      "ratio": 11.801,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A099838",
+      "ratio": 12.079,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A087233",
+      "ratio": 12.107,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A070472",
+      "ratio": 12.21,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A079807",
+      "ratio": 12.221,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A082999",
+      "ratio": 12.221,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A085980",
+      "ratio": 12.221,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A021580",
+      "ratio": 12.453,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A021300",
+      "ratio": 12.453,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A021433",
+      "ratio": 12.453,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A021892",
+      "ratio": 12.453,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A096811",
+      "ratio": 12.548,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A072769",
+      "ratio": 12.64,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A097795",
+      "ratio": 12.691,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A088917",
+      "ratio": 12.691,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A072643",
+      "ratio": 12.691,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A043545",
+      "ratio": 12.691,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A082389",
+      "ratio": 12.691,
+      "best_strategy": "xml_flat"
+    }
+  ],
+  "top_30_worst": [
+    {
+      "a_id": "A084853",
+      "ratio": 160.0,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A069447",
+      "ratio": 161.111,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A058472",
+      "ratio": 161.905,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A027885",
+      "ratio": 163.934,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A093004",
+      "ratio": 164.286,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A052432",
+      "ratio": 165.079,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A086788",
+      "ratio": 167.164,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A073921",
+      "ratio": 167.273,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A091824",
+      "ratio": 168.421,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A094482",
+      "ratio": 169.697,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A058139",
+      "ratio": 172.414,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A076859",
+      "ratio": 173.585,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A058447",
+      "ratio": 173.684,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A006029",
+      "ratio": 174.545,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A003134",
+      "ratio": 175.342,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A057241",
+      "ratio": 176.923,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A067569",
+      "ratio": 176.923,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A007666",
+      "ratio": 177.778,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A037948",
+      "ratio": 177.778,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A068000",
+      "ratio": 181.132,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A091470",
+      "ratio": 181.818,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A027682",
+      "ratio": 185.075,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A066693",
+      "ratio": 190.476,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A054560",
+      "ratio": 191.045,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A076226",
+      "ratio": 195.745,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A098113",
+      "ratio": 195.745,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A089923",
+      "ratio": 196.721,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A092358",
+      "ratio": 200.0,
+      "best_strategy": "xml_flat"
+    },
+    {
+      "a_id": "A078302",
+      "ratio": 203.509,
+      "best_strategy": "json_struct"
+    },
+    {
+      "a_id": "A062651",
+      "ratio": 203.509,
+      "best_strategy": "json_struct"
+    }
+  ],
+  "top_30_variance": [
+    {
+      "a_id": "A078302",
+      "variance": 94677.38018655554
+    },
+    {
+      "a_id": "A062651",
+      "variance": 91658.68316388887
+    },
+    {
+      "a_id": "A057241",
+      "variance": 57746.729137472226
+    },
+    {
+      "a_id": "A067569",
+      "variance": 57746.729137472226
+    },
+    {
+      "a_id": "A092358",
+      "variance": 54378.59680355556
+    },
+    {
+      "a_id": "A076226",
+      "variance": 48166.21450588889
+    },
+    {
+      "a_id": "A076859",
+      "variance": 39611.04042113889
+    },
+    {
+      "a_id": "A068000",
+      "variance": 38987.3431338889
+    },
+    {
+      "a_id": "A073921",
+      "variance": 38425.28065191666
+    },
+    {
+      "a_id": "A098113",
+      "variance": 37041.29402333333
+    },
+    {
+      "a_id": "A089923",
+      "variance": 36379.83394388889
+    },
+    {
+      "a_id": "A050679",
+      "variance": 35793.16863780556
+    },
+    {
+      "a_id": "A073608",
+      "variance": 34725.97958047222
+    },
+    {
+      "a_id": "A084853",
+      "variance": 34515.13565558333
+    },
+    {
+      "a_id": "A037948",
+      "variance": 30531.427100333338
+    },
+    {
+      "a_id": "A095031",
+      "variance": 27981.293960555555
+    },
+    {
+      "a_id": "A007666",
+      "variance": 27951.33837913889
+    },
+    {
+      "a_id": "A006029",
+      "variance": 27110.265268244897
+    },
+    {
+      "a_id": "A066693",
+      "variance": 24535.764047222223
+    },
+    {
+      "a_id": "A080496",
+      "variance": 22061.384115472218
+    },
+    {
+      "a_id": "A055577",
+      "variance": 21711.073816555552
+    },
+    {
+      "a_id": "A013578",
+      "variance": 21511.964811836737
+    },
+    {
+      "a_id": "A052185",
+      "variance": 20845.143919805552
+    },
+    {
+      "a_id": "A093004",
+      "variance": 19916.516747666665
+    },
+    {
+      "a_id": "A020592",
+      "variance": 19764.14294658333
+    },
+    {
+      "a_id": "A097881",
+      "variance": 19707.679563472222
+    },
+    {
+      "a_id": "A004045",
+      "variance": 19114.159178285714
+    },
+    {
+      "a_id": "A005454",
+      "variance": 19114.159178285714
+    },
+    {
+      "a_id": "A091824",
+      "variance": 18704.545983805558
+    },
+    {
+      "a_id": "A002632",
+      "variance": 18149.10200134694
+    }
+  ],
+  "top_40_first_4_terms": {
+    "0,0,0,0": 105,
+    "1,1,1,1": 104,
+    "1,2,3,4": 87,
+    "0,1,2,3": 64,
+    "1,1,1,2": 54,
+    "1,0,0,0": 52,
+    "1,1,2,3": 48,
+    "1,2,3,5": 33,
+    "1,1,2,2": 32,
+    "2,3,5,7": 28,
+    "1,1,2,1": 27,
+    "0,0,1,0": 26,
+    "0,1,1,1": 25,
+    "1,2,4,6": 24,
+    "0,1,1,2": 24,
+    "1,0,1,0": 23,
+    "1,0,1,1": 22,
+    "1,0,0,1": 21,
+    "0,0,0,1": 21,
+    "0,0,1,1": 21,
+    "0,1,2,4": 20,
+    "1,2,2,3": 20,
+    "1,1,2,6": 17,
+    "1,1,2,4": 16,
+    "1,2,4,8": 16,
+    "1,1,2,5": 16,
+    "1,2,2,4": 15,
+    "1,2,4,7": 15,
+    "1,2,4,5": 14,
+    "1,1,1,3": 14,
+    "0,0,1,2": 13,
+    "0,1,3,4": 13,
+    "0,0,1,3": 12,
+    "1,3,5,7": 11,
+    "2,3,4,5": 11,
+    "1,2,3,6": 10,
+    "1,1,1,0": 9,
+    "0,1,3,5": 9,
+    "0,1,4,9": 9,
+    "1,2,2,2": 9
+  },
+  "strategy_by_ratio_bucket": {
+    "100-109%": {
+      "xml_flat": 201,
+      "json_struct": 11
+    },
+    "90-99%": {
+      "xml_flat": 80
+    },
+    "80-89%": {
+      "xml_flat": 153
+    },
+    "70-79%": {
+      "xml_flat": 447
+    },
+    "60-69%": {
+      "xml_flat": 866
+    },
+    "50-59%": {
+      "xml_flat": 609,
+      "diff_first": 6
+    },
+    "40-49%": {
+      "xml_flat": 821,
+      "diff_first": 2
+    },
+    "30-39%": {
+      "xml_flat": 938,
+      "diff_first": 1
+    },
+    "20-29%": {
+      "xml_flat": 865
+    }
+  }
+}

@@ -1,0 +1,519 @@
+[
+  {
+    "source": "syn_even_0",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "lzma2",
+      "bz2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "syn_even_1",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "syn_arb_lcg",
+    "expected": "raw",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": false,
+    "in_top5": false
+  },
+  {
+    "source": "syn_arb_mixed",
+    "expected": "lzma2",
+    "ranked": [
+      "bz2",
+      "brotli",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "bz2",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "real_csv_int",
+    "expected": "brotli",
+    "ranked": [
+      "bz2",
+      "brotli",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "bz2",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "real_telem_int",
+    "expected": "lzma2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "text_repeated",
+    "expected": "brotli",
+    "ranked": [
+      "bz2",
+      "brotli",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "bz2",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "binary_zeros",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "binary_random",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "ini_config",
+    "expected": "lzma2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "json_array",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "css_repeated",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "telem_log_raw",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "html",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "xml",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "yaml",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "toml",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "jsonl",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "markdown",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "js_minified",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "cyrillic_utf8",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "mixed_binary_text",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "quoted_csv",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "semicolon_sparse",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "tsv",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "mixed_delim",
+    "expected": "brotli",
+    "ranked": [
+      "bz2",
+      "brotli",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "bz2",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "pipe_kv",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "fixed_width_log",
+    "expected": "lzma2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "numeric_csv_sparse",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "numeric_csv_dense",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "html_inline",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "repeating_lines",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "arith_progression",
+    "expected": "lzma2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "geo_progression",
+    "expected": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "zero_run_sparse",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "dense_small_ints",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  },
+  {
+    "source": "low_entropy_text",
+    "expected": "bz2",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "lzma2",
+      "raw"
+    ],
+    "top1": "brotli",
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true
+  }
+]

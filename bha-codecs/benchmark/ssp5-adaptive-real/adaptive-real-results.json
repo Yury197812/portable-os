@@ -1,0 +1,42 @@
+{
+  "rows": [
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "values": 60574,
+      "raw_bytes": 484592,
+      "atom_bytes": 170675,
+      "adapt_bytes": 484680,
+      "ssp5_raw": 49392,
+      "ssp5_atom": 65433,
+      "ssp5_adapt": 40677,
+      "lz2_raw": 49374,
+      "lz2_atom": 65415,
+      "lz2_adapt": 40659
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "values": 155285,
+      "raw_bytes": 1242280,
+      "atom_bytes": 311497,
+      "adapt_bytes": 751223,
+      "ssp5_raw": 37324,
+      "ssp5_atom": 55239,
+      "ssp5_adapt": 50516,
+      "lz2_raw": 37306,
+      "lz2_atom": 55221,
+      "lz2_adapt": 50498
+    }
+  ],
+  "roundtrip": [
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "match": true,
+      "n": 60574
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "match": true,
+      "n": 155285
+    }
+  ]
+}

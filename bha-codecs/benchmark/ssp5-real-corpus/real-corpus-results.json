@@ -1,0 +1,72 @@
+{
+  "rows": [
+    {
+      "name": "dense_numeric_csv_300k.csv__raw_u64",
+      "orig_bytes": 484592,
+      "ssp5_bytes": 49392,
+      "lzma_xz_bytes": 49432,
+      "lzma2_bytes": 49374,
+      "ssp5_ms": 425.63,
+      "lzma_xz_ms": 268.16,
+      "lzma2_ms": 471.08,
+      "ssp5_pct": 10.192,
+      "lzma_xz_pct": 10.201,
+      "lzma2_pct": 10.189
+    },
+    {
+      "name": "dense_numeric_csv_300k.csv__atomized",
+      "orig_bytes": 170675,
+      "ssp5_bytes": 65433,
+      "lzma_xz_bytes": 65472,
+      "lzma2_bytes": 65415,
+      "ssp5_ms": 122.65,
+      "lzma_xz_ms": 69.97,
+      "lzma2_ms": 141.23,
+      "ssp5_pct": 38.338,
+      "lzma_xz_pct": 38.361,
+      "lzma2_pct": 38.327
+    },
+    {
+      "name": "telemetry_logs_1m.log__raw_u64",
+      "orig_bytes": 1242280,
+      "ssp5_bytes": 37324,
+      "lzma_xz_bytes": 37364,
+      "lzma2_bytes": 37306,
+      "ssp5_ms": 1993.53,
+      "lzma_xz_ms": 1148.6,
+      "lzma2_ms": 1756.61,
+      "ssp5_pct": 3.004,
+      "lzma_xz_pct": 3.008,
+      "lzma2_pct": 3.003
+    },
+    {
+      "name": "telemetry_logs_1m.log__atomized",
+      "orig_bytes": 311497,
+      "ssp5_bytes": 55239,
+      "lzma_xz_bytes": 55280,
+      "lzma2_bytes": 55221,
+      "ssp5_ms": 224.42,
+      "lzma_xz_ms": 100.47,
+      "lzma2_ms": 202.72,
+      "ssp5_pct": 17.733,
+      "lzma_xz_pct": 17.747,
+      "lzma2_pct": 17.728
+    }
+  ],
+  "roundtrip": [
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "values": 60574,
+      "atom_bytes": 170675,
+      "ssp5_bytes": 65433,
+      "match": true
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "values": 155285,
+      "atom_bytes": 311497,
+      "ssp5_bytes": 55239,
+      "match": true
+    }
+  ]
+}

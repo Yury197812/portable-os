@@ -1,0 +1,977 @@
+{
+  "n_files": 50,
+  "v1_real_codec_count": 39,
+  "v7_real_codec_count": 49,
+  "v1_bh_family_count": 11,
+  "v7_bh_family_count": 1,
+  "v7_bha_magic_in_top5": 0,
+  "v7_exact_bha_match": 0,
+  "v1_pick_distribution": {
+    "ours_adaptive_atomize": 19,
+    "brotli": 6,
+    "raw": 3,
+    "BHCS1": 1,
+    "BHCC1": 6,
+    "SSP5": 11,
+    "BHSP1": 2,
+    "BHVT1": 2
+  },
+  "v7_pick_distribution": {
+    "brotli": 36,
+    "bz2": 9,
+    "lzma2": 4,
+    "BHCC1__transpose": 1
+  },
+  "rows": [
+    {
+      "file": "archive_zip_100k.zip",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 24078,
+      "real_bha_pct": 21.92,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "binary_embedded.txt",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 297,
+      "real_bha_pct": 0.3,
+      "v1_pred": "brotli",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "binary_header_text_payload.log",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 68075,
+      "real_bha_pct": 1.28,
+      "v1_pred": "raw",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "cr_only_lines_128k.txt",
+      "real_bha_magic": "BHRT1",
+      "real_bha_size": 471,
+      "real_bha_pct": 0.36,
+      "v1_pred": "brotli",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "crlf_lf_bom_mixed_struct.txt",
+      "real_bha_magic": "BHNL1",
+      "real_bha_size": 18732,
+      "real_bha_pct": 5.3,
+      "v1_pred": "brotli",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "css_repeated_150k.css",
+      "real_bha_magic": "BHCS1",
+      "real_bha_size": 9037,
+      "real_bha_pct": 5.88,
+      "v1_pred": "BHCS1",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "csv_optional_cols_1m.csv",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 6497,
+      "real_bha_pct": 0.62,
+      "v1_pred": "BHCC1",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "data_csv_100k.csv",
+      "real_bha_magic": "BHTM1",
+      "real_bha_size": 13133,
+      "real_bha_pct": 12.92,
+      "v1_pred": "BHCC1",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "data_json_100k.json",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 2420,
+      "real_bha_pct": 2.42,
+      "v1_pred": "SSP5",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__transpose",
+        "lzma2",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "deep_nested_flat_mimic.json",
+      "real_bha_magic": "BHJA1",
+      "real_bha_size": 2665,
+      "real_bha_pct": 0.46,
+      "v1_pred": "SSP5",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose",
+        "lzma2"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "real_bha_magic": "BHCC1",
+      "real_bha_size": 694,
+      "real_bha_pct": 0.23,
+      "v1_pred": "BHCC1",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "empty_rows_sparse.csv",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 7600,
+      "real_bha_pct": 5.6,
+      "v1_pred": "BHCC1",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "fake_zip_header_text.zip",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 186,
+      "real_bha_pct": 0.1,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "fixed_aligned_log_256k.log",
+      "real_bha_magic": "BHRT1",
+      "real_bha_size": 520,
+      "real_bha_pct": 0.2,
+      "v1_pred": "SSP5",
+      "v7_pred": "lzma2",
+      "v7_top5": [
+        "lzma2",
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "fixed_db_dump_512k.txt",
+      "real_bha_magic": "BHRT1",
+      "real_bha_size": 706,
+      "real_bha_pct": 0.13,
+      "v1_pred": "brotli",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "fixed_width_short_128k.log",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 2471,
+      "real_bha_pct": 1.89,
+      "v1_pred": "SSP5",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "html_inline_data_uri_200k.html",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 488,
+      "real_bha_pct": 0.24,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "img_smooth_256x256.raw",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 34359,
+      "real_bha_pct": 52.43,
+      "v1_pred": "SSP5",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose",
+        "lzma2"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "ini_config_128k.ini",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 3015,
+      "real_bha_pct": 2.3,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "lzma2",
+      "v7_top5": [
+        "lzma2",
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "js_minified_200k.js",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 9007,
+      "real_bha_pct": 4.4,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "json_lines_200k.jsonl",
+      "real_bha_magic": "BHST1",
+      "real_bha_size": 306,
+      "real_bha_pct": 0.15,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "latin1_text_200k.txt",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 176,
+      "real_bha_pct": 0.09,
+      "v1_pred": "brotli",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "real_bha_magic": "BHTL1",
+      "real_bha_size": 133192,
+      "real_bha_pct": 25.4,
+      "v1_pred": "SSP5",
+      "v7_pred": "lzma2",
+      "v7_top5": [
+        "lzma2",
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "log_long_repeated_512k.log",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 2485,
+      "real_bha_pct": 0.47,
+      "v1_pred": "SSP5",
+      "v7_pred": "lzma2",
+      "v7_top5": [
+        "lzma2",
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "markdown_tables_256k.md",
+      "real_bha_magic": "BHMT1",
+      "real_bha_size": 230,
+      "real_bha_pct": 0.09,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__transpose",
+        "lzma2",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "mixed_delimiter_switch.csv",
+      "real_bha_magic": "BHMX1",
+      "real_bha_size": 222,
+      "real_bha_pct": 0.08,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "mixed_delimiters.csv",
+      "real_bha_magic": "BHMX1",
+      "real_bha_size": 160,
+      "real_bha_pct": 0.09,
+      "v1_pred": "BHSP1",
+      "v7_pred": "BHCC1__transpose",
+      "v7_top5": [
+        "BHCC1__transpose",
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": false,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "nested_arrays_300k.json",
+      "real_bha_magic": "BHJA1",
+      "real_bha_size": 10793,
+      "real_bha_pct": 3.51,
+      "v1_pred": "SSP5",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "nested_quotes.tsv",
+      "real_bha_magic": "BHQC1",
+      "real_bha_size": 7408,
+      "real_bha_pct": 4.67,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "pipe_kv_transition_256k.log",
+      "real_bha_magic": "BHVT1",
+      "real_bha_size": 6068,
+      "real_bha_pct": 2.31,
+      "v1_pred": "SSP5",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "pipe_sparse_many_cols_256k.log",
+      "real_bha_magic": "BHSP1",
+      "real_bha_size": 233,
+      "real_bha_pct": 0.09,
+      "v1_pred": "BHVT1",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "quoted_csv_escape_heavy.csv",
+      "real_bha_magic": "BHQC1",
+      "real_bha_size": 7182,
+      "real_bha_pct": 2.65,
+      "v1_pred": "BHCC1",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "random_lcg_256k.bin",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 262157,
+      "real_bha_pct": 100.0,
+      "v1_pred": "raw",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "repeating_binary_pattern.bin",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 94,
+      "real_bha_pct": 0.05,
+      "v1_pred": "SSP5",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "semicolon_sparse_300k.csv",
+      "real_bha_magic": "BHSP1",
+      "real_bha_size": 233,
+      "real_bha_pct": 0.08,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "single_giant_line_record.dat",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1355,
+      "real_bha_pct": 0.01,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "small_threshold_4k.txt",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 57,
+      "real_bha_pct": 8.48,
+      "v1_pred": "brotli",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "sparse_dense_transition.csv",
+      "real_bha_magic": "BHDT1",
+      "real_bha_size": 183,
+      "real_bha_pct": 0.04,
+      "v1_pred": "BHCC1",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "sparse_many_columns_300k.csv",
+      "real_bha_magic": "BHSP1",
+      "real_bha_size": 233,
+      "real_bha_pct": 0.08,
+      "v1_pred": "BHSP1",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "tab_sparse_quotes.tsv",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1834,
+      "real_bha_pct": 2.26,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "bz2",
+      "v7_top5": [
+        "bz2",
+        "brotli",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "real_bha_magic": "BHVT1",
+      "real_bha_size": 5168,
+      "real_bha_pct": 0.49,
+      "v1_pred": "BHVT1",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "toml_config_128k.toml",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1611,
+      "real_bha_pct": 1.23,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "lzma2",
+        "bz2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "truncated_partial_last_block.bin",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 794,
+      "real_bha_pct": 2.41,
+      "v1_pred": "raw",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "unicode_filename_ru.txt",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1176,
+      "real_bha_pct": 0.9,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "unquoted_delimiter_in_value.tsv",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 4481,
+      "real_bha_pct": 1.41,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__transpose",
+        "lzma2",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "utf16_like_control.bin",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 752,
+      "real_bha_pct": 0.46,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "utf8_cyrillic_200k.txt",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1438,
+      "real_bha_pct": 0.7,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "xml_attrs_300k.xml",
+      "real_bha_magic": "BHST1",
+      "real_bha_size": 236,
+      "real_bha_pct": 0.08,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__transpose",
+        "BHCC1__delta_i64"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "yaml_mixed_indent_200k.yaml",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 6761,
+      "real_bha_pct": 3.3,
+      "v1_pred": "ours_adaptive_atomize",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "lzma2",
+        "BHCC1__delta_i64",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": true,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    },
+    {
+      "file": "zero_sparse_binary_128k.bin",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 485,
+      "real_bha_pct": 0.37,
+      "v1_pred": "SSP5",
+      "v7_pred": "brotli",
+      "v7_top5": [
+        "brotli",
+        "bz2",
+        "BHCC1__delta_i64",
+        "lzma2",
+        "BHCC1__transpose"
+      ],
+      "v1_real_codec": false,
+      "v7_real_codec": true,
+      "v7_in_bha_top5": false,
+      "v7_matches_bha": false
+    }
+  ]
+}

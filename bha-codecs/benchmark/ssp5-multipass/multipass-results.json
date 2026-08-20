@@ -1,0 +1,523 @@
+{
+  "results": [
+    {
+      "source": "syn_even_0",
+      "orig": 131072,
+      "best_recipe": [
+        "bz2"
+      ],
+      "best_chain": "bz2",
+      "best_size": 5229,
+      "ratio_pct": 3.99,
+      "top_singles": [
+        [
+          "bz2",
+          5229
+        ],
+        [
+          "lzma2_ext",
+          5265
+        ],
+        [
+          "ssp5",
+          5283
+        ],
+        [
+          "ssp5_adapt",
+          5289
+        ],
+        [
+          "ssp5_atom",
+          5848
+        ]
+      ]
+    },
+    {
+      "source": "syn_even_1",
+      "orig": 131072,
+      "best_recipe": [
+        "adaptive",
+        "lzma2_ext"
+      ],
+      "best_chain": "adaptive -> lzma2_ext",
+      "best_size": 2878,
+      "ratio_pct": 2.2,
+      "top_singles": [
+        [
+          "ssp5_adapt",
+          2896
+        ],
+        [
+          "bz2",
+          5509
+        ],
+        [
+          "lzma2_ext",
+          5542
+        ],
+        [
+          "ssp5",
+          5560
+        ],
+        [
+          "ssp5_atom",
+          5848
+        ]
+      ]
+    },
+    {
+      "source": "syn_arb_lcg",
+      "orig": 131072,
+      "best_recipe": [
+        "atomize",
+        "lzma2_ext"
+      ],
+      "best_chain": "atomize -> lzma2_ext",
+      "best_size": 125021,
+      "ratio_pct": 95.38,
+      "top_singles": [
+        [
+          "ssp5_atom",
+          125039
+        ],
+        [
+          "ssp5_adapt",
+          125781
+        ],
+        [
+          "raw",
+          131072
+        ],
+        [
+          "brotli",
+          131077
+        ],
+        [
+          "lzma2_ext",
+          131082
+        ]
+      ]
+    },
+    {
+      "source": "syn_arb_mixed",
+      "orig": 131072,
+      "best_recipe": [
+        "adaptive",
+        "lzma2_ext"
+      ],
+      "best_chain": "adaptive -> lzma2_ext",
+      "best_size": 28633,
+      "ratio_pct": 21.85,
+      "top_singles": [
+        [
+          "ssp5_adapt",
+          28651
+        ],
+        [
+          "lzma2_ext",
+          32460
+        ],
+        [
+          "ssp5",
+          32478
+        ],
+        [
+          "brotli",
+          32993
+        ],
+        [
+          "ssp5_atom",
+          43696
+        ]
+      ]
+    },
+    {
+      "source": "real_csv",
+      "orig": 484592,
+      "best_recipe": [
+        "adaptive",
+        "lzma2_ext"
+      ],
+      "best_chain": "adaptive -> lzma2_ext",
+      "best_size": 40659,
+      "ratio_pct": 8.39,
+      "top_singles": [
+        [
+          "ssp5_adapt",
+          40677
+        ],
+        [
+          "brotli",
+          48693
+        ],
+        [
+          "lzma2_ext",
+          49374
+        ],
+        [
+          "ssp5",
+          49392
+        ],
+        [
+          "ssp5_atom",
+          65433
+        ]
+      ]
+    },
+    {
+      "source": "real_telemetry",
+      "orig": 1242280,
+      "best_recipe": [
+        "lzma2_ext"
+      ],
+      "best_chain": "lzma2_ext",
+      "best_size": 37306,
+      "ratio_pct": 3.0,
+      "top_singles": [
+        [
+          "lzma2_ext",
+          37306
+        ],
+        [
+          "ssp5",
+          37324
+        ],
+        [
+          "bz2",
+          43424
+        ],
+        [
+          "ssp5_adapt",
+          50516
+        ],
+        [
+          "brotli",
+          51274
+        ]
+      ]
+    },
+    {
+      "source": "text_repeated",
+      "orig": 200000,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 79,
+      "ratio_pct": 0.04,
+      "top_singles": [
+        [
+          "brotli",
+          79
+        ],
+        [
+          "lzma2_ext",
+          185
+        ],
+        [
+          "ssp5",
+          203
+        ],
+        [
+          "lzma_xz",
+          244
+        ],
+        [
+          "bz2",
+          271
+        ]
+      ]
+    },
+    {
+      "source": "binary_zeros",
+      "orig": 200000,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 14,
+      "ratio_pct": 0.01,
+      "top_singles": [
+        [
+          "brotli",
+          14
+        ],
+        [
+          "bz2",
+          47
+        ],
+        [
+          "lzma2_ext",
+          105
+        ],
+        [
+          "ssp5",
+          123
+        ],
+        [
+          "lzma_xz",
+          164
+        ]
+      ]
+    },
+    {
+      "source": "binary_random",
+      "orig": 200000,
+      "best_recipe": [
+        "raw"
+      ],
+      "best_chain": "raw",
+      "best_size": 200000,
+      "ratio_pct": 100.0,
+      "top_singles": [
+        [
+          "raw",
+          200000
+        ],
+        [
+          "brotli",
+          200005
+        ],
+        [
+          "lzma2_ext",
+          200013
+        ],
+        [
+          "ssp5",
+          200031
+        ],
+        [
+          "zlib",
+          200071
+        ]
+      ]
+    },
+    {
+      "source": "ini_config",
+      "orig": 131072,
+      "best_recipe": [
+        "lzma2_ext"
+      ],
+      "best_chain": "lzma2_ext",
+      "best_size": 2997,
+      "ratio_pct": 2.29,
+      "top_singles": [
+        [
+          "lzma2_ext",
+          2997
+        ],
+        [
+          "ssp5",
+          3015
+        ],
+        [
+          "lzma_xz",
+          3252
+        ],
+        [
+          "brotli",
+          4025
+        ],
+        [
+          "bz2",
+          6472
+        ]
+      ]
+    },
+    {
+      "source": "json_array",
+      "orig": 100000,
+      "best_recipe": [
+        "bz2",
+        "zlib"
+      ],
+      "best_chain": "bz2 -> zlib",
+      "best_size": 4499,
+      "ratio_pct": 4.5,
+      "top_singles": [
+        [
+          "bz2",
+          4768
+        ],
+        [
+          "lzma2_ext",
+          5337
+        ],
+        [
+          "ssp5",
+          5355
+        ],
+        [
+          "lzma_xz",
+          5396
+        ],
+        [
+          "brotli",
+          5518
+        ]
+      ]
+    },
+    {
+      "source": "css_repeated",
+      "orig": 153600,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 14482,
+      "ratio_pct": 9.43,
+      "top_singles": [
+        [
+          "brotli",
+          14482
+        ],
+        [
+          "lzma2_ext",
+          16196
+        ],
+        [
+          "ssp5",
+          16214
+        ],
+        [
+          "lzma_xz",
+          16252
+        ],
+        [
+          "bz2",
+          19591
+        ]
+      ]
+    },
+    {
+      "source": "telemetry_log_raw",
+      "orig": 200000,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 8561,
+      "ratio_pct": 4.28,
+      "top_singles": [
+        [
+          "brotli",
+          8561
+        ],
+        [
+          "lzma2_ext",
+          10450
+        ],
+        [
+          "ssp5",
+          10468
+        ],
+        [
+          "lzma_xz",
+          11384
+        ],
+        [
+          "bz2",
+          12742
+        ]
+      ]
+    }
+  ],
+  "roundtrip": [
+    {
+      "source": "syn_even_0",
+      "recipe": [
+        "bz2"
+      ],
+      "match": true
+    },
+    {
+      "source": "syn_even_1",
+      "recipe": [
+        "adaptive",
+        "lzma2_ext"
+      ],
+      "match": true
+    },
+    {
+      "source": "syn_arb_lcg",
+      "recipe": [
+        "atomize",
+        "lzma2_ext"
+      ],
+      "match": true
+    },
+    {
+      "source": "syn_arb_mixed",
+      "recipe": [
+        "adaptive",
+        "lzma2_ext"
+      ],
+      "match": true
+    },
+    {
+      "source": "real_csv",
+      "recipe": [
+        "adaptive",
+        "lzma2_ext"
+      ],
+      "match": true
+    },
+    {
+      "source": "real_telemetry",
+      "recipe": [
+        "lzma2_ext"
+      ],
+      "match": true
+    },
+    {
+      "source": "text_repeated",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    },
+    {
+      "source": "binary_zeros",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    },
+    {
+      "source": "binary_random",
+      "recipe": [
+        "raw"
+      ],
+      "match": true
+    },
+    {
+      "source": "ini_config",
+      "recipe": [
+        "lzma2_ext"
+      ],
+      "match": true
+    },
+    {
+      "source": "json_array",
+      "recipe": [
+        "bz2",
+        "zlib"
+      ],
+      "match": true
+    },
+    {
+      "source": "css_repeated",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    },
+    {
+      "source": "telemetry_log_raw",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    }
+  ]
+}

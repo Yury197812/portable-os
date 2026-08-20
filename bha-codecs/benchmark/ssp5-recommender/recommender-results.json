@@ -1,0 +1,296 @@
+[
+  {
+    "file": "dense_numeric_csv_300k.csv",
+    "features": {
+      "ext": ".csv",
+      "size": 307200,
+      "entropy": 3.483,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0818,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "csv",
+      "csv_density": 0.2212,
+      "mean_cols": 6.0
+    },
+    "expected": "BHCC1",
+    "predicted": "BHCC1",
+    "reason": "dense numeric CSV cols=6.0 ent=3.483",
+    "match": true
+  },
+  {
+    "file": "telemetry_logs_1m.log",
+    "features": {
+      "ext": ".log",
+      "size": 1048543,
+      "entropy": 4.6492,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0566,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "pipe",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "BHVT1",
+    "predicted": "BHVT1",
+    "reason": "structured numeric log, entropy=4.6492",
+    "match": true
+  },
+  {
+    "file": "data_json_100k.json",
+    "features": {
+      "ext": ".json",
+      "size": 100000,
+      "entropy": 4.1447,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.5992,
+      "has_repeated_lines": true,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "csv",
+      "csv_density": 0.1042,
+      "mean_cols": 1.63
+    },
+    "expected": "SSP5",
+    "predicted": "SSP5",
+    "reason": "JSON generic",
+    "match": true
+  },
+  {
+    "file": "ini_config_128k.ini",
+    "features": {
+      "ext": ".ini",
+      "size": 131072,
+      "entropy": 4.6279,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.1203,
+      "has_repeated_lines": true,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "ours_adaptive_atomize",
+    "predicted": "ours_adaptive_atomize",
+    "reason": "default fallback",
+    "match": true
+  },
+  {
+    "file": "css_repeated_150k.css",
+    "features": {
+      "ext": ".css",
+      "size": 153600,
+      "entropy": 4.8592,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0285,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "BHCS1",
+    "predicted": "BHCS1",
+    "reason": "CSS structural",
+    "match": true
+  },
+  {
+    "file": "log_long_repeated_512k.log",
+    "features": {
+      "ext": ".log",
+      "size": 524288,
+      "entropy": 4.6418,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0283,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "SSP5",
+    "predicted": "SSP5",
+    "reason": "log with uniform line length (std=0.0283)",
+    "match": true
+  },
+  {
+    "file": "img_smooth_256x256.raw",
+    "features": {
+      "ext": ".raw",
+      "size": 65536,
+      "entropy": 6.8948,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 0.4864,
+      "line_len_std": 0.0,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": false,
+      "delimiter": "pipe",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "SSP5",
+    "predicted": "SSP5",
+    "reason": "raw image-like bytes",
+    "match": true
+  },
+  {
+    "file": "random_lcg_256k.bin",
+    "features": {
+      "ext": ".bin",
+      "size": 262144,
+      "entropy": 7.9951,
+      "zero_ratio": 0.0036,
+      "ascii_ratio": 0.3903,
+      "line_len_std": 1.0428,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "tsv",
+      "csv_density": 0.0078,
+      "mean_cols": 2.14
+    },
+    "expected": "raw",
+    "predicted": "raw",
+    "reason": "entropy=7.9951 > 7.9 (random-like)",
+    "match": true
+  },
+  {
+    "file": "repeating_binary_pattern.bin",
+    "features": {
+      "ext": ".bin",
+      "size": 196608,
+      "entropy": 2.9185,
+      "zero_ratio": 0.0833,
+      "ascii_ratio": 0.25,
+      "line_len_std": 0.0,
+      "has_repeated_lines": false,
+      "binary_repeat": true,
+      "has_numeric": true,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "SSP5",
+    "predicted": "SSP5",
+    "reason": "repeating binary pattern",
+    "match": true
+  },
+  {
+    "file": "sparse_many_columns_300k.csv",
+    "features": {
+      "ext": ".csv",
+      "size": 307200,
+      "entropy": 2.276,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.1134,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "csv",
+      "csv_density": 0.6577,
+      "mean_cols": 25.0
+    },
+    "expected": "BHSP1",
+    "predicted": "BHSP1",
+    "reason": "sparse numeric CSV cols=25.0 ent=2.276",
+    "match": true
+  },
+  {
+    "file": "zero_sparse_binary_128k.bin",
+    "features": {
+      "ext": ".bin",
+      "size": 131072,
+      "entropy": 0.1636,
+      "zero_ratio": 0.9897,
+      "ascii_ratio": 0.0041,
+      "line_len_std": 0.3014,
+      "has_repeated_lines": false,
+      "binary_repeat": true,
+      "has_numeric": true,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "SSP5",
+    "predicted": "SSP5",
+    "reason": "moderate zeros=0.9897 (LZMA2 envelope wins here)",
+    "match": true
+  },
+  {
+    "file": "text_repeated.txt",
+    "features": {
+      "ext": ".txt",
+      "size": 210000,
+      "entropy": 3.9162,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": false,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "brotli",
+    "predicted": "brotli",
+    "reason": "repetitive ASCII text, entropy=3.9162",
+    "match": true
+  },
+  {
+    "file": "binary_zeros.bin",
+    "features": {
+      "ext": ".bin",
+      "size": 100000,
+      "entropy": 0.0,
+      "zero_ratio": 1.0,
+      "ascii_ratio": 0.0,
+      "line_len_std": 0.0,
+      "has_repeated_lines": false,
+      "binary_repeat": true,
+      "has_numeric": false,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0
+    },
+    "expected": "brotli",
+    "predicted": "brotli",
+    "reason": "zero_ratio=1.0 > 0.99 (pure zero stream)",
+    "match": true
+  },
+  {
+    "file": "binary_random.bin",
+    "features": {
+      "ext": ".bin",
+      "size": 100000,
+      "entropy": 7.9942,
+      "zero_ratio": 0.0034,
+      "ascii_ratio": 0.3913,
+      "line_len_std": 0.8638,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "csv",
+      "csv_density": 0.0084,
+      "mean_cols": 1.86
+    },
+    "expected": "raw",
+    "predicted": "raw",
+    "reason": "entropy=7.9942 > 7.9 (random-like)",
+    "match": true
+  }
+]

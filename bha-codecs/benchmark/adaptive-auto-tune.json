@@ -1,0 +1,56 @@
+﻿{
+  "rules": {
+    "csv, json, html, xml, log": "plain_lzma primary, atomize variants for entropy",
+    "ini, css": "lzma_atomize primary (key-value pattern)",
+    "binary": "plain_lzma only (atomization doesn't help random data)"
+  },
+  "pipeline_suggestions": {
+    "csv": [
+      "plain_lzma",
+      "atomize_lzma",
+      "lzma_atomize_lzma",
+      "lzma_atomize"
+    ],
+    "json": [
+      "plain_lzma",
+      "atomize_lzma",
+      "lzma_atomize_lzma",
+      "lzma_atomize"
+    ],
+    "html": [
+      "plain_lzma",
+      "atomize_lzma",
+      "lzma_atomize_lzma",
+      "lzma_atomize"
+    ],
+    "xml": [
+      "plain_lzma",
+      "atomize_lzma",
+      "lzma_atomize_lzma",
+      "lzma_atomize"
+    ],
+    "log": [
+      "plain_lzma",
+      "atomize_lzma",
+      "lzma_atomize_lzma",
+      "lzma_atomize"
+    ],
+    "ini": [
+      "lzma_atomize",
+      "atomize_lzma",
+      "lzma_atomize_lzma",
+      "plain_lzma"
+    ],
+    "css": [
+      "lzma_atomize",
+      "atomize_lzma",
+      "lzma_atomize_lzma",
+      "plain_lzma"
+    ],
+    "binary": [
+      "plain_lzma",
+      "lzma_lzma",
+      "atomize_lzma"
+    ]
+  }
+}

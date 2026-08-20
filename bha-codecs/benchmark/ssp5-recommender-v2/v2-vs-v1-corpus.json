@@ -1,0 +1,975 @@
+{
+  "n_files": 50,
+  "v1_real_codec_count": 39,
+  "v2_real_codec_count": 50,
+  "v1_bh_family_count": 11,
+  "v2_bh_family_count": 0,
+  "v1_pick_distribution": {
+    "ours_adaptive_atomize": 19,
+    "brotli": 6,
+    "raw": 3,
+    "BHCS1": 1,
+    "BHCC1": 6,
+    "SSP5": 11,
+    "BHSP1": 2,
+    "BHVT1": 2
+  },
+  "v2_pick_distribution": {
+    "brotli": 38,
+    "raw": 3,
+    "ssp5_adapt": 7,
+    "bz2": 1,
+    "lzma2": 1
+  },
+  "rows": [
+    {
+      "file": "archive_zip_100k.zip",
+      "domain_label": "compressed_control",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 24078,
+      "real_bha_pct": 21.92,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "bz2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "binary_embedded.txt",
+      "domain_label": "adversarial_binary_embedded_text",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 297,
+      "real_bha_pct": 0.3,
+      "real_winner": "bha",
+      "v1_pred": "brotli",
+      "v1_reason": "repetitive ASCII text, entropy=4.2638",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "binary_header_text_payload.log",
+      "domain_label": "adversarial_binary_header_text_payload",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 68075,
+      "real_bha_pct": 1.28,
+      "real_winner": "bha",
+      "v1_pred": "raw",
+      "v1_reason": "entropy=8.0 > 7.9 (random-like)",
+      "v2_pred": "raw",
+      "v2_top3": [
+        "raw",
+        "bz2",
+        "brotli"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "cr_only_lines_128k.txt",
+      "domain_label": "cr_only_lines",
+      "real_bha_magic": "BHRT1",
+      "real_bha_size": 471,
+      "real_bha_pct": 0.36,
+      "real_winner": "bha",
+      "v1_pred": "brotli",
+      "v1_reason": "repetitive ASCII text, entropy=4.2781",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "crlf_lf_bom_mixed_struct.txt",
+      "domain_label": "adversarial_crlf_lf_bom_mixed_struct",
+      "real_bha_magic": "BHNL1",
+      "real_bha_size": 18732,
+      "real_bha_pct": 5.3,
+      "real_winner": "bha",
+      "v1_pred": "brotli",
+      "v1_reason": "repetitive ASCII text, entropy=4.5224",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "css_repeated_150k.css",
+      "domain_label": "css_repeated",
+      "real_bha_magic": "BHCS1",
+      "real_bha_size": 9037,
+      "real_bha_pct": 5.88,
+      "real_winner": "bha",
+      "v1_pred": "BHCS1",
+      "v1_reason": "CSS structural",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "csv_optional_cols_1m.csv",
+      "domain_label": "sparse_csv",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 6497,
+      "real_bha_pct": 0.62,
+      "real_winner": "bha",
+      "v1_pred": "BHCC1",
+      "v1_reason": "dense numeric CSV cols=6.36 ent=4.1963",
+      "v2_pred": "ssp5_adapt",
+      "v2_top3": [
+        "ssp5_adapt",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "data_csv_100k.csv",
+      "domain_label": "dense_csv",
+      "real_bha_magic": "BHTM1",
+      "real_bha_size": 13133,
+      "real_bha_pct": 12.92,
+      "real_winner": "bha",
+      "v1_pred": "BHCC1",
+      "v1_reason": "dense numeric CSV cols=4.0 ent=3.9252",
+      "v2_pred": "ssp5_adapt",
+      "v2_top3": [
+        "ssp5_adapt",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "data_json_100k.json",
+      "domain_label": "structured_json",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 2420,
+      "real_bha_pct": 2.42,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "JSON generic",
+      "v2_pred": "bz2",
+      "v2_top3": [
+        "bz2",
+        "brotli",
+        "raw"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "deep_nested_flat_mimic.json",
+      "domain_label": "adversarial_deep_nested_flat_mimic",
+      "real_bha_magic": "BHJA1",
+      "real_bha_size": 2665,
+      "real_bha_pct": 0.46,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "JSON generic",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "bz2",
+        "raw"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "domain_label": "dense_numeric_csv",
+      "real_bha_magic": "BHCC1",
+      "real_bha_size": 694,
+      "real_bha_pct": 0.23,
+      "real_winner": "bha",
+      "v1_pred": "BHCC1",
+      "v1_reason": "dense numeric CSV cols=6.0 ent=3.483",
+      "v2_pred": "ssp5_adapt",
+      "v2_top3": [
+        "ssp5_adapt",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": true
+    },
+    {
+      "file": "empty_rows_sparse.csv",
+      "domain_label": "adversarial_empty_rows_sparse",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 7600,
+      "real_bha_pct": 5.6,
+      "real_winner": "bha",
+      "v1_pred": "BHCC1",
+      "v1_reason": "dense numeric CSV cols=5.0 ent=4.0045",
+      "v2_pred": "ssp5_adapt",
+      "v2_top3": [
+        "ssp5_adapt",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "fake_zip_header_text.zip",
+      "domain_label": "fake_zip_header_text",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 186,
+      "real_bha_pct": 0.1,
+      "real_winner": "tie",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "bz2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "fixed_aligned_log_256k.log",
+      "domain_label": "fixed_record",
+      "real_bha_magic": "BHRT1",
+      "real_bha_size": 520,
+      "real_bha_pct": 0.2,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "log with uniform line length (std=0.0069)",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "fixed_db_dump_512k.txt",
+      "domain_label": "fixed_record",
+      "real_bha_magic": "BHRT1",
+      "real_bha_size": 706,
+      "real_bha_pct": 0.13,
+      "real_winner": "bha",
+      "v1_pred": "brotli",
+      "v1_reason": "repetitive ASCII text, entropy=3.6174",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "fixed_width_short_128k.log",
+      "domain_label": "fixed_width_short",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 2471,
+      "real_bha_pct": 1.89,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "log with uniform line length (std=0.0303)",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "html_inline_data_uri_200k.html",
+      "domain_label": "html_inline_data_uri",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 488,
+      "real_bha_pct": 0.24,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "raw",
+        "bz2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "img_smooth_256x256.raw",
+      "domain_label": "image_control",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 34359,
+      "real_bha_pct": 52.43,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "raw image-like bytes",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "ssp5_atom",
+        "raw"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "ini_config_128k.ini",
+      "domain_label": "ini_config",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 3015,
+      "real_bha_pct": 2.3,
+      "real_winner": "ours",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "lzma2",
+      "v2_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "js_minified_200k.js",
+      "domain_label": "js_minified",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 9007,
+      "real_bha_pct": 4.4,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "json_lines_200k.jsonl",
+      "domain_label": "json_lines",
+      "real_bha_magic": "BHST1",
+      "real_bha_size": 306,
+      "real_bha_pct": 0.15,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "raw",
+        "bz2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "latin1_text_200k.txt",
+      "domain_label": "encoding_latin1_text",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 176,
+      "real_bha_pct": 0.09,
+      "real_winner": "ours",
+      "v1_pred": "brotli",
+      "v1_reason": "repetitive ASCII text, entropy=4.2008",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "domain_label": "log_high_entropy_tail",
+      "real_bha_magic": "BHTL1",
+      "real_bha_size": 133192,
+      "real_bha_pct": 25.4,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "log with uniform line length (std=0.0283)",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "log_long_repeated_512k.log",
+      "domain_label": "log_long_repeated",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 2485,
+      "real_bha_pct": 0.47,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "log with uniform line length (std=0.0283)",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "markdown_tables_256k.md",
+      "domain_label": "markdown_tables",
+      "real_bha_magic": "BHMT1",
+      "real_bha_size": 230,
+      "real_bha_pct": 0.09,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "mixed_delimiter_switch.csv",
+      "domain_label": "adversarial_mixed_delimiter_switch",
+      "real_bha_magic": "BHMX1",
+      "real_bha_size": 222,
+      "real_bha_pct": 0.08,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "ssp5_atom",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "mixed_delimiters.csv",
+      "domain_label": "adversarial_mixed_delimiters",
+      "real_bha_magic": "BHMX1",
+      "real_bha_size": 160,
+      "real_bha_pct": 0.09,
+      "real_winner": "bha",
+      "v1_pred": "BHSP1",
+      "v1_reason": "sparse numeric CSV cols=2.35 ent=4.944",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "raw",
+        "bz2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "nested_arrays_300k.json",
+      "domain_label": "nested_json_arrays",
+      "real_bha_magic": "BHJA1",
+      "real_bha_size": 10793,
+      "real_bha_pct": 3.51,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "JSON generic",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "bz2",
+        "raw"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "nested_quotes.tsv",
+      "domain_label": "adversarial_quoted_csv",
+      "real_bha_magic": "BHQC1",
+      "real_bha_size": 7408,
+      "real_bha_pct": 4.67,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "bz2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "pipe_kv_transition_256k.log",
+      "domain_label": "pipe_kv_transition",
+      "real_bha_magic": "BHVT1",
+      "real_bha_size": 6068,
+      "real_bha_pct": 2.31,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "log with uniform line length (std=0.0325)",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "pipe_sparse_many_cols_256k.log",
+      "domain_label": "pipe_sparse_many_cols",
+      "real_bha_magic": "BHSP1",
+      "real_bha_size": 233,
+      "real_bha_pct": 0.09,
+      "real_winner": "bha",
+      "v1_pred": "BHVT1",
+      "v1_reason": "structured numeric log, entropy=2.276",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "quoted_csv_escape_heavy.csv",
+      "domain_label": "quoted_csv_escape_heavy",
+      "real_bha_magic": "BHQC1",
+      "real_bha_size": 7182,
+      "real_bha_pct": 2.65,
+      "real_winner": "bha",
+      "v1_pred": "BHCC1",
+      "v1_reason": "dense numeric CSV cols=5.0 ent=4.345",
+      "v2_pred": "ssp5_adapt",
+      "v2_top3": [
+        "ssp5_adapt",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "random_lcg_256k.bin",
+      "domain_label": "random_lcg_control",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 262157,
+      "real_bha_pct": 100.0,
+      "real_winner": "ours",
+      "v1_pred": "raw",
+      "v1_reason": "entropy=7.9951 > 7.9 (random-like)",
+      "v2_pred": "raw",
+      "v2_top3": [
+        "raw",
+        "brotli",
+        "ssp5_adapt"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "repeating_binary_pattern.bin",
+      "domain_label": "repeating_binary_pattern",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 94,
+      "real_bha_pct": 0.05,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "repeating binary pattern",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "raw",
+        "lzma2"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "semicolon_sparse_300k.csv",
+      "domain_label": "semicolon_sparse",
+      "real_bha_magic": "BHSP1",
+      "real_bha_size": 233,
+      "real_bha_pct": 0.08,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "single_giant_line_record.dat",
+      "domain_label": "adversarial_single_giant_line_record",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1355,
+      "real_bha_pct": 0.01,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "small_threshold_4k.txt",
+      "domain_label": "small_threshold_control",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 57,
+      "real_bha_pct": 8.48,
+      "real_winner": "ours",
+      "v1_pred": "brotli",
+      "v1_reason": "repetitive ASCII text, entropy=3.749",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "sparse_dense_transition.csv",
+      "domain_label": "adversarial_sparse_dense_transition",
+      "real_bha_magic": "BHDT1",
+      "real_bha_size": 183,
+      "real_bha_pct": 0.04,
+      "real_winner": "bha",
+      "v1_pred": "BHCC1",
+      "v1_reason": "dense numeric CSV cols=10.0 ent=3.1886",
+      "v2_pred": "ssp5_adapt",
+      "v2_top3": [
+        "ssp5_adapt",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "sparse_many_columns_300k.csv",
+      "domain_label": "sparse_many_columns",
+      "real_bha_magic": "BHSP1",
+      "real_bha_size": 233,
+      "real_bha_pct": 0.08,
+      "real_winner": "bha",
+      "v1_pred": "BHSP1",
+      "v1_reason": "sparse numeric CSV cols=25.0 ent=2.276",
+      "v2_pred": "ssp5_adapt",
+      "v2_top3": [
+        "ssp5_adapt",
+        "BHCC1",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "tab_sparse_quotes.tsv",
+      "domain_label": "quoted_tsv_sparse",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1834,
+      "real_bha_pct": 2.26,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "bz2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "domain_label": "pipe_kv_vartrans",
+      "real_bha_magic": "BHVT1",
+      "real_bha_size": 5168,
+      "real_bha_pct": 0.49,
+      "real_winner": "bha",
+      "v1_pred": "BHVT1",
+      "v1_reason": "structured numeric log, entropy=4.6492",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "ssp5_atom",
+        "BHCC1"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "toml_config_128k.toml",
+      "domain_label": "toml_config",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1611,
+      "real_bha_pct": 1.23,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "truncated_partial_last_block.bin",
+      "domain_label": "adversarial_truncated_partial_last_block",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 794,
+      "real_bha_pct": 2.41,
+      "real_winner": "bha",
+      "v1_pred": "raw",
+      "v1_reason": "entropy=7.9993 > 7.9 (random-like)",
+      "v2_pred": "raw",
+      "v2_top3": [
+        "raw",
+        "brotli",
+        "ssp5_adapt"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "unicode_filename_ru.txt",
+      "domain_label": "unicode_filename_text",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1176,
+      "real_bha_pct": 0.9,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "unquoted_delimiter_in_value.tsv",
+      "domain_label": "adversarial_unquoted_delimiter_in_value",
+      "real_bha_magic": "BHTC1",
+      "real_bha_size": 4481,
+      "real_bha_pct": 1.41,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "ssp5_atom"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "utf16_like_control.bin",
+      "domain_label": "binary_utf16_like_control",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 752,
+      "real_bha_pct": 0.46,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "raw",
+        "lzma2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "utf8_cyrillic_200k.txt",
+      "domain_label": "encoding_utf8_cyrillic",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 1438,
+      "real_bha_pct": 0.7,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "xml_attrs_300k.xml",
+      "domain_label": "xml_repeated_attrs",
+      "real_bha_magic": "BHST1",
+      "real_bha_size": 236,
+      "real_bha_pct": 0.08,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "raw"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "yaml_mixed_indent_200k.yaml",
+      "domain_label": "yaml_mixed_indent",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 6761,
+      "real_bha_pct": 3.3,
+      "real_winner": "bha",
+      "v1_pred": "ours_adaptive_atomize",
+      "v1_reason": "default fallback",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v1_real_codec": true,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    },
+    {
+      "file": "zero_sparse_binary_128k.bin",
+      "domain_label": "zero_sparse_binary",
+      "real_bha_magic": "SSP5\u0003",
+      "real_bha_size": 485,
+      "real_bha_pct": 0.37,
+      "real_winner": "bha",
+      "v1_pred": "SSP5",
+      "v1_reason": "moderate zeros=0.9897 (LZMA2 envelope wins here)",
+      "v2_pred": "brotli",
+      "v2_top3": [
+        "brotli",
+        "raw",
+        "lzma2"
+      ],
+      "v1_real_codec": false,
+      "v2_real_codec": true,
+      "v2_in_bha_top3": false
+    }
+  ]
+}

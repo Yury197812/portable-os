@@ -1,0 +1,1129 @@
+{
+  "n_attempted": 1000,
+  "n_successful": 1000,
+  "elapsed_seconds": 8.5,
+  "strategies": [
+    "raw",
+    "terms_only",
+    "diff_first",
+    "formulas_first",
+    "keyvalue",
+    "xml_flat",
+    "json_struct"
+  ],
+  "best_strategy_distribution": {
+    "xml_flat": 996,
+    "diff_first": 3,
+    "json_struct": 1
+  },
+  "by_prefix": {
+    "A042xxx": {
+      "count": 8,
+      "avg_ratio": 69.11,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A019xxx": {
+      "count": 17,
+      "avg_ratio": 43.9,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 17
+    },
+    "A051xxx": {
+      "count": 15,
+      "avg_ratio": 45.34,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 15
+    },
+    "A085xxx": {
+      "count": 11,
+      "avg_ratio": 31.92,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A006xxx": {
+      "count": 11,
+      "avg_ratio": 67.48,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A009xxx": {
+      "count": 14,
+      "avg_ratio": 71.3,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 14
+    },
+    "A070xxx": {
+      "count": 7,
+      "avg_ratio": 57.32,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A012xxx": {
+      "count": 7,
+      "avg_ratio": 78.46,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A047xxx": {
+      "count": 14,
+      "avg_ratio": 49.45,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 14
+    },
+    "A076xxx": {
+      "count": 13,
+      "avg_ratio": 55.06,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 13
+    },
+    "A007xxx": {
+      "count": 12,
+      "avg_ratio": 41.51,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A066xxx": {
+      "count": 15,
+      "avg_ratio": 52.67,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 15
+    },
+    "A028xxx": {
+      "count": 10,
+      "avg_ratio": 56.9,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A004xxx": {
+      "count": 5,
+      "avg_ratio": 35.88,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    },
+    "A011xxx": {
+      "count": 18,
+      "avg_ratio": 36.02,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 18
+    },
+    "A056xxx": {
+      "count": 14,
+      "avg_ratio": 61.2,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 14
+    },
+    "A054xxx": {
+      "count": 12,
+      "avg_ratio": 59.45,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A031xxx": {
+      "count": 10,
+      "avg_ratio": 40.14,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A072xxx": {
+      "count": 13,
+      "avg_ratio": 57.42,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 13
+    },
+    "A055xxx": {
+      "count": 7,
+      "avg_ratio": 50.88,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A074xxx": {
+      "count": 9,
+      "avg_ratio": 55.09,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A016xxx": {
+      "count": 11,
+      "avg_ratio": 37.55,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A029xxx": {
+      "count": 9,
+      "avg_ratio": 35.34,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A082xxx": {
+      "count": 11,
+      "avg_ratio": 35.98,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A008xxx": {
+      "count": 12,
+      "avg_ratio": 45.95,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A075xxx": {
+      "count": 5,
+      "avg_ratio": 47.36,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    },
+    "A017xxx": {
+      "count": 11,
+      "avg_ratio": 70.43,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A037xxx": {
+      "count": 11,
+      "avg_ratio": 56.13,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A018xxx": {
+      "count": 13,
+      "avg_ratio": 90.17,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 13
+    },
+    "A015xxx": {
+      "count": 12,
+      "avg_ratio": 47.4,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A040xxx": {
+      "count": 8,
+      "avg_ratio": 15.89,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A073xxx": {
+      "count": 9,
+      "avg_ratio": 45.41,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A089xxx": {
+      "count": 11,
+      "avg_ratio": 41.98,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A023xxx": {
+      "count": 9,
+      "avg_ratio": 38.84,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A013xxx": {
+      "count": 13,
+      "avg_ratio": 72.58,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 13
+    },
+    "A083xxx": {
+      "count": 9,
+      "avg_ratio": 48.46,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A024xxx": {
+      "count": 7,
+      "avg_ratio": 52.72,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A048xxx": {
+      "count": 6,
+      "avg_ratio": 51.84,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 6
+    },
+    "A071xxx": {
+      "count": 10,
+      "avg_ratio": 61.34,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A093xxx": {
+      "count": 9,
+      "avg_ratio": 46.3,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A081xxx": {
+      "count": 8,
+      "avg_ratio": 77.15,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A026xxx": {
+      "count": 15,
+      "avg_ratio": 51.46,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 15
+    },
+    "A065xxx": {
+      "count": 14,
+      "avg_ratio": 47.89,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 14
+    },
+    "A069xxx": {
+      "count": 14,
+      "avg_ratio": 57.47,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 14
+    },
+    "A041xxx": {
+      "count": 8,
+      "avg_ratio": 68.45,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A061xxx": {
+      "count": 10,
+      "avg_ratio": 60.96,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A059xxx": {
+      "count": 11,
+      "avg_ratio": 44.25,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A039xxx": {
+      "count": 11,
+      "avg_ratio": 37.18,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A032xxx": {
+      "count": 12,
+      "avg_ratio": 48.31,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A091xxx": {
+      "count": 8,
+      "avg_ratio": 52.74,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A010xxx": {
+      "count": 11,
+      "avg_ratio": 42.11,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A068xxx": {
+      "count": 7,
+      "avg_ratio": 66.93,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A064xxx": {
+      "count": 12,
+      "avg_ratio": 41.26,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A045xxx": {
+      "count": 11,
+      "avg_ratio": 42.62,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A095xxx": {
+      "count": 10,
+      "avg_ratio": 47.56,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A058xxx": {
+      "count": 13,
+      "avg_ratio": 65.99,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 13
+    },
+    "A079xxx": {
+      "count": 8,
+      "avg_ratio": 58.3,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A067xxx": {
+      "count": 15,
+      "avg_ratio": 50.46,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 15
+    },
+    "A021xxx": {
+      "count": 11,
+      "avg_ratio": 28.98,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A099xxx": {
+      "count": 10,
+      "avg_ratio": 46.73,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A044xxx": {
+      "count": 12,
+      "avg_ratio": 41.02,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A005xxx": {
+      "count": 8,
+      "avg_ratio": 56.22,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A087xxx": {
+      "count": 9,
+      "avg_ratio": 49.93,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A077xxx": {
+      "count": 4,
+      "avg_ratio": 42.11,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 4
+    },
+    "A035xxx": {
+      "count": 11,
+      "avg_ratio": 34.01,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A062xxx": {
+      "count": 14,
+      "avg_ratio": 75.29,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 13
+    },
+    "A084xxx": {
+      "count": 10,
+      "avg_ratio": 42.01,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A050xxx": {
+      "count": 8,
+      "avg_ratio": 45.31,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A002xxx": {
+      "count": 15,
+      "avg_ratio": 54.22,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 15
+    },
+    "A060xxx": {
+      "count": 9,
+      "avg_ratio": 55.44,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A046xxx": {
+      "count": 6,
+      "avg_ratio": 49.02,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 6
+    },
+    "A022xxx": {
+      "count": 5,
+      "avg_ratio": 56.18,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    },
+    "A080xxx": {
+      "count": 9,
+      "avg_ratio": 51.44,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A096xxx": {
+      "count": 11,
+      "avg_ratio": 53.63,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A052xxx": {
+      "count": 12,
+      "avg_ratio": 60.06,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A036xxx": {
+      "count": 13,
+      "avg_ratio": 51.37,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 13
+    },
+    "A092xxx": {
+      "count": 7,
+      "avg_ratio": 43.69,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A049xxx": {
+      "count": 6,
+      "avg_ratio": 65.97,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 6
+    },
+    "A030xxx": {
+      "count": 9,
+      "avg_ratio": 70.02,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A086xxx": {
+      "count": 10,
+      "avg_ratio": 52.49,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A001xxx": {
+      "count": 6,
+      "avg_ratio": 70.65,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 6
+    },
+    "A063xxx": {
+      "count": 12,
+      "avg_ratio": 53.85,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A034xxx": {
+      "count": 15,
+      "avg_ratio": 47.33,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 15
+    },
+    "A000xxx": {
+      "count": 11,
+      "avg_ratio": 58.08,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 11
+    },
+    "A090xxx": {
+      "count": 12,
+      "avg_ratio": 47.11,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A088xxx": {
+      "count": 5,
+      "avg_ratio": 26.25,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    },
+    "A027xxx": {
+      "count": 9,
+      "avg_ratio": 60.4,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 9
+    },
+    "A057xxx": {
+      "count": 5,
+      "avg_ratio": 63.1,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    },
+    "A014xxx": {
+      "count": 5,
+      "avg_ratio": 59.63,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    },
+    "A078xxx": {
+      "count": 6,
+      "avg_ratio": 57.84,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 6
+    },
+    "A003xxx": {
+      "count": 10,
+      "avg_ratio": 56.14,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A033xxx": {
+      "count": 12,
+      "avg_ratio": 51.24,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 12
+    },
+    "A098xxx": {
+      "count": 10,
+      "avg_ratio": 62.51,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 10
+    },
+    "A097xxx": {
+      "count": 8,
+      "avg_ratio": 38.87,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A043xxx": {
+      "count": 8,
+      "avg_ratio": 42.29,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A025xxx": {
+      "count": 8,
+      "avg_ratio": 42.17,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 8
+    },
+    "A094xxx": {
+      "count": 6,
+      "avg_ratio": 39.7,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 6
+    },
+    "A020xxx": {
+      "count": 7,
+      "avg_ratio": 36.19,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 7
+    },
+    "A038xxx": {
+      "count": 5,
+      "avg_ratio": 45.57,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    },
+    "A053xxx": {
+      "count": 5,
+      "avg_ratio": 51.07,
+      "dominant_strategy": "xml_flat",
+      "dominant_count": 5
+    }
+  },
+  "top_30_best": [
+    [
+      "A081147",
+      11.751,
+      "xml_flat"
+    ],
+    [
+      "A087052",
+      11.881,
+      "xml_flat"
+    ],
+    [
+      "A021189",
+      11.955,
+      "xml_flat"
+    ],
+    [
+      "A093718",
+      12.092,
+      "xml_flat"
+    ],
+    [
+      "A011765",
+      12.323,
+      "xml_flat"
+    ],
+    [
+      "A065067",
+      12.573,
+      "xml_flat"
+    ],
+    [
+      "A082527",
+      12.691,
+      "xml_flat"
+    ],
+    [
+      "A099395",
+      13.059,
+      "xml_flat"
+    ],
+    [
+      "A093338",
+      13.631,
+      "xml_flat"
+    ],
+    [
+      "A010059",
+      13.631,
+      "xml_flat"
+    ],
+    [
+      "A021895",
+      13.948,
+      "xml_flat"
+    ],
+    [
+      "A021162",
+      13.948,
+      "xml_flat"
+    ],
+    [
+      "A094917",
+      13.948,
+      "xml_flat"
+    ],
+    [
+      "A015348",
+      13.961,
+      "xml_flat"
+    ],
+    [
+      "A015120",
+      13.961,
+      "xml_flat"
+    ],
+    [
+      "A040894",
+      14.124,
+      "xml_flat"
+    ],
+    [
+      "A025657",
+      14.269,
+      "xml_flat"
+    ],
+    [
+      "A040434",
+      14.404,
+      "xml_flat"
+    ],
+    [
+      "A035214",
+      14.446,
+      "xml_flat"
+    ],
+    [
+      "A010729",
+      14.568,
+      "xml_flat"
+    ],
+    [
+      "A020649",
+      14.629,
+      "xml_flat"
+    ],
+    [
+      "A067131",
+      14.85,
+      "xml_flat"
+    ],
+    [
+      "A040852",
+      14.876,
+      "xml_flat"
+    ],
+    [
+      "A040581",
+      14.894,
+      "xml_flat"
+    ],
+    [
+      "A045534",
+      14.943,
+      "xml_flat"
+    ],
+    [
+      "A036578",
+      14.944,
+      "xml_flat"
+    ],
+    [
+      "A080378",
+      15.041,
+      "xml_flat"
+    ],
+    [
+      "A076754",
+      15.041,
+      "xml_flat"
+    ],
+    [
+      "A085983",
+      15.041,
+      "xml_flat"
+    ],
+    [
+      "A023400",
+      15.086,
+      "xml_flat"
+    ]
+  ],
+  "top_30_worst": [
+    [
+      "A087585",
+      108.108,
+      "xml_flat"
+    ],
+    [
+      "A079818",
+      108.738,
+      "xml_flat"
+    ],
+    [
+      "A001537",
+      111.888,
+      "xml_flat"
+    ],
+    [
+      "A018555",
+      121.951,
+      "xml_flat"
+    ],
+    [
+      "A067848",
+      122.727,
+      "xml_flat"
+    ],
+    [
+      "A018579",
+      125.301,
+      "xml_flat"
+    ],
+    [
+      "A018443",
+      125.301,
+      "xml_flat"
+    ],
+    [
+      "A076914",
+      128.302,
+      "xml_flat"
+    ],
+    [
+      "A018298",
+      130.0,
+      "xml_flat"
+    ],
+    [
+      "A062657",
+      130.12,
+      "xml_flat"
+    ],
+    [
+      "A046743",
+      135.065,
+      "xml_flat"
+    ],
+    [
+      "A071794",
+      136.842,
+      "xml_flat"
+    ],
+    [
+      "A030090",
+      136.986,
+      "xml_flat"
+    ],
+    [
+      "A072228",
+      137.931,
+      "xml_flat"
+    ],
+    [
+      "A058440",
+      138.272,
+      "xml_flat"
+    ],
+    [
+      "A063646",
+      138.462,
+      "xml_flat"
+    ],
+    [
+      "A028978",
+      138.889,
+      "xml_flat"
+    ],
+    [
+      "A070334",
+      139.13,
+      "xml_flat"
+    ],
+    [
+      "A058911",
+      139.13,
+      "xml_flat"
+    ],
+    [
+      "A061615",
+      141.176,
+      "xml_flat"
+    ],
+    [
+      "A072104",
+      145.946,
+      "xml_flat"
+    ],
+    [
+      "A062228",
+      150.725,
+      "xml_flat"
+    ],
+    [
+      "A030244",
+      152.941,
+      "xml_flat"
+    ],
+    [
+      "A019471",
+      154.839,
+      "xml_flat"
+    ],
+    [
+      "A018260",
+      157.377,
+      "xml_flat"
+    ],
+    [
+      "A062658",
+      168.75,
+      "xml_flat"
+    ],
+    [
+      "A030246",
+      171.429,
+      "xml_flat"
+    ],
+    [
+      "A056602",
+      185.185,
+      "xml_flat"
+    ],
+    [
+      "A081979",
+      195.918,
+      "xml_flat"
+    ],
+    [
+      "A062213",
+      200.0,
+      "json_struct"
+    ]
+  ],
+  "top_30_variance": [
+    [
+      "A062213",
+      50419.140713333334
+    ],
+    [
+      "A018260",
+      31244.831990888895
+    ],
+    [
+      "A019471",
+      27782.982995222217
+    ],
+    [
+      "A070334",
+      25350.030095888887
+    ],
+    [
+      "A030246",
+      22894.489738138876
+    ],
+    [
+      "A081979",
+      22452.20420725
+    ],
+    [
+      "A058911",
+      21132.401959555555
+    ],
+    [
+      "A030090",
+      13076.832854333334
+    ],
+    [
+      "A018298",
+      12271.149420138887
+    ],
+    [
+      "A056602",
+      11261.038099583331
+    ],
+    [
+      "A018555",
+      10360.774825000002
+    ],
+    [
+      "A062228",
+      9684.713732583334
+    ],
+    [
+      "A071794",
+      9423.413756888891
+    ],
+    [
+      "A018443",
+      9400.300830333334
+    ],
+    [
+      "A030244",
+      9323.14142288889
+    ],
+    [
+      "A018579",
+      8817.089688555558
+    ],
+    [
+      "A028978",
+      8785.462333138888
+    ],
+    [
+      "A052487",
+      8116.9085393333335
+    ],
+    [
+      "A062658",
+      7872.339056805556
+    ],
+    [
+      "A046743",
+      7194.32509388889
+    ],
+    [
+      "A063646",
+      6396.199483222225
+    ],
+    [
+      "A072104",
+      5524.207127000001
+    ],
+    [
+      "A067848",
+      4949.789898888889
+    ],
+    [
+      "A062657",
+      4811.266368
+    ],
+    [
+      "A079818",
+      4633.931908222221
+    ],
+    [
+      "A018741",
+      4092.57612013889
+    ],
+    [
+      "A018314",
+      3875.4471115555552
+    ],
+    [
+      "A005139",
+      3567.0410817142847
+    ],
+    [
+      "A068704",
+      3236.466209805556
+    ],
+    [
+      "A096829",
+      3098.682308555555
+    ]
+  ],
+  "top_first_byte_patterns": [
+    [
+      "1,2,3,4",
+      24
+    ],
+    [
+      "0,0,0,0",
+      24
+    ],
+    [
+      "0,1,2,3",
+      21
+    ],
+    [
+      "1,1,1,1",
+      16
+    ],
+    [
+      "1,1,1,2",
+      12
+    ],
+    [
+      "0,0,1,0",
+      9
+    ],
+    [
+      "1,2,3,6",
+      6
+    ],
+    [
+      "1,2,4,5",
+      6
+    ],
+    [
+      "1,0,1,0",
+      6
+    ],
+    [
+      "1,2,4,8",
+      5
+    ],
+    [
+      "1,1,2,3",
+      5
+    ],
+    [
+      "0,0,1,1",
+      5
+    ],
+    [
+      "1,0,0,1",
+      4
+    ],
+    [
+      "1,3,5,7",
+      4
+    ],
+    [
+      "1,1,2,2",
+      4
+    ],
+    [
+      "0,0,1,2",
+      4
+    ],
+    [
+      "1,1,2,1",
+      4
+    ],
+    [
+      "1,4,6,8",
+      4
+    ],
+    [
+      "1,2,3,5",
+      4
+    ],
+    [
+      "1,2,2,2",
+      4
+    ]
+  ]
+}

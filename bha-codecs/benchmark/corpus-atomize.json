@@ -1,0 +1,1871 @@
+{
+  "n_total": 200,
+  "n_successful": 200,
+  "elapsed_seconds": 1.9,
+  "strategies": [
+    "raw",
+    "terms_only",
+    "diff_first",
+    "formulas_first",
+    "keyvalue",
+    "xml_flat",
+    "json_struct"
+  ],
+  "by_category": {
+    "obscure_sequences": [
+      {
+        "id": "A083811",
+        "best_strategy": "xml_flat",
+        "best_ratio": 58.378,
+        "variance": 118.23548233333337
+      },
+      {
+        "id": "A014593",
+        "best_strategy": "xml_flat",
+        "best_ratio": 114.943,
+        "variance": 13860.038711428575
+      },
+      {
+        "id": "A097197",
+        "best_strategy": "xml_flat",
+        "best_ratio": 47.581,
+        "variance": 450.6575785833333
+      },
+      {
+        "id": "A036049",
+        "best_strategy": "xml_flat",
+        "best_ratio": 33.557,
+        "variance": 533.9255669999999
+      },
+      {
+        "id": "A032099",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.225,
+        "variance": 284.0725823333334
+      },
+      {
+        "id": "A029257",
+        "best_strategy": "xml_flat",
+        "best_ratio": 31.502,
+        "variance": 494.332652888889
+      },
+      {
+        "id": "A018290",
+        "best_strategy": "xml_flat",
+        "best_ratio": 130.0,
+        "variance": 11349.758634138889
+      },
+      {
+        "id": "A096531",
+        "best_strategy": "xml_flat",
+        "best_ratio": 61.878,
+        "variance": 258.1408485555556
+      },
+      {
+        "id": "A013435",
+        "best_strategy": "xml_flat",
+        "best_ratio": 69.364,
+        "variance": 71.32451955102036
+      },
+      {
+        "id": "A088697",
+        "best_strategy": "xml_flat",
+        "best_ratio": 40.228,
+        "variance": 496.8542094722222
+      },
+      {
+        "id": "A097081",
+        "best_strategy": "xml_flat",
+        "best_ratio": 56.716,
+        "variance": 305.30813555555557
+      },
+      {
+        "id": "A071483",
+        "best_strategy": "xml_flat",
+        "best_ratio": 25.678,
+        "variance": 496.85640047222233
+      },
+      {
+        "id": "A011396",
+        "best_strategy": "xml_flat",
+        "best_ratio": 24.408,
+        "variance": 460.95780669387756
+      },
+      {
+        "id": "A077398",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.122,
+        "variance": 148.09834680555556
+      },
+      {
+        "id": "A055303",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.773,
+        "variance": 107.39128925000001
+      },
+      {
+        "id": "A012281",
+        "best_strategy": "xml_flat",
+        "best_ratio": 68.139,
+        "variance": 210.08464910204083
+      },
+      {
+        "id": "A028658",
+        "best_strategy": "xml_flat",
+        "best_ratio": 32.504,
+        "variance": 422.7140544722222
+      },
+      {
+        "id": "A030496",
+        "best_strategy": "xml_flat",
+        "best_ratio": 20.793,
+        "variance": 323.73984847222226
+      },
+      {
+        "id": "A066238",
+        "best_strategy": "xml_flat",
+        "best_ratio": 53.801,
+        "variance": 200.32248366666659
+      },
+      {
+        "id": "A078908",
+        "best_strategy": "xml_flat",
+        "best_ratio": 29.859,
+        "variance": 485.81508133333324
+      },
+      {
+        "id": "A073564",
+        "best_strategy": "xml_flat",
+        "best_ratio": 86.111,
+        "variance": 557.3190072499997
+      },
+      {
+        "id": "A026063",
+        "best_strategy": "xml_flat",
+        "best_ratio": 45.038,
+        "variance": 340.67101047222235
+      },
+      {
+        "id": "A093851",
+        "best_strategy": "xml_flat",
+        "best_ratio": 54.294,
+        "variance": 99.22891466666665
+      },
+      {
+        "id": "A085182",
+        "best_strategy": "xml_flat",
+        "best_ratio": 21.765,
+        "variance": 217.14191813888894
+      },
+      {
+        "id": "A091925",
+        "best_strategy": "xml_flat",
+        "best_ratio": 24.168,
+        "variance": 476.985513888889
+      },
+      {
+        "id": "A071427",
+        "best_strategy": "xml_flat",
+        "best_ratio": 21.569,
+        "variance": 337.5373369999999
+      },
+      {
+        "id": "A054988",
+        "best_strategy": "xml_flat",
+        "best_ratio": 23.197,
+        "variance": 428.3133314722223
+      },
+      {
+        "id": "A028894",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.882,
+        "variance": 203.60522799999993
+      },
+      {
+        "id": "A058879",
+        "best_strategy": "xml_flat",
+        "best_ratio": 35.511,
+        "variance": 535.8804835555555
+      },
+      {
+        "id": "A077237",
+        "best_strategy": "xml_flat",
+        "best_ratio": 60.745,
+        "variance": 404.3954459166668
+      },
+      {
+        "id": "A036464",
+        "best_strategy": "xml_flat",
+        "best_ratio": 50.0,
+        "variance": 313.9852878888889
+      },
+      {
+        "id": "A099459",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.823,
+        "variance": 111.0175362222223
+      },
+      {
+        "id": "A020927",
+        "best_strategy": "xml_flat",
+        "best_ratio": 54.976,
+        "variance": 240.3833448055556
+      },
+      {
+        "id": "A091507",
+        "best_strategy": "xml_flat",
+        "best_ratio": 47.737,
+        "variance": 371.0029138888888
+      },
+      {
+        "id": "A055393",
+        "best_strategy": "xml_flat",
+        "best_ratio": 40.535,
+        "variance": 555.4714262222225
+      },
+      {
+        "id": "A044598",
+        "best_strategy": "xml_flat",
+        "best_ratio": 47.059,
+        "variance": 401.94626113888904
+      },
+      {
+        "id": "A036422",
+        "best_strategy": "xml_flat",
+        "best_ratio": 55.882,
+        "variance": 302.86057947222224
+      },
+      {
+        "id": "A020380",
+        "best_strategy": "xml_flat",
+        "best_ratio": 47.162,
+        "variance": 475.8666895555557
+      },
+      {
+        "id": "A028222",
+        "best_strategy": "xml_flat",
+        "best_ratio": 77.419,
+        "variance": 135.05861780555554
+      },
+      {
+        "id": "A044119",
+        "best_strategy": "xml_flat",
+        "best_ratio": 40.299,
+        "variance": 333.9314525555556
+      },
+      {
+        "id": "A013397",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.231,
+        "variance": 166.24732391836747
+      },
+      {
+        "id": "A012157",
+        "best_strategy": "xml_flat",
+        "best_ratio": 77.091,
+        "variance": 108.04263310204087
+      },
+      {
+        "id": "A049798",
+        "best_strategy": "xml_flat",
+        "best_ratio": 35.507,
+        "variance": 558.8436126666667
+      },
+      {
+        "id": "A012677",
+        "best_strategy": "xml_flat",
+        "best_ratio": 80.916,
+        "variance": 106.01400738775511
+      },
+      {
+        "id": "A047053",
+        "best_strategy": "xml_flat",
+        "best_ratio": 70.968,
+        "variance": 141.80955022222216
+      },
+      {
+        "id": "A045083",
+        "best_strategy": "xml_flat",
+        "best_ratio": 47.88,
+        "variance": 346.51650822222217
+      },
+      {
+        "id": "A079132",
+        "best_strategy": "xml_flat",
+        "best_ratio": 37.956,
+        "variance": 403.8892334722222
+      },
+      {
+        "id": "A034672",
+        "best_strategy": "xml_flat",
+        "best_ratio": 75.676,
+        "variance": 98.19209588888886
+      },
+      {
+        "id": "A095648",
+        "best_strategy": "xml_flat",
+        "best_ratio": 37.708,
+        "variance": 671.2529450000001
+      },
+      {
+        "id": "A060218",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.306,
+        "variance": 90.18499525000006
+      },
+      {
+        "id": "A070285",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.236,
+        "variance": 51.769330138888854
+      },
+      {
+        "id": "A016362",
+        "best_strategy": "xml_flat",
+        "best_ratio": 18.316,
+        "variance": 194.91691433333335
+      },
+      {
+        "id": "A049616",
+        "best_strategy": "xml_flat",
+        "best_ratio": 45.136,
+        "variance": 462.4708573333333
+      },
+      {
+        "id": "A010329",
+        "best_strategy": "xml_flat",
+        "best_ratio": 63.584,
+        "variance": 165.61513906122445
+      },
+      {
+        "id": "A072358",
+        "best_strategy": "xml_flat",
+        "best_ratio": 18.811,
+        "variance": 201.23788647222224
+      },
+      {
+        "id": "A038428",
+        "best_strategy": "xml_flat",
+        "best_ratio": 45.07,
+        "variance": 430.0455194722222
+      },
+      {
+        "id": "A082398",
+        "best_strategy": "xml_flat",
+        "best_ratio": 62.703,
+        "variance": 233.42030580555544
+      },
+      {
+        "id": "A081071",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.073,
+        "variance": 175.50753547222223
+      },
+      {
+        "id": "A047401",
+        "best_strategy": "xml_flat",
+        "best_ratio": 32.877,
+        "variance": 466.6913248888887
+      },
+      {
+        "id": "A075675",
+        "best_strategy": "xml_flat",
+        "best_ratio": 57.79,
+        "variance": 434.63753913888894
+      },
+      {
+        "id": "A025204",
+        "best_strategy": "xml_flat",
+        "best_ratio": 63.694,
+        "variance": 498.95989647222217
+      },
+      {
+        "id": "A092350",
+        "best_strategy": "xml_flat",
+        "best_ratio": 48.163,
+        "variance": 384.3080655833334
+      },
+      {
+        "id": "A086674",
+        "best_strategy": "xml_flat",
+        "best_ratio": 33.853,
+        "variance": 617.1553788888889
+      },
+      {
+        "id": "A029872",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.249,
+        "variance": 117.7276345833334
+      },
+      {
+        "id": "A037931",
+        "best_strategy": "xml_flat",
+        "best_ratio": 135.211,
+        "variance": 15851.770941555558
+      },
+      {
+        "id": "A010459",
+        "best_strategy": "xml_flat",
+        "best_ratio": 41.895,
+        "variance": 691.2544771020408
+      },
+      {
+        "id": "A030513",
+        "best_strategy": "xml_flat",
+        "best_ratio": 34.47,
+        "variance": 526.6397159999999
+      },
+      {
+        "id": "A013239",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.712,
+        "variance": 190.41286583673468
+      },
+      {
+        "id": "A049824",
+        "best_strategy": "xml_flat",
+        "best_ratio": 30.147,
+        "variance": 558.4599963333334
+      },
+      {
+        "id": "A036435",
+        "best_strategy": "xml_flat",
+        "best_ratio": 34.026,
+        "variance": 277.54565622222225
+      },
+      {
+        "id": "A059430",
+        "best_strategy": "xml_flat",
+        "best_ratio": 69.617,
+        "variance": 138.15208255555555
+      },
+      {
+        "id": "A083321",
+        "best_strategy": "xml_flat",
+        "best_ratio": 58.937,
+        "variance": 168.80485380555558
+      },
+      {
+        "id": "A047820",
+        "best_strategy": "xml_flat",
+        "best_ratio": 34.722,
+        "variance": 477.0891516666668
+      },
+      {
+        "id": "A021320",
+        "best_strategy": "xml_flat",
+        "best_ratio": 13.948,
+        "variance": 177.67106647222218
+      },
+      {
+        "id": "A048521",
+        "best_strategy": "xml_flat",
+        "best_ratio": 36.298,
+        "variance": 419.45467547222216
+      },
+      {
+        "id": "A046567",
+        "best_strategy": "xml_flat",
+        "best_ratio": 32.227,
+        "variance": 411.53475522222226
+      },
+      {
+        "id": "A027461",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.738,
+        "variance": 132.13896955555558
+      },
+      {
+        "id": "A087842",
+        "best_strategy": "xml_flat",
+        "best_ratio": 21.543,
+        "variance": 280.07246633333335
+      },
+      {
+        "id": "A034994",
+        "best_strategy": "xml_flat",
+        "best_ratio": 49.817,
+        "variance": 92.32124822222221
+      },
+      {
+        "id": "A091989",
+        "best_strategy": "xml_flat",
+        "best_ratio": 36.863,
+        "variance": 608.24315725
+      },
+      {
+        "id": "A089594",
+        "best_strategy": "xml_flat",
+        "best_ratio": 44.106,
+        "variance": 386.3916766666666
+      },
+      {
+        "id": "A084940",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.59,
+        "variance": 78.67744258333336
+      },
+      {
+        "id": "A079841",
+        "best_strategy": "xml_flat",
+        "best_ratio": 37.468,
+        "variance": 45.68494991666665
+      },
+      {
+        "id": "A083228",
+        "best_strategy": "xml_flat",
+        "best_ratio": 75.714,
+        "variance": 110.91128755555559
+      },
+      {
+        "id": "A022432",
+        "best_strategy": "xml_flat",
+        "best_ratio": 34.206,
+        "variance": 397.4691405833332
+      },
+      {
+        "id": "A070011",
+        "best_strategy": "xml_flat",
+        "best_ratio": 35.636,
+        "variance": 559.4228326666666
+      },
+      {
+        "id": "A095569",
+        "best_strategy": "xml_flat",
+        "best_ratio": 58.182,
+        "variance": 84.87364188888886
+      },
+      {
+        "id": "A032088",
+        "best_strategy": "xml_flat",
+        "best_ratio": 63.787,
+        "variance": 180.83474113888894
+      },
+      {
+        "id": "A021418",
+        "best_strategy": "xml_flat",
+        "best_ratio": 15.94,
+        "variance": 204.50114658333334
+      },
+      {
+        "id": "A060590",
+        "best_strategy": "xml_flat",
+        "best_ratio": 56.296,
+        "variance": 267.70119322222223
+      },
+      {
+        "id": "A049736",
+        "best_strategy": "xml_flat",
+        "best_ratio": 53.14,
+        "variance": 460.4118824722223
+      },
+      {
+        "id": "A035383",
+        "best_strategy": "xml_flat",
+        "best_ratio": 62.162,
+        "variance": 121.11856722222224
+      },
+      {
+        "id": "A083887",
+        "best_strategy": "xml_flat",
+        "best_ratio": 42.553,
+        "variance": 437.8448744722223
+      },
+      {
+        "id": "A090199",
+        "best_strategy": "xml_flat",
+        "best_ratio": 60.358,
+        "variance": 235.7256713333334
+      },
+      {
+        "id": "A073001",
+        "best_strategy": "xml_flat",
+        "best_ratio": 36.01,
+        "variance": 997.7135374722224
+      },
+      {
+        "id": "A028786",
+        "best_strategy": "xml_flat",
+        "best_ratio": 45.646,
+        "variance": 952.7509751388889
+      },
+      {
+        "id": "A089734",
+        "best_strategy": "xml_flat",
+        "best_ratio": 20.741,
+        "variance": 335.5768824722223
+      },
+      {
+        "id": "A042505",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.721,
+        "variance": 173.96542455555547
+      },
+      {
+        "id": "A030022",
+        "best_strategy": "xml_flat",
+        "best_ratio": 126.316,
+        "variance": 9315.653555555557
+      },
+      {
+        "id": "A041348",
+        "best_strategy": "xml_flat",
+        "best_ratio": 62.176,
+        "variance": 168.9561988888889
+      },
+      {
+        "id": "A052582",
+        "best_strategy": "xml_flat",
+        "best_ratio": 63.66,
+        "variance": 120.33148113888889
+      },
+      {
+        "id": "A035094",
+        "best_strategy": "xml_flat",
+        "best_ratio": 61.14,
+        "variance": 109.88106080555555
+      },
+      {
+        "id": "A027654",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.646,
+        "variance": 126.70705280555558
+      },
+      {
+        "id": "A074342",
+        "best_strategy": "xml_flat",
+        "best_ratio": 43.222,
+        "variance": 477.06155525
+      },
+      {
+        "id": "A094099",
+        "best_strategy": "xml_flat",
+        "best_ratio": 66.39,
+        "variance": 758.0876333333334
+      },
+      {
+        "id": "A041246",
+        "best_strategy": "xml_flat",
+        "best_ratio": 59.472,
+        "variance": 241.95737266666666
+      },
+      {
+        "id": "A027870",
+        "best_strategy": "xml_flat",
+        "best_ratio": 18.801,
+        "variance": 272.13380722222234
+      },
+      {
+        "id": "A085910",
+        "best_strategy": "xml_flat",
+        "best_ratio": 37.05,
+        "variance": 489.28380088888895
+      },
+      {
+        "id": "A065436",
+        "best_strategy": "xml_flat",
+        "best_ratio": 69.565,
+        "variance": 1681.5900476666673
+      },
+      {
+        "id": "A051857",
+        "best_strategy": "xml_flat",
+        "best_ratio": 116.667,
+        "variance": 5361.368060805556
+      },
+      {
+        "id": "A084260",
+        "best_strategy": "xml_flat",
+        "best_ratio": 57.143,
+        "variance": 185.2343931388889
+      },
+      {
+        "id": "A060143",
+        "best_strategy": "xml_flat",
+        "best_ratio": 25.112,
+        "variance": 302.06817458333336
+      },
+      {
+        "id": "A018727",
+        "best_strategy": "xml_flat",
+        "best_ratio": 82.581,
+        "variance": 2769.9920784722217
+      },
+      {
+        "id": "A034719",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.909,
+        "variance": 210.34411388888884
+      },
+      {
+        "id": "A018302",
+        "best_strategy": "xml_flat",
+        "best_ratio": 85.714,
+        "variance": 4474.967438138889
+      },
+      {
+        "id": "A032326",
+        "best_strategy": "xml_flat",
+        "best_ratio": 72.085,
+        "variance": 261.5644268055557
+      },
+      {
+        "id": "A097648",
+        "best_strategy": "xml_flat",
+        "best_ratio": 25.412,
+        "variance": 350.45661788888896
+      },
+      {
+        "id": "A073580",
+        "best_strategy": "xml_flat",
+        "best_ratio": 61.376,
+        "variance": 263.9596698888889
+      },
+      {
+        "id": "A070645",
+        "best_strategy": "xml_flat",
+        "best_ratio": 18.618,
+        "variance": 181.15268725
+      },
+      {
+        "id": "A034439",
+        "best_strategy": "xml_flat",
+        "best_ratio": 31.304,
+        "variance": 550.8540172222222
+      },
+      {
+        "id": "A097913",
+        "best_strategy": "xml_flat",
+        "best_ratio": 23.155,
+        "variance": 274.3300574722222
+      },
+      {
+        "id": "A076623",
+        "best_strategy": "xml_flat",
+        "best_ratio": 63.222,
+        "variance": 396.6398472222223
+      },
+      {
+        "id": "A056156",
+        "best_strategy": "xml_flat",
+        "best_ratio": 61.458,
+        "variance": 242.2170795555556
+      },
+      {
+        "id": "A076485",
+        "best_strategy": "xml_flat",
+        "best_ratio": 36.431,
+        "variance": 603.2126999999999
+      },
+      {
+        "id": "A052351",
+        "best_strategy": "xml_flat",
+        "best_ratio": 48.361,
+        "variance": 334.2339458055556
+      },
+      {
+        "id": "A047448",
+        "best_strategy": "xml_flat",
+        "best_ratio": 32.432,
+        "variance": 477.3279816666666
+      },
+      {
+        "id": "A028747",
+        "best_strategy": "xml_flat",
+        "best_ratio": 79.47,
+        "variance": 4058.154682555556
+      },
+      {
+        "id": "A018132",
+        "best_strategy": "xml_flat",
+        "best_ratio": 49.635,
+        "variance": 307.36946288888896
+      },
+      {
+        "id": "A066785",
+        "best_strategy": "xml_flat",
+        "best_ratio": 56.158,
+        "variance": 312.7418371388888
+      },
+      {
+        "id": "A064687",
+        "best_strategy": "xml_flat",
+        "best_ratio": 48.826,
+        "variance": 458.83978447222233
+      },
+      {
+        "id": "A011916",
+        "best_strategy": "xml_flat",
+        "best_ratio": 72.258,
+        "variance": 103.09318906122454
+      },
+      {
+        "id": "A099062",
+        "best_strategy": "xml_flat",
+        "best_ratio": 44.534,
+        "variance": 422.13465300000007
+      },
+      {
+        "id": "A014372",
+        "best_strategy": "xml_flat",
+        "best_ratio": 78.392,
+        "variance": 708.5164259591838
+      },
+      {
+        "id": "A020034",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.081,
+        "variance": 242.3651312499999
+      },
+      {
+        "id": "A082241",
+        "best_strategy": "xml_flat",
+        "best_ratio": 97.902,
+        "variance": 947.4247540000001
+      },
+      {
+        "id": "A020970",
+        "best_strategy": "xml_flat",
+        "best_ratio": 74.576,
+        "variance": 134.26743433333337
+      },
+      {
+        "id": "A089193",
+        "best_strategy": "xml_flat",
+        "best_ratio": 36.036,
+        "variance": 436.2988221388889
+      },
+      {
+        "id": "A055334",
+        "best_strategy": "xml_flat",
+        "best_ratio": 29.395,
+        "variance": 435.2997765555556
+      },
+      {
+        "id": "A078173",
+        "best_strategy": "xml_flat",
+        "best_ratio": 25.296,
+        "variance": 390.3410565555555
+      },
+      {
+        "id": "A050433",
+        "best_strategy": "xml_flat",
+        "best_ratio": 17.51,
+        "variance": 244.18861422222224
+      },
+      {
+        "id": "A050020",
+        "best_strategy": "xml_flat",
+        "best_ratio": 37.262,
+        "variance": 449.1147379166667
+      },
+      {
+        "id": "A078105",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.384,
+        "variance": 521.8363065555554
+      },
+      {
+        "id": "A061349",
+        "best_strategy": "xml_flat",
+        "best_ratio": 49.573,
+        "variance": 419.05758413888884
+      },
+      {
+        "id": "A069353",
+        "best_strategy": "xml_flat",
+        "best_ratio": 41.53,
+        "variance": 537.5365604722223
+      },
+      {
+        "id": "A032954",
+        "best_strategy": "xml_flat",
+        "best_ratio": 34.686,
+        "variance": 487.7808255555555
+      },
+      {
+        "id": "A072513",
+        "best_strategy": "xml_flat",
+        "best_ratio": 49.339,
+        "variance": 332.52132580555553
+      },
+      {
+        "id": "A089167",
+        "best_strategy": "xml_flat",
+        "best_ratio": 34.087,
+        "variance": 427.6921311388889
+      },
+      {
+        "id": "A094467",
+        "best_strategy": "xml_flat",
+        "best_ratio": 72.171,
+        "variance": 77.4933925555555
+      },
+      {
+        "id": "A015015",
+        "best_strategy": "xml_flat",
+        "best_ratio": 66.835,
+        "variance": 43.255128979591866
+      },
+      {
+        "id": "A089354",
+        "best_strategy": "xml_flat",
+        "best_ratio": 64.249,
+        "variance": 163.5744625555556
+      },
+      {
+        "id": "A070382",
+        "best_strategy": "xml_flat",
+        "best_ratio": 18.452,
+        "variance": 172.36004413888887
+      },
+      {
+        "id": "A098420",
+        "best_strategy": "xml_flat",
+        "best_ratio": 35.379,
+        "variance": 373.0068395555556
+      },
+      {
+        "id": "A034974",
+        "best_strategy": "xml_flat",
+        "best_ratio": 35.636,
+        "variance": 362.85889113888896
+      },
+      {
+        "id": "A084013",
+        "best_strategy": "xml_flat",
+        "best_ratio": 48.753,
+        "variance": 112.45982766666667
+      },
+      {
+        "id": "A044588",
+        "best_strategy": "xml_flat",
+        "best_ratio": 46.154,
+        "variance": 380.80049847222216
+      },
+      {
+        "id": "A014622",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.368,
+        "variance": 82.05286355102045
+      },
+      {
+        "id": "A038470",
+        "best_strategy": "xml_flat",
+        "best_ratio": 44.72,
+        "variance": 269.7551092222223
+      },
+      {
+        "id": "A056986",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.591,
+        "variance": 135.81310600000003
+      },
+      {
+        "id": "A020731",
+        "best_strategy": "xml_flat",
+        "best_ratio": 30.769,
+        "variance": 476.38752913888885
+      },
+      {
+        "id": "A059471",
+        "best_strategy": "xml_flat",
+        "best_ratio": 31.779,
+        "variance": 344.40896100000003
+      },
+      {
+        "id": "A094647",
+        "best_strategy": "xml_flat",
+        "best_ratio": 79.121,
+        "variance": 83.99655688888896
+      },
+      {
+        "id": "A094330",
+        "best_strategy": "xml_flat",
+        "best_ratio": 76.19,
+        "variance": 114.76236588888894
+      },
+      {
+        "id": "A034523",
+        "best_strategy": "xml_flat",
+        "best_ratio": 34.818,
+        "variance": 410.5378935555556
+      },
+      {
+        "id": "A065613",
+        "best_strategy": "xml_flat",
+        "best_ratio": 58.416,
+        "variance": 321.0898435555556
+      },
+      {
+        "id": "A099872",
+        "best_strategy": "xml_flat",
+        "best_ratio": 23.972,
+        "variance": 437.5019924722222
+      },
+      {
+        "id": "A023417",
+        "best_strategy": "xml_flat",
+        "best_ratio": 59.551,
+        "variance": 342.67920233333325
+      },
+      {
+        "id": "A066543",
+        "best_strategy": "xml_flat",
+        "best_ratio": 90.598,
+        "variance": 17.237610472222233
+      },
+      {
+        "id": "A013948",
+        "best_strategy": "xml_flat",
+        "best_ratio": 31.31,
+        "variance": 372.2984473469388
+      },
+      {
+        "id": "A081960",
+        "best_strategy": "xml_flat",
+        "best_ratio": 79.104,
+        "variance": 35.27323922222222
+      },
+      {
+        "id": "A039118",
+        "best_strategy": "xml_flat",
+        "best_ratio": 29.7,
+        "variance": 474.03794258333323
+      },
+      {
+        "id": "A083749",
+        "best_strategy": "xml_flat",
+        "best_ratio": 56.14,
+        "variance": 305.6062523333333
+      },
+      {
+        "id": "A066541",
+        "best_strategy": "xml_flat",
+        "best_ratio": 36.116,
+        "variance": 435.74804958333317
+      },
+      {
+        "id": "A079819",
+        "best_strategy": "xml_flat",
+        "best_ratio": 84.324,
+        "variance": 678.6064668888888
+      },
+      {
+        "id": "A026072",
+        "best_strategy": "xml_flat",
+        "best_ratio": 72.241,
+        "variance": 209.87742813888892
+      },
+      {
+        "id": "A020033",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.879,
+        "variance": 199.29017313888883
+      },
+      {
+        "id": "A049010",
+        "best_strategy": "xml_flat",
+        "best_ratio": 50.526,
+        "variance": 389.28799255555555
+      },
+      {
+        "id": "A099944",
+        "best_strategy": "xml_flat",
+        "best_ratio": 60.235,
+        "variance": 181.3063302222222
+      },
+      {
+        "id": "A021175",
+        "best_strategy": "xml_flat",
+        "best_ratio": 14.944,
+        "variance": 190.36833491666664
+      },
+      {
+        "id": "A070698",
+        "best_strategy": "xml_flat",
+        "best_ratio": 33.871,
+        "variance": 458.0359252222222
+      },
+      {
+        "id": "A069515",
+        "best_strategy": "xml_flat",
+        "best_ratio": 67.059,
+        "variance": 203.0723351388889
+      },
+      {
+        "id": "A078505",
+        "best_strategy": "xml_flat",
+        "best_ratio": 33.793,
+        "variance": 423.95979666666653
+      },
+      {
+        "id": "A042488",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.455,
+        "variance": 284.97719924999996
+      },
+      {
+        "id": "A064043",
+        "best_strategy": "xml_flat",
+        "best_ratio": 48.98,
+        "variance": 361.11842733333333
+      }
+    ],
+    "extended_sequences": [
+      {
+        "id": "A003279",
+        "best_strategy": "xml_flat",
+        "best_ratio": 78.261,
+        "variance": 331.19940620408164
+      },
+      {
+        "id": "A004166",
+        "best_strategy": "xml_flat",
+        "best_ratio": 30.335,
+        "variance": 283.80608840816325
+      },
+      {
+        "id": "A003906",
+        "best_strategy": "xml_flat",
+        "best_ratio": 61.135,
+        "variance": 1009.8397824897957
+      },
+      {
+        "id": "A003479",
+        "best_strategy": "xml_flat",
+        "best_ratio": 55.684,
+        "variance": 282.5859649795918
+      },
+      {
+        "id": "A005696",
+        "best_strategy": "xml_flat",
+        "best_ratio": 46.018,
+        "variance": 487.2404782857143
+      },
+      {
+        "id": "A009117",
+        "best_strategy": "xml_flat",
+        "best_ratio": 59.951,
+        "variance": 138.83016825000004
+      },
+      {
+        "id": "A006007",
+        "best_strategy": "xml_flat",
+        "best_ratio": 51.902,
+        "variance": 358.35621453061225
+      },
+      {
+        "id": "A009359",
+        "best_strategy": "xml_flat",
+        "best_ratio": 78.195,
+        "variance": 146.5893193333334
+      },
+      {
+        "id": "A007332",
+        "best_strategy": "xml_flat",
+        "best_ratio": 45.509,
+        "variance": 385.47159625
+      },
+      {
+        "id": "A004208",
+        "best_strategy": "xml_flat",
+        "best_ratio": 68.376,
+        "variance": 90.61866469387753
+      },
+      {
+        "id": "A008676",
+        "best_strategy": "xml_flat",
+        "best_ratio": 19.528,
+        "variance": 287.8931751388889
+      },
+      {
+        "id": "A006176",
+        "best_strategy": "xml_flat",
+        "best_ratio": 84.898,
+        "variance": 74.27340795918371
+      },
+      {
+        "id": "A008327",
+        "best_strategy": "xml_flat",
+        "best_ratio": 28.169,
+        "variance": 359.6208541388889
+      },
+      {
+        "id": "A001505",
+        "best_strategy": "xml_flat",
+        "best_ratio": 53.636,
+        "variance": 252.0322402040816
+      }
+    ],
+    "core_sequences": [
+      {
+        "id": "A000852",
+        "best_strategy": "xml_flat",
+        "best_ratio": 36.129,
+        "variance": 341.4746725714286
+      },
+      {
+        "id": "A000426",
+        "best_strategy": "xml_flat",
+        "best_ratio": 65.416,
+        "variance": 124.61229142857147
+      },
+      {
+        "id": "A000075",
+        "best_strategy": "xml_flat",
+        "best_ratio": 56.376,
+        "variance": 267.49206538775513
+      }
+    ]
+  },
+  "top_outliers": [
+    {
+      "id": "A037931",
+      "ratios": {
+        "raw": 447.059,
+        "terms_only": 447.059,
+        "diff_first": 400.0,
+        "keyvalue": 252.632,
+        "xml_flat": 135.211,
+        "json_struct": 185.075
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 135.211,
+      "median_ratio": 400.0,
+      "variance": 15851.770941555558
+    },
+    {
+      "id": "A014593",
+      "ratios": {
+        "raw": 380.952,
+        "terms_only": 380.952,
+        "diff_first": 447.059,
+        "formulas_first": 363.636,
+        "keyvalue": 208.333,
+        "xml_flat": 114.943,
+        "json_struct": 174.648
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 114.943,
+      "median_ratio": 363.636,
+      "variance": 13860.038711428575
+    },
+    {
+      "id": "A018290",
+      "ratios": {
+        "raw": 380.0,
+        "terms_only": 380.0,
+        "diff_first": 400.0,
+        "keyvalue": 236.364,
+        "xml_flat": 130.0,
+        "json_struct": 182.857
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 130.0,
+      "median_ratio": 380.0,
+      "variance": 11349.758634138889
+    },
+    {
+      "id": "A030022",
+      "ratios": {
+        "raw": 363.636,
+        "terms_only": 363.636,
+        "diff_first": 347.826,
+        "keyvalue": 223.256,
+        "xml_flat": 126.316,
+        "json_struct": 172.222
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 126.316,
+      "median_ratio": 347.826,
+      "variance": 9315.653555555557
+    },
+    {
+      "id": "A051857",
+      "ratios": {
+        "raw": 293.333,
+        "terms_only": 293.333,
+        "diff_first": 311.111,
+        "keyvalue": 196.491,
+        "xml_flat": 116.667,
+        "json_struct": 170.0
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 116.667,
+      "median_ratio": 293.333,
+      "variance": 5361.368060805556
+    },
+    {
+      "id": "A018302",
+      "ratios": {
+        "raw": 252.632,
+        "terms_only": 252.632,
+        "diff_first": 266.667,
+        "keyvalue": 150.0,
+        "xml_flat": 85.714,
+        "json_struct": 161.798
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 85.714,
+      "median_ratio": 252.632,
+      "variance": 4474.967438138889
+    },
+    {
+      "id": "A028747",
+      "ratios": {
+        "raw": 232.558,
+        "terms_only": 232.558,
+        "diff_first": 258.065,
+        "keyvalue": 136.082,
+        "xml_flat": 79.47,
+        "json_struct": 153.191
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 79.47,
+      "median_ratio": 232.558,
+      "variance": 4058.154682555556
+    },
+    {
+      "id": "A018727",
+      "ratios": {
+        "raw": 221.277,
+        "terms_only": 221.277,
+        "diff_first": 219.048,
+        "keyvalue": 138.614,
+        "xml_flat": 82.581,
+        "json_struct": 151.02
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 82.581,
+      "median_ratio": 219.048,
+      "variance": 2769.9920784722217
+    },
+    {
+      "id": "A065436",
+      "ratios": {
+        "raw": 173.913,
+        "terms_only": 173.913,
+        "diff_first": 187.097,
+        "keyvalue": 114.685,
+        "xml_flat": 69.565,
+        "json_struct": 136.667
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 69.565,
+      "median_ratio": 173.913,
+      "variance": 1681.5900476666673
+    },
+    {
+      "id": "A003906",
+      "ratios": {
+        "raw": 123.077,
+        "terms_only": 123.077,
+        "diff_first": 174.194,
+        "formulas_first": 126.087,
+        "keyvalue": 94.545,
+        "xml_flat": 61.135,
+        "json_struct": 112.676
+      },
+      "category": "extended_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 61.135,
+      "median_ratio": 123.077,
+      "variance": 1009.8397824897957
+    },
+    {
+      "id": "A073001",
+      "ratios": {
+        "raw": 121.212,
+        "terms_only": 121.212,
+        "diff_first": 112.821,
+        "keyvalue": 71.972,
+        "xml_flat": 36.01,
+        "json_struct": 112.0
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 36.01,
+      "median_ratio": 112.821,
+      "variance": 997.7135374722224
+    },
+    {
+      "id": "A028786",
+      "ratios": {
+        "raw": 125.714,
+        "terms_only": 125.714,
+        "diff_first": 129.577,
+        "keyvalue": 78.661,
+        "xml_flat": 45.646,
+        "json_struct": 112.821
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 45.646,
+      "median_ratio": 125.714,
+      "variance": 952.7509751388889
+    },
+    {
+      "id": "A082241",
+      "ratios": {
+        "raw": 184.615,
+        "terms_only": 184.615,
+        "diff_first": 172.222,
+        "keyvalue": 145.455,
+        "xml_flat": 97.902,
+        "json_struct": 137.931
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 97.902,
+      "median_ratio": 172.222,
+      "variance": 947.4247540000001
+    },
+    {
+      "id": "A094099",
+      "ratios": {
+        "raw": 144.33,
+        "terms_only": 144.33,
+        "diff_first": 135.849,
+        "keyvalue": 105.143,
+        "xml_flat": 66.39,
+        "json_struct": 124.324
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 66.39,
+      "median_ratio": 135.849,
+      "variance": 758.0876333333334
+    },
+    {
+      "id": "A014372",
+      "ratios": {
+        "raw": 155.294,
+        "terms_only": 155.294,
+        "diff_first": 153.488,
+        "formulas_first": 153.488,
+        "keyvalue": 120.28,
+        "xml_flat": 78.392,
+        "json_struct": 129.412
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 78.392,
+      "median_ratio": 153.488,
+      "variance": 708.5164259591838
+    },
+    {
+      "id": "A010459",
+      "ratios": {
+        "raw": 115.2,
+        "terms_only": 115.2,
+        "diff_first": 91.954,
+        "formulas_first": 117.46,
+        "keyvalue": 72.852,
+        "xml_flat": 41.895,
+        "json_struct": 109.091
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 41.895,
+      "median_ratio": 109.091,
+      "variance": 691.2544771020408
+    },
+    {
+      "id": "A079819",
+      "ratios": {
+        "raw": 159.036,
+        "terms_only": 159.036,
+        "diff_first": 151.111,
+        "keyvalue": 126.316,
+        "xml_flat": 84.324,
+        "json_struct": 131.343
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 84.324,
+      "median_ratio": 151.111,
+      "variance": 678.6064668888888
+    },
+    {
+      "id": "A095648",
+      "ratios": {
+        "raw": 89.756,
+        "terms_only": 89.756,
+        "diff_first": 118.75,
+        "keyvalue": 58.394,
+        "xml_flat": 37.708,
+        "json_struct": 89.062
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 37.708,
+      "median_ratio": 89.756,
+      "variance": 671.2529450000001
+    },
+    {
+      "id": "A086674",
+      "ratios": {
+        "raw": 102.19,
+        "terms_only": 102.19,
+        "diff_first": 88.889,
+        "keyvalue": 63.609,
+        "xml_flat": 33.853,
+        "json_struct": 95.745
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 33.853,
+      "median_ratio": 95.745,
+      "variance": 617.1553788888889
+    },
+    {
+      "id": "A091989",
+      "ratios": {
+        "raw": 90.323,
+        "terms_only": 90.323,
+        "diff_first": 113.208,
+        "keyvalue": 60.417,
+        "xml_flat": 36.863,
+        "json_struct": 89.451
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 36.863,
+      "median_ratio": 90.323,
+      "variance": 608.24315725
+    }
+  ],
+  "top_best": [
+    {
+      "id": "A021320",
+      "ratios": {
+        "raw": 46.701,
+        "terms_only": 46.701,
+        "diff_first": 39.834,
+        "keyvalue": 50.086,
+        "xml_flat": 13.948,
+        "json_struct": 54.839
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 13.948,
+      "median_ratio": 46.701,
+      "variance": 177.67106647222218
+    },
+    {
+      "id": "A021175",
+      "ratios": {
+        "raw": 48.731,
+        "terms_only": 48.731,
+        "diff_first": 40.816,
+        "keyvalue": 50.772,
+        "xml_flat": 14.944,
+        "json_struct": 58.065
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 14.944,
+      "median_ratio": 48.731,
+      "variance": 190.36833491666664
+    },
+    {
+      "id": "A021418",
+      "ratios": {
+        "raw": 52.792,
+        "terms_only": 52.792,
+        "diff_first": 45.902,
+        "keyvalue": 52.83,
+        "xml_flat": 15.94,
+        "json_struct": 59.677
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 15.94,
+      "median_ratio": 52.792,
+      "variance": 204.50114658333334
+    },
+    {
+      "id": "A050433",
+      "ratios": {
+        "raw": 58.101,
+        "terms_only": 58.101,
+        "diff_first": 57.143,
+        "keyvalue": 45.369,
+        "xml_flat": 17.51,
+        "json_struct": 64.348
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 17.51,
+      "median_ratio": 58.101,
+      "variance": 244.18861422222224
+    },
+    {
+      "id": "A016362",
+      "ratios": {
+        "raw": 53.631,
+        "terms_only": 53.631,
+        "diff_first": 55.556,
+        "keyvalue": 50.304,
+        "xml_flat": 18.316,
+        "json_struct": 60.87
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 18.316,
+      "median_ratio": 53.631,
+      "variance": 194.91691433333335
+    },
+    {
+      "id": "A070382",
+      "ratios": {
+        "raw": 50.98,
+        "terms_only": 50.98,
+        "diff_first": 49.778,
+        "keyvalue": 54.618,
+        "xml_flat": 18.452,
+        "json_struct": 58.039
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 18.452,
+      "median_ratio": 50.98,
+      "variance": 172.36004413888887
+    },
+    {
+      "id": "A070645",
+      "ratios": {
+        "raw": 52.683,
+        "terms_only": 52.683,
+        "diff_first": 46.637,
+        "keyvalue": 55.067,
+        "xml_flat": 18.618,
+        "json_struct": 59.375
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 18.618,
+      "median_ratio": 52.683,
+      "variance": 181.15268725
+    },
+    {
+      "id": "A027870",
+      "ratios": {
+        "raw": 61.244,
+        "terms_only": 61.244,
+        "diff_first": 59.829,
+        "keyvalue": 44.231,
+        "xml_flat": 18.801,
+        "json_struct": 67.433
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 18.801,
+      "median_ratio": 61.244,
+      "variance": 272.13380722222234
+    },
+    {
+      "id": "A072358",
+      "ratios": {
+        "raw": 54.106,
+        "terms_only": 54.106,
+        "diff_first": 57.485,
+        "keyvalue": 42.026,
+        "xml_flat": 18.811,
+        "json_struct": 60.465
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 18.811,
+      "median_ratio": 54.106,
+      "variance": 201.23788647222224
+    },
+    {
+      "id": "A008676",
+      "ratios": {
+        "raw": 64.516,
+        "terms_only": 64.516,
+        "diff_first": 49.123,
+        "keyvalue": 46.389,
+        "xml_flat": 19.528,
+        "json_struct": 69.903
+      },
+      "category": "extended_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 19.528,
+      "median_ratio": 64.516,
+      "variance": 287.8931751388889
+    },
+    {
+      "id": "A089734",
+      "ratios": {
+        "raw": 67.879,
+        "terms_only": 67.879,
+        "diff_first": 67.016,
+        "keyvalue": 48.46,
+        "xml_flat": 20.741,
+        "json_struct": 74.074
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 20.741,
+      "median_ratio": 67.879,
+      "variance": 335.5768824722223
+    },
+    {
+      "id": "A030496",
+      "ratios": {
+        "raw": 69.274,
+        "terms_only": 69.274,
+        "diff_first": 61.818,
+        "keyvalue": 49.905,
+        "xml_flat": 20.793,
+        "json_struct": 73.043
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 20.793,
+      "median_ratio": 69.274,
+      "variance": 323.73984847222226
+    },
+    {
+      "id": "A087842",
+      "ratios": {
+        "raw": 61.836,
+        "terms_only": 61.836,
+        "diff_first": 71.429,
+        "keyvalue": 47.151,
+        "xml_flat": 21.543,
+        "json_struct": 66.667
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 21.543,
+      "median_ratio": 61.836,
+      "variance": 280.07246633333335
+    },
+    {
+      "id": "A071427",
+      "ratios": {
+        "raw": 70.588,
+        "terms_only": 70.588,
+        "diff_first": 66.953,
+        "keyvalue": 49.832,
+        "xml_flat": 21.569,
+        "json_struct": 73.438
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 21.569,
+      "median_ratio": 70.588,
+      "variance": 337.5373369999999
+    },
+    {
+      "id": "A085182",
+      "ratios": {
+        "raw": 60.194,
+        "terms_only": 60.194,
+        "diff_first": 57.516,
+        "keyvalue": 45.238,
+        "xml_flat": 21.765,
+        "json_struct": 65.37
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 21.765,
+      "median_ratio": 60.194,
+      "variance": 217.14191813888894
+    },
+    {
+      "id": "A097913",
+      "ratios": {
+        "raw": 66.351,
+        "terms_only": 66.351,
+        "diff_first": 64.103,
+        "keyvalue": 46.784,
+        "xml_flat": 23.155,
+        "json_struct": 70.229
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 23.155,
+      "median_ratio": 66.351,
+      "variance": 274.3300574722222
+    },
+    {
+      "id": "A054988",
+      "ratios": {
+        "raw": 78.613,
+        "terms_only": 78.613,
+        "diff_first": 70.244,
+        "keyvalue": 50.881,
+        "xml_flat": 23.197,
+        "json_struct": 80.357
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 23.197,
+      "median_ratio": 78.613,
+      "variance": 428.3133314722223
+    },
+    {
+      "id": "A099872",
+      "ratios": {
+        "raw": 80.383,
+        "terms_only": 80.383,
+        "diff_first": 70.866,
+        "keyvalue": 51.923,
+        "xml_flat": 23.972,
+        "json_struct": 81.226
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 23.972,
+      "median_ratio": 80.383,
+      "variance": 437.5019924722222
+    },
+    {
+      "id": "A091925",
+      "ratios": {
+        "raw": 82.412,
+        "terms_only": 82.412,
+        "diff_first": 75.102,
+        "keyvalue": 51.613,
+        "xml_flat": 24.168,
+        "json_struct": 82.869
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 24.168,
+      "median_ratio": 82.412,
+      "variance": 476.985513888889
+    },
+    {
+      "id": "A011396",
+      "ratios": {
+        "raw": 83.249,
+        "terms_only": 83.249,
+        "diff_first": 81.013,
+        "formulas_first": 82.828,
+        "keyvalue": 52.144,
+        "xml_flat": 24.408,
+        "json_struct": 83.871
+      },
+      "category": "obscure_sequences",
+      "best_strategy": "xml_flat",
+      "best_ratio": 24.408,
+      "median_ratio": 82.828,
+      "variance": 460.95780669387756
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "rows": [
+    {
+      "case": "even_mask_0__n=16384",
+      "raw_bytes": 131072,
+      "atom_bytes": 32879,
+      "adapt_bytes": 131105,
+      "ssp5_raw": 5283,
+      "ssp5_atom": 5848,
+      "ssp5_adapt": 5289
+    },
+    {
+      "case": "even_mask_1__n=16384",
+      "raw_bytes": 131072,
+      "atom_bytes": 32879,
+      "adapt_bytes": 131105,
+      "ssp5_raw": 5560,
+      "ssp5_atom": 5848,
+      "ssp5_adapt": 2896
+    },
+    {
+      "case": "arbitrary_lcg__n=16384",
+      "raw_bytes": 131072,
+      "atom_bytes": 131151,
+      "adapt_bytes": 131105,
+      "ssp5_raw": 131100,
+      "ssp5_atom": 125039,
+      "ssp5_adapt": 125781
+    },
+    {
+      "case": "arbitrary_mixed__n=16384",
+      "raw_bytes": 131072,
+      "atom_bytes": 131151,
+      "adapt_bytes": 131105,
+      "ssp5_raw": 32478,
+      "ssp5_atom": 43696,
+      "ssp5_adapt": 28651
+    },
+    {
+      "case": "even_mask_0__n=131072",
+      "raw_bytes": 1048576,
+      "atom_bytes": 262927,
+      "adapt_bytes": 1048749,
+      "ssp5_raw": 33028,
+      "ssp5_atom": 6000,
+      "ssp5_adapt": 26155
+    },
+    {
+      "case": "even_mask_1__n=131072",
+      "raw_bytes": 1048576,
+      "atom_bytes": 262927,
+      "adapt_bytes": 1048749,
+      "ssp5_raw": 35932,
+      "ssp5_atom": 6001,
+      "ssp5_adapt": 9055
+    },
+    {
+      "case": "arbitrary_lcg__n=131072",
+      "raw_bytes": 1048576,
+      "atom_bytes": 1049103,
+      "adapt_bytes": 1048749,
+      "ssp5_raw": 954311,
+      "ssp5_atom": 967551,
+      "ssp5_adapt": 972882
+    },
+    {
+      "case": "arbitrary_mixed__n=131072",
+      "raw_bytes": 1048576,
+      "atom_bytes": 1049103,
+      "adapt_bytes": 1048749,
+      "ssp5_raw": 263322,
+      "ssp5_atom": 280070,
+      "ssp5_adapt": 203282
+    }
+  ],
+  "roundtrip": [
+    {
+      "case": "even_mask_0__n=16384",
+      "match": true
+    },
+    {
+      "case": "even_mask_1__n=16384",
+      "match": true
+    },
+    {
+      "case": "arbitrary_lcg__n=16384",
+      "match": true
+    },
+    {
+      "case": "arbitrary_mixed__n=16384",
+      "match": true
+    },
+    {
+      "case": "even_mask_0__n=131072",
+      "match": true
+    },
+    {
+      "case": "even_mask_1__n=131072",
+      "match": true
+    },
+    {
+      "case": "arbitrary_lcg__n=131072",
+      "match": true
+    },
+    {
+      "case": "arbitrary_mixed__n=131072",
+      "match": true
+    }
+  ]
+}

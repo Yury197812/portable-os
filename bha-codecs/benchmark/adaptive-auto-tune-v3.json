@@ -1,0 +1,524 @@
+﻿{
+  "n_files": 48,
+  "by_type": {
+    "unknown": 8,
+    "css": 1,
+    "csv": 10,
+    "json": 5,
+    "log": 7,
+    "html": 1,
+    "binary": 8,
+    "ini": 1,
+    "js": 1,
+    "markdown": 1,
+    "tsv": 3,
+    "xml": 1,
+    "yaml": 1
+  },
+  "results": [
+    {
+      "file": "archive_zip_100k.zip",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 109848
+    },
+    {
+      "file": "binary_embedded.txt",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 98158
+    },
+    {
+      "file": "cr_only_lines_128k.txt",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 131072
+    },
+    {
+      "file": "crlf_lf_bom_mixed_struct.txt",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 353503
+    },
+    {
+      "file": "css_repeated_150k.css",
+      "type": "css",
+      "pipelines": [
+        "lzma_atomize",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "plain_lzma"
+      ],
+      "size": 153600
+    },
+    {
+      "file": "csv_optional_cols_1m.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 1048531
+    },
+    {
+      "file": "data_csv_100k.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 101647
+    },
+    {
+      "file": "data_json_100k.json",
+      "type": "json",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 100000
+    },
+    {
+      "file": "deep_nested_flat_mimic.json",
+      "type": "json",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 583153
+    },
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 307200
+    },
+    {
+      "file": "empty_rows_sparse.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 135750
+    },
+    {
+      "file": "fake_zip_header_text.zip",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 184324
+    },
+    {
+      "file": "fixed_aligned_log_256k.log",
+      "type": "log",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 262170
+    },
+    {
+      "file": "fixed_db_dump_512k.txt",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 524295
+    },
+    {
+      "file": "fixed_width_short_128k.log",
+      "type": "log",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 131072
+    },
+    {
+      "file": "html_inline_data_uri_200k.html",
+      "type": "html",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 204800
+    },
+    {
+      "file": "img_smooth_256x256.raw",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 65536
+    },
+    {
+      "file": "ini_config_128k.ini",
+      "type": "ini",
+      "pipelines": [
+        "lzma_atomize",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "plain_lzma"
+      ],
+      "size": 131072
+    },
+    {
+      "file": "js_minified_200k.js",
+      "type": "js",
+      "pipelines": [
+        "lzma_atomize",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "plain_lzma"
+      ],
+      "size": 204800
+    },
+    {
+      "file": "json_lines_200k.jsonl",
+      "type": "json",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 204800
+    },
+    {
+      "file": "latin1_text_200k.txt",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 204800
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "type": "log",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 524288
+    },
+    {
+      "file": "log_long_repeated_512k.log",
+      "type": "log",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 524288
+    },
+    {
+      "file": "markdown_tables_256k.md",
+      "type": "markdown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 262144
+    },
+    {
+      "file": "mixed_delimiter_switch.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 274204
+    },
+    {
+      "file": "mixed_delimiters.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 182205
+    },
+    {
+      "file": "nested_arrays_300k.json",
+      "type": "json",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 307200
+    },
+    {
+      "file": "nested_quotes.tsv",
+      "type": "tsv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 158707
+    },
+    {
+      "file": "pipe_kv_transition_256k.log",
+      "type": "log",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 262144
+    },
+    {
+      "file": "pipe_sparse_many_cols_256k.log",
+      "type": "log",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 262144
+    },
+    {
+      "file": "quoted_csv_escape_heavy.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 270682
+    },
+    {
+      "file": "random_lcg_256k.bin",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 262144
+    },
+    {
+      "file": "repeating_binary_pattern.bin",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 196608
+    },
+    {
+      "file": "semicolon_sparse_300k.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 307200
+    },
+    {
+      "file": "small_threshold_4k.txt",
+      "type": "unknown",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma"
+      ],
+      "size": 672
+    },
+    {
+      "file": "sparse_dense_transition.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 434015
+    },
+    {
+      "file": "sparse_many_columns_300k.csv",
+      "type": "csv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 307200
+    },
+    {
+      "file": "tab_sparse_quotes.tsv",
+      "type": "tsv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 81052
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "type": "log",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 1048543
+    },
+    {
+      "file": "toml_config_128k.toml",
+      "type": "json",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 131072
+    },
+    {
+      "file": "truncated_partial_last_block.bin",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 32895
+    },
+    {
+      "file": "unicode_filename_ru.txt",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 131072
+    },
+    {
+      "file": "unquoted_delimiter_in_value.tsv",
+      "type": "tsv",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 317406
+    },
+    {
+      "file": "utf16_like_control.bin",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 163840
+    },
+    {
+      "file": "utf8_cyrillic_200k.txt",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 204800
+    },
+    {
+      "file": "xml_attrs_300k.xml",
+      "type": "xml",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 307200
+    },
+    {
+      "file": "yaml_mixed_indent_200k.yaml",
+      "type": "yaml",
+      "pipelines": [
+        "plain_lzma",
+        "atomize_lzma",
+        "lzma_atomize_lzma",
+        "lzma_atomize"
+      ],
+      "size": 204800
+    },
+    {
+      "file": "zero_sparse_binary_128k.bin",
+      "type": "binary",
+      "pipelines": [
+        "plain_lzma",
+        "lzma_lzma",
+        "atomize_lzma"
+      ],
+      "size": 131072
+    }
+  ]
+}

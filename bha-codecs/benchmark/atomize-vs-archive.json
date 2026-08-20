@@ -1,0 +1,170 @@
+﻿[
+  {
+    "file": "data_csv_100k.csv",
+    "size": 101647,
+    "1_lzma": {
+      "size": 26712,
+      "ratio": 26.28
+    },
+    "2_atomize": {
+      "size": 208899,
+      "ratio": 205.51
+    },
+    "3_lzma+atomize": {
+      "size": 26724,
+      "ratio": 26.29
+    },
+    "4_lzma+atomize+lzma": {
+      "size": 26784,
+      "ratio": 26.35
+    },
+    "5_atomize+lzma": {
+      "size": 33588,
+      "ratio": 33.04
+    },
+    "6_lzma+lzma": {
+      "size": 26772,
+      "ratio": 26.34
+    }
+  },
+  {
+    "file": "data_json_100k.json",
+    "size": 100000,
+    "1_lzma": {
+      "size": 5512,
+      "ratio": 5.51
+    },
+    "2_atomize": {
+      "size": 100012,
+      "ratio": 100.01
+    },
+    "3_lzma+atomize": {
+      "size": 5512,
+      "ratio": 5.51
+    },
+    "4_lzma+atomize+lzma": {
+      "size": 5572,
+      "ratio": 5.57
+    },
+    "5_atomize+lzma": {
+      "size": 5524,
+      "ratio": 5.52
+    },
+    "6_lzma+lzma": {
+      "size": 5572,
+      "ratio": 5.57
+    }
+  },
+  {
+    "file": "log_high_entropy_tail_512k.log",
+    "size": 524288,
+    "1_lzma": {
+      "size": 143416,
+      "ratio": 27.35
+    },
+    "2_atomize": {
+      "size": 471208,
+      "ratio": 89.88
+    },
+    "3_lzma+atomize": {
+      "size": 143416,
+      "ratio": 27.35
+    },
+    "4_lzma+atomize+lzma": {
+      "size": 143484,
+      "ratio": 27.37
+    },
+    "5_atomize+lzma": {
+      "size": 32044,
+      "ratio": 6.11
+    },
+    "6_lzma+lzma": {
+      "size": 143484,
+      "ratio": 27.37
+    }
+  },
+  {
+    "file": "html_inline_data_uri_200k.html",
+    "size": 204800,
+    "1_lzma": {
+      "size": 792,
+      "ratio": 0.39
+    },
+    "2_atomize": {
+      "size": 207911,
+      "ratio": 101.52
+    },
+    "3_lzma+atomize": {
+      "size": 804,
+      "ratio": 0.39
+    },
+    "4_lzma+atomize+lzma": {
+      "size": 864,
+      "ratio": 0.42
+    },
+    "5_atomize+lzma": {
+      "size": 984,
+      "ratio": 0.48
+    },
+    "6_lzma+lzma": {
+      "size": 852,
+      "ratio": 0.42
+    }
+  },
+  {
+    "file": "css_repeated_150k.css",
+    "size": 153600,
+    "1_lzma": {
+      "size": 16256,
+      "ratio": 10.58
+    },
+    "2_atomize": {
+      "size": 153612,
+      "ratio": 100.01
+    },
+    "3_lzma+atomize": {
+      "size": 8053,
+      "ratio": 5.24
+    },
+    "4_lzma+atomize+lzma": {
+      "size": 3612,
+      "ratio": 2.35
+    },
+    "5_atomize+lzma": {
+      "size": 16268,
+      "ratio": 10.59
+    },
+    "6_lzma+lzma": {
+      "size": 16316,
+      "ratio": 10.62
+    }
+  },
+  {
+    "file": "ini_config_128k.ini",
+    "size": 131072,
+    "1_lzma": {
+      "size": 3056,
+      "ratio": 2.33
+    },
+    "2_atomize": {
+      "size": 126138,
+      "ratio": 96.24
+    },
+    "3_lzma+atomize": {
+      "size": 1112,
+      "ratio": 0.85
+    },
+    "4_lzma+atomize+lzma": {
+      "size": 604,
+      "ratio": 0.46
+    },
+    "5_atomize+lzma": {
+      "size": 1520,
+      "ratio": 1.16
+    },
+    "6_lzma+lzma": {
+      "size": 3116,
+      "ratio": 2.38
+    }
+  }
+]

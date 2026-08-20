@@ -1,0 +1,380 @@
+[
+  {
+    "source": "syn_even_0",
+    "expected": "BHCC1",
+    "predicted": "ssp5_adapt",
+    "ranked": [
+      "ssp5_adapt",
+      "BHCC1",
+      "ssp5_atom"
+    ],
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".csv",
+      "size": 131072,
+      "entropy": 2.4623,
+      "zero_ratio": 0.7549,
+      "ascii_ratio": 0.0684,
+      "line_len_std": 1.9646,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "tsv",
+      "csv_density": 0.0088,
+      "mean_cols": 1.8,
+      "_source": "syn_even_0",
+      "_domain": "int"
+    }
+  },
+  {
+    "source": "syn_even_1",
+    "expected": "ssp5_adapt",
+    "predicted": "ssp5_adapt",
+    "ranked": [
+      "ssp5_adapt",
+      "BHCC1",
+      "ssp5_atom"
+    ],
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".csv",
+      "size": 131072,
+      "entropy": 2.4696,
+      "zero_ratio": 0.7539,
+      "ascii_ratio": 0.0684,
+      "line_len_std": 8.2294,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "tsv",
+      "csv_density": 0.0088,
+      "mean_cols": 2.24,
+      "_source": "syn_even_1",
+      "_domain": "int"
+    }
+  },
+  {
+    "source": "syn_arb_lcg",
+    "expected": "ssp5_atom",
+    "predicted": "ssp5_adapt",
+    "ranked": [
+      "ssp5_adapt",
+      "BHCC1",
+      "brotli"
+    ],
+    "in_top1": false,
+    "in_top3": false,
+    "in_top5": false,
+    "features": {
+      "ext": ".csv",
+      "size": 131072,
+      "entropy": 7.9823,
+      "zero_ratio": 0.0042,
+      "ascii_ratio": 0.4465,
+      "line_len_std": 0.8859,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "pipe",
+      "csv_density": 0.0,
+      "mean_cols": 0.0,
+      "_source": "syn_arb_lcg",
+      "_domain": "int"
+    }
+  },
+  {
+    "source": "syn_arb_mixed",
+    "expected": "ssp5_adapt",
+    "predicted": "BHCC1",
+    "ranked": [
+      "BHCC1",
+      "ssp5_adapt",
+      "ssp5_atom"
+    ],
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".csv",
+      "size": 131072,
+      "entropy": 3.9102,
+      "zero_ratio": 0.5308,
+      "ascii_ratio": 0.105,
+      "line_len_std": 1.9139,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "tsv",
+      "csv_density": 0.0057,
+      "mean_cols": 2.09,
+      "_source": "syn_arb_mixed",
+      "_domain": "int"
+    }
+  },
+  {
+    "source": "real_csv_int",
+    "expected": "ssp5_adapt",
+    "predicted": "BHCC1",
+    "ranked": [
+      "BHCC1",
+      "ssp5_adapt",
+      "ssp5_atom"
+    ],
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".csv",
+      "size": 484592,
+      "entropy": 2.3577,
+      "zero_ratio": 0.7728,
+      "ascii_ratio": 0.0693,
+      "line_len_std": 2.2928,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "tsv",
+      "csv_density": 0.0076,
+      "mean_cols": 1.97,
+      "_source": "real_csv_int",
+      "_domain": "int"
+    }
+  },
+  {
+    "source": "real_telem_int",
+    "expected": "BHCC1",
+    "predicted": "ssp5_adapt",
+    "ranked": [
+      "ssp5_adapt",
+      "BHCC1",
+      "ssp5_atom"
+    ],
+    "in_top1": false,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".log",
+      "size": 1242280,
+      "entropy": 2.0471,
+      "zero_ratio": 0.6789,
+      "ascii_ratio": 0.0526,
+      "line_len_std": 0.9487,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "tsv",
+      "csv_density": 0.0018,
+      "mean_cols": 3.05,
+      "_source": "real_telem_int",
+      "_domain": "int"
+    }
+  },
+  {
+    "source": "text_repeated",
+    "expected": "brotli",
+    "predicted": "brotli",
+    "ranked": [
+      "brotli",
+      "lzma2",
+      "raw"
+    ],
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".txt",
+      "size": 200000,
+      "entropy": 4.4931,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": false,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0,
+      "_source": "text_repeated",
+      "_domain": "byte"
+    }
+  },
+  {
+    "source": "binary_zeros",
+    "expected": "brotli",
+    "predicted": "brotli",
+    "ranked": [
+      "brotli",
+      "raw",
+      "lzma2"
+    ],
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".bin",
+      "size": 200000,
+      "entropy": 0.0,
+      "zero_ratio": 1.0,
+      "ascii_ratio": 0.0,
+      "line_len_std": 0.0,
+      "has_repeated_lines": false,
+      "binary_repeat": true,
+      "has_numeric": false,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0,
+      "_source": "binary_zeros",
+      "_domain": "byte"
+    }
+  },
+  {
+    "source": "binary_random",
+    "expected": "raw",
+    "predicted": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "ssp5_atom"
+    ],
+    "in_top1": false,
+    "in_top3": false,
+    "in_top5": false,
+    "features": {
+      "ext": ".bin",
+      "size": 200000,
+      "entropy": 7.9942,
+      "zero_ratio": 0.0034,
+      "ascii_ratio": 0.3913,
+      "line_len_std": 0.8638,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "csv",
+      "csv_density": 0.0084,
+      "mean_cols": 1.86,
+      "_source": "binary_random",
+      "_domain": "byte"
+    }
+  },
+  {
+    "source": "ini_config",
+    "expected": "lzma2",
+    "predicted": "brotli",
+    "ranked": [
+      "brotli",
+      "bz2",
+      "raw"
+    ],
+    "in_top1": false,
+    "in_top3": false,
+    "in_top5": false,
+    "features": {
+      "ext": ".ini",
+      "size": 100000,
+      "entropy": 4.6279,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.1203,
+      "has_repeated_lines": true,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0,
+      "_source": "ini_config",
+      "_domain": "byte"
+    }
+  },
+  {
+    "source": "json_array",
+    "expected": "bz2",
+    "predicted": "brotli",
+    "ranked": [
+      "brotli",
+      "raw",
+      "lzma2"
+    ],
+    "in_top1": false,
+    "in_top3": false,
+    "in_top5": false,
+    "features": {
+      "ext": ".json",
+      "size": 100000,
+      "entropy": 4.1447,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.5992,
+      "has_repeated_lines": true,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "csv",
+      "csv_density": 0.1042,
+      "mean_cols": 1.63,
+      "_source": "json_array",
+      "_domain": "byte"
+    }
+  },
+  {
+    "source": "css_repeated",
+    "expected": "brotli",
+    "predicted": "brotli",
+    "ranked": [
+      "brotli",
+      "lzma2",
+      "raw"
+    ],
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".css",
+      "size": 153600,
+      "entropy": 4.8592,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0285,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "none",
+      "csv_density": 0.0,
+      "mean_cols": 0.0,
+      "_source": "css_repeated",
+      "_domain": "byte"
+    }
+  },
+  {
+    "source": "telem_log_raw",
+    "expected": "brotli",
+    "predicted": "brotli",
+    "ranked": [
+      "brotli",
+      "lzma2",
+      "ssp5_atom",
+      "raw"
+    ],
+    "in_top1": true,
+    "in_top3": true,
+    "in_top5": true,
+    "features": {
+      "ext": ".log",
+      "size": 200000,
+      "entropy": 4.6492,
+      "zero_ratio": 0.0,
+      "ascii_ratio": 1.0,
+      "line_len_std": 0.0566,
+      "has_repeated_lines": false,
+      "binary_repeat": false,
+      "has_numeric": true,
+      "delimiter": "pipe",
+      "csv_density": 0.0,
+      "mean_cols": 0.0,
+      "_source": "telem_log_raw",
+      "_domain": "byte"
+    }
+  }
+]

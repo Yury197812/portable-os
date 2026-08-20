@@ -1,0 +1,25 @@
+{
+  "method": "k-NN with inverse-sqrt-frequency class weights + distance vote",
+  "training_set": "37 sources x 74 codecs",
+  "preprocessors": [
+    "identity",
+    "delta",
+    "delta_i64",
+    "transpose",
+    "dedup_lines",
+    "json_extract",
+    "nul_split",
+    "text_dict",
+    "collate_keys"
+  ],
+  "total_sources": 37,
+  "unique_codecs": 6,
+  "label_distribution": {
+    "BHCC1__delta_i64": 4,
+    "raw": 1,
+    "lzma2": 3,
+    "brotli": 21,
+    "bz2": 6,
+    "BHCC1__transpose": 2
+  }
+}

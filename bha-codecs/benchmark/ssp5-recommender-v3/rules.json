@@ -1,0 +1,43 @@
+{
+  "method": "k-NN with rank-weighted training (1/(rank+1)) and distance-weighted vote",
+  "training_set": "13 sources \u00d7 top-5 codecs from 42codec matrix = 65 weighted points",
+  "numeric_features": [
+    "size",
+    "entropy",
+    "zero_ratio",
+    "ascii_ratio",
+    "line_len_std",
+    "csv_density",
+    "mean_cols"
+  ],
+  "categorical_features": [
+    "ext",
+    "delimiter"
+  ],
+  "bool_features": [
+    "has_repeated_lines",
+    "binary_repeat",
+    "has_numeric"
+  ],
+  "label_distribution": {
+    "BHCC1": 6,
+    "BHDT1": 6,
+    "BHMD1": 5,
+    "BHMT1": 5,
+    "BHMX1": 2,
+    "ssp5_adapt": 4,
+    "ssp5_atom": 1,
+    "delta_int": 1,
+    "brotli": 5,
+    "lzma2": 7,
+    "lzma2_fast": 3,
+    "BHBK1": 6,
+    "BHCS1": 5,
+    "bz2": 2,
+    "raw": 1,
+    "xor_mask": 1,
+    "BHDS1": 4,
+    "BHDS2": 1
+  },
+  "unique_codecs": 18
+}

@@ -1,0 +1,684 @@
+{
+  "results": [
+    {
+      "source": "syn_even_0",
+      "orig": 131072,
+      "best_recipe": [
+        "BHCC1"
+      ],
+      "best_chain": "BHCC1",
+      "best_size": 5278,
+      "ratio_pct": 4.027,
+      "n_pass1": 19,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          5278,
+          [
+            "BHCC1"
+          ]
+        ],
+        [
+          5278,
+          [
+            "BHDT1"
+          ]
+        ],
+        [
+          5278,
+          [
+            "BHMD1"
+          ]
+        ],
+        [
+          5278,
+          [
+            "BHMT1"
+          ]
+        ],
+        [
+          5278,
+          [
+            "BHMX1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "syn_even_1",
+      "orig": 131072,
+      "best_recipe": [
+        "ssp5_adapt"
+      ],
+      "best_chain": "ssp5_adapt",
+      "best_size": 2896,
+      "ratio_pct": 2.209,
+      "n_pass1": 19,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          2896,
+          [
+            "ssp5_adapt"
+          ]
+        ],
+        [
+          5555,
+          [
+            "BHCC1"
+          ]
+        ],
+        [
+          5555,
+          [
+            "BHDT1"
+          ]
+        ],
+        [
+          5555,
+          [
+            "BHMD1"
+          ]
+        ],
+        [
+          5555,
+          [
+            "BHMT1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "syn_arb_lcg",
+      "orig": 131072,
+      "best_recipe": [
+        "ssp5_atom"
+      ],
+      "best_chain": "ssp5_atom",
+      "best_size": 125039,
+      "ratio_pct": 95.397,
+      "n_pass1": 19,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          125039,
+          [
+            "ssp5_atom"
+          ]
+        ],
+        [
+          125781,
+          [
+            "ssp5_adapt"
+          ]
+        ],
+        [
+          131072,
+          [
+            "delta_int"
+          ]
+        ],
+        [
+          131095,
+          [
+            "BHCC1"
+          ]
+        ],
+        [
+          131095,
+          [
+            "BHDT1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "syn_arb_mixed",
+      "orig": 131072,
+      "best_recipe": [
+        "ssp5_adapt"
+      ],
+      "best_chain": "ssp5_adapt",
+      "best_size": 28651,
+      "ratio_pct": 21.859,
+      "n_pass1": 19,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          28651,
+          [
+            "ssp5_adapt"
+          ]
+        ],
+        [
+          32473,
+          [
+            "BHCC1"
+          ]
+        ],
+        [
+          32473,
+          [
+            "BHDT1"
+          ]
+        ],
+        [
+          32473,
+          [
+            "BHMD1"
+          ]
+        ],
+        [
+          32473,
+          [
+            "BHMT1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "real_csv_int",
+      "orig": 484592,
+      "best_recipe": [
+        "ssp5_adapt"
+      ],
+      "best_chain": "ssp5_adapt",
+      "best_size": 40677,
+      "ratio_pct": 8.394,
+      "n_pass1": 19,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          40677,
+          [
+            "ssp5_adapt"
+          ]
+        ],
+        [
+          49387,
+          [
+            "BHCC1"
+          ]
+        ],
+        [
+          49387,
+          [
+            "BHDT1"
+          ]
+        ],
+        [
+          49387,
+          [
+            "BHMD1"
+          ]
+        ],
+        [
+          49387,
+          [
+            "BHMT1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "real_telem_int",
+      "orig": 1242280,
+      "best_recipe": [
+        "BHCC1"
+      ],
+      "best_chain": "BHCC1",
+      "best_size": 37319,
+      "ratio_pct": 3.004,
+      "n_pass1": 19,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          37319,
+          [
+            "BHCC1"
+          ]
+        ],
+        [
+          37319,
+          [
+            "BHDT1"
+          ]
+        ],
+        [
+          37319,
+          [
+            "BHMD1"
+          ]
+        ],
+        [
+          37319,
+          [
+            "BHMT1"
+          ]
+        ],
+        [
+          37319,
+          [
+            "BHMX1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "text_repeated",
+      "orig": 200000,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 79,
+      "ratio_pct": 0.04,
+      "n_pass1": 23,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          79,
+          [
+            "brotli"
+          ]
+        ],
+        [
+          185,
+          [
+            "lzma2"
+          ]
+        ],
+        [
+          187,
+          [
+            "lzma2_fast"
+          ]
+        ],
+        [
+          198,
+          [
+            "BHBK1"
+          ]
+        ],
+        [
+          198,
+          [
+            "BHCS1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "binary_zeros",
+      "orig": 200000,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 14,
+      "ratio_pct": 0.007,
+      "n_pass1": 23,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          14,
+          [
+            "brotli"
+          ]
+        ],
+        [
+          47,
+          [
+            "bz2"
+          ]
+        ],
+        [
+          105,
+          [
+            "lzma2"
+          ]
+        ],
+        [
+          105,
+          [
+            "lzma2_fast"
+          ]
+        ],
+        [
+          118,
+          [
+            "BHBK1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "binary_random",
+      "orig": 200000,
+      "best_recipe": [
+        "raw"
+      ],
+      "best_chain": "raw",
+      "best_size": 200000,
+      "ratio_pct": 100.0,
+      "n_pass1": 23,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          200000,
+          [
+            "raw"
+          ]
+        ],
+        [
+          200000,
+          [
+            "xor_mask"
+          ]
+        ],
+        [
+          200005,
+          [
+            "brotli"
+          ]
+        ],
+        [
+          200013,
+          [
+            "lzma2"
+          ]
+        ],
+        [
+          200013,
+          [
+            "lzma2_fast"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "ini_config",
+      "orig": 100000,
+      "best_recipe": [
+        "lzma2"
+      ],
+      "best_chain": "lzma2",
+      "best_size": 2977,
+      "ratio_pct": 2.977,
+      "n_pass1": 23,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          2977,
+          [
+            "lzma2"
+          ]
+        ],
+        [
+          2990,
+          [
+            "BHBK1"
+          ]
+        ],
+        [
+          2990,
+          [
+            "BHCS1"
+          ]
+        ],
+        [
+          2990,
+          [
+            "BHDS1"
+          ]
+        ],
+        [
+          2990,
+          [
+            "BHDS2"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "json_array",
+      "orig": 100000,
+      "best_recipe": [
+        "bz2"
+      ],
+      "best_chain": "bz2",
+      "best_size": 4768,
+      "ratio_pct": 4.768,
+      "n_pass1": 23,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          4768,
+          [
+            "bz2"
+          ]
+        ],
+        [
+          5337,
+          [
+            "lzma2"
+          ]
+        ],
+        [
+          5350,
+          [
+            "BHBK1"
+          ]
+        ],
+        [
+          5350,
+          [
+            "BHCS1"
+          ]
+        ],
+        [
+          5350,
+          [
+            "BHDS1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "css_repeated",
+      "orig": 153600,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 14482,
+      "ratio_pct": 9.428,
+      "n_pass1": 23,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          14482,
+          [
+            "brotli"
+          ]
+        ],
+        [
+          16196,
+          [
+            "lzma2"
+          ]
+        ],
+        [
+          16209,
+          [
+            "BHBK1"
+          ]
+        ],
+        [
+          16209,
+          [
+            "BHCS1"
+          ]
+        ],
+        [
+          16209,
+          [
+            "BHDS1"
+          ]
+        ]
+      ]
+    },
+    {
+      "source": "telem_log_raw",
+      "orig": 200000,
+      "best_recipe": [
+        "brotli"
+      ],
+      "best_chain": "brotli",
+      "best_size": 8561,
+      "ratio_pct": 4.28,
+      "n_pass1": 23,
+      "n_pass2": 0,
+      "n_pass3": 0,
+      "top5": [
+        [
+          8561,
+          [
+            "brotli"
+          ]
+        ],
+        [
+          10450,
+          [
+            "lzma2"
+          ]
+        ],
+        [
+          10463,
+          [
+            "BHBK1"
+          ]
+        ],
+        [
+          10463,
+          [
+            "BHCS1"
+          ]
+        ],
+        [
+          10463,
+          [
+            "BHDS1"
+          ]
+        ]
+      ]
+    }
+  ],
+  "roundtrip": [
+    {
+      "src": "syn_even_0",
+      "recipe": [
+        "BHCC1"
+      ],
+      "match": false,
+      "err": "no decoder for BHCC1"
+    },
+    {
+      "src": "syn_even_1",
+      "recipe": [
+        "ssp5_adapt"
+      ],
+      "match": true
+    },
+    {
+      "src": "syn_arb_lcg",
+      "recipe": [
+        "ssp5_atom"
+      ],
+      "match": true
+    },
+    {
+      "src": "syn_arb_mixed",
+      "recipe": [
+        "ssp5_adapt"
+      ],
+      "match": true
+    },
+    {
+      "src": "real_csv_int",
+      "recipe": [
+        "ssp5_adapt"
+      ],
+      "match": true
+    },
+    {
+      "src": "real_telem_int",
+      "recipe": [
+        "BHCC1"
+      ],
+      "match": false,
+      "err": "no decoder for BHCC1"
+    },
+    {
+      "src": "text_repeated",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    },
+    {
+      "src": "binary_zeros",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    },
+    {
+      "src": "binary_random",
+      "recipe": [
+        "raw"
+      ],
+      "match": true
+    },
+    {
+      "src": "ini_config",
+      "recipe": [
+        "lzma2"
+      ],
+      "match": true
+    },
+    {
+      "src": "json_array",
+      "recipe": [
+        "bz2"
+      ],
+      "match": true
+    },
+    {
+      "src": "css_repeated",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    },
+    {
+      "src": "telem_log_raw",
+      "recipe": [
+        "brotli"
+      ],
+      "match": true
+    }
+  ]
+}

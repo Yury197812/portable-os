@@ -1,0 +1,56 @@
+{
+  "method": "k-NN k=5 on min-max-normalized 12-feature vector",
+  "numeric_features": [
+    "size",
+    "entropy",
+    "zero_ratio",
+    "ascii_ratio",
+    "line_len_std",
+    "csv_density",
+    "mean_cols"
+  ],
+  "categorical_features": [
+    "ext",
+    "delimiter"
+  ],
+  "bool_features": [
+    "has_repeated_lines",
+    "binary_repeat",
+    "has_numeric"
+  ],
+  "domain_feature": "_domain",
+  "known_ext": [
+    ".bin",
+    ".css",
+    ".csv",
+    ".html",
+    ".ini",
+    ".js",
+    ".json",
+    ".log",
+    ".md",
+    ".raw",
+    ".tsv",
+    ".txt",
+    ".xml",
+    ".yaml",
+    ".yml",
+    ".zip"
+  ],
+  "known_delim": [
+    "csv",
+    "none",
+    "pipe",
+    "tsv"
+  ],
+  "n_train": 13,
+  "label_distribution": {
+    "BHCC1": 2,
+    "ssp5_adapt": 3,
+    "ssp5_atom": 1,
+    "brotli": 4,
+    "raw": 1,
+    "lzma2": 1,
+    "bz2": 1
+  }
+}

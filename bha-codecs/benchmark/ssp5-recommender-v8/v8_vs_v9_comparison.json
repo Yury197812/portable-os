@@ -1,0 +1,1003 @@
+{
+  "v8_metrics": {
+    "top1": 17,
+    "top3": 28,
+    "n": 50,
+    "pick_distribution": {
+      "lzma2": 23,
+      "BHRT1": 2,
+      "brotli": 7,
+      "BHTM1": 1,
+      "BHTC1": 6,
+      "bz2": 1,
+      "BHJA1": 2,
+      "BHCC1": 1,
+      "BHTL1": 2,
+      "BHVT1": 3,
+      "BHCC1__transpose": 1,
+      "BHQC1": 1
+    }
+  },
+  "v9_metrics": {
+    "top1": 15,
+    "top3": 25,
+    "n": 50,
+    "pick_distribution": {
+      "lzma2": 16,
+      "BHRT1": 2,
+      "bz2": 9,
+      "BHNL1": 1,
+      "brotli": 8,
+      "BHTM1": 1,
+      "BHJA1": 2,
+      "BHCC1": 1,
+      "BHTL1": 2,
+      "BHVT1": 4,
+      "BHCC1__transpose": 1,
+      "BHTC1": 2,
+      "BHQC1": 1
+    }
+  },
+  "diff": {
+    "both_hit": [
+      "archive_zip_100k.zip",
+      "deep_nested_flat_mimic.json",
+      "ini_config_128k.ini",
+      "latin1_text_200k.txt",
+      "nested_arrays_300k.json",
+      "random_lcg_256k.bin",
+      "repeating_binary_pattern.bin",
+      "single_giant_line_record.dat",
+      "telemetry_logs_1m.log",
+      "truncated_partial_last_block.bin",
+      "unicode_filename_ru.txt",
+      "utf8_cyrillic_200k.txt"
+    ],
+    "v8_only": [
+      "binary_header_text_payload.log",
+      "img_smooth_256x256.raw",
+      "js_minified_200k.js",
+      "small_threshold_4k.txt",
+      "utf16_like_control.bin"
+    ],
+    "v9_only": [
+      "fake_zip_header_text.zip",
+      "html_inline_data_uri_200k.html",
+      "pipe_kv_transition_256k.log"
+    ],
+    "neither": [
+      "binary_embedded.txt",
+      "cr_only_lines_128k.txt",
+      "crlf_lf_bom_mixed_struct.txt",
+      "css_repeated_150k.css",
+      "csv_optional_cols_1m.csv",
+      "data_csv_100k.csv",
+      "data_json_100k.json",
+      "dense_numeric_csv_300k.csv",
+      "empty_rows_sparse.csv",
+      "fixed_aligned_log_256k.log",
+      "fixed_db_dump_512k.txt",
+      "fixed_width_short_128k.log",
+      "json_lines_200k.jsonl",
+      "log_high_entropy_tail_512k.log",
+      "log_long_repeated_512k.log",
+      "markdown_tables_256k.md",
+      "mixed_delimiter_switch.csv",
+      "mixed_delimiters.csv",
+      "nested_quotes.tsv",
+      "pipe_sparse_many_cols_256k.log",
+      "quoted_csv_escape_heavy.csv",
+      "semicolon_sparse_300k.csv",
+      "sparse_dense_transition.csv",
+      "sparse_many_columns_300k.csv",
+      "tab_sparse_quotes.tsv",
+      "toml_config_128k.toml",
+      "unquoted_delimiter_in_value.tsv",
+      "xml_attrs_300k.xml",
+      "yaml_mixed_indent_200k.yaml",
+      "zero_sparse_binary_128k.bin"
+    ]
+  },
+  "rows": [
+    {
+      "file": "archive_zip_100k.zip",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHST1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "bz2",
+        "brotli"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "binary_embedded.txt",
+      "bha_magic": "lzma2",
+      "v8_pred": "BHRT1",
+      "v9_pred": "BHRT1",
+      "v8_top3": [
+        "BHRT1",
+        "BHNL1",
+        "lzma2"
+      ],
+      "v9_top3": [
+        "BHRT1",
+        "BHNL1",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "binary_header_text_payload.log",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "bz2",
+        "lzma2",
+        "brotli"
+      ],
+      "v8_match": true,
+      "v9_match": false
+    },
+    {
+      "file": "cr_only_lines_128k.txt",
+      "bha_magic": "BHRT1",
+      "v8_pred": "lzma2",
+      "v9_pred": "BHNL1",
+      "v8_top3": [
+        "lzma2",
+        "BHNL1",
+        "brotli"
+      ],
+      "v9_top3": [
+        "BHNL1",
+        "lzma2",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "crlf_lf_bom_mixed_struct.txt",
+      "bha_magic": "BHNL1",
+      "v8_pred": "BHRT1",
+      "v9_pred": "BHRT1",
+      "v8_top3": [
+        "BHRT1",
+        "lzma2",
+        "brotli"
+      ],
+      "v9_top3": [
+        "BHRT1",
+        "lzma2",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "css_repeated_150k.css",
+      "bha_magic": "BHCS1",
+      "v8_pred": "brotli",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "brotli",
+        "lzma2",
+        "BHRT1"
+      ],
+      "v9_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "csv_optional_cols_1m.csv",
+      "bha_magic": "BHTC1",
+      "v8_pred": "BHTM1",
+      "v9_pred": "BHTM1",
+      "v8_top3": [
+        "BHTM1",
+        "BHQC1",
+        "BHTC1"
+      ],
+      "v9_top3": [
+        "BHTM1",
+        "BHQC1",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "data_csv_100k.csv",
+      "bha_magic": "BHTM1",
+      "v8_pred": "BHTC1",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "BHTC1",
+        "bz2",
+        "BHCC1"
+      ],
+      "v9_top3": [
+        "bz2",
+        "BHTC1",
+        "BHCC1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "data_json_100k.json",
+      "bha_magic": "lzma2",
+      "v8_pred": "bz2",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "bz2",
+        "brotli",
+        "lzma2"
+      ],
+      "v9_top3": [
+        "bz2",
+        "brotli",
+        "lzma2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "deep_nested_flat_mimic.json",
+      "bha_magic": "BHJA1",
+      "v8_pred": "BHJA1",
+      "v9_pred": "BHJA1",
+      "v8_top3": [
+        "BHJA1",
+        "lzma2",
+        "brotli"
+      ],
+      "v9_top3": [
+        "BHJA1",
+        "bz2",
+        "lzma2"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "bha_magic": "BHCC1",
+      "v8_pred": "BHTC1",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "BHTC1",
+        "bz2",
+        "BHTM1"
+      ],
+      "v9_top3": [
+        "bz2",
+        "BHTC1",
+        "BHTM1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "empty_rows_sparse.csv",
+      "bha_magic": "BHTC1",
+      "v8_pred": "BHCC1",
+      "v9_pred": "BHCC1",
+      "v8_top3": [
+        "BHCC1",
+        "BHTM1",
+        "bz2"
+      ],
+      "v9_top3": [
+        "BHCC1",
+        "BHTM1",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "fake_zip_header_text.zip",
+      "bha_magic": "lzma2",
+      "v8_pred": "brotli",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "bz2",
+        "brotli"
+      ],
+      "v8_match": false,
+      "v9_match": true
+    },
+    {
+      "file": "fixed_aligned_log_256k.log",
+      "bha_magic": "BHRT1",
+      "v8_pred": "BHTL1",
+      "v9_pred": "BHTL1",
+      "v8_top3": [
+        "BHTL1",
+        "lzma2",
+        "brotli"
+      ],
+      "v9_top3": [
+        "BHTL1",
+        "lzma2",
+        "brotli"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "fixed_db_dump_512k.txt",
+      "bha_magic": "BHRT1",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHTC1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "bz2",
+        "brotli"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "fixed_width_short_128k.log",
+      "bha_magic": "BHTC1",
+      "v8_pred": "BHVT1",
+      "v9_pred": "BHVT1",
+      "v8_top3": [
+        "BHVT1",
+        "BHSP1",
+        "lzma2"
+      ],
+      "v9_top3": [
+        "BHVT1",
+        "BHSP1",
+        "brotli"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "html_inline_data_uri_200k.html",
+      "bha_magic": "lzma2",
+      "v8_pred": "brotli",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "brotli",
+        "lzma2",
+        "BHST1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": true
+    },
+    {
+      "file": "img_smooth_256x256.raw",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "brotli",
+        "bz2",
+        "lzma2"
+      ],
+      "v8_match": true,
+      "v9_match": false
+    },
+    {
+      "file": "ini_config_128k.ini",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "js_minified_200k.js",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHRT1"
+      ],
+      "v9_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v8_match": true,
+      "v9_match": false
+    },
+    {
+      "file": "json_lines_200k.jsonl",
+      "bha_magic": "BHST1",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHCC1__transpose"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "latin1_text_200k.txt",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHRT1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "BHRT1",
+        "bz2"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "bha_magic": "BHTL1",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "BHRT1",
+        "brotli"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "BHRT1",
+        "brotli"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "log_long_repeated_512k.log",
+      "bha_magic": "lzma2",
+      "v8_pred": "BHTL1",
+      "v9_pred": "BHTL1",
+      "v8_top3": [
+        "BHTL1",
+        "BHRT1",
+        "lzma2"
+      ],
+      "v9_top3": [
+        "BHTL1",
+        "BHRT1",
+        "lzma2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "markdown_tables_256k.md",
+      "bha_magic": "BHMT1",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHTC1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "mixed_delimiter_switch.csv",
+      "bha_magic": "BHMX1",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHTC1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "BHTC1",
+        "brotli"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "mixed_delimiters.csv",
+      "bha_magic": "BHMX1",
+      "v8_pred": "BHCC1__transpose",
+      "v9_pred": "BHCC1__transpose",
+      "v8_top3": [
+        "BHCC1__transpose",
+        "brotli",
+        "lzma2"
+      ],
+      "v9_top3": [
+        "BHCC1__transpose",
+        "brotli",
+        "lzma2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "nested_arrays_300k.json",
+      "bha_magic": "BHJA1",
+      "v8_pred": "BHJA1",
+      "v9_pred": "BHJA1",
+      "v8_top3": [
+        "BHJA1",
+        "lzma2",
+        "brotli"
+      ],
+      "v9_top3": [
+        "BHJA1",
+        "lzma2",
+        "brotli"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "nested_quotes.tsv",
+      "bha_magic": "BHQC1",
+      "v8_pred": "lzma2",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "lzma2",
+        "bz2",
+        "brotli"
+      ],
+      "v9_top3": [
+        "bz2",
+        "lzma2",
+        "BHTC1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "pipe_kv_transition_256k.log",
+      "bha_magic": "BHVT1",
+      "v8_pred": "BHTC1",
+      "v9_pred": "BHVT1",
+      "v8_top3": [
+        "BHTC1",
+        "BHVT1",
+        "BHSP1"
+      ],
+      "v9_top3": [
+        "BHVT1",
+        "BHTC1",
+        "BHSP1"
+      ],
+      "v8_match": false,
+      "v9_match": true
+    },
+    {
+      "file": "pipe_sparse_many_cols_256k.log",
+      "bha_magic": "BHSP1",
+      "v8_pred": "BHVT1",
+      "v9_pred": "BHVT1",
+      "v8_top3": [
+        "BHVT1",
+        "BHTC1",
+        "lzma2"
+      ],
+      "v9_top3": [
+        "BHVT1",
+        "BHTC1",
+        "lzma2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "quoted_csv_escape_heavy.csv",
+      "bha_magic": "BHQC1",
+      "v8_pred": "BHTC1",
+      "v9_pred": "BHTC1",
+      "v8_top3": [
+        "BHTC1",
+        "BHTM1",
+        "BHDT1"
+      ],
+      "v9_top3": [
+        "BHTC1",
+        "BHTM1",
+        "BHDT1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "random_lcg_256k.bin",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "repeating_binary_pattern.bin",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "semicolon_sparse_300k.csv",
+      "bha_magic": "BHSP1",
+      "v8_pred": "brotli",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v9_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "single_giant_line_record.dat",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHTC1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "bz2",
+        "brotli"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "small_threshold_4k.txt",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "bz2",
+        "lzma2",
+        "brotli"
+      ],
+      "v8_match": true,
+      "v9_match": false
+    },
+    {
+      "file": "sparse_dense_transition.csv",
+      "bha_magic": "BHDT1",
+      "v8_pred": "BHTC1",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "BHTC1",
+        "bz2",
+        "BHTM1"
+      ],
+      "v9_top3": [
+        "bz2",
+        "BHTC1",
+        "BHTM1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "sparse_many_columns_300k.csv",
+      "bha_magic": "BHSP1",
+      "v8_pred": "BHTC1",
+      "v9_pred": "BHTC1",
+      "v8_top3": [
+        "BHTC1",
+        "bz2",
+        "brotli"
+      ],
+      "v9_top3": [
+        "BHTC1",
+        "bz2",
+        "BHCC1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "tab_sparse_quotes.tsv",
+      "bha_magic": "lzma2",
+      "v8_pred": "BHQC1",
+      "v9_pred": "BHQC1",
+      "v8_top3": [
+        "BHQC1",
+        "bz2",
+        "lzma2"
+      ],
+      "v9_top3": [
+        "BHQC1",
+        "bz2",
+        "BHTC1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "bha_magic": "BHVT1",
+      "v8_pred": "BHVT1",
+      "v9_pred": "BHVT1",
+      "v8_top3": [
+        "BHVT1",
+        "BHTC1",
+        "BHSP1"
+      ],
+      "v9_top3": [
+        "BHVT1",
+        "BHTC1",
+        "BHSP1"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "toml_config_128k.toml",
+      "bha_magic": "lzma2",
+      "v8_pred": "brotli",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v9_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "truncated_partial_last_block.bin",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "unicode_filename_ru.txt",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHRT1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "BHRT1",
+        "BHNL1"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "unquoted_delimiter_in_value.tsv",
+      "bha_magic": "BHTC1",
+      "v8_pred": "lzma2",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "bz2",
+        "lzma2",
+        "brotli"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "utf16_like_control.bin",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "bz2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "bz2"
+      ],
+      "v9_top3": [
+        "bz2",
+        "lzma2",
+        "brotli"
+      ],
+      "v8_match": true,
+      "v9_match": false
+    },
+    {
+      "file": "utf8_cyrillic_200k.txt",
+      "bha_magic": "lzma2",
+      "v8_pred": "lzma2",
+      "v9_pred": "lzma2",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHRT1"
+      ],
+      "v9_top3": [
+        "lzma2",
+        "BHRT1",
+        "BHNL1"
+      ],
+      "v8_match": true,
+      "v9_match": true
+    },
+    {
+      "file": "xml_attrs_300k.xml",
+      "bha_magic": "BHST1",
+      "v8_pred": "lzma2",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "lzma2",
+        "brotli",
+        "BHRT1"
+      ],
+      "v9_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "yaml_mixed_indent_200k.yaml",
+      "bha_magic": "lzma2",
+      "v8_pred": "brotli",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v9_top3": [
+        "brotli",
+        "lzma2",
+        "BHRT1"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    },
+    {
+      "file": "zero_sparse_binary_128k.bin",
+      "bha_magic": "lzma2",
+      "v8_pred": "brotli",
+      "v9_pred": "brotli",
+      "v8_top3": [
+        "brotli",
+        "lzma2",
+        "bz2"
+      ],
+      "v9_top3": [
+        "brotli",
+        "bz2",
+        "lzma2"
+      ],
+      "v8_match": false,
+      "v9_match": false
+    }
+  ]
+}

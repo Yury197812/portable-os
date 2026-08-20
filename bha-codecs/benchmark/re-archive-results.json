@@ -1,0 +1,42 @@
+﻿{
+  "bha_vs_lzma": [
+    {
+      "file": "data_csv_100k.csv",
+      "original": 101647,
+      "bha_size": 13158,
+      "bha_ratio": 12.94,
+      "lzma_extreme_size": 26712,
+      "lzma_extreme_ratio": 26.28
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "original": 524288,
+      "bha_size": 133231,
+      "bha_ratio": 25.41,
+      "lzma_extreme_size": 143416,
+      "lzma_extreme_ratio": 27.35
+    },
+    {
+      "file": "html_inline_data_uri_200k.html",
+      "original": 204800,
+      "bha_size": 526,
+      "bha_ratio": 0.26,
+      "lzma_extreme_size": 792,
+      "lzma_extreme_ratio": 0.39
+    }
+  ],
+  "re_archive": [
+    {
+      "file": "data_csv_100k.csv",
+      "original": 101647,
+      "bha_size": 26754,
+      "lzma_from_bha_size": 26816
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "original": 524288,
+      "bha_size": 143471,
+      "lzma_from_bha_size": 143540
+    }
+  ]
+}

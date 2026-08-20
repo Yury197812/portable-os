@@ -1,0 +1,29 @@
+{
+  "method": "k-NN + inverse-sqrt-frequency class weight + IDF locality",
+  "locality_formula": "log(1 + N/df(label))  where N=k_neigh=30, df=neighbour doc-freq",
+  "training_set": "87 points = 37 synthetic + 50 real-corpus",
+  "unique_codecs": 21,
+  "label_distribution": {
+    "BHCC1__delta_i64": 4,
+    "raw": 1,
+    "lzma2": 26,
+    "brotli": 21,
+    "bz2": 6,
+    "BHCC1__transpose": 2,
+    "BHRT1": 3,
+    "BHNL1": 1,
+    "BHCS1": 1,
+    "BHTC1": 4,
+    "BHTM1": 1,
+    "BHJA1": 2,
+    "BHCC1": 1,
+    "BHST1": 2,
+    "BHTL1": 1,
+    "BHMT1": 1,
+    "BHMX1": 2,
+    "BHQC1": 2,
+    "BHVT1": 2,
+    "BHSP1": 3,
+    "BHDT1": 1
+  }
+}
