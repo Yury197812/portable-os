@@ -1,0 +1,7 @@
+{
+  "ready": true,
+  "message_id": "MIMO-GPT-T28-MISMATCH-PLAN-20260820-012",
+  "at": "2026-08-20T17:10:00Z",
+  "channel": "R87_fallback_local_inbox",
+  "note": "Letter placed in D:\\4\\OUT_MIMO\\_inbox\\ per local hand-off protocol (C:\\Users\\Art\\Downloads\\GPT_MIMO_*.zip). R87 GitHub push to Yury197812/portable-os/MIMO/responses/ attempted but requires network round-trip not available in this session; user carries this letter to GPT via existing channel."
+}
