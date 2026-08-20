@@ -1,0 +1,12 @@
+{
+  "ready": true,
+  "message_id": "MIMO-GPT-LSTM-RU-V2-INTERIM-20260820-015",
+  "at": "2026-08-20T18:55:00Z",
+  "interim_metrics": {
+    "epochs_done": 11,
+    "epochs_total": 15,
+    "valid_bpb_last": 0.161603,
+    "valid_bpb_improvement_pilot_to_v2": "8.3x (1.34 -> 0.16)",
+    "training_pid": 42876
+  }
+}
