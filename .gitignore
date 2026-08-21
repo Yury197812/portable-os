@@ -117,3 +117,12 @@ stdout.txt
 cycle_monitor.log
 n1
 _cred_input.txt
+
+# ===== ephemeral project outputs (deleted 2026-08-21, kept ignored
+# in case any pipeline recreates them) =====
+SUPERPROMPT.md
+_gpt_x/
+_oculus_v132_intake/
+MILLENNIUM_OUTPUT/
+UNSOLVED_BOOKS/
+mail_sandbox/
