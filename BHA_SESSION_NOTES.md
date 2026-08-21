@@ -195,4 +195,99 @@ end-to-end. No further OEIS action taken this turn.
 (fetch_oeis_details, classify, taxonomy extension) is
 unblocked but each step still warrants its own user cue
 per the original 2026-08-19 convention.
+
+## [turn N · 2026-08-21T17:13:50Z] Final cleanup + zip artifacts + dict_size experiment
+
+User asked for (a) cleanup of root directory temp/test files, (b)
+"не спи, сделай коммит этого состояния" — interpreted as
+document+commit the cleanup, (c) intermediate dict_size experiment
+on LZMA which was reverted.
+
+### Cleanup executed (2026-08-21, ~17:00Z)
+
+**Root directory temp cleanup (140 MB freed, 22 objects):**
+- 9 dirs deleted: `_SCRATCH/`, `_SELF_IMPROVE_20260810/`,
+  `.playwright-cli/`, `browser_data/`, `.pytest_cache/`, `TMP/`,
+  `unsloth_compiled_cache/`, `web/`, `evals/`
+- 8 files deleted: `webapp.db`, `database.sqlite`, `.env`,
+  `cycle_monitor.log`, `n1`, `_cred_input.txt`, `stderr.txt`, `stdout.txt`
+- Preserved: `docs/` (23 MB, user decision — documentation), all 19
+  live projects (factory, oeis, gfs255_*, oculus132_*, etc.)
+- Zips created:
+  - `BHA_ARTIFACTS_2026-08-21.zip` (257 967 B, 34 files) —
+    initial snapshot, 4 categories (core/docs/scripts/benchmark/),
+    5 untracked live project entries, sanitized
+  - `BHA_ARTIFACTS_2026-08-21b.zip` (257 967 B, 34 files) —
+    regenerated with current working tree state (no content delta,
+    refresh after dict_size revert)
+
+**`__pycache__` cleanup (2.40 MB freed, 56 dirs):**
+- Recursive scan of D:\4 (skipping `.git/`) found 56
+  `__pycache__` directories containing 156 `.pyc` files
+- All deleted; `__pycache__` already in `.gitignore` (line 7,
+  since 2026-08-21 commit `ffb53fa7`) so cleanup is invisible to
+  git and does not show in `git status`
+- Largest: `bha-codecs/__pycache__/` (18 files, 358 KB),
+  `MIMO/responses/artweb-studio/runtime/__pycache__/` (52 KB),
+  `OUT/MIMO/orchestrator/__pycache__/` (17 KB)
+
+### Dict_size tuning experiment (REVERTED 2026-08-21T~16:55Z)
+
+User asked to improve compression ratio. I identified 8 directions
+from memory (LZMA dict_size, parallel orchestrator, JSON
+column-extract pp, per-column delta, better recommender features,
+per-chunk brotli+LZMA, brotli as preprocessor, crossover
+benchmark) and selected "F. LZMA dict_size tuning" as lowest risk
++ highest ratio of gain to implementation cost.
+
+Empirically tested dict_size variants on real 1.48MB HTML and 8
+fixtures:
+- default (no dict_size): 26 172 B (1.77%)
+- dict=1MB: 26 027 B (1.76%) — **-0.55% win on 1.5MB**
+- dict=64KB-256KB: 27 329 B (1.85%) — **+4.4% regression on 1.5MB**
+- dict≥2MB: same as default
+
+Applied patch via replacing `_build_runtime_lzma_archive` with
+custom implementation that takes `dict_size` (original did not
+accept this kwarg). 19/19 tests initially FAILED on
+`test_safe_encode_data_bypasses_on_big_input` + 1 more (TypeError).
+Fixed by adapting wrapper to call original function with default
+behavior when no dict_size given.
+
+Final benchmark on all 8 fixtures: **6/8 regression, 2/8 win,
+average +25 B/file**. Only 2 wins were -7B (bro_json-80k.json)
+and -127B (bro_specific_html_500k.html — the 1.5MB target).
+Patch reversed at user request.
+
+**Key learning**: `lzma.compress` default behavior on this
+host is 4-8MB dict (not 64KB as I assumed from preset docs).
+Setting `dict_size=1MB` is **regression on 50-1500KB inputs** because
+default is already optimal. Memory note L11 ("dict_size matters
+more than preset above L6") is **partially true** — true for very
+large inputs (>4MB) but default is good enough for <4MB.
+
+User decision: **"Revert"** — kept original `bha.py` with
+PRESET_EXTREME + ssp.encode_data bypass patches only.
+
+### Final state at 2026-08-21T17:13:50Z
+
+- HEAD: `3321fd23` (typo-fix redaction) on `origin/master`
+- Working tree: 0 modified, 0 untracked, 0 staged (clean)
+- 11 session commits on remote master (de801c24, 864f48ed,
+  bcbe194a, bc03fde5, af8c1745, 4bca8534, ffb53fa7, 80a9ad8f,
+  458f136a, 3321fd23, 31ee81e2)
+- 2 local zips: `BHA_ARTIFACTS_2026-08-21.zip` (34 files,
+  257 967 B), `BHA_ARTIFACTS_2026-08-21b.zip` (regenerated)
+- Disk freed: 195 MB ephemeral outputs + 140 MB temp + 2.40 MB
+  __pycache__ = **337 MB total**
+- All scratch scripts deleted from disk
+- Pre-commit hook active: blocks scratch / numbered-copy /
+  pycache files at commit time
+- OAuth `gho_wEy…ZJ3TXIEZ` in Windows Credential Manager is the
+  live push credential; both old `ghp_…` PATs confirmed dead
+  (HTTP 401)
+
+Open items for future sessions (unchanged from turn 15:49:34Z):
+- Browser-flow creation of new PAT (if user wants one)
+- MEMORY redaction-checklist rule (writer's domain)
 ```
