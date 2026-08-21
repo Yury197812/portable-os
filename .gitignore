@@ -10,7 +10,6 @@ __pycache__/
 .mypy_cache/
 
 # ===== Secrets (перенесено из GPT-обмена 2026-08-13) =====
-.env
 *credentials*.txt
 .ruff_cache/
 
@@ -110,8 +109,8 @@ bha-codecs/benchmark/bro_markdown-80k (*).md
 
 # ===== runtime / output noise =====
 # Per-user mimocode state and ephemeral logs; never version-control.
+# (Python __pycache__/ + .env already covered in sections above.)
 .mimocode/
-__pycache__/
 stderr.txt
 stdout.txt
 cycle_monitor.log
