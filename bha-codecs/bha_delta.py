@@ -170,6 +170,63 @@ def _is_ipv4_column(values: List[str]) -> bool:
     return n_total >= 50 and n_match == n_total
 
 
+def _is_boolean_column(values: List[str]) -> bool:
+    """Return True if all values are boolean-like (true/false/0/1/yes/no)."""
+    if not values:
+        return False
+    BOOL_SET = {'true', 'false', 't', 'f', '0', '1', 'yes', 'no', 'y', 'n'}
+    n_match = 0
+    n_total = 0
+    for v in values:
+        v = v.strip().lower()
+        if not v:
+            continue
+        n_total += 1
+        if v in BOOL_SET:
+            n_match += 1
+    return n_total >= 50 and n_match == n_total
+
+
+def _delta_encode_boolean(values: List[str]) -> bytes:
+    """Run-length encode boolean values. First value is 1 byte
+    (0 or 1), then a series of (varint_count, value) pairs for runs.
+    For typical 'all 0' or 'all 1' columns, the encoded size is
+    2 bytes (header + 1 run) regardless of row count. For long runs
+    (>255), count uses varint encoding (same as delta encoding).
+    """
+    out = bytearray()
+    if not values:
+        return bytes(out)
+
+    def _write_varint(n: int) -> None:
+        """Write unsigned varint."""
+        while n >= 0x80:
+            out.append((n & 0x7F) | 0x80)
+            n >>= 7
+        out.append(n)
+
+    def to_bit(v: str) -> int:
+        v = v.strip().lower()
+        if v in ('1', 'true', 't', 'yes', 'y'):
+            return 1
+        return 0
+    prev_bit = to_bit(values[0])
+    out.append(prev_bit)
+    run_len = 1
+    for v in values[1:]:
+        b = to_bit(v)
+        if b == prev_bit:
+            run_len += 1
+        else:
+            _write_varint(run_len)
+            out.append(prev_bit)
+            prev_bit = b
+            run_len = 1
+    _write_varint(run_len)
+    out.append(prev_bit)
+    return bytes(out)
+
+
 def _delta_encode_ipv4(values: List[str]) -> bytes:
     """Encode IPv4 strings as packed 4-byte sequences. First value
     absolute (4 bytes), rest as per-octet deltas (1 byte each).
@@ -204,11 +261,12 @@ def try_column_delta(data: bytes) -> Optional[bytes]:
     return column-delta-encoded JSON. Otherwise None.
 
     Supported per-column encodings (priority order):
-      1. delta_timestamp  (epoch seconds, 10-13 digit int)
-      2. delta_ipv4       (dotted-quad IP strings)
-      3. delta_int        (regular integers)
-      4. delta_float      (floating point, adaptive scale)
-      5. pass             (non-numeric: original CSV text)
+      1. delta_boolean   (true/false/0/1/yes/no, run-length)
+      2. delta_timestamp  (epoch seconds, 10-13 digit int)
+      3. delta_ipv4       (dotted-quad IP strings)
+      4. delta_int        (regular integers)
+      5. delta_float      (floating point, adaptive scale)
+      6. pass             (non-numeric: original CSV text)
     """
     if len(data) < 256 or len(data) > 8 * 1024 * 1024:
         return None
@@ -231,7 +289,10 @@ def try_column_delta(data: bytes) -> Optional[bytes]:
     int_columns = 0
     for c in range(n_cols):
         col_strs = [rows[r + 1][c] if c < len(rows[r + 1]) else '' for r in range(n_data)]
-        if _is_timestamp_column(col_strs):
+        if _is_boolean_column(col_strs):
+            col_encodings.append('delta_boolean')
+            col_blobs.append(_delta_encode_boolean(col_strs))
+        elif _is_timestamp_column(col_strs):
             ints = [int(s.strip()) for s in col_strs]
             col_encodings.append('delta_timestamp')
             col_blobs.append(_delta_encode_timestamp(ints))
