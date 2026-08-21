@@ -110,12 +110,15 @@ bha-codecs/benchmark/bro_markdown-80k (*).md
 # ===== runtime / output noise =====
 # Per-user mimocode state and ephemeral logs; never version-control.
 # (Python __pycache__/ + .env already covered in sections above.)
-.mimocode/
-stderr.txt
-stdout.txt
-cycle_monitor.log
-n1
-_cred_input.txt
+# Globs cover common variants (numbered, dated, suffixed) so
+# pipeline outputs like stderr2.txt, cycle_monitor_2025.log,
+# _cred_input_v2.txt, n2, .mimocode_state/ stay ignored too.
+.mimocode*/
+stderr*.txt
+stdout*.txt
+cycle_monitor*.log
+n1*
+_cred_input*.txt
 
 # ===== ephemeral project outputs (deleted 2026-08-21, kept ignored
 # in case any pipeline recreates them) =====
