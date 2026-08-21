@@ -10,7 +10,7 @@ git clone https://ghp_REDACTED@github.com/Yury197812/REPO_NAME.git
 ### Push to repo
 ```bash
 cd REPO_NAME
-git remote set-url origin https://ghp_YeHx7Q9Yx9Ukbt8g3YaELsFZnwdUFf1SxFBw@github.com/Yury197812/REPO_NAME.git
+git remote set-url origin https://ghp_REDACTED@github.com/Yury197812/REPO_NAME.git
 git push
 ```
 
