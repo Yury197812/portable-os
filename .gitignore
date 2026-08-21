@@ -126,3 +126,11 @@ _oculus_v132_intake/
 MILLENNIUM_OUTPUT/
 UNSOLVED_BOOKS/
 mail_sandbox/
+
+# ===== junk / cache =====
+# 'Повторяем' was a stray 24-byte file (likely empty/binary residue).
+# gh_profile/ and gh_session/ were Chromium browser caches auto-created
+# by the GitHub login flow; safe to delete and ignored on regen.
+Повторяем
+gh_profile/
+gh_session/
