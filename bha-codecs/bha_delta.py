@@ -78,22 +78,47 @@ def _delta_encode(values: List[int]) -> bytes:
 
 
 def _delta_encode_float(values: List[float]) -> bytes:
-    """First value absolute (8-byte big-endian double), rest as
-    zigzag varint deltas (scaled to int for varint encoding).
+    """Adaptive-scale float delta encoding.
+
+    Choose scale dynamically based on max abs delta between consecutive
+    values. For slow-changing floats (e.g. temperature 20.001, 20.002)
+    use scale=1e9 (9 decimal digits) -> delta=1, fits in 1 varint byte.
+    For wide-range floats (1.5, 1e6) use scale=1 (delta=999998, fits in
+    3 varint bytes). For mixed ranges the smaller scale wins.
     """
     out = bytearray()
     if not values:
         return bytes(out)
-    SCALE = 1_000_000  # 6 decimal places
-    out.extend(values[0].to_bytes(8, 'big', signed=False) if values[0] >= 0 else b'\x00' * 8)  # simplified
     import struct
-    out = bytearray(struct.pack('>d', values[0]))
-    prev_int = int(values[0] * SCALE)
+    # single value: store as 8-byte double
+    if len(values) == 1:
+        out.extend(struct.pack('>d', values[0]))
+        return bytes(out)
+    deltas = [values[i+1] - values[i] for i in range(len(values) - 1)]
+    max_abs_delta = max((abs(d) for d in deltas), default=0.0)
+    # pick scale: prefer high scale if max abs delta is small
+    if max_abs_delta == 0.0:
+        scale_idx = 0  # 1.0
+    elif max_abs_delta < 1e-9:
+        scale_idx = 4  # 1e9
+    elif max_abs_delta < 1e-6:
+        scale_idx = 3  # 1e6
+    elif max_abs_delta < 1e-3:
+        scale_idx = 2  # 1e3
+    elif max_abs_delta < 1.0:
+        scale_idx = 1  # 1e2
+    else:
+        scale_idx = 0  # 1.0
+    scale = [1, 100, 1_000, 1_000_000, 1_000_000_000][scale_idx]
+    out.append(scale_idx)
+    out.extend(struct.pack('>d', values[0]))
+    prev_int = int(round(values[0] * scale))
     for v in values[1:]:
-        cur_int = int(v * SCALE)
+        cur_int = int(round(v * scale))
         d = cur_int - prev_int
         u = (d << 1) ^ (d >> 63)
         u &= (1 << 64) - 1
+        # varint
         while u >= 0x80:
             out.append((u & 0x7F) | 0x80)
             u >>= 7
