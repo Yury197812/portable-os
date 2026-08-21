@@ -127,9 +127,88 @@ def _delta_encode_float(values: List[float]) -> bytes:
     return bytes(out)
 
 
+def _is_timestamp_column(values: List[str]) -> bool:
+    """Return True if all values look like epoch seconds (10-13 digits)."""
+    if not values:
+        return False
+    n_match = 0
+    n_total = 0
+    for v in values:
+        v = v.strip()
+        if not v:
+            continue
+        n_total += 1
+        if v.isdigit() and 10 <= len(v) <= 13:
+            n_match += 1
+    return n_total >= 50 and n_match == n_total
+
+
+def _delta_encode_timestamp(values: List[int]) -> bytes:
+    """Same as int delta encoding - first value absolute, rest as
+    zigzag varint deltas. For typical 1-second sample log, deltas are
+    small (often 1) so each fits in 1 byte varint.
+    """
+    return _delta_encode(values)
+
+
+def _is_ipv4_column(values: List[str]) -> bool:
+    """Return True if all values look like IPv4 dotted-quad strings."""
+    if not values:
+        return False
+    n_match = 0
+    n_total = 0
+    for v in values:
+        v = v.strip()
+        if not v:
+            continue
+        n_total += 1
+        parts = v.split('.')
+        if len(parts) != 4:
+            continue
+        if all(p.isdigit() and 0 <= int(p) <= 255 for p in parts):
+            n_match += 1
+    return n_total >= 50 and n_match == n_total
+
+
+def _delta_encode_ipv4(values: List[str]) -> bytes:
+    """Encode IPv4 strings as packed 4-byte sequences. First value
+    absolute (4 bytes), rest as per-octet deltas (1 byte each).
+    For typical '192.168.1.1', '192.168.1.2', ... series, per-octet
+    deltas are 0, 0, 0, 1 = 4 bytes per row vs original 9+ chars.
+    """
+    out = bytearray()
+    if not values:
+        return bytes(out)
+    first_parts = [int(p) for p in values[0].strip().split('.')]
+    out.extend(bytes(first_parts))
+    prev = first_parts
+    for v in values[1:]:
+        cur = [int(p) for p in v.strip().split('.')]
+        deltas = [(c - p) & 0xFF for c, p in zip(cur, prev)]
+        # encode as 4 signed-bytes (one per octet)
+        for d in deltas:
+            u = (d << 1) ^ (d >> 7)
+            u &= 0xFF
+            if u >= 0x80:
+                # two-byte varint for signed octet delta
+                out.append((u & 0x7F) | 0x80)
+                out.append(u >> 7)
+            else:
+                out.append(u)
+        prev = cur
+    return bytes(out)
+
+
 def try_column_delta(data: bytes) -> Optional[bytes]:
     """If data is a CSV with >= 1 numeric column of >= 50 rows,
     return column-delta-encoded JSON. Otherwise None.
+
+    Supported per-column encodings (priority order):
+      1. delta_timestamp  (epoch seconds, 10-13 digit int)
+      2. delta_ipv4       (dotted-quad IP strings)
+      3. delta_int        (regular integers)
+      4. delta_float      (floating point, adaptive scale)
+      5. pass             (non-numeric: original CSV text)
     """
     if len(data) < 256 or len(data) > 8 * 1024 * 1024:
         return None
@@ -147,29 +226,31 @@ def try_column_delta(data: bytes) -> Optional[bytes]:
     header = rows[0]
     n_cols = len(header)
     n_data = len(rows) - 1
-    # per-column analysis
-    col_encodings = []  # 'pass' | 'delta_int' | 'delta_float'
-    col_blobs = []  # bytes or None
+    col_encodings = []
+    col_blobs = []
     int_columns = 0
     for c in range(n_cols):
         col_strs = [rows[r + 1][c] if c < len(rows[r + 1]) else '' for r in range(n_data)]
-        if _is_int_column(col_strs):
-            int_columns += 1
+        if _is_timestamp_column(col_strs):
             ints = [int(s.strip()) for s in col_strs]
-            blob = _delta_encode(ints)
+            col_encodings.append('delta_timestamp')
+            col_blobs.append(_delta_encode_timestamp(ints))
+            int_columns += 1
+        elif _is_ipv4_column(col_strs):
+            col_encodings.append('delta_ipv4')
+            col_blobs.append(_delta_encode_ipv4(col_strs))
+        elif _is_int_column(col_strs):
+            ints = [int(s.strip()) for s in col_strs]
             col_encodings.append('delta_int')
-            col_blobs.append(blob)
+            col_blobs.append(_delta_encode(ints))
+            int_columns += 1
         elif _is_float_column(col_strs):
             col_encodings.append('delta_float')
             col_blobs.append(_delta_encode_float([float(s.strip()) for s in col_strs]))
         else:
             col_encodings.append('pass')
             col_blobs.append(None)
-    # estimate gain
     original_csv_size = len(data)
-    encoded_size = len(json.dumps({"_meta": {"cols": header, "enc": col_encodings}})) + \
-                    sum(len(json.dumps(b.hex())) + 30 for b in col_blobs if b) + 200
-    # use simpler estimate: try encoding, then compare
     out = {
         "_meta": {
             "cols": header,
@@ -181,7 +262,7 @@ def try_column_delta(data: bytes) -> Optional[bytes]:
     }
     encoded = json.dumps(out, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
     if len(encoded) >= original_csv_size * 0.95:
-        return None  # < 5% gain
+        return None
     return encoded
 
 
