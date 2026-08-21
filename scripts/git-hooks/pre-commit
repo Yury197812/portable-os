@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# D:\4\ pre-commit hook source.
+# INSTALLED FILE: .git/hooks/pre-commit (per-clone, not in git).
+# To install on a new clone, run from repo root:
+#   cp scripts/git-hooks/pre-commit .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit        # (no-op on Windows)
+#
+# Purpose: block scratch / numbered-copy files from being committed.
+#
+# Triggers (returns non-zero, blocks commit):
+#   1. Staged file basename starts with `_` (scratch / debug / dbg pattern).
+#   2. Staged file matches "name (N).ext" — numbered copies from broken
+#      benchmark loops.
+#   3. Staged file is inside __pycache__/ or *.pyc (defensive).
+#
+# Bypass: git commit --no-verify (use only when you really know why).
+#
+# Created 2026-08-21 after the 4000-row `git status` incident from
+# `bro_specific_html_500k (N).html` / `bro_markdown-80k (N).md` copies.
+# See notes.md session ses_-ffe5fdd00905bffe7uVqSnnpp 2026-08-21T~14:18Z.
+
+set -e
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR 2>/dev/null || true)
+
+if [ -z "$STAGED" ]; then
+    exit 0
+fi
+
+VIOLATIONS=0
+declare -a REASONS
+
+while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    fname="${f##*/}"
+
+    # Rule 1: underscore-prefixed scratch / debug files.
+    case "$fname" in
+        _*)
+            REASONS+=("SCRATCH: $f starts with '_' (rename or delete before commit)")
+            VIOLATIONS=$((VIOLATIONS+1))
+            ;;
+    esac
+
+    # Rule 2: numbered-copy pattern produced by broken benchmark loops.
+    if echo "$fname" | grep -qE ' \([0-9]+\)\.[a-zA-Z0-9]+$'; then
+        REASONS+=("NUMBERED-COPY: $f matches 'name (N).ext' — these are junk duplicates")
+        VIOLATIONS=$((VIOLATIONS+1))
+    fi
+
+    # Rule 3: __pycache__ / .pyc (defensive; should be in .gitignore already).
+    case "$f" in
+        */__pycache__/*|*.pyc)
+            REASONS+=("PYCACHE: $f should be excluded via .gitignore")
+            VIOLATIONS=$((VIOLATIONS+1))
+            ;;
+    esac
+done <<< "$STAGED"
+
+if [ "$VIOLATIONS" -gt 0 ]; then
+    echo ""
+    echo "  pre-commit: BLOCKED $VIOLATIONS file(s) from commit."
+    echo ""
+    for r in "${REASONS[@]}"; do
+        echo "    - $r"
+    done
+    echo ""
+    echo "  Fix: rename (rm '_' prefix) or git restore --staged <file>."
+    echo "  Bypass (NOT recommended): git commit --no-verify"
+    echo ""
+    exit 1
+fi
+
+exit 0
