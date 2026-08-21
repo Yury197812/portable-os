@@ -167,7 +167,62 @@ D:\4\bha-codecs\
     └── ssp5-recommender-v9b/                 # v9b STABLE + all_versions_metrics
 ```
 
-## 11. Provenance
+## 11. Benchmarks (compression improvements, session 2026-08-21)
+
+### 11.1 BHA vs brotli crossover (100KB - 1MB)
+
+`bench_bha_vs_brotli.py` with 10 fixtures (5 HTML+inline-JSON, 5 JSON-array,
+sizes 50/100/200/500/1024 KB).
+
+| Range | Winner | Reason |
+|---|---|---|
+| HTML < 200KB | BHA | delta_pp / BHA preprocessors win |
+| HTML 200-400KB | BHA | same |
+| HTML >= 400KB | brotli | static-dictionary advantage |
+| JSON < 200KB | brotli | BHA overhead dominates |
+| JSON >= 200KB | BHA | BHCC1 etc. win by 4-9% |
+
+### 11.2 delta preprocessor per-pattern gain (16 fixtures, 50-500KB)
+
+| Pattern | Avg gain over raw LZMA2 | Best single result |
+|---|---|---|
+| arith (linear) | +98.6% | 571KB -> 228 B (0.04%) |
+| quadratic | +98.2% |  |
+| sparse_random | +50% |  |
+| mixed (5-col) | +72.6% |  |
+| log (timestamp) | +26% |  |
+| ip (dotted-quad) | +92% (sequential IPs) |  |
+| status_alt | +98.9% (alternating patterns) | 988KB -> 337 B (0.03%) |
+| bool (RLE) | +87% |  |
+
+### 11.3 adaptive-scale float encoding (4 fixtures)
+
++65% on float-heavy via per-fixture scale selection (1, 100,
+1e3, 1e6, 1e9). The 1-byte scale_index header + 8-byte first-value
++ 4-byte delta-varints outperform fixed scale=1e6 by 1.5-2x on
+slow-changing (sub-nano) and wide-range (1e12) float series.
+
+### 11.4 ProcessPoolExecutor orchestrator (bha_parallel, 6 fixtures)
+
+Threshold: 500KB. Workers: 8. Coordinator dispatches 14 independent
+BHA gates to a worker pool, picks min(encoded_size) across the
+worker output, the lzma_fallback_archive, and the caller's baseline.
+
+| File | size | seq (ms) | par (ms) | speedup | par_size | win? |
+|---|---:|---:|---:|---:|---:|---|
+| delta_arith_500kb | 571KB | 3876 | 881 | **4.40x** | 228 | yes |
+| delta_mixed_500kb | 371KB | 2605 | 0 | sp. won | 14722 | yes |
+| delta_log_per_sec | 377KB | 4227 | 0 | sp. won | 54735 | yes |
+| delta_status_alt | 987KB | 4143 | 4628 | 0.90x | 337 | no |
+| bro_html_500k | 1.5MB | 2854 | 7170 | 0.40x | 102 | no |
+| bro_html_200k | 1.5MB | 2085 | 4602 | 0.45x | 25412 | no |
+| **Total** | | **19791** | **17281** | **1.15x avg** | | 3/6 wins |
+
+Speedup losses on HTML: worker-process startup (~200ms) dominates
+the ~100ms encode work. Future direction: persistent worker pool
+(ssp_DLL pre-loaded in a daemon) would remove the startup cost.
+
+## 12. Provenance
 
 - Commits: `1f4c306` (v9b), `a324dc4` (README)
 - ZIP: `D:\4\OUT_MIMO\bha-codecs-ssp5-recommender__MIMO__20260820T1200Z__v1to9b.zip`
