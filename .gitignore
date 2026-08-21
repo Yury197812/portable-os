@@ -107,3 +107,13 @@ bha-codecs/benchmark/bro_json-50k (*).json
 bha-codecs/benchmark/bro_json-80k (*).json
 bha-codecs/benchmark/bro_markdown-50k (*).md
 bha-codecs/benchmark/bro_markdown-80k (*).md
+
+# ===== runtime / output noise =====
+# Per-user mimocode state and ephemeral logs; never version-control.
+.mimocode/
+__pycache__/
+stderr.txt
+stdout.txt
+cycle_monitor.log
+n1
+_cred_input.txt
