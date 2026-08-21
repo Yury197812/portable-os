@@ -1,0 +1,20 @@
+{
+  "n_files": 50,
+  "v10_top1_match_bha": 21,
+  "v10_top3_match_bha": 26,
+  "v10_pick_distribution": {
+    "lzma2": 25,
+    "BHRT1": 2,
+    "BHNL1": 1,
+    "brotli": 4,
+    "BHTM1": 1,
+    "BHTC1": 5,
+    "bz2": 1,
+    "BHJA1": 2,
+    "BHCC1": 1,
+    "BHTL1": 2,
+    "BHVT1": 4,
+    "BHCC1__transpose": 1,
+    "BHQC1": 1
+  }
+}
