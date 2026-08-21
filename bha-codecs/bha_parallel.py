@@ -46,6 +46,90 @@ sys.path.insert(0, r'D:\PROJECT UNIVERSE\01Compression\BHA')
 PARALLEL_MIN_SIZE = 500 * 1024  # 500KB
 DEFAULT_WORKERS = 8
 
+# Adaptive threshold tuning. The simple 500KB cut-off was a v1 guess
+# that gave 1.15x avg and 3/6 wins on the 6-fixture benchmark
+# (see bha-codecs/README.md section 11.4). The cost model:
+#   startup_per_worker = 0.2s      (Python + bha modules + ssp_DLL)
+#   work_per_byte     = 2 ns/byte  (lzma ~500 MB/s)
+# We parallelize only if total work across N workers dominates
+# total startup (rule of thumb: 2x ratio = break-even).
+#
+# File classification:
+#   is_csv_like  = first 1KB is plain ASCII with ',' or '\t' in
+#                 line 0 and '\n' in <=1KB.  Cheap sniff.
+# Then:
+#   small <500KB       -> never profitable on 8 workers
+#   csv_like <100KB     -> 2 workers (delta_pp wins despite overhead)
+#   medium 500KB-1MB    -> baseline sequential, or 2-worker (low overhead)
+#   large >1MB          -> 4-8 workers (real work amortizes)
+#
+# If is_csv_like is True and data has numeric columns, the threshold
+# drops because delta_pp encodes delta_pp output, not raw data.
+# We keep the existing public API: bha_parallel_compress always
+# uses the determined n_workers; user can override via max_workers.
+
+import os as _os  # noqa: E402 (top-level for early use)
+
+
+def _is_csv_like(data: bytes) -> bool:
+    """Quick sniff: first line is plain ASCII, has a comma or tab,
+    and at least one newline within the first 1KB. False negatives
+    are fine - we just won't apply the CSV boost."""
+    sample = data[:1024]
+    if not sample:
+        return False
+    head = sample.split(b'\n', 1)[0]
+    if not head or len(head) > 256:
+        return False
+    # require plain ASCII (no high-bit) and a delimiter
+    if any(b > 127 for b in head):
+        return False
+    if b',' not in head and b'\t' not in head and b';' not in head:
+        return False
+    # require at least one more line within first 1KB
+    return b'\n' in sample[1:]
+
+
+def _select_parallel_strategy(
+    size: int,
+    is_csv_like: bool,
+    n_workers_max: int = DEFAULT_WORKERS,
+) -> int:
+    """Return optimal worker count, or 0 to skip parallel path.
+
+    Empirical model:
+    - per-worker startup = 0.2s (Python + bha imports + ssp_DLL load)
+    - per-worker work  = 2 ns/byte (lzma 500 MB/s)
+    - delta_pp on CSV may deliver large compression even for small
+      inputs, so CSV path uses lower threshold.
+    """
+    # 1. Below the minimum: never profitable, even with delta_pp
+    if size < 200_000:  # < 200KB
+        return 0
+    # 2. CSV path: delta_pp can win even on small files
+    if is_csv_like:
+        if size < 500_000:  # 200-500KB CSV: 1 worker (low overhead)
+            return 1
+        if size < 2_000_000:  # 500KB-2MB: 2 workers
+            return 2
+        return min(4, n_workers_max)
+    # 3. Non-CSV path: must amortize worker startup
+    if size < 2_000_000:    # < 2MB: 0 or 1 worker
+        return 0
+    if size < 10_000_000:   # 2-10MB: 2 workers
+        return 2
+    if size < 50_000_000:   # 10-50MB: 4 workers
+        return 4
+    return min(n_workers_max, 8)  # 50MB+: 8 workers
+
+
+def _select_workers_for(data: bytes) -> int:
+    """Public entry: classify data and return optimal worker count."""
+    n_max = max(1, DEFAULT_WORKERS)
+    return _select_parallel_strategy(
+        len(data), _is_csv_like(data), n_max
+    )
+
 # Global worker state (set once per worker process by worker_init)
 _WORKER_SSP = None
 _WORKER_BHA_DELTA = None
@@ -251,23 +335,43 @@ def worker_gate(args: Tuple[str, bytes, Optional[str]]) -> Optional[Tuple[str, i
 def bha_parallel_compress(
     data: bytes,
     src_path: Optional[Path] = None,
-    max_workers: int = DEFAULT_WORKERS,
+    max_workers: Optional[int] = None,
     baseline: Optional[bytes] = None,
 ) -> Tuple[bytes, dict]:
-    """ProcessPoolExecutor-based parallel orchestrator.
+    """ProcessPoolExecutor-based parallel orchestrator with adaptive
+    threshold tuning.
 
     Returns: (best_arc, meta_dict) where meta contains
-        'method': 'parallel' or 'fallback_sequential',
+        'method': 'parallel' or 'fallback_sequential' or
+                 'fallback_sequential_csv' or 'csv_1w'
         'elapsed_s': float,
         'best_gate': str,
         'best_size': int,
         'n_gates_succeeded': int,
         'gates_tried': list of str,
+        'selected_n_workers': int (workers actually used, may be 0),
+        'is_csv_like': bool (whether file was detected as CSV-like).
+
+    Adaptive strategy (see _select_parallel_strategy):
+    - < 200KB: skip parallel path entirely
+    - CSV-like + <500KB: 1 worker (low overhead, delta_pp wins)
+    - CSV-like + 500KB-2MB: 2 workers
+    - CSV-like + >2MB: up to 4 workers
+    - Non-CSV + <2MB: skip parallel
+    - Non-CSV + 2-10MB: 2 workers
+    - Non-CSV + 10-50MB: 4 workers
+    - Non-CSV + >50MB: 4-8 workers
     """
+    # Auto-select worker count if caller did not pass an override
+    if max_workers is None:
+        max_workers = _select_workers_for(data)
     t0 = time.perf_counter()
+    is_csv = _is_csv_like(data)
     meta = {
         'method': 'parallel',
         'max_workers': max_workers,
+        'selected_n_workers': max_workers,
+        'is_csv_like': is_csv,
         'elapsed_s': 0.0,
         'best_gate': None,
         'best_size': 0,
@@ -275,7 +379,9 @@ def bha_parallel_compress(
         'gates_tried': [],
     }
 
-    if len(data) < PARALLEL_MIN_SIZE:
+    # Adaptive threshold: selected_n_workers was set by _select_workers_for.
+    # If 0 -> skip the pool entirely and use sequential fallback.
+    if max_workers == 0 or len(data) < PARALLEL_MIN_SIZE:
         meta['method'] = 'below_threshold_sequential_fallback'
         if baseline is not None:
             meta['best_size'] = len(baseline)
@@ -359,6 +465,48 @@ if __name__ == '__main__':
     # memory-spillover-completed-tracks.md line 33)
     mp.freeze_support()
 
+    # ----- Unit tests for adaptive threshold tuning -----
+    print('=== bha_parallel unit tests ===')
+
+    # _is_csv_like: positive case
+    csv_data = b'idx,val,score\n' + b'1,2,3\n' * 100
+    assert _is_csv_like(csv_data), 'plain CSV should be detected'
+    print('  _is_csv_like(csv)  OK')
+
+    # _is_csv_like: negative cases
+    assert not _is_csv_like(b'<!DOCTYPE html><html>'), 'HTML should not be CSV'
+    print('  _is_csv_like(html) OK')
+
+    assert not _is_csv_like(b''), 'empty should not be CSV'
+    print('  _is_csv_like(empty) OK')
+
+    assert not _is_csv_like(b'\xff\xfe\xfd'), 'non-ASCII should not be CSV'
+    print('  _is_csv_like(non-ASCII) OK')
+
+    # _select_parallel_strategy: matrix
+    cases = [
+        # (size, is_csv, expected_workers, desc)
+        (50_000,   False, 0, '<200KB non-CSV -> 0'),
+        (200_000,  False, 0, '200KB non-CSV -> 0'),
+        (1_000_000,False, 0, '1MB non-CSV -> 0'),
+        (2_000_000,False, 2, '2MB non-CSV -> 2'),
+        (10_000_000,False,4, '10MB non-CSV -> 4'),
+        (50_000_000,False,8, '50MB non-CSV -> 8 (boundary)'),
+        (60_000_000,False,8, '60MB non-CSV -> 8'),
+        (100_000_000,False,8, '100MB non-CSV -> 8'),
+        (50_000,   True,  0, '<200KB CSV -> 0'),
+        (300_000,  True,  1, '300KB CSV -> 1'),
+        (1_000_000,True,  2, '1MB CSV -> 2'),
+        (3_000_000,True,  4, '3MB CSV -> 4'),
+    ]
+    for size, is_csv, want, desc in cases:
+        got = _select_parallel_strategy(size, is_csv, n_workers_max=8)
+        assert got == want, f'{desc}: got {got}, want {want}'
+        print(f'  {desc:30s} OK ({got})')
+
+    print('All unit tests passed.\n')
+
+    # ----- CLI benchmark mode -----
     import sys
     if len(sys.argv) < 2:
         print('Usage: bha_parallel.py <file> [file...]', file=sys.stderr)
