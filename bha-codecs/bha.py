@@ -122,7 +122,19 @@ def bha_compress(
 
     def runner():
         try:
+            # Try plain first
             result["inner"], result["stats"] = bha._compress_best(data, src_path)
+            # Also try delta-preprocessed for numeric CSV
+            try:
+                import bha_delta
+                delta_bytes = bha_delta.try_column_delta(data)
+                if delta_bytes is not None:
+                    delta_inner, _ = bha._compress_best(delta_bytes, src_path)
+                    if delta_inner is not None and len(delta_inner) < len(result["inner"]):
+                        result["inner"] = delta_inner
+                        result["stats"] = ("delta_pp", result["stats"])
+            except Exception as e:
+                result["delta_error"] = str(e)
         except Exception as e:
             result["error"] = e
 

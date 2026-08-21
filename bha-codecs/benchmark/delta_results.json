@@ -1,0 +1,162 @@
+[
+  {
+    "file": "delta_arith_100kb.csv",
+    "input_bytes": 99777,
+    "bha_size": 180,
+    "bha_ratio_pct": 0.1804,
+    "bha_delta_used": false,
+    "raw_lzma_size": 15228,
+    "raw_lzma_ratio_pct": 15.262,
+    "pack_ms_median": 1845.3
+  },
+  {
+    "file": "delta_arith_200kb.csv",
+    "input_bytes": 212608,
+    "bha_size": 206,
+    "bha_ratio_pct": 0.0969,
+    "bha_delta_used": false,
+    "raw_lzma_size": 31536,
+    "raw_lzma_ratio_pct": 14.8329,
+    "pack_ms_median": 3058.6
+  },
+  {
+    "file": "delta_arith_500kb.csv",
+    "input_bytes": 571008,
+    "bha_size": 228,
+    "bha_ratio_pct": 0.0399,
+    "bha_delta_used": true,
+    "raw_lzma_size": 79536,
+    "raw_lzma_ratio_pct": 13.9291,
+    "pack_ms_median": 1555.6
+  },
+  {
+    "file": "delta_arith_50kb.csv",
+    "input_bytes": 48573,
+    "bha_size": 152,
+    "bha_ratio_pct": 0.3129,
+    "bha_delta_used": false,
+    "raw_lzma_size": 8064,
+    "raw_lzma_ratio_pct": 16.6018,
+    "pack_ms_median": 1069.6
+  },
+  {
+    "file": "delta_mixed_100kb.csv",
+    "input_bytes": 70120,
+    "bha_size": 3248,
+    "bha_ratio_pct": 4.6321,
+    "bha_delta_used": false,
+    "raw_lzma_size": 15068,
+    "raw_lzma_ratio_pct": 21.4889,
+    "pack_ms_median": 2056.9
+  },
+  {
+    "file": "delta_mixed_200kb.csv",
+    "input_bytes": 142874,
+    "bha_size": 6200,
+    "bha_ratio_pct": 4.3395,
+    "bha_delta_used": false,
+    "raw_lzma_size": 28932,
+    "raw_lzma_ratio_pct": 20.25,
+    "pack_ms_median": 3872.6
+  },
+  {
+    "file": "delta_mixed_500kb.csv",
+    "input_bytes": 370950,
+    "bha_size": 18846,
+    "bha_ratio_pct": 5.0805,
+    "bha_delta_used": true,
+    "raw_lzma_size": 70668,
+    "raw_lzma_ratio_pct": 19.0505,
+    "pack_ms_median": 1630.1
+  },
+  {
+    "file": "delta_mixed_50kb.csv",
+    "input_bytes": 33737,
+    "bha_size": 1757,
+    "bha_ratio_pct": 5.2079,
+    "bha_delta_used": false,
+    "raw_lzma_size": 8044,
+    "raw_lzma_ratio_pct": 23.8433,
+    "pack_ms_median": 1443.1
+  },
+  {
+    "file": "delta_quadratic_100kb.csv",
+    "input_bytes": 53369,
+    "bha_size": 142,
+    "bha_ratio_pct": 0.2661,
+    "bha_delta_used": false,
+    "raw_lzma_size": 7440,
+    "raw_lzma_ratio_pct": 13.9407,
+    "pack_ms_median": 1202.4
+  },
+  {
+    "file": "delta_quadratic_200kb.csv",
+    "input_bytes": 109929,
+    "bha_size": 170,
+    "bha_ratio_pct": 0.1546,
+    "bha_delta_used": false,
+    "raw_lzma_size": 11628,
+    "raw_lzma_ratio_pct": 10.5777,
+    "pack_ms_median": 2180.3
+  },
+  {
+    "file": "delta_quadratic_500kb.csv",
+    "input_bytes": 303183,
+    "bha_size": 213,
+    "bha_ratio_pct": 0.0703,
+    "bha_delta_used": true,
+    "raw_lzma_size": 22796,
+    "raw_lzma_ratio_pct": 7.5189,
+    "pack_ms_median": 747.9
+  },
+  {
+    "file": "delta_quadratic_50kb.csv",
+    "input_bytes": 25209,
+    "bha_size": 122,
+    "bha_ratio_pct": 0.484,
+    "bha_delta_used": false,
+    "raw_lzma_size": 4084,
+    "raw_lzma_ratio_pct": 16.2006,
+    "pack_ms_median": 698.3
+  },
+  {
+    "file": "delta_sparse_random_100kb.csv",
+    "input_bytes": 80449,
+    "bha_size": 8610,
+    "bha_ratio_pct": 10.7024,
+    "bha_delta_used": false,
+    "raw_lzma_size": 17372,
+    "raw_lzma_ratio_pct": 21.5938,
+    "pack_ms_median": 2485.7
+  },
+  {
+    "file": "delta_sparse_random_200kb.csv",
+    "input_bytes": 168694,
+    "bha_size": 16896,
+    "bha_ratio_pct": 10.0158,
+    "bha_delta_used": false,
+    "raw_lzma_size": 34440,
+    "raw_lzma_ratio_pct": 20.4157,
+    "pack_ms_median": 4683.3
+  },
+  {
+    "file": "delta_sparse_random_500kb.csv",
+    "input_bytes": 454934,
+    "bha_size": 49293,
+    "bha_ratio_pct": 10.8352,
+    "bha_delta_used": true,
+    "raw_lzma_size": 85432,
+    "raw_lzma_ratio_pct": 18.779,
+    "pack_ms_median": 2461.6
+  },
+  {
+    "file": "delta_sparse_random_50kb.csv",
+    "input_bytes": 39136,
+    "bha_size": 4454,
+    "bha_ratio_pct": 11.3808,
+    "bha_delta_used": false,
+    "raw_lzma_size": 8908,
+    "raw_lzma_ratio_pct": 22.7617,
+    "pack_ms_median": 1433.5
+  }
+]
