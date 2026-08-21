@@ -277,6 +277,11 @@ def try_column_delta(data: bytes) -> Optional[bytes]:
             text = data.decode('latin-1')
         except Exception:
             return None
+    # Increase csv field_size_limit to handle large fields (e.g. embedded
+    # base64 blobs in JSON, long text values). Default is 131072 bytes
+    # (128 KB) which is too small for the 500KB fixtures.
+    import sys as _sys_mod
+    csv.field_size_limit(min(_sys_mod.maxsize, 2**31 - 1))
     reader = csv.reader(io.StringIO(text))
     rows = list(reader)
     if len(rows) < 51:  # header + 50 data
