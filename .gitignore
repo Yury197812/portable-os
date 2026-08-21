@@ -8,6 +8,10 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
+
+# ===== Secrets (перенесено из GPT-обмена 2026-08-13) =====
+.env
+*credentials*.txt
 .ruff_cache/
 
 # ===== Node / Next.js =====
@@ -90,3 +94,16 @@ auto_*.ps1
 start_*.bat
 setup_*.ps1
 install_*.ps1
+
+# ===== bha-codecs test artifacts =====
+# Junk copies produced by broken benchmark iterations (2026-08-21).
+# Real fixtures have no trailing " (N)"; numbered ones are duplicates.
+bha-codecs/benchmark/bro_specific_html_500k *.html
+bha-codecs/benchmark/bro_specific_html_500k (*).html
+bha-codecs/benchmark/bro_specific_html_200k (*).html
+bha-codecs/benchmark/bro_html+json-50k (*).html
+bha-codecs/benchmark/bro_html+json-80k (*).html
+bha-codecs/benchmark/bro_json-50k (*).json
+bha-codecs/benchmark/bro_json-80k (*).json
+bha-codecs/benchmark/bro_markdown-50k (*).md
+bha-codecs/benchmark/bro_markdown-80k (*).md

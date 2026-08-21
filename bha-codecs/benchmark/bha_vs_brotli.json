@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "files_compared": 1,
+    "bha_total_bytes": 23080,
+    "brotli_q6_total_bytes": 40811,
+    "brotli_q9_total_bytes": 34442,
+    "brotli_q11_total_bytes": 36877,
+    "input_total_bytes": 1536812,
+    "bha_overall_ratio_pct": 1.5018,
+    "brotli_q6_overall_ratio_pct": 2.6556,
+    "brotli_q9_overall_ratio_pct": 2.2411,
+    "brotli_q11_overall_ratio_pct": 2.3996,
+    "bha_total_pack_ms": 32852.4,
+    "brotli_q6_total_pack_ms": 29.9,
+    "bha_wins_vs_q11": 1,
+    "bha_size_minus_q11_pct": -37.41
+  },
+  "rows": [
+    {
+      "file": "bro_specific_html_200k.html",
+      "kind": "html-inline-json",
+      "size_in": 1536812,
+      "bha_size": 23080,
+      "bha_ratio_pct": 1.5018,
+      "bha_pack_ms": 32852.371,
+      "brotli_q6_size": 40811,
+      "brotli_q6_ratio_pct": 2.6556,
+      "brotli_q6_pack_ms": 29.94,
+      "brotli_q9_size": 34442,
+      "brotli_q9_ratio_pct": 2.2411,
+      "brotli_q9_pack_ms": 63.64,
+      "brotli_q11_size": 36877,
+      "brotli_q11_ratio_pct": 2.3996,
+      "brotli_q11_pack_ms": 4525.17,
+      "brotli_q11_decode_ms": 3.66,
+      "verdict": "BHA<q11"
+    }
+  ]
+}

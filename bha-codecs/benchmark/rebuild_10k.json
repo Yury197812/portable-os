@@ -1,0 +1,108 @@
+{
+  "files": {
+    "bro_json-80k.json": {
+      "file": "bro_json-80k.json",
+      "input_bytes": 15487,
+      "n": 10000,
+      "elapsed_s": 5619.61,
+      "throughput_files_per_s": 1.78,
+      "size_bytes": {
+        "min": 1005,
+        "max": 1005,
+        "median": 1005,
+        "mean": 1005,
+        "stdev": 0.0,
+        "unique_count": 1
+      },
+      "ratio_pct_median": 6.4893,
+      "pack_ms": {
+        "min": 184.83,
+        "p50": 242.16,
+        "p95": 300.52,
+        "p99": 315.0,
+        "max": 431.93,
+        "mean": 247.39
+      },
+      "rt_fails": 0,
+      "rt_pass_rate_pct": 100.0
+    },
+    "bro_markdown-80k.md": {
+      "file": "bro_markdown-80k.md",
+      "input_bytes": 153857,
+      "n": 1000,
+      "elapsed_s": 4615.58,
+      "throughput_files_per_s": 0.22,
+      "size_bytes": {
+        "min": 600,
+        "max": 600,
+        "median": 600,
+        "mean": 600,
+        "stdev": 0.0,
+        "unique_count": 1
+      },
+      "ratio_pct_median": 0.39,
+      "pack_ms": {
+        "min": 3672.21,
+        "p50": 4552.32,
+        "p95": 4964.74,
+        "p99": 5113.24,
+        "max": 5245.6,
+        "mean": 4557.94
+      },
+      "rt_fails": 0,
+      "rt_pass_rate_pct": 100.0
+    },
+    "bro_specific_html_500k.html": {
+      "file": "bro_specific_html_500k.html",
+      "input_bytes": 1480603,
+      "n": 200,
+      "elapsed_s": 620.23,
+      "throughput_files_per_s": 0.32,
+      "size_bytes": {
+        "min": 25095,
+        "max": 25095,
+        "median": 25095,
+        "mean": 25095,
+        "stdev": 0.0,
+        "unique_count": 1
+      },
+      "ratio_pct_median": 1.6949,
+      "pack_ms": {
+        "min": 2576.75,
+        "p50": 2969.16,
+        "p95": 3215.26,
+        "p99": 3353.88,
+        "max": 3642.26,
+        "mean": 2963.69
+      },
+      "rt_fails": 0,
+      "rt_pass_rate_pct": 100.0
+    },
+    "bro_html+json-80k.html": {
+      "file": "bro_html+json-80k.html",
+      "input_bytes": 5557,
+      "n": 5000,
+      "elapsed_s": 3606.49,
+      "throughput_files_per_s": 1.39,
+      "size_bytes": {
+        "min": 705,
+        "max": 705,
+        "median": 705,
+        "mean": 705,
+        "stdev": 0.0,
+        "unique_count": 1
+      },
+      "ratio_pct_median": 12.6867,
+      "pack_ms": {
+        "min": 170.68,
+        "p50": 218.43,
+        "p95": 272.78,
+        "p99": 299.86,
+        "max": 358.63,
+        "mean": 225.98
+      },
+      "rt_fails": 0,
+      "rt_pass_rate_pct": 100.0
+    }
+  }
+}
