@@ -134,3 +134,33 @@ mail_sandbox/
 Повторяем
 gh_profile/
 gh_session/
+
+# ===== untracked but live projects (added 2026-08-21) =====
+# These 19 dirs + 1 file are live code/data, NOT deleted.
+# They live in D:\4 but are not part of this repo's tracked set.
+# Kept out of git status to reduce noise; promoted later if the
+# user wants them as submodules/subtrees or direct commits.
+#
+# Go modules — gfs255 + iteration_dividend + oculus132 + oculus_v132:
+gfs255_bench_v039/
+gfs255_resolver_exact_v050/
+gfs255_splitproof_exact_v051/
+iteration_dividend_v2_benchmark/
+iteration_dividend_v2_exact/
+oculus132_shadow_exact_v1/
+oculus132_shadow_exact_v2/
+oculus132_shadow_exact_v3/
+oculus132_v02_exact/
+oculus132_v04_exact/
+oculus132_v05_exact/
+oculus_v132_intake/
+# Python / Rust / data — factory + oeis + lstm_ru_v2:
+factory/
+oeis/
+oeis-classifier/
+lstm_ru_v2_tools/
+# LaTeX + automation:
+paper/
+tools/
+# Single file at repo root:
+test_core.py
