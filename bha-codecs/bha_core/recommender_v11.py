@@ -30,9 +30,15 @@ from pathlib import Path
 # Telemetry lives in the parent project's benchmark directory (large
 # artifact, kept outside the package). Rules JSON is written next to
 # this module so bha_recommender_v11 can find it relatively.
+#
+# T2 retraining: telemetry_v2.json adds the BHA_VS_BROTLI crossover
+# fixtures so v11 routing can correctly learn that brotli dominates
+# on small web files. Pass --telemetry=v1 to use the legacy corpus.
 _HERE = Path(__file__).parent
 _PROJECT = _HERE.parent
-TELEMETRY = _PROJECT / 'benchmark' / 'codec-benchmark' / 'telemetry_v1.json'
+DEFAULT_TELEMETRY = _PROJECT / 'benchmark' / 'codec-benchmark' / 'telemetry_v2.json'
+LEGACY_TELEMETRY = _PROJECT / 'benchmark' / 'codec-benchmark' / 'telemetry_v1.json'
+TELEMETRY = DEFAULT_TELEMETRY
 OUT = _HERE / 'rules.json'
 
 

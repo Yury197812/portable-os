@@ -194,15 +194,19 @@ def bha_compress(
         size_class = "medium"
     else:
         size_class = "large"
+    # Use compact IDs from meta_dict_ids (the "filter-dictionary" pattern).
+    # Round-trip via id_to_full() when serializing to JSON for
+    # backwards-compatible human-readable output.
+    from bha_core.meta_dict_ids import _MetaId as MI, id_to_full
     meta = {
-        "elapsed_s": elapsed,
-        "timed_out": th.is_alive(),
-        "reached_finish": not th.is_alive(),
-        "method": result.get("method", "lzma_archive"),
-        "skipped_delta": result.get("skipped_delta", False),
-        "skipped_ssp": result.get("skipped_ssp", False),
-        "size_class": size_class,
-        "input_bytes": len(data),
+        MI.ELAPSED_S: elapsed,
+        MI.TIMED_OUT: th.is_alive(),
+        MI.REACHED_FINISH: not th.is_alive(),
+        MI.METHOD: result.get("method", "lzma_archive"),
+        MI.SKIPPED_DELTA: result.get("skipped_delta", False),
+        MI.SKIPPED_SSP: result.get("skipped_ssp", False),
+        MI.SIZE_CLASS: size_class,
+        MI.INPUT_BYTES: len(data),
     }
     if th.is_alive():
         # Note: thread keeps running in the background; we just abandon it.

@@ -203,6 +203,33 @@ def worker_gate(args: Tuple[str, bytes, Optional[str]]) -> Optional[Tuple[str, i
             return (gate_name, len(arc), arc)
         return None
 
+    # Brotli gates: bypass ssp pipeline entirely. Round-trip is
+    # brotli.compress -> brotli.decompress (no BHA envelope). Best on
+    # small (<=64 KB) web/structured-text files where the BHA envelope
+    # overhead (~370-700 B) eats the brotli ratio win. See
+    # BHA_VS_BROTLI.md for the baseline that motivated this gate.
+    if gate_name in ('brotli_q11', 'brotli_q6'):
+        try:
+            from .bha_codec_backends import (
+                is_available as _brotli_available,
+                quality_for, brotli_compress, brotli_decompress,
+            )
+        except Exception:
+            return None
+        if not _brotli_available():
+            return None
+        q = quality_for(gate_name)
+        if q is None:
+            return None
+        try:
+            arc = brotli_compress(data, quality=q)
+            decoded = brotli_decompress(arc)
+        except Exception:
+            return None
+        if decoded != data:
+            return None
+        return (gate_name, len(arc), arc)
+
     if gate_name == 'structured':
         from black_hole_archiver import (
             _structured_transform_file, _decode_line_delta,
@@ -365,6 +392,7 @@ def bha_parallel_compress(
         'mixed_formula', 'sparse_col', 'tabular_col', 'record_transpose',
         'vartrans', 'line_norm', 'json_array', 'markdown_table', 'css_struct',
         'pp_dedup_substring', 'pp_bcj_x86', 'pp_zero_extend',
+        'brotli_q11', 'brotli_q6',
     ]
     if priority:
         if v11_only:

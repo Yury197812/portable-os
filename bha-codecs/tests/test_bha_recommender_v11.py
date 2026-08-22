@@ -25,10 +25,13 @@ class TestStats:
         # v11 was trained on 46 files; allow some drift
         assert stats["n_files"] >= 40
 
-    def test_stats_top1_accuracy_at_least_45_pct(self):
-        # v11 should beat v9b (42.0%) — minimum bar at 45%
+    def test_stats_top1_accuracy_at_least_50_pct(self):
+        # T2 retraining on telemetry_v2 raised the bar to 51.5%.
+        # Minimum acceptable for the brotli-cross-training recommender.
         stats = bha_recommender_v11.stats()
-        assert stats["loo_top1_pct"] >= 45.0
+        assert stats["loo_top1_pct"] >= 50.0, (
+            f'v12 LOO top-1 dropped to {stats["loo_top1_pct"]}% (was 51.5% baseline)'
+        )
 
 
 class TestRecommend:

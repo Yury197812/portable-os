@@ -35,6 +35,21 @@ CheckFn = Callable[[object, bytes], bool]
 EncodeFn = Callable[[bytes], bytes]
 ArchiveFn = Callable[[bytes], bytes]
 
+# Pipeline types (T3 extension):
+#   'ssp'    - 4-step BHA pipeline: encode -> ssp.encode_data -> ssp.decode_data
+#                -> verify -> build_archive (default, used by 14 BHA gates).
+#   'brotli' - 4-step alternative pipeline: encode -> brotli.compress
+#                -> brotli.decompress -> verify -> build_archive. Used by
+#                brotli_q11 / brotli_q6 gates that bypass ssp entirely
+#                (ssp cannot decode a brotli-framed blob).
+#   'passthrough' - no entropy layer: encode -> verify -> build_archive.
+#                Used by gates that don't need compression (e.g. plain
+#                delta_pp output for small delta-encoded data).
+PIPELINE_SSP = 'ssp'
+PIPELINE_BROTLI = 'brotli'
+PIPELINE_PASSTHROUGH = 'passthrough'
+_VALID_PIPELINES = frozenset({PIPELINE_SSP, PIPELINE_BROTLI, PIPELINE_PASSTHROUGH})
+
 
 class GateRegistry:
     """Registry of BHA codec gates keyed by name."""
@@ -43,27 +58,45 @@ class GateRegistry:
         self._gates: dict[str, dict] = {}
 
     def register(self, name: str, check: CheckFn, encode: EncodeFn,
-                 build_archive: ArchiveFn) -> None:
+                 build_archive: ArchiveFn,
+                 pipeline: str = PIPELINE_SSP) -> None:
         """Register a gate.
 
         Args:
-            name: gate identifier (e.g. 'quoted_csv', 'pp_bcj_x86')
+            name: gate identifier (e.g. 'quoted_csv', 'pp_bcj_x86',
+                  'brotli_q11')
             check: (src_path, data) -> bool, returns True if gate applies
             encode: data -> blob (preprocessed bytes)
             build_archive: blob -> BHA file archive bytes
+            pipeline: 'ssp' (default), 'brotli', or 'passthrough'. The
+                'brotli' pipeline skips the LZMA2/ssp step (brotli is the
+                entropy layer). 'passthrough' means no entropy layer at
+                all (the encoder output is the archive).
 
-        The 4-step pipeline (encode → lzma2 → archive → verify) is
-        applied uniformly by run() — no need for each gate to
-        duplicate that logic.
+        The 4-step pipeline (check → encode → entropy → verify → archive)
+        is applied uniformly by run(); the entropy step varies by
+        pipeline type. Adding a new pipeline (e.g. 'zstd') means adding
+        a branch in run() — no changes to registered gates.
         """
+        if pipeline not in _VALID_PIPELINES:
+            raise ValueError(
+                f'unknown pipeline {pipeline!r}; '
+                f'expected one of {sorted(_VALID_PIPELINES)}'
+            )
         self._gates[name] = {
             'check': check,
             'encode': encode,
             'build_archive': build_archive,
+            'pipeline': pipeline,
         }
 
     def has(self, name: str) -> bool:
         return name in self._gates
+
+    def pipeline_of(self, name: str) -> Optional[str]:
+        """Return the pipeline type for a registered gate, or None."""
+        g = self._gates.get(name)
+        return g['pipeline'] if g else None
 
     def names(self) -> list[str]:
         return list(self._gates.keys())
@@ -76,13 +109,14 @@ class GateRegistry:
         - Gate not in registry
         - check() returns False
         - encode fails (exception)
-        - LZMA2 encode/decode fails
+        - entropy encode/decode fails
         - round-trip check fails (decoded != original)
         - build_archive fails
         """
         if name not in self._gates:
             return None
         g = self._gates[name]
+        pipeline = g['pipeline']
 
         # Step 1: gate-specific check
         try:
@@ -97,14 +131,41 @@ class GateRegistry:
         except Exception:
             return None
 
-        # Step 3: LZMA2 compress via ssp runtime
-        try:
-            arc, _ = ssp_module.encode_data(
-                blob, None, 1, r=1, block_bits=32, allow_ssp=False
-            )
-            decoded = ssp_module.decode_data(arc, None)
-        except Exception:
-            return None
+        # Step 3: entropy layer (varies by pipeline)
+        if pipeline == PIPELINE_SSP:
+            # LZMA2 compress via ssp runtime (default BHA path)
+            try:
+                arc, _ = ssp_module.encode_data(
+                    blob, None, 1, r=1, block_bits=32, allow_ssp=False
+                )
+                decoded = ssp_module.decode_data(arc, None)
+            except Exception:
+                return None
+        elif pipeline == PIPELINE_BROTLI:
+            # Brotli compress/decompress (T3: brotli is the entropy layer)
+            try:
+                from .bha_codec_backends import (
+                    is_available as _brotli_available,
+                    brotli_compress, brotli_decompress,
+                )
+            except Exception:
+                return None
+            if not _brotli_available():
+                return None
+            try:
+                # Use the gate's encode-fn output (blob) as the brotli input.
+                # Quality is set by the encode-fn itself (each brotli gate
+                # has its own encode fn pinned to a specific quality).
+                arc = brotli_compress(blob, quality=_gate_quality(name))
+                decoded = brotli_decompress(arc)
+            except Exception:
+                return None
+        elif pipeline == PIPELINE_PASSTHROUGH:
+            # No entropy layer: the encoder output IS the archive.
+            arc = blob
+            decoded = blob  # skip round-trip — gate is authoritative
+        else:
+            return None  # unknown pipeline (shouldn't reach here)
 
         # Step 4: round-trip verification
         if decoded != data:
@@ -116,6 +177,23 @@ class GateRegistry:
             return (len(final_arc), final_arc)
         except Exception:
             return None
+
+
+# Brotli quality lookup for gate names registered with pipeline='brotli'.
+# Kept here (not in bha_codec_backends) so the registry module stays
+# self-contained — only quality is registry-specific data.
+_BROTLI_GATE_QUALITY: dict[str, int] = {}
+
+
+def _gate_quality(name: str) -> int:
+    """Return brotli quality for a gate registered with pipeline='brotli'.
+    Defaults to 11 if not explicitly registered."""
+    return _BROTLI_GATE_QUALITY.get(name, 11)
+
+
+def set_brotli_quality(name: str, quality: int) -> None:
+    """Register brotli quality for a gate before it's added to a registry."""
+    _BROTLI_GATE_QUALITY[name] = quality
 
 
 # ---------------------------------------------------------------------------
@@ -259,12 +337,54 @@ def _register_default_gates() -> None:
 # ('pp_dedup_substring', 'pp_bcj_x86', 'pp_zero_extend') are handled
 # separately by the orchestrator because they have custom sidecar
 # logic not captured by the simple 3-function gate interface.
+#
+# T3: brotli_q11 / brotli_q6 are now in the registry (with
+# pipeline='brotli'). They are listed in GATE_NAMES so the parallel
+# orchestrator includes them in the candidate pool when v11 routing
+# puts them in priority.
 GATE_NAMES = [
     'lzma_fallback',
+    'brotli_q11', 'brotli_q6',
     'quoted_csv', 'telemetry_csv', 'sparse_pattern', 'dense_sparse',
     'mixed_formula', 'sparse_col', 'tabular_col', 'record_transpose',
     'vartrans', 'line_norm', 'json_array', 'markdown_table', 'css_struct',
 ]
+
+
+def _register_brotli_gates() -> None:
+    """Register brotli_q11 / brotli_q6 as codec gates (T3).
+
+    These gates use pipeline='brotli': the encode step is identity
+    (brotli IS the entropy layer, no preprocessing needed). The build
+    archive step is also identity (the brotli-framed blob is the
+    archive - no BHA envelope). Round-trip verification is provided
+    by the brotli encode/decode pair inside run().
+
+    The check() returns True unconditionally because brotli handles
+    any byte input (worst case: output is slightly larger than input
+    for already-compressed data, but always round-trip safe).
+    """
+    # Register quality per gate so run() knows what to call.
+    set_brotli_quality('brotli_q11', 11)
+    set_brotli_quality('brotli_q6', 6)
+
+    identity_encode = lambda d: d
+    identity_archive = lambda blob: blob
+
+    DEFAULT_REGISTRY.register(
+        'brotli_q11',
+        check=lambda sp, d: True,
+        encode=identity_encode,
+        build_archive=identity_archive,
+        pipeline=PIPELINE_BROTLI,
+    )
+    DEFAULT_REGISTRY.register(
+        'brotli_q6',
+        check=lambda sp, d: True,
+        encode=identity_encode,
+        build_archive=identity_archive,
+        pipeline=PIPELINE_BROTLI,
+    )
 
 
 def list_gates() -> list[str]:
@@ -276,12 +396,23 @@ def list_gates() -> list[str]:
 # Auto-register on import (lazy — BHA runtime must be available)
 # ---------------------------------------------------------------------------
 def ensure_registered() -> None:
-    """Idempotent: register defaults if not already done."""
+    """Idempotent: register defaults if not already done.
+
+    Always registers brotli gates (no BHA runtime needed for them).
+    Conditionally registers the 14 BHA structural gates if the BHA
+    runtime is importable.
+    """
     if not DEFAULT_REGISTRY.names():
+        # Brotli gates first — they don't need BHA runtime and the
+        # registry should expose them even when BHA is missing.
+        try:
+            _register_brotli_gates()
+        except Exception as e:  # pragma: no cover (defensive)
+            pass  # brotli not available; skip silently
         try:
             _register_default_gates()
         except ImportError:
-            pass  # BHA runtime not available; gates won't work
+            pass  # BHA runtime not available; BHA gates won't work
 
 
 ensure_registered()

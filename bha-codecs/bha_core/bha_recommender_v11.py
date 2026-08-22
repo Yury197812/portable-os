@@ -91,6 +91,48 @@ EXT_LZMA_PRESET = {
 }
 
 
+# ---------------------------------------------------------------------------
+# Brotli routing (T1: small-file web crossover fix)
+# ---------------------------------------------------------------------------
+# Reference: BHA_VS_BROTLI.md + telemetry_v2.json show brotli wins on
+# web/structured-text content up to ~256 KB (crossover_html_400kb and
+# bro_markdown-80k both go to brotli_11/brotli_6 in v2 telemetry).
+# 256 KB = 2^18 is the new power-of-2 threshold; we stay conservative
+# below 1 MB where BHA structural codecs start to dominate again.
+BROTLI_SMALL_MAX = 1 << 18  # 256 KiB (was 64 KiB in T1; raised by T2 telemetry)
+
+# Extensions where brotli wins for small inputs (from telemetry +
+# BHA_VS_BROTLI cross-bucket 50k/80k benchmarks).
+BROTLI_PREFERRED_EXTS = frozenset({
+    'html', 'htm', 'css', 'json', 'md', 'markdown',
+    'xml', 'ini', 'toml', 'yaml', 'yml', 'jsonl',
+    'txt', 'svg', 'js', 'ts',
+})
+
+# Brotli priority extension to prepend for small files. Order matters:
+# v11 picks highest-priority first, so brotli_q11 must come before
+# brotli_q6 before BHA gates.
+BROTLI_SMALL_PRIORITY = ['brotli_q11', 'brotli_q6']
+
+
+# Codec name aliases (T2). The bench harness (bench_codecs.py) emits
+# codec names from the stdlib/external registry: 'brotli_11', 'brotli_6'.
+# The gate layer (bha_parallel.worker_gate, bha_codec_backends) uses
+# 'brotli_q11' / 'brotli_q6' to match the bha_gates naming convention
+# (`<codec>_<quality>`-style). They denote the SAME operation
+# (brotli with quality=N); we translate telemetry names to gate names
+# so the L8 recommender can dispatch a real BHA gate.
+CODEC_ALIASES = {
+    'brotli_11': 'brotli_q11',
+    'brotli_6':  'brotli_q6',
+}
+
+
+def _alias_gate(name: str) -> str:
+    """Translate telemetry codec name to bha gate name (or pass through)."""
+    return CODEC_ALIASES.get(name, name)
+
+
 @lru_cache(maxsize=1)
 def _load_rules() -> dict:
     if not RULES_PATH.exists():
@@ -120,7 +162,9 @@ def _features(name: str, size: int) -> dict:
 def _top_codec_for(name: str, size: int) -> tuple[str, str]:
     """Return (best_codec, source) where source is 'extension', 'global', or 'fallback'.
 
-    Used internally to derive LZMA preset and gate priority.
+    Used internally to derive LZMA preset and gate priority. The returned
+    codec name is aliased via CODEC_ALIASES so telemetry names like
+    'brotli_11' become the gate name 'brotli_q11'.
     """
     rules = _load_rules()
     ext = _features(name, size)['ext']
@@ -129,12 +173,12 @@ def _top_codec_for(name: str, size: int) -> tuple[str, str]:
     if by_ext_rules and by_ext_rules.get('_count', 0) >= 2:
         counts = {k: v for k, v in by_ext_rules.items() if k != '_count'}
         best = max(counts, key=counts.get)
-        return (best, 'extension')
+        return (_alias_gate(best), 'extension')
     # Best global
     dist = rules.get('codec_distribution', {})
     if dist:
         best = max(dist, key=dist.get)
-        return (best, 'global')
+        return (_alias_gate(best), 'global')
     return ('lzma6', 'fallback')
 
 
@@ -150,7 +194,7 @@ def lzma_preset_for(name: str, size: int) -> int:
     # Map top codec to preset
     if codec == 'lzma9_extreme':
         return 9
-    if codec in ('brotli_11', 'brotli_6', 'zstd_22'):
+    if codec in ('brotli_q11', 'brotli_q6', 'brotli_11', 'brotli_6', 'zstd_22'):
         return 9  # high-compression regimes benefit from EXTREME
     return 6  # default
 
@@ -163,15 +207,32 @@ def recommend(name: str, size: int, k: int = 5) -> list[str]:
 
     The returned list is always of length >=k; falls back to
     DEFAULT_PRIORITY if extension is unknown.
+
+    Brotli crossover (T1/T2): for web/structured-text extensions and
+    small inputs (<=256 KB after T2 telemetry retraining), brotli_q11
+    is prepended at index 0, since telemetry_v2 + BHA_VS_BROTLI
+    baseline show it wins on this domain. Above the threshold, BHA
+    structural codecs resume priority; brotli still appears later as
+    a candidate.
+
+    All gate names pass through _alias_gate() so that telemetry names
+    like 'brotli_11' (from bench_codecs.py) are translated to the gate
+    name 'brotli_q11' (from worker_gate / bha_codec_backends).
     """
     feats = _features(name, size)
     ext = feats['ext']
-    priority = list(EXT_PRIORITY.get(ext, DEFAULT_PRIORITY))
+    priority = [_alias_gate(g) for g in EXT_PRIORITY.get(ext, DEFAULT_PRIORITY)]
+    # Brotli crossover: prepend for small web files
+    if ext in BROTLI_PREFERRED_EXTS and size <= BROTLI_SMALL_MAX:
+        priority = BROTLI_SMALL_PRIORITY + [
+            g for g in priority if g not in BROTLI_SMALL_PRIORITY
+        ]
     # Pad to k if extension-specific list is too short
     if len(priority) < k:
         for g in DEFAULT_PRIORITY:
-            if g not in priority:
-                priority.append(g)
+            g_aliased = _alias_gate(g)
+            if g_aliased not in priority:
+                priority.append(g_aliased)
             if len(priority) >= k:
                 break
     return priority[:k]
