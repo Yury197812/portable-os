@@ -16,8 +16,9 @@ trained on real compression telemetry.
 | `lz4` | 1.45× | 5.52 | Fastest, worst ratio |
 | `snappy` | 1.40× | 5.72 | Fastest |
 
-**v11 recommender:** 48.5% top-1 accuracy (vs v9b 42.0%) on 50-file BHA corpus.
+**v11 recommender:** 51.5% top-1 / 81.1% top-3 LOO accuracy (vs v9b 42.0%) on 64-file BHA+Brotli corpus (T2 retrain).
 **Persistent pool:** 2.14× avg speedup over per-call ProcessPoolExecutor.
+**Brotli gates:** brotli_q11 / brotli_q6 registered as codec gates in `GateRegistry` with `pipeline='brotli'` (T3). Routed for web/structured-text files <=256 KiB; avg -19.5% vs LZMA6 on small files (T1 bench).
 
 ---
 
