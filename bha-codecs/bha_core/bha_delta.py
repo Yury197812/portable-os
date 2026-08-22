@@ -544,7 +544,12 @@ def try_column_delta(data: bytes) -> Optional[bytes]:
       5. delta_float      (floating point, adaptive scale)
       6. pass             (non-numeric: original CSV text)
     """
-    if len(data) < 256 or len(data) > 8 * 1024 * 1024:
+    # Size limits: must be at least 256 bytes for CSV detection
+    # (header + at least one row), and at most 8 MiB (varint overhead
+    # becomes worse than the original CSV above this point).
+    MIN_DATA_SIZE = 1 << 8   # 256 bytes
+    MAX_DATA_SIZE = 1 << 23  # 8 MiB
+    if len(data) < MIN_DATA_SIZE or len(data) > MAX_DATA_SIZE:
         return None
     try:
         text = data.decode('utf-8')
