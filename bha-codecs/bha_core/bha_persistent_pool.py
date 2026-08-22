@@ -46,7 +46,7 @@ try:
 except ImportError:
     _HAS_BHA_PARALLEL = False
 
-PARALLEL_MIN_SIZE = 500 * 1024  # 500KB — matches bha_parallel
+PARALLEL_MIN_SIZE = 1 << 19  # 512KB — matches bha_parallel (1 << 19)
 DEFAULT_WORKERS = 8
 IDLE_TIMEOUT_S = 60.0  # shutdown pool after 60s of inactivity
 

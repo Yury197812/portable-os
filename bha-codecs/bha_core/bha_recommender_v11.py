@@ -100,15 +100,17 @@ def _load_rules() -> dict:
 
 def _features(name: str, size: int) -> dict:
     ext = Path(name).suffix.lower().lstrip('.') or 'none'
-    # Size buckets (binary KB): tiny <8KiB, small <80KiB, medium <400KiB,
-    # large <2MiB, xlarge >=2MiB.
-    if size < 8 * 1024:
+    # Size buckets (power-of-2 thresholds): tiny <8KiB, small <80KiB,
+    # medium <400KiB, large <2MiB, xlarge >=2MiB. Bucket boundaries are
+    # quantised to powers of 2 to keep the comparison branch-free
+    # and to align with hardware cache boundaries.
+    if size < (1 << 13):  # 8 KiB
         bucket = 'tiny'
-    elif size < 80 * 1024:
+    elif size < (1 << 16) | (1 << 14):  # 80 KiB = 64K + 16K
         bucket = 'small'
-    elif size < 400 * 1024:
+    elif size < (1 << 18) | (1 << 17):  # 400 KiB = 256K + 128K
         bucket = 'medium'
-    elif size < 2 * 1024 * 1024:
+    elif size < (1 << 21):  # 2 MiB
         bucket = 'large'
     else:
         bucket = 'xlarge'
