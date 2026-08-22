@@ -1,0 +1,5726 @@
+{
+  "iterations": 3,
+  "n_files": 46,
+  "n_codecs": 13,
+  "codecs_registered": [
+    "lzma9_extreme",
+    "lzma6",
+    "bz2_9",
+    "zlib_9",
+    "gzip_9",
+    "brotli_11",
+    "brotli_6",
+    "lz4_12",
+    "lz4_block_hc",
+    "snappy",
+    "zstd_22",
+    "zstd_3",
+    "zopfli_deflate_15"
+  ],
+  "rows": [
+    {
+      "file": "archive_zip_100k.zip",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\archive_zip_100k.zip",
+      "input_size": 109848,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 24796,
+          "bits_per_byte": 1.8058,
+          "ratio": 4.43,
+          "encode_p50_ms": 43.39,
+          "decode_p50_ms": 2.42,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 24972,
+          "bits_per_byte": 1.8187,
+          "ratio": 4.399,
+          "encode_p50_ms": 23.33,
+          "decode_p50_ms": 2.29,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 28024,
+          "bits_per_byte": 2.0409,
+          "ratio": 3.92,
+          "encode_p50_ms": 31.0,
+          "decode_p50_ms": 2.97,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 30944,
+          "bits_per_byte": 2.2536,
+          "ratio": 3.55,
+          "encode_p50_ms": 2.59,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 30956,
+          "bits_per_byte": 2.2545,
+          "ratio": 3.549,
+          "encode_p50_ms": 2.8,
+          "decode_p50_ms": 0.52,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 24530,
+          "bits_per_byte": 1.7865,
+          "ratio": 4.478,
+          "encode_p50_ms": 130.67,
+          "decode_p50_ms": 0.51,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 26098,
+          "bits_per_byte": 1.9007,
+          "ratio": 4.209,
+          "encode_p50_ms": 3.77,
+          "decode_p50_ms": 0.67,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 33106,
+          "bits_per_byte": 2.411,
+          "ratio": 3.318,
+          "encode_p50_ms": 5.02,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 33144,
+          "bits_per_byte": 2.4138,
+          "ratio": 3.314,
+          "encode_p50_ms": 1.5,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 41980,
+          "bits_per_byte": 3.0573,
+          "ratio": 2.617,
+          "encode_p50_ms": 0.11,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 25626,
+          "bits_per_byte": 1.8663,
+          "ratio": 4.287,
+          "encode_p50_ms": 31.39,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 29396,
+          "bits_per_byte": 2.1408,
+          "ratio": 3.737,
+          "encode_p50_ms": 0.52,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 27061,
+          "bits_per_byte": 1.9708,
+          "ratio": 4.059,
+          "encode_p50_ms": 3627.33,
+          "decode_p50_ms": 0.33,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "binary_embedded.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\binary_embedded.txt",
+      "input_size": 98158,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 2856,
+          "bits_per_byte": 0.2328,
+          "ratio": 34.369,
+          "encode_p50_ms": 255.11,
+          "decode_p50_ms": 0.75,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 2816,
+          "bits_per_byte": 0.2295,
+          "ratio": 34.857,
+          "encode_p50_ms": 48.04,
+          "decode_p50_ms": 0.69,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 6196,
+          "bits_per_byte": 0.505,
+          "ratio": 15.842,
+          "encode_p50_ms": 7.08,
+          "decode_p50_ms": 1.44,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 11077,
+          "bits_per_byte": 0.9028,
+          "ratio": 8.861,
+          "encode_p50_ms": 3.9,
+          "decode_p50_ms": 0.21,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 11089,
+          "bits_per_byte": 0.9038,
+          "ratio": 8.852,
+          "encode_p50_ms": 5.25,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 4654,
+          "bits_per_byte": 0.3793,
+          "ratio": 21.091,
+          "encode_p50_ms": 204.3,
+          "decode_p50_ms": 0.29,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 4934,
+          "bits_per_byte": 0.4021,
+          "ratio": 19.894,
+          "encode_p50_ms": 4.26,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 19370,
+          "bits_per_byte": 1.5787,
+          "ratio": 5.068,
+          "encode_p50_ms": 68.97,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 19936,
+          "bits_per_byte": 1.6248,
+          "ratio": 4.924,
+          "encode_p50_ms": 5.3,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 21004,
+          "bits_per_byte": 1.7119,
+          "ratio": 4.673,
+          "encode_p50_ms": 0.13,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 3506,
+          "bits_per_byte": 0.2857,
+          "ratio": 27.997,
+          "encode_p50_ms": 683.0,
+          "decode_p50_ms": 0.18,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 5770,
+          "bits_per_byte": 0.4703,
+          "ratio": 17.012,
+          "encode_p50_ms": 0.65,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 6677,
+          "bits_per_byte": 0.5442,
+          "ratio": 14.701,
+          "encode_p50_ms": 1374.77,
+          "decode_p50_ms": 0.3,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "cr_only_lines_128k.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\cr_only_lines_128k.txt",
+      "input_size": 131072,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 7272,
+          "bits_per_byte": 0.4438,
+          "ratio": 18.024,
+          "encode_p50_ms": 52.79,
+          "decode_p50_ms": 1.87,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 7272,
+          "bits_per_byte": 0.4438,
+          "ratio": 18.024,
+          "encode_p50_ms": 32.51,
+          "decode_p50_ms": 1.85,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 14735,
+          "bits_per_byte": 0.8994,
+          "ratio": 8.895,
+          "encode_p50_ms": 10.86,
+          "decode_p50_ms": 3.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 23521,
+          "bits_per_byte": 1.4356,
+          "ratio": 5.573,
+          "encode_p50_ms": 13.56,
+          "decode_p50_ms": 0.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 23533,
+          "bits_per_byte": 1.4363,
+          "ratio": 5.57,
+          "encode_p50_ms": 11.05,
+          "decode_p50_ms": 0.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 10282,
+          "bits_per_byte": 0.6276,
+          "ratio": 12.748,
+          "encode_p50_ms": 209.62,
+          "decode_p50_ms": 0.46,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 10236,
+          "bits_per_byte": 0.6248,
+          "ratio": 12.805,
+          "encode_p50_ms": 5.25,
+          "decode_p50_ms": 0.48,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 35920,
+          "bits_per_byte": 2.1924,
+          "ratio": 3.649,
+          "encode_p50_ms": 38.14,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 36950,
+          "bits_per_byte": 2.2552,
+          "ratio": 3.547,
+          "encode_p50_ms": 6.24,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 43576,
+          "bits_per_byte": 2.6597,
+          "ratio": 3.008,
+          "encode_p50_ms": 0.22,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 9379,
+          "bits_per_byte": 0.5724,
+          "ratio": 13.975,
+          "encode_p50_ms": 54.21,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 9865,
+          "bits_per_byte": 0.6021,
+          "ratio": 13.287,
+          "encode_p50_ms": 0.84,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 15270,
+          "bits_per_byte": 0.932,
+          "ratio": 8.584,
+          "encode_p50_ms": 1306.16,
+          "decode_p50_ms": 0.42,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "crlf_lf_bom_mixed_struct.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\crlf_lf_bom_mixed_struct.txt",
+      "input_size": 353503,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 24772,
+          "bits_per_byte": 0.5606,
+          "ratio": 14.27,
+          "encode_p50_ms": 393.12,
+          "decode_p50_ms": 4.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 24724,
+          "bits_per_byte": 0.5595,
+          "ratio": 14.298,
+          "encode_p50_ms": 223.06,
+          "decode_p50_ms": 4.93,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 29899,
+          "bits_per_byte": 0.6766,
+          "ratio": 11.823,
+          "encode_p50_ms": 46.13,
+          "decode_p50_ms": 9.78,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 46156,
+          "bits_per_byte": 1.0445,
+          "ratio": 7.659,
+          "encode_p50_ms": 50.51,
+          "decode_p50_ms": 0.73,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 46168,
+          "bits_per_byte": 1.0448,
+          "ratio": 7.657,
+          "encode_p50_ms": 45.15,
+          "decode_p50_ms": 0.99,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 22234,
+          "bits_per_byte": 0.5032,
+          "ratio": 15.899,
+          "encode_p50_ms": 753.05,
+          "decode_p50_ms": 1.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 22461,
+          "bits_per_byte": 0.5083,
+          "ratio": 15.739,
+          "encode_p50_ms": 11.31,
+          "decode_p50_ms": 1.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 71592,
+          "bits_per_byte": 1.6202,
+          "ratio": 4.938,
+          "encode_p50_ms": 72.37,
+          "decode_p50_ms": 0.42,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 72184,
+          "bits_per_byte": 1.6336,
+          "ratio": 4.897,
+          "encode_p50_ms": 14.01,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 96856,
+          "bits_per_byte": 2.1919,
+          "ratio": 3.65,
+          "encode_p50_ms": 0.58,
+          "decode_p50_ms": 0.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 19967,
+          "bits_per_byte": 0.4519,
+          "ratio": 17.704,
+          "encode_p50_ms": 457.98,
+          "decode_p50_ms": 0.8,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 29495,
+          "bits_per_byte": 0.6675,
+          "ratio": 11.985,
+          "encode_p50_ms": 2.03,
+          "decode_p50_ms": 0.57,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 39388,
+          "bits_per_byte": 0.8914,
+          "ratio": 8.975,
+          "encode_p50_ms": 2604.69,
+          "decode_p50_ms": 0.92,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "css_repeated_150k.css",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\css_repeated_150k.css",
+      "input_size": 153600,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 16252,
+          "bits_per_byte": 0.8465,
+          "ratio": 9.451,
+          "encode_p50_ms": 79.09,
+          "decode_p50_ms": 2.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 16256,
+          "bits_per_byte": 0.8467,
+          "ratio": 9.449,
+          "encode_p50_ms": 50.44,
+          "decode_p50_ms": 2.4,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 19591,
+          "bits_per_byte": 1.0204,
+          "ratio": 7.84,
+          "encode_p50_ms": 12.02,
+          "decode_p50_ms": 3.48,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 28613,
+          "bits_per_byte": 1.4903,
+          "ratio": 5.368,
+          "encode_p50_ms": 29.04,
+          "decode_p50_ms": 0.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 28625,
+          "bits_per_byte": 1.4909,
+          "ratio": 5.366,
+          "encode_p50_ms": 21.93,
+          "decode_p50_ms": 0.6,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 14482,
+          "bits_per_byte": 0.7543,
+          "ratio": 10.606,
+          "encode_p50_ms": 289.93,
+          "decode_p50_ms": 0.68,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 22304,
+          "bits_per_byte": 1.1617,
+          "ratio": 6.887,
+          "encode_p50_ms": 6.5,
+          "decode_p50_ms": 0.66,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 42529,
+          "bits_per_byte": 2.2151,
+          "ratio": 3.612,
+          "encode_p50_ms": 30.72,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 42845,
+          "bits_per_byte": 2.2315,
+          "ratio": 3.585,
+          "encode_p50_ms": 5.1,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 55841,
+          "bits_per_byte": 2.9084,
+          "ratio": 2.751,
+          "encode_p50_ms": 0.29,
+          "decode_p50_ms": 0.11,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 16324,
+          "bits_per_byte": 0.8502,
+          "ratio": 9.409,
+          "encode_p50_ms": 113.98,
+          "decode_p50_ms": 0.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 28851,
+          "bits_per_byte": 1.5027,
+          "ratio": 5.324,
+          "encode_p50_ms": 1.43,
+          "decode_p50_ms": 0.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 23830,
+          "bits_per_byte": 1.2411,
+          "ratio": 6.446,
+          "encode_p50_ms": 1328.71,
+          "decode_p50_ms": 0.5,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "data_csv_100k.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\data_csv_100k.csv",
+      "input_size": 101647,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 26984,
+          "bits_per_byte": 2.1237,
+          "ratio": 3.767,
+          "encode_p50_ms": 50.57,
+          "decode_p50_ms": 2.73,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 26712,
+          "bits_per_byte": 2.1023,
+          "ratio": 3.805,
+          "encode_p50_ms": 34.74,
+          "decode_p50_ms": 2.91,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 25565,
+          "bits_per_byte": 2.0121,
+          "ratio": 3.976,
+          "encode_p50_ms": 10.35,
+          "decode_p50_ms": 3.82,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 32225,
+          "bits_per_byte": 2.5362,
+          "ratio": 3.154,
+          "encode_p50_ms": 18.32,
+          "decode_p50_ms": 0.62,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 32237,
+          "bits_per_byte": 2.5372,
+          "ratio": 3.153,
+          "encode_p50_ms": 18.33,
+          "decode_p50_ms": 0.72,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 26866,
+          "bits_per_byte": 2.1145,
+          "ratio": 3.783,
+          "encode_p50_ms": 217.82,
+          "decode_p50_ms": 0.73,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 31744,
+          "bits_per_byte": 2.4984,
+          "ratio": 3.202,
+          "encode_p50_ms": 5.77,
+          "decode_p50_ms": 0.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 41728,
+          "bits_per_byte": 3.2842,
+          "ratio": 2.436,
+          "encode_p50_ms": 20.84,
+          "decode_p50_ms": 0.14,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 42273,
+          "bits_per_byte": 3.327,
+          "ratio": 2.405,
+          "encode_p50_ms": 8.1,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 56073,
+          "bits_per_byte": 4.4132,
+          "ratio": 1.813,
+          "encode_p50_ms": 0.38,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 29252,
+          "bits_per_byte": 2.3022,
+          "ratio": 3.475,
+          "encode_p50_ms": 48.37,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 33773,
+          "bits_per_byte": 2.6581,
+          "ratio": 3.01,
+          "encode_p50_ms": 2.73,
+          "decode_p50_ms": 0.56,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 28044,
+          "bits_per_byte": 2.2072,
+          "ratio": 3.625,
+          "encode_p50_ms": 795.94,
+          "decode_p50_ms": 0.55,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "data_json_100k.json",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\data_json_100k.json",
+      "input_size": 100000,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 5396,
+          "bits_per_byte": 0.4317,
+          "ratio": 18.532,
+          "encode_p50_ms": 98.12,
+          "decode_p50_ms": 0.8,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 5512,
+          "bits_per_byte": 0.441,
+          "ratio": 18.142,
+          "encode_p50_ms": 38.32,
+          "decode_p50_ms": 0.85,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 4768,
+          "bits_per_byte": 0.3814,
+          "ratio": 20.973,
+          "encode_p50_ms": 10.7,
+          "decode_p50_ms": 1.85,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 8471,
+          "bits_per_byte": 0.6777,
+          "ratio": 11.805,
+          "encode_p50_ms": 4.51,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 8483,
+          "bits_per_byte": 0.6786,
+          "ratio": 11.788,
+          "encode_p50_ms": 4.15,
+          "decode_p50_ms": 0.26,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 5518,
+          "bits_per_byte": 0.4414,
+          "ratio": 18.123,
+          "encode_p50_ms": 308.12,
+          "decode_p50_ms": 0.36,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 6810,
+          "bits_per_byte": 0.5448,
+          "ratio": 14.684,
+          "encode_p50_ms": 3.96,
+          "decode_p50_ms": 0.36,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 12573,
+          "bits_per_byte": 1.0058,
+          "ratio": 7.954,
+          "encode_p50_ms": 12.51,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 12602,
+          "bits_per_byte": 1.0082,
+          "ratio": 7.935,
+          "encode_p50_ms": 3.97,
+          "decode_p50_ms": 0.11,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 16129,
+          "bits_per_byte": 1.2903,
+          "ratio": 6.2,
+          "encode_p50_ms": 0.18,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 5996,
+          "bits_per_byte": 0.4797,
+          "ratio": 16.678,
+          "encode_p50_ms": 197.11,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 8764,
+          "bits_per_byte": 0.7011,
+          "ratio": 11.41,
+          "encode_p50_ms": 0.6,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 7043,
+          "bits_per_byte": 0.5634,
+          "ratio": 14.198,
+          "encode_p50_ms": 1776.56,
+          "decode_p50_ms": 0.26,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "deep_nested_flat_mimic.json",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\deep_nested_flat_mimic.json",
+      "input_size": 583153,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 20492,
+          "bits_per_byte": 0.2811,
+          "ratio": 28.458,
+          "encode_p50_ms": 1123.46,
+          "decode_p50_ms": 3.74,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 20540,
+          "bits_per_byte": 0.2818,
+          "ratio": 28.391,
+          "encode_p50_ms": 409.66,
+          "decode_p50_ms": 4.79,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 30033,
+          "bits_per_byte": 0.412,
+          "ratio": 19.417,
+          "encode_p50_ms": 78.26,
+          "decode_p50_ms": 14.51,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 59949,
+          "bits_per_byte": 0.8224,
+          "ratio": 9.727,
+          "encode_p50_ms": 67.75,
+          "decode_p50_ms": 1.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 59961,
+          "bits_per_byte": 0.8226,
+          "ratio": 9.726,
+          "encode_p50_ms": 78.77,
+          "decode_p50_ms": 1.97,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 24481,
+          "bits_per_byte": 0.3358,
+          "ratio": 23.821,
+          "encode_p50_ms": 1555.91,
+          "decode_p50_ms": 1.48,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 44448,
+          "bits_per_byte": 0.6098,
+          "ratio": 13.12,
+          "encode_p50_ms": 14.77,
+          "decode_p50_ms": 1.28,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 87875,
+          "bits_per_byte": 1.2055,
+          "ratio": 6.636,
+          "encode_p50_ms": 85.35,
+          "decode_p50_ms": 0.5,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 89796,
+          "bits_per_byte": 1.2319,
+          "ratio": 6.494,
+          "encode_p50_ms": 24.95,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 128455,
+          "bits_per_byte": 1.7622,
+          "ratio": 4.54,
+          "encode_p50_ms": 0.64,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 27627,
+          "bits_per_byte": 0.379,
+          "ratio": 21.108,
+          "encode_p50_ms": 1241.01,
+          "decode_p50_ms": 0.79,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 56154,
+          "bits_per_byte": 0.7704,
+          "ratio": 10.385,
+          "encode_p50_ms": 2.38,
+          "decode_p50_ms": 0.75,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 49251,
+          "bits_per_byte": 0.6757,
+          "ratio": 11.84,
+          "encode_p50_ms": 5480.36,
+          "decode_p50_ms": 1.5,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "dense_numeric_csv_300k.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\dense_numeric_csv_300k.csv",
+      "input_size": 307200,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 59296,
+          "bits_per_byte": 1.5442,
+          "ratio": 5.181,
+          "encode_p50_ms": 134.95,
+          "decode_p50_ms": 8.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 59408,
+          "bits_per_byte": 1.5471,
+          "ratio": 5.171,
+          "encode_p50_ms": 105.37,
+          "decode_p50_ms": 7.98,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 125937,
+          "bits_per_byte": 3.2796,
+          "ratio": 2.439,
+          "encode_p50_ms": 38.38,
+          "decode_p50_ms": 15.85,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 135767,
+          "bits_per_byte": 3.5356,
+          "ratio": 2.263,
+          "encode_p50_ms": 49.41,
+          "decode_p50_ms": 1.66,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 135779,
+          "bits_per_byte": 3.5359,
+          "ratio": 2.263,
+          "encode_p50_ms": 49.07,
+          "decode_p50_ms": 1.81,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 108844,
+          "bits_per_byte": 2.8345,
+          "ratio": 2.822,
+          "encode_p50_ms": 959.92,
+          "decode_p50_ms": 3.26,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 100704,
+          "bits_per_byte": 2.6225,
+          "ratio": 3.051,
+          "encode_p50_ms": 24.52,
+          "decode_p50_ms": 1.87,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 193771,
+          "bits_per_byte": 5.0461,
+          "ratio": 1.585,
+          "encode_p50_ms": 44.4,
+          "decode_p50_ms": 0.49,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 196463,
+          "bits_per_byte": 5.1162,
+          "ratio": 1.564,
+          "encode_p50_ms": 23.77,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 235215,
+          "bits_per_byte": 6.1254,
+          "ratio": 1.306,
+          "encode_p50_ms": 2.0,
+          "decode_p50_ms": 0.78,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 73233,
+          "bits_per_byte": 1.9071,
+          "ratio": 4.195,
+          "encode_p50_ms": 105.91,
+          "decode_p50_ms": 1.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 121719,
+          "bits_per_byte": 3.1698,
+          "ratio": 2.524,
+          "encode_p50_ms": 5.62,
+          "decode_p50_ms": 0.89,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 102870,
+          "bits_per_byte": 2.6789,
+          "ratio": 2.986,
+          "encode_p50_ms": 1608.53,
+          "decode_p50_ms": 1.8,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "empty_rows_sparse.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\empty_rows_sparse.csv",
+      "input_size": 135750,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 12812,
+          "bits_per_byte": 0.755,
+          "ratio": 10.596,
+          "encode_p50_ms": 61.02,
+          "decode_p50_ms": 2.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 12864,
+          "bits_per_byte": 0.7581,
+          "ratio": 10.553,
+          "encode_p50_ms": 43.87,
+          "decode_p50_ms": 2.36,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 30959,
+          "bits_per_byte": 1.8245,
+          "ratio": 4.385,
+          "encode_p50_ms": 12.09,
+          "decode_p50_ms": 4.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 40015,
+          "bits_per_byte": 2.3582,
+          "ratio": 3.392,
+          "encode_p50_ms": 34.02,
+          "decode_p50_ms": 0.55,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 40027,
+          "bits_per_byte": 2.3589,
+          "ratio": 3.391,
+          "encode_p50_ms": 33.24,
+          "decode_p50_ms": 0.65,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 14299,
+          "bits_per_byte": 0.8427,
+          "ratio": 9.494,
+          "encode_p50_ms": 283.22,
+          "decode_p50_ms": 0.67,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 19154,
+          "bits_per_byte": 1.1288,
+          "ratio": 7.087,
+          "encode_p50_ms": 11.84,
+          "decode_p50_ms": 0.85,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 67242,
+          "bits_per_byte": 3.9627,
+          "ratio": 2.019,
+          "encode_p50_ms": 75.08,
+          "decode_p50_ms": 0.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 68223,
+          "bits_per_byte": 4.0205,
+          "ratio": 1.99,
+          "encode_p50_ms": 14.13,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 62434,
+          "bits_per_byte": 3.6794,
+          "ratio": 2.174,
+          "encode_p50_ms": 0.3,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 25449,
+          "bits_per_byte": 1.4998,
+          "ratio": 5.334,
+          "encode_p50_ms": 65.8,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 22915,
+          "bits_per_byte": 1.3504,
+          "ratio": 5.924,
+          "encode_p50_ms": 1.58,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 28069,
+          "bits_per_byte": 1.6542,
+          "ratio": 4.836,
+          "encode_p50_ms": 1616.5,
+          "decode_p50_ms": 0.81,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "fake_zip_header_text.zip",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\fake_zip_header_text.zip",
+      "input_size": 184324,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 224,
+          "bits_per_byte": 0.0097,
+          "ratio": 822.875,
+          "encode_p50_ms": 31.81,
+          "decode_p50_ms": 1.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 224,
+          "bits_per_byte": 0.0097,
+          "ratio": 822.875,
+          "encode_p50_ms": 10.99,
+          "decode_p50_ms": 1.09,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 244,
+          "bits_per_byte": 0.0106,
+          "ratio": 755.426,
+          "encode_p50_ms": 68.35,
+          "decode_p50_ms": 2.68,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 625,
+          "bits_per_byte": 0.0271,
+          "ratio": 294.918,
+          "encode_p50_ms": 1.39,
+          "decode_p50_ms": 0.23,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 637,
+          "bits_per_byte": 0.0276,
+          "ratio": 289.363,
+          "encode_p50_ms": 1.53,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 74,
+          "bits_per_byte": 0.0032,
+          "ratio": 2490.865,
+          "encode_p50_ms": 17.93,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 72,
+          "bits_per_byte": 0.0031,
+          "ratio": 2560.056,
+          "encode_p50_ms": 0.84,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 849,
+          "bits_per_byte": 0.0368,
+          "ratio": 217.107,
+          "encode_p50_ms": 14.84,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 804,
+          "bits_per_byte": 0.0349,
+          "ratio": 229.259,
+          "encode_p50_ms": 0.06,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 8838,
+          "bits_per_byte": 0.3836,
+          "ratio": 20.856,
+          "encode_p50_ms": 0.09,
+          "decode_p50_ms": 0.11,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 93,
+          "bits_per_byte": 0.004,
+          "ratio": 1981.978,
+          "encode_p50_ms": 1.88,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 96,
+          "bits_per_byte": 0.0042,
+          "ratio": 1920.042,
+          "encode_p50_ms": 0.31,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 620,
+          "bits_per_byte": 0.0269,
+          "ratio": 297.297,
+          "encode_p50_ms": 3872.14,
+          "decode_p50_ms": 0.29,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "fixed_aligned_log_256k.log",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\fixed_aligned_log_256k.log",
+      "input_size": 262170,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 5840,
+          "bits_per_byte": 0.1782,
+          "ratio": 44.892,
+          "encode_p50_ms": 241.92,
+          "decode_p50_ms": 1.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 5928,
+          "bits_per_byte": 0.1809,
+          "ratio": 44.226,
+          "encode_p50_ms": 161.53,
+          "decode_p50_ms": 1.44,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 10169,
+          "bits_per_byte": 0.3103,
+          "ratio": 25.781,
+          "encode_p50_ms": 34.45,
+          "decode_p50_ms": 6.58,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 21256,
+          "bits_per_byte": 0.6486,
+          "ratio": 12.334,
+          "encode_p50_ms": 33.71,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 21268,
+          "bits_per_byte": 0.649,
+          "ratio": 12.327,
+          "encode_p50_ms": 36.63,
+          "decode_p50_ms": 0.59,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 6278,
+          "bits_per_byte": 0.1916,
+          "ratio": 41.76,
+          "encode_p50_ms": 537.21,
+          "decode_p50_ms": 0.46,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 7627,
+          "bits_per_byte": 0.2327,
+          "ratio": 34.374,
+          "encode_p50_ms": 9.04,
+          "decode_p50_ms": 0.71,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 30942,
+          "bits_per_byte": 0.9442,
+          "ratio": 8.473,
+          "encode_p50_ms": 20.27,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 30963,
+          "bits_per_byte": 0.9448,
+          "ratio": 8.467,
+          "encode_p50_ms": 6.13,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 51680,
+          "bits_per_byte": 1.577,
+          "ratio": 5.073,
+          "encode_p50_ms": 0.29,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 4315,
+          "bits_per_byte": 0.1317,
+          "ratio": 60.758,
+          "encode_p50_ms": 266.99,
+          "decode_p50_ms": 0.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 13985,
+          "bits_per_byte": 0.4267,
+          "ratio": 18.747,
+          "encode_p50_ms": 1.16,
+          "decode_p50_ms": 0.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 18651,
+          "bits_per_byte": 0.5691,
+          "ratio": 14.057,
+          "encode_p50_ms": 2863.22,
+          "decode_p50_ms": 0.68,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "fixed_db_dump_512k.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\fixed_db_dump_512k.txt",
+      "input_size": 524295,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 28416,
+          "bits_per_byte": 0.4336,
+          "ratio": 18.451,
+          "encode_p50_ms": 979.01,
+          "decode_p50_ms": 5.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 30584,
+          "bits_per_byte": 0.4667,
+          "ratio": 17.143,
+          "encode_p50_ms": 296.93,
+          "decode_p50_ms": 5.35,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 63820,
+          "bits_per_byte": 0.9738,
+          "ratio": 8.215,
+          "encode_p50_ms": 52.88,
+          "decode_p50_ms": 10.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 95345,
+          "bits_per_byte": 1.4548,
+          "ratio": 5.499,
+          "encode_p50_ms": 52.35,
+          "decode_p50_ms": 1.43,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 95357,
+          "bits_per_byte": 1.455,
+          "ratio": 5.498,
+          "encode_p50_ms": 45.46,
+          "decode_p50_ms": 1.61,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 40449,
+          "bits_per_byte": 0.6172,
+          "ratio": 12.962,
+          "encode_p50_ms": 1055.38,
+          "decode_p50_ms": 1.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 32629,
+          "bits_per_byte": 0.4979,
+          "ratio": 16.068,
+          "encode_p50_ms": 17.67,
+          "decode_p50_ms": 1.43,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 149488,
+          "bits_per_byte": 2.281,
+          "ratio": 3.507,
+          "encode_p50_ms": 170.1,
+          "decode_p50_ms": 0.46,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 152349,
+          "bits_per_byte": 2.3246,
+          "ratio": 3.441,
+          "encode_p50_ms": 43.97,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 158633,
+          "bits_per_byte": 2.4205,
+          "ratio": 3.305,
+          "encode_p50_ms": 1.11,
+          "decode_p50_ms": 0.59,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 35443,
+          "bits_per_byte": 0.5408,
+          "ratio": 14.793,
+          "encode_p50_ms": 870.9,
+          "decode_p50_ms": 1.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 51455,
+          "bits_per_byte": 0.7851,
+          "ratio": 10.189,
+          "encode_p50_ms": 4.51,
+          "decode_p50_ms": 1.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 68724,
+          "bits_per_byte": 1.0486,
+          "ratio": 7.629,
+          "encode_p50_ms": 3845.99,
+          "decode_p50_ms": 1.52,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "fixed_width_short_128k.log",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\fixed_width_short_128k.log",
+      "input_size": 131072,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 8760,
+          "bits_per_byte": 0.5347,
+          "ratio": 14.963,
+          "encode_p50_ms": 122.79,
+          "decode_p50_ms": 1.5,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 8932,
+          "bits_per_byte": 0.5452,
+          "ratio": 14.674,
+          "encode_p50_ms": 44.31,
+          "decode_p50_ms": 1.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 13261,
+          "bits_per_byte": 0.8094,
+          "ratio": 9.884,
+          "encode_p50_ms": 9.02,
+          "decode_p50_ms": 2.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 22642,
+          "bits_per_byte": 1.382,
+          "ratio": 5.789,
+          "encode_p50_ms": 10.87,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 22654,
+          "bits_per_byte": 1.3827,
+          "ratio": 5.786,
+          "encode_p50_ms": 11.09,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 9804,
+          "bits_per_byte": 0.5984,
+          "ratio": 13.369,
+          "encode_p50_ms": 232.27,
+          "decode_p50_ms": 0.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 7535,
+          "bits_per_byte": 0.4599,
+          "ratio": 17.395,
+          "encode_p50_ms": 5.53,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 34703,
+          "bits_per_byte": 2.1181,
+          "ratio": 3.777,
+          "encode_p50_ms": 44.57,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 36018,
+          "bits_per_byte": 2.1984,
+          "ratio": 3.639,
+          "encode_p50_ms": 9.83,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 39848,
+          "bits_per_byte": 2.4321,
+          "ratio": 3.289,
+          "encode_p50_ms": 0.25,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 9858,
+          "bits_per_byte": 0.6017,
+          "ratio": 13.296,
+          "encode_p50_ms": 274.76,
+          "decode_p50_ms": 0.3,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 13150,
+          "bits_per_byte": 0.8026,
+          "ratio": 9.967,
+          "encode_p50_ms": 0.76,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 15769,
+          "bits_per_byte": 0.9625,
+          "ratio": 8.312,
+          "encode_p50_ms": 1048.16,
+          "decode_p50_ms": 0.42,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "html_inline_data_uri_200k.html",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\html_inline_data_uri_200k.html",
+      "input_size": 204800,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 1156,
+          "bits_per_byte": 0.0452,
+          "ratio": 177.163,
+          "encode_p50_ms": 579.28,
+          "decode_p50_ms": 0.65,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 792,
+          "bits_per_byte": 0.0309,
+          "ratio": 258.586,
+          "encode_p50_ms": 14.84,
+          "decode_p50_ms": 0.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 1452,
+          "bits_per_byte": 0.0567,
+          "ratio": 141.047,
+          "encode_p50_ms": 52.9,
+          "decode_p50_ms": 2.79,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 2888,
+          "bits_per_byte": 0.1128,
+          "ratio": 70.914,
+          "encode_p50_ms": 1.87,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 2900,
+          "bits_per_byte": 0.1133,
+          "ratio": 70.621,
+          "encode_p50_ms": 2.0,
+          "decode_p50_ms": 0.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 1636,
+          "bits_per_byte": 0.0639,
+          "ratio": 125.183,
+          "encode_p50_ms": 950.14,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 1656,
+          "bits_per_byte": 0.0647,
+          "ratio": 123.671,
+          "encode_p50_ms": 2.59,
+          "decode_p50_ms": 0.11,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 4494,
+          "bits_per_byte": 0.1755,
+          "ratio": 45.572,
+          "encode_p50_ms": 5.25,
+          "decode_p50_ms": 0.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 4437,
+          "bits_per_byte": 0.1733,
+          "ratio": 46.157,
+          "encode_p50_ms": 1.41,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 12753,
+          "bits_per_byte": 0.4982,
+          "ratio": 16.059,
+          "encode_p50_ms": 0.05,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 1545,
+          "bits_per_byte": 0.0604,
+          "ratio": 132.557,
+          "encode_p50_ms": 1064.6,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 1869,
+          "bits_per_byte": 0.073,
+          "ratio": 109.577,
+          "encode_p50_ms": 0.37,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 2717,
+          "bits_per_byte": 0.1061,
+          "ratio": 75.377,
+          "encode_p50_ms": 1958.25,
+          "decode_p50_ms": 0.26,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "img_smooth_256x256.raw",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\img_smooth_256x256.raw",
+      "input_size": 65536,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 40792,
+          "bits_per_byte": 4.9795,
+          "ratio": 1.607,
+          "encode_p50_ms": 40.07,
+          "decode_p50_ms": 3.63,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 40708,
+          "bits_per_byte": 4.9692,
+          "ratio": 1.61,
+          "encode_p50_ms": 17.6,
+          "decode_p50_ms": 3.64,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 36466,
+          "bits_per_byte": 4.4514,
+          "ratio": 1.797,
+          "encode_p50_ms": 6.15,
+          "decode_p50_ms": 2.94,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 51598,
+          "bits_per_byte": 6.2986,
+          "ratio": 1.27,
+          "encode_p50_ms": 2.93,
+          "decode_p50_ms": 0.4,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 51610,
+          "bits_per_byte": 6.3,
+          "ratio": 1.27,
+          "encode_p50_ms": 2.95,
+          "decode_p50_ms": 0.43,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 41030,
+          "bits_per_byte": 5.0085,
+          "ratio": 1.597,
+          "encode_p50_ms": 263.24,
+          "decode_p50_ms": 0.94,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 51626,
+          "bits_per_byte": 6.302,
+          "ratio": 1.269,
+          "encode_p50_ms": 4.22,
+          "decode_p50_ms": 0.83,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 63066,
+          "bits_per_byte": 7.6985,
+          "ratio": 1.039,
+          "encode_p50_ms": 2.86,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 63072,
+          "bits_per_byte": 7.6992,
+          "ratio": 1.039,
+          "encode_p50_ms": 2.11,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 65542,
+          "bits_per_byte": 8.0007,
+          "ratio": 1.0,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 48848,
+          "bits_per_byte": 5.9629,
+          "ratio": 1.342,
+          "encode_p50_ms": 18.7,
+          "decode_p50_ms": 0.42,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 56765,
+          "bits_per_byte": 6.9293,
+          "ratio": 1.155,
+          "encode_p50_ms": 0.24,
+          "decode_p50_ms": 0.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 47089,
+          "bits_per_byte": 5.7482,
+          "ratio": 1.392,
+          "encode_p50_ms": 777.09,
+          "decode_p50_ms": 0.6,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "ini_config_128k.ini",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\ini_config_128k.ini",
+      "input_size": 131072,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 3252,
+          "bits_per_byte": 0.1985,
+          "ratio": 40.305,
+          "encode_p50_ms": 114.4,
+          "decode_p50_ms": 0.76,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 3056,
+          "bits_per_byte": 0.1865,
+          "ratio": 42.89,
+          "encode_p50_ms": 52.89,
+          "decode_p50_ms": 0.76,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 6472,
+          "bits_per_byte": 0.395,
+          "ratio": 20.252,
+          "encode_p50_ms": 45.53,
+          "decode_p50_ms": 2.47,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 12476,
+          "bits_per_byte": 0.7615,
+          "ratio": 10.506,
+          "encode_p50_ms": 5.71,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 12488,
+          "bits_per_byte": 0.7622,
+          "ratio": 10.496,
+          "encode_p50_ms": 5.79,
+          "decode_p50_ms": 0.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 4025,
+          "bits_per_byte": 0.2457,
+          "ratio": 32.564,
+          "encode_p50_ms": 178.42,
+          "decode_p50_ms": 0.23,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 4045,
+          "bits_per_byte": 0.2469,
+          "ratio": 32.403,
+          "encode_p50_ms": 2.98,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 18936,
+          "bits_per_byte": 1.1558,
+          "ratio": 6.922,
+          "encode_p50_ms": 17.67,
+          "decode_p50_ms": 0.09,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 18978,
+          "bits_per_byte": 1.1583,
+          "ratio": 6.907,
+          "encode_p50_ms": 4.0,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 25824,
+          "bits_per_byte": 1.5762,
+          "ratio": 5.076,
+          "encode_p50_ms": 0.17,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 4109,
+          "bits_per_byte": 0.2508,
+          "ratio": 31.899,
+          "encode_p50_ms": 81.32,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 7469,
+          "bits_per_byte": 0.4559,
+          "ratio": 17.549,
+          "encode_p50_ms": 0.46,
+          "decode_p50_ms": 0.09,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 11016,
+          "bits_per_byte": 0.6724,
+          "ratio": 11.898,
+          "encode_p50_ms": 2329.51,
+          "decode_p50_ms": 0.36,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "js_minified_200k.js",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\js_minified_200k.js",
+      "input_size": 204800,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 9048,
+          "bits_per_byte": 0.3534,
+          "ratio": 22.635,
+          "encode_p50_ms": 241.91,
+          "decode_p50_ms": 2.26,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 9048,
+          "bits_per_byte": 0.3534,
+          "ratio": 22.635,
+          "encode_p50_ms": 79.24,
+          "decode_p50_ms": 2.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 17163,
+          "bits_per_byte": 0.6704,
+          "ratio": 11.933,
+          "encode_p50_ms": 24.34,
+          "decode_p50_ms": 4.68,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 28590,
+          "bits_per_byte": 1.1168,
+          "ratio": 7.163,
+          "encode_p50_ms": 26.58,
+          "decode_p50_ms": 0.49,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 28602,
+          "bits_per_byte": 1.1173,
+          "ratio": 7.16,
+          "encode_p50_ms": 26.38,
+          "decode_p50_ms": 0.56,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 13830,
+          "bits_per_byte": 0.5402,
+          "ratio": 14.808,
+          "encode_p50_ms": 378.57,
+          "decode_p50_ms": 0.57,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 11167,
+          "bits_per_byte": 0.4362,
+          "ratio": 18.34,
+          "encode_p50_ms": 7.32,
+          "decode_p50_ms": 0.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 41692,
+          "bits_per_byte": 1.6286,
+          "ratio": 4.912,
+          "encode_p50_ms": 46.33,
+          "decode_p50_ms": 0.09,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 45052,
+          "bits_per_byte": 1.7598,
+          "ratio": 4.546,
+          "encode_p50_ms": 13.63,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 53338,
+          "bits_per_byte": 2.0835,
+          "ratio": 3.84,
+          "encode_p50_ms": 0.29,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 15134,
+          "bits_per_byte": 0.5912,
+          "ratio": 13.532,
+          "encode_p50_ms": 515.71,
+          "decode_p50_ms": 0.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 27085,
+          "bits_per_byte": 1.058,
+          "ratio": 7.561,
+          "encode_p50_ms": 1.28,
+          "decode_p50_ms": 0.3,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 25135,
+          "bits_per_byte": 0.9818,
+          "ratio": 8.148,
+          "encode_p50_ms": 2020.32,
+          "decode_p50_ms": 0.67,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "json_lines_200k.jsonl",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\json_lines_200k.jsonl",
+      "input_size": 204800,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 11792,
+          "bits_per_byte": 0.4606,
+          "ratio": 17.368,
+          "encode_p50_ms": 290.23,
+          "decode_p50_ms": 1.89,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 11836,
+          "bits_per_byte": 0.4623,
+          "ratio": 17.303,
+          "encode_p50_ms": 86.12,
+          "decode_p50_ms": 1.87,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 15333,
+          "bits_per_byte": 0.5989,
+          "ratio": 13.357,
+          "encode_p50_ms": 14.61,
+          "decode_p50_ms": 3.68,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 24984,
+          "bits_per_byte": 0.9759,
+          "ratio": 8.197,
+          "encode_p50_ms": 18.97,
+          "decode_p50_ms": 0.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 24996,
+          "bits_per_byte": 0.9764,
+          "ratio": 8.193,
+          "encode_p50_ms": 14.73,
+          "decode_p50_ms": 0.58,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 12302,
+          "bits_per_byte": 0.4805,
+          "ratio": 16.648,
+          "encode_p50_ms": 441.72,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 13994,
+          "bits_per_byte": 0.5466,
+          "ratio": 14.635,
+          "encode_p50_ms": 5.2,
+          "decode_p50_ms": 0.36,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 42429,
+          "bits_per_byte": 1.6574,
+          "ratio": 4.827,
+          "encode_p50_ms": 74.94,
+          "decode_p50_ms": 0.14,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 43387,
+          "bits_per_byte": 1.6948,
+          "ratio": 4.72,
+          "encode_p50_ms": 7.37,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 46865,
+          "bits_per_byte": 1.8307,
+          "ratio": 4.37,
+          "encode_p50_ms": 0.27,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 13055,
+          "bits_per_byte": 0.51,
+          "ratio": 15.687,
+          "encode_p50_ms": 516.75,
+          "decode_p50_ms": 0.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 20599,
+          "bits_per_byte": 0.8046,
+          "ratio": 9.942,
+          "encode_p50_ms": 1.01,
+          "decode_p50_ms": 0.26,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 20066,
+          "bits_per_byte": 0.7838,
+          "ratio": 10.206,
+          "encode_p50_ms": 1213.62,
+          "decode_p50_ms": 0.54,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "latin1_text_200k.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\latin1_text_200k.txt",
+      "input_size": 204800,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 216,
+          "bits_per_byte": 0.0084,
+          "ratio": 948.148,
+          "encode_p50_ms": 28.63,
+          "decode_p50_ms": 0.95,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 216,
+          "bits_per_byte": 0.0084,
+          "ratio": 948.148,
+          "encode_p50_ms": 10.07,
+          "decode_p50_ms": 0.9,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 199,
+          "bits_per_byte": 0.0078,
+          "ratio": 1029.146,
+          "encode_p50_ms": 63.54,
+          "decode_p50_ms": 1.97,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 674,
+          "bits_per_byte": 0.0263,
+          "ratio": 303.858,
+          "encode_p50_ms": 1.22,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 686,
+          "bits_per_byte": 0.0268,
+          "ratio": 298.542,
+          "encode_p50_ms": 1.4,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 66,
+          "bits_per_byte": 0.0026,
+          "ratio": 3103.03,
+          "encode_p50_ms": 15.15,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 62,
+          "bits_per_byte": 0.0024,
+          "ratio": 3303.226,
+          "encode_p50_ms": 0.75,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 930,
+          "bits_per_byte": 0.0363,
+          "ratio": 220.215,
+          "encode_p50_ms": 16.15,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 871,
+          "bits_per_byte": 0.034,
+          "ratio": 235.132,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 9823,
+          "bits_per_byte": 0.3837,
+          "ratio": 20.849,
+          "encode_p50_ms": 0.05,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 85,
+          "bits_per_byte": 0.0033,
+          "ratio": 2409.412,
+          "encode_p50_ms": 1.57,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 88,
+          "bits_per_byte": 0.0034,
+          "ratio": 2327.273,
+          "encode_p50_ms": 0.25,
+          "decode_p50_ms": 0.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 672,
+          "bits_per_byte": 0.0262,
+          "ratio": 304.762,
+          "encode_p50_ms": 4231.22,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\log_high_entropy_tail_512k.log",
+      "input_size": 524288,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 143376,
+          "bits_per_byte": 2.1877,
+          "ratio": 3.657,
+          "encode_p50_ms": 446.51,
+          "decode_p50_ms": 6.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 143416,
+          "bits_per_byte": 2.1884,
+          "ratio": 3.656,
+          "encode_p50_ms": 208.39,
+          "decode_p50_ms": 6.27,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 155083,
+          "bits_per_byte": 2.3664,
+          "ratio": 3.381,
+          "encode_p50_ms": 58.81,
+          "decode_p50_ms": 19.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 172303,
+          "bits_per_byte": 2.6291,
+          "ratio": 3.043,
+          "encode_p50_ms": 31.89,
+          "decode_p50_ms": 0.93,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 172315,
+          "bits_per_byte": 2.6293,
+          "ratio": 3.043,
+          "encode_p50_ms": 33.74,
+          "decode_p50_ms": 1.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 144032,
+          "bits_per_byte": 2.1978,
+          "ratio": 3.64,
+          "encode_p50_ms": 1234.14,
+          "decode_p50_ms": 1.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 145234,
+          "bits_per_byte": 2.2161,
+          "ratio": 3.61,
+          "encode_p50_ms": 9.84,
+          "decode_p50_ms": 1.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 186316,
+          "bits_per_byte": 2.843,
+          "ratio": 2.814,
+          "encode_p50_ms": 66.1,
+          "decode_p50_ms": 0.23,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 186765,
+          "bits_per_byte": 2.8498,
+          "ratio": 2.807,
+          "encode_p50_ms": 20.03,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 205004,
+          "bits_per_byte": 3.1281,
+          "ratio": 2.557,
+          "encode_p50_ms": 0.54,
+          "decode_p50_ms": 0.28,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 144694,
+          "bits_per_byte": 2.2079,
+          "ratio": 3.623,
+          "encode_p50_ms": 492.31,
+          "decode_p50_ms": 0.52,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 161137,
+          "bits_per_byte": 2.4588,
+          "ratio": 3.254,
+          "encode_p50_ms": 1.69,
+          "decode_p50_ms": 0.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 165923,
+          "bits_per_byte": 2.5318,
+          "ratio": 3.16,
+          "encode_p50_ms": 2911.56,
+          "decode_p50_ms": 1.32,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "log_long_repeated_512k.log",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\log_long_repeated_512k.log",
+      "input_size": 524288,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 15232,
+          "bits_per_byte": 0.2324,
+          "ratio": 34.42,
+          "encode_p50_ms": 759.21,
+          "decode_p50_ms": 2.88,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 15308,
+          "bits_per_byte": 0.2336,
+          "ratio": 34.249,
+          "encode_p50_ms": 316.06,
+          "decode_p50_ms": 4.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 22307,
+          "bits_per_byte": 0.3404,
+          "ratio": 23.503,
+          "encode_p50_ms": 51.79,
+          "decode_p50_ms": 8.81,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 52111,
+          "bits_per_byte": 0.7952,
+          "ratio": 10.061,
+          "encode_p50_ms": 37.78,
+          "decode_p50_ms": 1.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 52123,
+          "bits_per_byte": 0.7953,
+          "ratio": 10.059,
+          "encode_p50_ms": 51.17,
+          "decode_p50_ms": 1.64,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 16294,
+          "bits_per_byte": 0.2486,
+          "ratio": 32.177,
+          "encode_p50_ms": 1338.77,
+          "decode_p50_ms": 0.94,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 18146,
+          "bits_per_byte": 0.2769,
+          "ratio": 28.893,
+          "encode_p50_ms": 13.68,
+          "decode_p50_ms": 0.95,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 73321,
+          "bits_per_byte": 1.1188,
+          "ratio": 7.151,
+          "encode_p50_ms": 66.13,
+          "decode_p50_ms": 0.29,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 73246,
+          "bits_per_byte": 1.1176,
+          "ratio": 7.158,
+          "encode_p50_ms": 13.35,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 98738,
+          "bits_per_byte": 1.5066,
+          "ratio": 5.31,
+          "encode_p50_ms": 0.56,
+          "decode_p50_ms": 0.3,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 15763,
+          "bits_per_byte": 0.2405,
+          "ratio": 33.261,
+          "encode_p50_ms": 811.2,
+          "decode_p50_ms": 0.56,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 36045,
+          "bits_per_byte": 0.55,
+          "ratio": 14.545,
+          "encode_p50_ms": 1.99,
+          "decode_p50_ms": 0.47,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 45956,
+          "bits_per_byte": 0.7012,
+          "ratio": 11.408,
+          "encode_p50_ms": 3000.78,
+          "decode_p50_ms": 1.36,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "markdown_tables_256k.md",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\markdown_tables_256k.md",
+      "input_size": 262144,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 13060,
+          "bits_per_byte": 0.3986,
+          "ratio": 20.072,
+          "encode_p50_ms": 424.94,
+          "decode_p50_ms": 2.81,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 10384,
+          "bits_per_byte": 0.3169,
+          "ratio": 25.245,
+          "encode_p50_ms": 106.75,
+          "decode_p50_ms": 2.57,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 39840,
+          "bits_per_byte": 1.2158,
+          "ratio": 6.58,
+          "encode_p50_ms": 85.11,
+          "decode_p50_ms": 6.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 54717,
+          "bits_per_byte": 1.6698,
+          "ratio": 4.791,
+          "encode_p50_ms": 66.83,
+          "decode_p50_ms": 0.78,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 54729,
+          "bits_per_byte": 1.6702,
+          "ratio": 4.79,
+          "encode_p50_ms": 66.66,
+          "decode_p50_ms": 0.89,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 18481,
+          "bits_per_byte": 0.564,
+          "ratio": 14.185,
+          "encode_p50_ms": 378.14,
+          "decode_p50_ms": 0.79,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 19573,
+          "bits_per_byte": 0.5973,
+          "ratio": 13.393,
+          "encode_p50_ms": 14.71,
+          "decode_p50_ms": 0.77,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 92290,
+          "bits_per_byte": 2.8165,
+          "ratio": 2.84,
+          "encode_p50_ms": 152.28,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 94328,
+          "bits_per_byte": 2.8787,
+          "ratio": 2.779,
+          "encode_p50_ms": 22.22,
+          "decode_p50_ms": 0.18,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 107665,
+          "bits_per_byte": 3.2857,
+          "ratio": 2.435,
+          "encode_p50_ms": 0.5,
+          "decode_p50_ms": 0.24,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 20067,
+          "bits_per_byte": 0.6124,
+          "ratio": 13.063,
+          "encode_p50_ms": 487.25,
+          "decode_p50_ms": 0.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 23631,
+          "bits_per_byte": 0.7212,
+          "ratio": 11.093,
+          "encode_p50_ms": 2.16,
+          "decode_p50_ms": 0.57,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 43196,
+          "bits_per_byte": 1.3182,
+          "ratio": 6.069,
+          "encode_p50_ms": 2401.06,
+          "decode_p50_ms": 1.12,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "mixed_delimiter_switch.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\mixed_delimiter_switch.csv",
+      "input_size": 274204,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 23872,
+          "bits_per_byte": 0.6965,
+          "ratio": 11.486,
+          "encode_p50_ms": 261.72,
+          "decode_p50_ms": 5.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 23812,
+          "bits_per_byte": 0.6947,
+          "ratio": 11.515,
+          "encode_p50_ms": 118.38,
+          "decode_p50_ms": 5.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 50363,
+          "bits_per_byte": 1.4694,
+          "ratio": 5.445,
+          "encode_p50_ms": 18.77,
+          "decode_p50_ms": 6.26,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 77102,
+          "bits_per_byte": 2.2495,
+          "ratio": 3.556,
+          "encode_p50_ms": 40.78,
+          "decode_p50_ms": 0.82,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 77114,
+          "bits_per_byte": 2.2498,
+          "ratio": 3.556,
+          "encode_p50_ms": 41.22,
+          "decode_p50_ms": 0.99,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 32101,
+          "bits_per_byte": 0.9366,
+          "ratio": 8.542,
+          "encode_p50_ms": 451.55,
+          "decode_p50_ms": 0.96,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 24061,
+          "bits_per_byte": 0.702,
+          "ratio": 11.396,
+          "encode_p50_ms": 11.62,
+          "decode_p50_ms": 1.27,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 113985,
+          "bits_per_byte": 3.3256,
+          "ratio": 2.406,
+          "encode_p50_ms": 48.39,
+          "decode_p50_ms": 0.27,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 115324,
+          "bits_per_byte": 3.3646,
+          "ratio": 2.378,
+          "encode_p50_ms": 16.74,
+          "decode_p50_ms": 0.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 130999,
+          "bits_per_byte": 3.8219,
+          "ratio": 2.093,
+          "encode_p50_ms": 0.57,
+          "decode_p50_ms": 0.28,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 31724,
+          "bits_per_byte": 0.9256,
+          "ratio": 8.643,
+          "encode_p50_ms": 218.5,
+          "decode_p50_ms": 0.97,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 46422,
+          "bits_per_byte": 1.3544,
+          "ratio": 5.907,
+          "encode_p50_ms": 2.82,
+          "decode_p50_ms": 0.63,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 52810,
+          "bits_per_byte": 1.5408,
+          "ratio": 5.192,
+          "encode_p50_ms": 1937.04,
+          "decode_p50_ms": 1.04,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "mixed_delimiters.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\mixed_delimiters.csv",
+      "input_size": 182205,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 20956,
+          "bits_per_byte": 0.9201,
+          "ratio": 8.695,
+          "encode_p50_ms": 200.24,
+          "decode_p50_ms": 2.94,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 18796,
+          "bits_per_byte": 0.8253,
+          "ratio": 9.694,
+          "encode_p50_ms": 94.68,
+          "decode_p50_ms": 3.27,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 26924,
+          "bits_per_byte": 1.1821,
+          "ratio": 6.767,
+          "encode_p50_ms": 16.65,
+          "decode_p50_ms": 5.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 40316,
+          "bits_per_byte": 1.7701,
+          "ratio": 4.519,
+          "encode_p50_ms": 11.81,
+          "decode_p50_ms": 0.59,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 40328,
+          "bits_per_byte": 1.7707,
+          "ratio": 4.518,
+          "encode_p50_ms": 12.31,
+          "decode_p50_ms": 0.71,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 17762,
+          "bits_per_byte": 0.7799,
+          "ratio": 10.258,
+          "encode_p50_ms": 414.01,
+          "decode_p50_ms": 0.76,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 21157,
+          "bits_per_byte": 0.9289,
+          "ratio": 8.612,
+          "encode_p50_ms": 10.25,
+          "decode_p50_ms": 0.87,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 61316,
+          "bits_per_byte": 2.6922,
+          "ratio": 2.972,
+          "encode_p50_ms": 55.05,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 61600,
+          "bits_per_byte": 2.7046,
+          "ratio": 2.958,
+          "encode_p50_ms": 6.34,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 71438,
+          "bits_per_byte": 3.1366,
+          "ratio": 2.551,
+          "encode_p50_ms": 0.55,
+          "decode_p50_ms": 0.24,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 19855,
+          "bits_per_byte": 0.8718,
+          "ratio": 9.177,
+          "encode_p50_ms": 334.95,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 26784,
+          "bits_per_byte": 1.176,
+          "ratio": 6.803,
+          "encode_p50_ms": 1.23,
+          "decode_p50_ms": 0.29,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 33483,
+          "bits_per_byte": 1.4701,
+          "ratio": 5.442,
+          "encode_p50_ms": 1042.83,
+          "decode_p50_ms": 0.69,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "nested_arrays_300k.json",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\nested_arrays_300k.json",
+      "input_size": 307200,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 14888,
+          "bits_per_byte": 0.3877,
+          "ratio": 20.634,
+          "encode_p50_ms": 434.46,
+          "decode_p50_ms": 3.23,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 14876,
+          "bits_per_byte": 0.3874,
+          "ratio": 20.651,
+          "encode_p50_ms": 121.64,
+          "decode_p50_ms": 3.0,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 24862,
+          "bits_per_byte": 0.6474,
+          "ratio": 12.356,
+          "encode_p50_ms": 119.13,
+          "decode_p50_ms": 5.54,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 46724,
+          "bits_per_byte": 1.2168,
+          "ratio": 6.575,
+          "encode_p50_ms": 81.63,
+          "decode_p50_ms": 0.65,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 46736,
+          "bits_per_byte": 1.2171,
+          "ratio": 6.573,
+          "encode_p50_ms": 82.65,
+          "decode_p50_ms": 0.88,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 13067,
+          "bits_per_byte": 0.3403,
+          "ratio": 23.51,
+          "encode_p50_ms": 442.67,
+          "decode_p50_ms": 0.68,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 19985,
+          "bits_per_byte": 0.5204,
+          "ratio": 15.372,
+          "encode_p50_ms": 8.76,
+          "decode_p50_ms": 0.65,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 68577,
+          "bits_per_byte": 1.7859,
+          "ratio": 4.48,
+          "encode_p50_ms": 96.78,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 72553,
+          "bits_per_byte": 1.8894,
+          "ratio": 4.234,
+          "encode_p50_ms": 19.81,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 88922,
+          "bits_per_byte": 2.3157,
+          "ratio": 3.455,
+          "encode_p50_ms": 0.43,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 22584,
+          "bits_per_byte": 0.5881,
+          "ratio": 13.603,
+          "encode_p50_ms": 344.39,
+          "decode_p50_ms": 0.48,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 29278,
+          "bits_per_byte": 0.7624,
+          "ratio": 10.493,
+          "encode_p50_ms": 3.06,
+          "decode_p50_ms": 0.75,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 44209,
+          "bits_per_byte": 1.1513,
+          "ratio": 6.949,
+          "encode_p50_ms": 2140.73,
+          "decode_p50_ms": 1.04,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "nested_quotes.tsv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\nested_quotes.tsv",
+      "input_size": 158707,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 10092,
+          "bits_per_byte": 0.5087,
+          "ratio": 15.726,
+          "encode_p50_ms": 248.47,
+          "decode_p50_ms": 2.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 8424,
+          "bits_per_byte": 0.4246,
+          "ratio": 18.84,
+          "encode_p50_ms": 108.23,
+          "decode_p50_ms": 2.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 15842,
+          "bits_per_byte": 0.7986,
+          "ratio": 10.018,
+          "encode_p50_ms": 15.85,
+          "decode_p50_ms": 3.8,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 24036,
+          "bits_per_byte": 1.2116,
+          "ratio": 6.603,
+          "encode_p50_ms": 33.42,
+          "decode_p50_ms": 0.36,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 24048,
+          "bits_per_byte": 1.2122,
+          "ratio": 6.6,
+          "encode_p50_ms": 33.24,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 10373,
+          "bits_per_byte": 0.5229,
+          "ratio": 15.3,
+          "encode_p50_ms": 403.85,
+          "decode_p50_ms": 0.49,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 11962,
+          "bits_per_byte": 0.603,
+          "ratio": 13.268,
+          "encode_p50_ms": 5.31,
+          "decode_p50_ms": 0.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 36325,
+          "bits_per_byte": 1.831,
+          "ratio": 4.369,
+          "encode_p50_ms": 28.35,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 38360,
+          "bits_per_byte": 1.9336,
+          "ratio": 4.137,
+          "encode_p50_ms": 6.19,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 54754,
+          "bits_per_byte": 2.76,
+          "ratio": 2.899,
+          "encode_p50_ms": 0.27,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 12395,
+          "bits_per_byte": 0.6248,
+          "ratio": 12.804,
+          "encode_p50_ms": 413.72,
+          "decode_p50_ms": 0.28,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 19092,
+          "bits_per_byte": 0.9624,
+          "ratio": 8.313,
+          "encode_p50_ms": 0.98,
+          "decode_p50_ms": 0.29,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 21501,
+          "bits_per_byte": 1.0838,
+          "ratio": 7.381,
+          "encode_p50_ms": 1387.99,
+          "decode_p50_ms": 0.49,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pipe_kv_transition_256k.log",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\pipe_kv_transition_256k.log",
+      "input_size": 262144,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 17904,
+          "bits_per_byte": 0.5464,
+          "ratio": 14.642,
+          "encode_p50_ms": 424.26,
+          "decode_p50_ms": 2.93,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 16852,
+          "bits_per_byte": 0.5143,
+          "ratio": 15.556,
+          "encode_p50_ms": 136.41,
+          "decode_p50_ms": 3.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 24263,
+          "bits_per_byte": 0.7404,
+          "ratio": 10.804,
+          "encode_p50_ms": 24.49,
+          "decode_p50_ms": 6.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 39502,
+          "bits_per_byte": 1.2055,
+          "ratio": 6.636,
+          "encode_p50_ms": 30.17,
+          "decode_p50_ms": 0.56,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 39514,
+          "bits_per_byte": 1.2059,
+          "ratio": 6.634,
+          "encode_p50_ms": 30.67,
+          "decode_p50_ms": 0.79,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 17229,
+          "bits_per_byte": 0.5258,
+          "ratio": 15.215,
+          "encode_p50_ms": 492.17,
+          "decode_p50_ms": 0.57,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 20815,
+          "bits_per_byte": 0.6352,
+          "ratio": 12.594,
+          "encode_p50_ms": 10.07,
+          "decode_p50_ms": 0.74,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 67355,
+          "bits_per_byte": 2.0555,
+          "ratio": 3.892,
+          "encode_p50_ms": 71.09,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 70142,
+          "bits_per_byte": 2.1406,
+          "ratio": 3.737,
+          "encode_p50_ms": 11.41,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 72938,
+          "bits_per_byte": 2.2259,
+          "ratio": 3.594,
+          "encode_p50_ms": 0.41,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 20483,
+          "bits_per_byte": 0.6251,
+          "ratio": 12.798,
+          "encode_p50_ms": 2171.76,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 32486,
+          "bits_per_byte": 0.9914,
+          "ratio": 8.069,
+          "encode_p50_ms": 1.48,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 29342,
+          "bits_per_byte": 0.8954,
+          "ratio": 8.934,
+          "encode_p50_ms": 1869.83,
+          "decode_p50_ms": 0.74,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pipe_sparse_many_cols_256k.log",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\pipe_sparse_many_cols_256k.log",
+      "input_size": 262144,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 18200,
+          "bits_per_byte": 0.5554,
+          "ratio": 14.404,
+          "encode_p50_ms": 807.4,
+          "decode_p50_ms": 2.85,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 18140,
+          "bits_per_byte": 0.5536,
+          "ratio": 14.451,
+          "encode_p50_ms": 145.56,
+          "decode_p50_ms": 3.27,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 26165,
+          "bits_per_byte": 0.7985,
+          "ratio": 10.019,
+          "encode_p50_ms": 21.73,
+          "decode_p50_ms": 4.98,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 45377,
+          "bits_per_byte": 1.3848,
+          "ratio": 5.777,
+          "encode_p50_ms": 156.26,
+          "decode_p50_ms": 0.76,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 45389,
+          "bits_per_byte": 1.3852,
+          "ratio": 5.775,
+          "encode_p50_ms": 130.56,
+          "decode_p50_ms": 0.91,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 16643,
+          "bits_per_byte": 0.5079,
+          "ratio": 15.751,
+          "encode_p50_ms": 422.08,
+          "decode_p50_ms": 0.62,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 21052,
+          "bits_per_byte": 0.6425,
+          "ratio": 12.452,
+          "encode_p50_ms": 7.62,
+          "decode_p50_ms": 0.63,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 74538,
+          "bits_per_byte": 2.2747,
+          "ratio": 3.517,
+          "encode_p50_ms": 153.48,
+          "decode_p50_ms": 0.21,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 75010,
+          "bits_per_byte": 2.2891,
+          "ratio": 3.495,
+          "encode_p50_ms": 23.9,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 85966,
+          "bits_per_byte": 2.6235,
+          "ratio": 3.049,
+          "encode_p50_ms": 0.53,
+          "decode_p50_ms": 0.28,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 17928,
+          "bits_per_byte": 0.5471,
+          "ratio": 14.622,
+          "encode_p50_ms": 2375.49,
+          "decode_p50_ms": 0.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 33160,
+          "bits_per_byte": 1.012,
+          "ratio": 7.905,
+          "encode_p50_ms": 1.94,
+          "decode_p50_ms": 0.5,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 40099,
+          "bits_per_byte": 1.2237,
+          "ratio": 6.537,
+          "encode_p50_ms": 3221.8,
+          "decode_p50_ms": 1.18,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "quoted_csv_escape_heavy.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\quoted_csv_escape_heavy.csv",
+      "input_size": 270682,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 10344,
+          "bits_per_byte": 0.3057,
+          "ratio": 26.168,
+          "encode_p50_ms": 681.15,
+          "decode_p50_ms": 2.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 10260,
+          "bits_per_byte": 0.3032,
+          "ratio": 26.382,
+          "encode_p50_ms": 107.5,
+          "decode_p50_ms": 2.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 21278,
+          "bits_per_byte": 0.6289,
+          "ratio": 12.721,
+          "encode_p50_ms": 28.57,
+          "decode_p50_ms": 5.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 34446,
+          "bits_per_byte": 1.0181,
+          "ratio": 7.858,
+          "encode_p50_ms": 23.54,
+          "decode_p50_ms": 0.69,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 34458,
+          "bits_per_byte": 1.0184,
+          "ratio": 7.855,
+          "encode_p50_ms": 23.37,
+          "decode_p50_ms": 0.86,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 14192,
+          "bits_per_byte": 0.4194,
+          "ratio": 19.073,
+          "encode_p50_ms": 627.46,
+          "decode_p50_ms": 0.49,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 14476,
+          "bits_per_byte": 0.4278,
+          "ratio": 18.699,
+          "encode_p50_ms": 8.61,
+          "decode_p50_ms": 0.71,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 55011,
+          "bits_per_byte": 1.6258,
+          "ratio": 4.921,
+          "encode_p50_ms": 105.59,
+          "decode_p50_ms": 0.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 55411,
+          "bits_per_byte": 1.6377,
+          "ratio": 4.885,
+          "encode_p50_ms": 22.28,
+          "decode_p50_ms": 0.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 59991,
+          "bits_per_byte": 1.773,
+          "ratio": 4.512,
+          "encode_p50_ms": 0.44,
+          "decode_p50_ms": 0.23,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 13299,
+          "bits_per_byte": 0.3931,
+          "ratio": 20.354,
+          "encode_p50_ms": 940.48,
+          "decode_p50_ms": 0.44,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 13705,
+          "bits_per_byte": 0.4051,
+          "ratio": 19.751,
+          "encode_p50_ms": 1.52,
+          "decode_p50_ms": 0.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 25120,
+          "bits_per_byte": 0.7424,
+          "ratio": 10.776,
+          "encode_p50_ms": 2232.23,
+          "decode_p50_ms": 0.74,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "random_lcg_256k.bin",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\random_lcg_256k.bin",
+      "input_size": 262144,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 262216,
+          "bits_per_byte": 8.0022,
+          "ratio": 1.0,
+          "encode_p50_ms": 87.26,
+          "decode_p50_ms": 0.61,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 262216,
+          "bits_per_byte": 8.0022,
+          "ratio": 1.0,
+          "encode_p50_ms": 70.91,
+          "decode_p50_ms": 0.58,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 263744,
+          "bits_per_byte": 8.0488,
+          "ratio": 0.994,
+          "encode_p50_ms": 44.62,
+          "decode_p50_ms": 18.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 262230,
+          "bits_per_byte": 8.0026,
+          "ratio": 1.0,
+          "encode_p50_ms": 9.16,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 262242,
+          "bits_per_byte": 8.003,
+          "ratio": 1.0,
+          "encode_p50_ms": 9.48,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 262149,
+          "bits_per_byte": 8.0002,
+          "ratio": 1.0,
+          "encode_p50_ms": 113.13,
+          "decode_p50_ms": 0.11,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 262149,
+          "bits_per_byte": 8.0002,
+          "ratio": 1.0,
+          "encode_p50_ms": 2.82,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 262179,
+          "bits_per_byte": 8.0011,
+          "ratio": 1.0,
+          "encode_p50_ms": 11.04,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 263177,
+          "bits_per_byte": 8.0315,
+          "ratio": 0.996,
+          "encode_p50_ms": 9.61,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 262159,
+          "bits_per_byte": 8.0005,
+          "ratio": 1.0,
+          "encode_p50_ms": 0.08,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 262159,
+          "bits_per_byte": 8.0005,
+          "ratio": 1.0,
+          "encode_p50_ms": 30.36,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 262159,
+          "bits_per_byte": 8.0005,
+          "ratio": 1.0,
+          "encode_p50_ms": 0.41,
+          "decode_p50_ms": 0.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 262171,
+          "bits_per_byte": 8.0008,
+          "ratio": 1.0,
+          "encode_p50_ms": 788.45,
+          "decode_p50_ms": 0.48,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "repeating_binary_pattern.bin",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\repeating_binary_pattern.bin",
+      "input_size": 196608,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 176,
+          "bits_per_byte": 0.0072,
+          "ratio": 1117.091,
+          "encode_p50_ms": 32.3,
+          "decode_p50_ms": 1.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 176,
+          "bits_per_byte": 0.0072,
+          "ratio": 1117.091,
+          "encode_p50_ms": 8.78,
+          "decode_p50_ms": 0.82,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 82,
+          "bits_per_byte": 0.0033,
+          "ratio": 2397.659,
+          "encode_p50_ms": 45.05,
+          "decode_p50_ms": 2.78,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 419,
+          "bits_per_byte": 0.017,
+          "ratio": 469.232,
+          "encode_p50_ms": 1.16,
+          "decode_p50_ms": 0.21,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 431,
+          "bits_per_byte": 0.0175,
+          "ratio": 456.167,
+          "encode_p50_ms": 1.38,
+          "decode_p50_ms": 0.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 34,
+          "bits_per_byte": 0.0014,
+          "ratio": 5782.588,
+          "encode_p50_ms": 27.01,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 34,
+          "bits_per_byte": 0.0014,
+          "ratio": 5782.588,
+          "encode_p50_ms": 0.61,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 841,
+          "bits_per_byte": 0.0342,
+          "ratio": 233.779,
+          "encode_p50_ms": 56.07,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 796,
+          "bits_per_byte": 0.0324,
+          "ratio": 246.995,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 9258,
+          "bits_per_byte": 0.3767,
+          "ratio": 21.237,
+          "encode_p50_ms": 0.05,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 43,
+          "bits_per_byte": 0.0017,
+          "ratio": 4572.279,
+          "encode_p50_ms": 1.45,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 44,
+          "bits_per_byte": 0.0018,
+          "ratio": 4468.364,
+          "encode_p50_ms": 0.24,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 413,
+          "bits_per_byte": 0.0168,
+          "ratio": 476.048,
+          "encode_p50_ms": 2980.48,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "semicolon_sparse_300k.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\semicolon_sparse_300k.csv",
+      "input_size": 307200,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 18148,
+          "bits_per_byte": 0.4726,
+          "ratio": 16.927,
+          "encode_p50_ms": 932.27,
+          "decode_p50_ms": 2.79,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 18116,
+          "bits_per_byte": 0.4718,
+          "ratio": 16.957,
+          "encode_p50_ms": 122.47,
+          "decode_p50_ms": 2.49,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 30892,
+          "bits_per_byte": 0.8045,
+          "ratio": 9.944,
+          "encode_p50_ms": 28.18,
+          "decode_p50_ms": 4.62,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 52993,
+          "bits_per_byte": 1.38,
+          "ratio": 5.797,
+          "encode_p50_ms": 192.36,
+          "decode_p50_ms": 0.96,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 53005,
+          "bits_per_byte": 1.3803,
+          "ratio": 5.796,
+          "encode_p50_ms": 154.72,
+          "decode_p50_ms": 1.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 16643,
+          "bits_per_byte": 0.4334,
+          "ratio": 18.458,
+          "encode_p50_ms": 479.62,
+          "decode_p50_ms": 0.64,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 21016,
+          "bits_per_byte": 0.5473,
+          "ratio": 14.617,
+          "encode_p50_ms": 7.68,
+          "decode_p50_ms": 0.56,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 87352,
+          "bits_per_byte": 2.2748,
+          "ratio": 3.517,
+          "encode_p50_ms": 151.02,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 87913,
+          "bits_per_byte": 2.2894,
+          "ratio": 3.494,
+          "encode_p50_ms": 28.24,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 101474,
+          "bits_per_byte": 2.6426,
+          "ratio": 3.027,
+          "encode_p50_ms": 0.61,
+          "decode_p50_ms": 0.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 17936,
+          "bits_per_byte": 0.4671,
+          "ratio": 17.128,
+          "encode_p50_ms": 807.79,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 30508,
+          "bits_per_byte": 0.7945,
+          "ratio": 10.069,
+          "encode_p50_ms": 1.71,
+          "decode_p50_ms": 0.36,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 46786,
+          "bits_per_byte": 1.2184,
+          "ratio": 6.566,
+          "encode_p50_ms": 2581.67,
+          "decode_p50_ms": 1.13,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "small_threshold_4k.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\small_threshold_4k.txt",
+      "input_size": 672,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 96,
+          "bits_per_byte": 1.1429,
+          "ratio": 7.0,
+          "encode_p50_ms": 20.12,
+          "decode_p50_ms": 0.09,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 96,
+          "bits_per_byte": 1.1429,
+          "ratio": 7.0,
+          "encode_p50_ms": 5.19,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 75,
+          "bits_per_byte": 0.8929,
+          "ratio": 8.96,
+          "encode_p50_ms": 0.1,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 36,
+          "bits_per_byte": 0.4286,
+          "ratio": 18.667,
+          "encode_p50_ms": 0.01,
+          "decode_p50_ms": 0.0,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 48,
+          "bits_per_byte": 0.5714,
+          "ratio": 14.0,
+          "encode_p50_ms": 0.04,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 32,
+          "bits_per_byte": 0.381,
+          "ratio": 21.0,
+          "encode_p50_ms": 0.42,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 33,
+          "bits_per_byte": 0.3929,
+          "ratio": 20.364,
+          "encode_p50_ms": 0.07,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 57,
+          "bits_per_byte": 0.6786,
+          "ratio": 11.789,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.0,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 38,
+          "bits_per_byte": 0.4524,
+          "ratio": 17.684,
+          "encode_p50_ms": 0.01,
+          "decode_p50_ms": 0.0,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 56,
+          "bits_per_byte": 0.6667,
+          "ratio": 12.0,
+          "encode_p50_ms": 0.01,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 39,
+          "bits_per_byte": 0.4643,
+          "ratio": 17.231,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.0,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 38,
+          "bits_per_byte": 0.4524,
+          "ratio": 17.684,
+          "encode_p50_ms": 0.01,
+          "decode_p50_ms": 0.0,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 35,
+          "bits_per_byte": 0.4167,
+          "ratio": 19.2,
+          "encode_p50_ms": 14.54,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "sparse_dense_transition.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\sparse_dense_transition.csv",
+      "input_size": 434015,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 25712,
+          "bits_per_byte": 0.4739,
+          "ratio": 16.88,
+          "encode_p50_ms": 545.16,
+          "decode_p50_ms": 4.98,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 25596,
+          "bits_per_byte": 0.4718,
+          "ratio": 16.956,
+          "encode_p50_ms": 223.28,
+          "decode_p50_ms": 6.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 69441,
+          "bits_per_byte": 1.28,
+          "ratio": 6.25,
+          "encode_p50_ms": 27.13,
+          "decode_p50_ms": 8.71,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 107846,
+          "bits_per_byte": 1.9879,
+          "ratio": 4.024,
+          "encode_p50_ms": 143.62,
+          "decode_p50_ms": 1.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 107858,
+          "bits_per_byte": 1.9881,
+          "ratio": 4.024,
+          "encode_p50_ms": 120.92,
+          "decode_p50_ms": 1.6,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 34406,
+          "bits_per_byte": 0.6342,
+          "ratio": 12.615,
+          "encode_p50_ms": 810.61,
+          "decode_p50_ms": 1.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 39618,
+          "bits_per_byte": 0.7303,
+          "ratio": 10.955,
+          "encode_p50_ms": 20.92,
+          "decode_p50_ms": 1.78,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 171066,
+          "bits_per_byte": 3.1532,
+          "ratio": 2.537,
+          "encode_p50_ms": 352.78,
+          "decode_p50_ms": 0.7,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 172537,
+          "bits_per_byte": 3.1803,
+          "ratio": 2.515,
+          "encode_p50_ms": 77.54,
+          "decode_p50_ms": 0.36,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 167788,
+          "bits_per_byte": 3.0928,
+          "ratio": 2.587,
+          "encode_p50_ms": 0.94,
+          "decode_p50_ms": 0.49,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 31511,
+          "bits_per_byte": 0.5808,
+          "ratio": 13.773,
+          "encode_p50_ms": 473.07,
+          "decode_p50_ms": 1.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 47360,
+          "bits_per_byte": 0.873,
+          "ratio": 9.164,
+          "encode_p50_ms": 3.83,
+          "decode_p50_ms": 0.91,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 73142,
+          "bits_per_byte": 1.3482,
+          "ratio": 5.934,
+          "encode_p50_ms": 3101.65,
+          "decode_p50_ms": 1.9,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "sparse_many_columns_300k.csv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\sparse_many_columns_300k.csv",
+      "input_size": 307200,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 18216,
+          "bits_per_byte": 0.4744,
+          "ratio": 16.864,
+          "encode_p50_ms": 975.36,
+          "decode_p50_ms": 3.51,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 18180,
+          "bits_per_byte": 0.4734,
+          "ratio": 16.898,
+          "encode_p50_ms": 130.19,
+          "decode_p50_ms": 2.77,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 30083,
+          "bits_per_byte": 0.7834,
+          "ratio": 10.212,
+          "encode_p50_ms": 28.78,
+          "decode_p50_ms": 4.67,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 52994,
+          "bits_per_byte": 1.3801,
+          "ratio": 5.797,
+          "encode_p50_ms": 194.29,
+          "decode_p50_ms": 1.18,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 53006,
+          "bits_per_byte": 1.3804,
+          "ratio": 5.796,
+          "encode_p50_ms": 156.58,
+          "decode_p50_ms": 1.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 16643,
+          "bits_per_byte": 0.4334,
+          "ratio": 18.458,
+          "encode_p50_ms": 403.03,
+          "decode_p50_ms": 0.83,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 21054,
+          "bits_per_byte": 0.5483,
+          "ratio": 14.591,
+          "encode_p50_ms": 7.36,
+          "decode_p50_ms": 0.52,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 87355,
+          "bits_per_byte": 2.2749,
+          "ratio": 3.517,
+          "encode_p50_ms": 152.81,
+          "decode_p50_ms": 0.21,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 87917,
+          "bits_per_byte": 2.2895,
+          "ratio": 3.494,
+          "encode_p50_ms": 27.59,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 100621,
+          "bits_per_byte": 2.6203,
+          "ratio": 3.053,
+          "encode_p50_ms": 0.59,
+          "decode_p50_ms": 0.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 17936,
+          "bits_per_byte": 0.4671,
+          "ratio": 17.128,
+          "encode_p50_ms": 840.34,
+          "decode_p50_ms": 0.4,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 30461,
+          "bits_per_byte": 0.7933,
+          "ratio": 10.085,
+          "encode_p50_ms": 1.65,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 46787,
+          "bits_per_byte": 1.2184,
+          "ratio": 6.566,
+          "encode_p50_ms": 2693.59,
+          "decode_p50_ms": 1.19,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "tab_sparse_quotes.tsv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\tab_sparse_quotes.tsv",
+      "input_size": 81052,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 9572,
+          "bits_per_byte": 0.9448,
+          "ratio": 8.468,
+          "encode_p50_ms": 60.44,
+          "decode_p50_ms": 1.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 9532,
+          "bits_per_byte": 0.9408,
+          "ratio": 8.503,
+          "encode_p50_ms": 27.32,
+          "decode_p50_ms": 1.35,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 15321,
+          "bits_per_byte": 1.5122,
+          "ratio": 5.29,
+          "encode_p50_ms": 5.65,
+          "decode_p50_ms": 2.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 22060,
+          "bits_per_byte": 2.1774,
+          "ratio": 3.674,
+          "encode_p50_ms": 18.23,
+          "decode_p50_ms": 0.31,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 22072,
+          "bits_per_byte": 2.1786,
+          "ratio": 3.672,
+          "encode_p50_ms": 17.48,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 9385,
+          "bits_per_byte": 0.9263,
+          "ratio": 8.636,
+          "encode_p50_ms": 180.15,
+          "decode_p50_ms": 0.41,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 12376,
+          "bits_per_byte": 1.2215,
+          "ratio": 6.549,
+          "encode_p50_ms": 5.0,
+          "decode_p50_ms": 0.37,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 35224,
+          "bits_per_byte": 3.4767,
+          "ratio": 2.301,
+          "encode_p50_ms": 29.87,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 35744,
+          "bits_per_byte": 3.528,
+          "ratio": 2.268,
+          "encode_p50_ms": 6.05,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 35617,
+          "bits_per_byte": 3.5155,
+          "ratio": 2.276,
+          "encode_p50_ms": 0.24,
+          "decode_p50_ms": 0.09,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 14292,
+          "bits_per_byte": 1.4106,
+          "ratio": 5.671,
+          "encode_p50_ms": 50.41,
+          "decode_p50_ms": 0.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 16894,
+          "bits_per_byte": 1.6675,
+          "ratio": 4.798,
+          "encode_p50_ms": 0.89,
+          "decode_p50_ms": 0.27,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 16505,
+          "bits_per_byte": 1.6291,
+          "ratio": 4.911,
+          "encode_p50_ms": 955.07,
+          "decode_p50_ms": 0.34,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "toml_config_128k.toml",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\toml_config_128k.toml",
+      "input_size": 131072,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 1972,
+          "bits_per_byte": 0.1204,
+          "ratio": 66.467,
+          "encode_p50_ms": 214.98,
+          "decode_p50_ms": 0.7,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 2028,
+          "bits_per_byte": 0.1238,
+          "ratio": 64.631,
+          "encode_p50_ms": 57.56,
+          "decode_p50_ms": 0.84,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 6183,
+          "bits_per_byte": 0.3774,
+          "ratio": 21.199,
+          "encode_p50_ms": 55.79,
+          "decode_p50_ms": 2.29,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 12995,
+          "bits_per_byte": 0.7932,
+          "ratio": 10.086,
+          "encode_p50_ms": 3.66,
+          "decode_p50_ms": 0.21,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 13007,
+          "bits_per_byte": 0.7939,
+          "ratio": 10.077,
+          "encode_p50_ms": 3.75,
+          "decode_p50_ms": 0.32,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 3389,
+          "bits_per_byte": 0.2068,
+          "ratio": 38.676,
+          "encode_p50_ms": 133.0,
+          "decode_p50_ms": 0.23,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 3157,
+          "bits_per_byte": 0.1927,
+          "ratio": 41.518,
+          "encode_p50_ms": 2.7,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 19626,
+          "bits_per_byte": 1.1979,
+          "ratio": 6.678,
+          "encode_p50_ms": 34.62,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 19759,
+          "bits_per_byte": 1.206,
+          "ratio": 6.634,
+          "encode_p50_ms": 4.85,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 24195,
+          "bits_per_byte": 1.4767,
+          "ratio": 5.417,
+          "encode_p50_ms": 0.11,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 2342,
+          "bits_per_byte": 0.1429,
+          "ratio": 55.966,
+          "encode_p50_ms": 69.08,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 4615,
+          "bits_per_byte": 0.2817,
+          "ratio": 28.401,
+          "encode_p50_ms": 0.44,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 10216,
+          "bits_per_byte": 0.6235,
+          "ratio": 12.83,
+          "encode_p50_ms": 1902.48,
+          "decode_p50_ms": 0.38,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "truncated_partial_last_block.bin",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\truncated_partial_last_block.bin",
+      "input_size": 32895,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 32956,
+          "bits_per_byte": 8.0148,
+          "ratio": 0.998,
+          "encode_p50_ms": 31.03,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 32956,
+          "bits_per_byte": 8.0148,
+          "ratio": 0.998,
+          "encode_p50_ms": 12.23,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 33064,
+          "bits_per_byte": 8.0411,
+          "ratio": 0.995,
+          "encode_p50_ms": 8.23,
+          "decode_p50_ms": 2.73,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 32914,
+          "bits_per_byte": 8.0046,
+          "ratio": 0.999,
+          "encode_p50_ms": 1.09,
+          "decode_p50_ms": 0.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 32926,
+          "bits_per_byte": 8.0075,
+          "ratio": 0.999,
+          "encode_p50_ms": 1.13,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 32832,
+          "bits_per_byte": 7.9847,
+          "ratio": 1.002,
+          "encode_p50_ms": 164.48,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 32899,
+          "bits_per_byte": 8.001,
+          "ratio": 1.0,
+          "encode_p50_ms": 1.73,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 32918,
+          "bits_per_byte": 8.0056,
+          "ratio": 0.999,
+          "encode_p50_ms": 0.98,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 32998,
+          "bits_per_byte": 8.025,
+          "ratio": 0.997,
+          "encode_p50_ms": 0.77,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 32901,
+          "bits_per_byte": 8.0015,
+          "ratio": 1.0,
+          "encode_p50_ms": 0.02,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 32905,
+          "bits_per_byte": 8.0024,
+          "ratio": 1.0,
+          "encode_p50_ms": 5.29,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 32905,
+          "bits_per_byte": 8.0024,
+          "ratio": 1.0,
+          "encode_p50_ms": 0.09,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 32902,
+          "bits_per_byte": 8.0017,
+          "ratio": 1.0,
+          "encode_p50_ms": 88.89,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "unicode_filename_ru.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\unicode_filename_ru.txt",
+      "input_size": 131072,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 2872,
+          "bits_per_byte": 0.1753,
+          "ratio": 45.638,
+          "encode_p50_ms": 49.53,
+          "decode_p50_ms": 0.77,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 2028,
+          "bits_per_byte": 0.1238,
+          "ratio": 64.631,
+          "encode_p50_ms": 17.83,
+          "decode_p50_ms": 0.61,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 5392,
+          "bits_per_byte": 0.3291,
+          "ratio": 24.309,
+          "encode_p50_ms": 12.27,
+          "decode_p50_ms": 2.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 9038,
+          "bits_per_byte": 0.5516,
+          "ratio": 14.502,
+          "encode_p50_ms": 3.34,
+          "decode_p50_ms": 0.21,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 9050,
+          "bits_per_byte": 0.5524,
+          "ratio": 14.483,
+          "encode_p50_ms": 3.42,
+          "decode_p50_ms": 0.27,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 3968,
+          "bits_per_byte": 0.2422,
+          "ratio": 33.032,
+          "encode_p50_ms": 254.68,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 3748,
+          "bits_per_byte": 0.2288,
+          "ratio": 34.971,
+          "encode_p50_ms": 2.89,
+          "decode_p50_ms": 0.14,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 15020,
+          "bits_per_byte": 0.9167,
+          "ratio": 8.726,
+          "encode_p50_ms": 18.94,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 14998,
+          "bits_per_byte": 0.9154,
+          "ratio": 8.739,
+          "encode_p50_ms": 1.39,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 20586,
+          "bits_per_byte": 1.2565,
+          "ratio": 6.367,
+          "encode_p50_ms": 0.08,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 3734,
+          "bits_per_byte": 0.2279,
+          "ratio": 35.102,
+          "encode_p50_ms": 135.85,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 3900,
+          "bits_per_byte": 0.238,
+          "ratio": 33.608,
+          "encode_p50_ms": 0.55,
+          "decode_p50_ms": 0.11,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 6697,
+          "bits_per_byte": 0.4088,
+          "ratio": 19.572,
+          "encode_p50_ms": 1311.33,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "unquoted_delimiter_in_value.tsv",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\unquoted_delimiter_in_value.tsv",
+      "input_size": 317406,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 8464,
+          "bits_per_byte": 0.2133,
+          "ratio": 37.501,
+          "encode_p50_ms": 204.34,
+          "decode_p50_ms": 2.6,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 9572,
+          "bits_per_byte": 0.2413,
+          "ratio": 33.16,
+          "encode_p50_ms": 110.12,
+          "decode_p50_ms": 2.65,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 19663,
+          "bits_per_byte": 0.4956,
+          "ratio": 16.142,
+          "encode_p50_ms": 24.21,
+          "decode_p50_ms": 5.73,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 40566,
+          "bits_per_byte": 1.0224,
+          "ratio": 7.824,
+          "encode_p50_ms": 15.24,
+          "decode_p50_ms": 0.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 40578,
+          "bits_per_byte": 1.0227,
+          "ratio": 7.822,
+          "encode_p50_ms": 18.49,
+          "decode_p50_ms": 0.76,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 15893,
+          "bits_per_byte": 0.4006,
+          "ratio": 19.971,
+          "encode_p50_ms": 607.06,
+          "decode_p50_ms": 0.69,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 17532,
+          "bits_per_byte": 0.4419,
+          "ratio": 18.104,
+          "encode_p50_ms": 9.0,
+          "decode_p50_ms": 0.6,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 72514,
+          "bits_per_byte": 1.8277,
+          "ratio": 4.377,
+          "encode_p50_ms": 43.4,
+          "decode_p50_ms": 0.15,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 73010,
+          "bits_per_byte": 1.8402,
+          "ratio": 4.347,
+          "encode_p50_ms": 10.45,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 72897,
+          "bits_per_byte": 1.8373,
+          "ratio": 4.354,
+          "encode_p50_ms": 0.36,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 12956,
+          "bits_per_byte": 0.3265,
+          "ratio": 24.499,
+          "encode_p50_ms": 200.85,
+          "decode_p50_ms": 0.49,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 14689,
+          "bits_per_byte": 0.3702,
+          "ratio": 21.608,
+          "encode_p50_ms": 1.55,
+          "decode_p50_ms": 0.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 32930,
+          "bits_per_byte": 0.83,
+          "ratio": 9.639,
+          "encode_p50_ms": 2201.9,
+          "decode_p50_ms": 1.01,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "utf16_like_control.bin",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\utf16_like_control.bin",
+      "input_size": 163840,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 860,
+          "bits_per_byte": 0.042,
+          "ratio": 190.512,
+          "encode_p50_ms": 102.33,
+          "decode_p50_ms": 0.64,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 700,
+          "bits_per_byte": 0.0342,
+          "ratio": 234.057,
+          "encode_p50_ms": 9.47,
+          "decode_p50_ms": 0.59,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 2401,
+          "bits_per_byte": 0.1172,
+          "ratio": 68.238,
+          "encode_p50_ms": 17.92,
+          "decode_p50_ms": 1.84,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 6450,
+          "bits_per_byte": 0.3149,
+          "ratio": 25.402,
+          "encode_p50_ms": 10.82,
+          "decode_p50_ms": 0.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 6462,
+          "bits_per_byte": 0.3155,
+          "ratio": 25.354,
+          "encode_p50_ms": 6.27,
+          "decode_p50_ms": 0.39,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 2750,
+          "bits_per_byte": 0.1343,
+          "ratio": 59.578,
+          "encode_p50_ms": 336.66,
+          "decode_p50_ms": 0.19,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 2404,
+          "bits_per_byte": 0.1174,
+          "ratio": 68.153,
+          "encode_p50_ms": 2.79,
+          "decode_p50_ms": 0.44,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 12168,
+          "bits_per_byte": 0.5941,
+          "ratio": 13.465,
+          "encode_p50_ms": 33.7,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 12181,
+          "bits_per_byte": 0.5948,
+          "ratio": 13.45,
+          "encode_p50_ms": 10.85,
+          "decode_p50_ms": 0.05,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 15722,
+          "bits_per_byte": 0.7677,
+          "ratio": 10.421,
+          "encode_p50_ms": 0.1,
+          "decode_p50_ms": 0.08,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 1883,
+          "bits_per_byte": 0.0919,
+          "ratio": 87.01,
+          "encode_p50_ms": 151.29,
+          "decode_p50_ms": 0.14,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 2121,
+          "bits_per_byte": 0.1036,
+          "ratio": 77.247,
+          "encode_p50_ms": 0.48,
+          "decode_p50_ms": 0.11,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 5487,
+          "bits_per_byte": 0.2679,
+          "ratio": 29.86,
+          "encode_p50_ms": 2110.25,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "utf8_cyrillic_200k.txt",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\utf8_cyrillic_200k.txt",
+      "input_size": 204800,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 3484,
+          "bits_per_byte": 0.1361,
+          "ratio": 58.783,
+          "encode_p50_ms": 248.78,
+          "decode_p50_ms": 1.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 2368,
+          "bits_per_byte": 0.0925,
+          "ratio": 86.486,
+          "encode_p50_ms": 32.17,
+          "decode_p50_ms": 0.84,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 7896,
+          "bits_per_byte": 0.3084,
+          "ratio": 25.937,
+          "encode_p50_ms": 84.76,
+          "decode_p50_ms": 3.82,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 14062,
+          "bits_per_byte": 0.5493,
+          "ratio": 14.564,
+          "encode_p50_ms": 5.41,
+          "decode_p50_ms": 0.29,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 14074,
+          "bits_per_byte": 0.5498,
+          "ratio": 14.552,
+          "encode_p50_ms": 4.77,
+          "decode_p50_ms": 0.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 4781,
+          "bits_per_byte": 0.1868,
+          "ratio": 42.836,
+          "encode_p50_ms": 316.95,
+          "decode_p50_ms": 0.26,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 4350,
+          "bits_per_byte": 0.1699,
+          "ratio": 47.08,
+          "encode_p50_ms": 4.36,
+          "decode_p50_ms": 0.24,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 23389,
+          "bits_per_byte": 0.9136,
+          "ratio": 8.756,
+          "encode_p50_ms": 41.0,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 23384,
+          "bits_per_byte": 0.9134,
+          "ratio": 8.758,
+          "encode_p50_ms": 2.82,
+          "decode_p50_ms": 0.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 32204,
+          "bits_per_byte": 1.258,
+          "ratio": 6.359,
+          "encode_p50_ms": 0.18,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 4438,
+          "bits_per_byte": 0.1734,
+          "ratio": 46.147,
+          "encode_p50_ms": 141.63,
+          "decode_p50_ms": 0.18,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 5207,
+          "bits_per_byte": 0.2034,
+          "ratio": 39.332,
+          "encode_p50_ms": 0.48,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 10444,
+          "bits_per_byte": 0.408,
+          "ratio": 19.609,
+          "encode_p50_ms": 1403.81,
+          "decode_p50_ms": 0.48,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "xml_attrs_300k.xml",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\xml_attrs_300k.xml",
+      "input_size": 307200,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 12432,
+          "bits_per_byte": 0.3237,
+          "ratio": 24.71,
+          "encode_p50_ms": 654.9,
+          "decode_p50_ms": 3.14,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 12424,
+          "bits_per_byte": 0.3235,
+          "ratio": 24.726,
+          "encode_p50_ms": 134.98,
+          "decode_p50_ms": 2.57,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 23127,
+          "bits_per_byte": 0.6023,
+          "ratio": 13.283,
+          "encode_p50_ms": 21.35,
+          "decode_p50_ms": 4.97,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 41566,
+          "bits_per_byte": 1.0824,
+          "ratio": 7.391,
+          "encode_p50_ms": 40.92,
+          "decode_p50_ms": 0.76,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 41578,
+          "bits_per_byte": 1.0828,
+          "ratio": 7.389,
+          "encode_p50_ms": 40.53,
+          "decode_p50_ms": 1.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 19938,
+          "bits_per_byte": 0.5192,
+          "ratio": 15.408,
+          "encode_p50_ms": 673.72,
+          "decode_p50_ms": 0.74,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 17627,
+          "bits_per_byte": 0.459,
+          "ratio": 17.428,
+          "encode_p50_ms": 11.41,
+          "decode_p50_ms": 0.78,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 65250,
+          "bits_per_byte": 1.6992,
+          "ratio": 4.708,
+          "encode_p50_ms": 87.36,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 65877,
+          "bits_per_byte": 1.7155,
+          "ratio": 4.663,
+          "encode_p50_ms": 13.77,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 73058,
+          "bits_per_byte": 1.9026,
+          "ratio": 4.205,
+          "encode_p50_ms": 0.42,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 16269,
+          "bits_per_byte": 0.4237,
+          "ratio": 18.883,
+          "encode_p50_ms": 725.3,
+          "decode_p50_ms": 0.52,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 18951,
+          "bits_per_byte": 0.4935,
+          "ratio": 16.21,
+          "encode_p50_ms": 1.79,
+          "decode_p50_ms": 0.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 32858,
+          "bits_per_byte": 0.8557,
+          "ratio": 9.349,
+          "encode_p50_ms": 2101.81,
+          "decode_p50_ms": 0.89,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "yaml_mixed_indent_200k.yaml",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\yaml_mixed_indent_200k.yaml",
+      "input_size": 204800,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 6800,
+          "bits_per_byte": 0.2656,
+          "ratio": 30.118,
+          "encode_p50_ms": 218.31,
+          "decode_p50_ms": 1.62,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 7004,
+          "bits_per_byte": 0.2736,
+          "ratio": 29.24,
+          "encode_p50_ms": 108.61,
+          "decode_p50_ms": 2.07,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 14945,
+          "bits_per_byte": 0.5838,
+          "ratio": 13.704,
+          "encode_p50_ms": 76.56,
+          "decode_p50_ms": 4.92,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 25569,
+          "bits_per_byte": 0.9988,
+          "ratio": 8.01,
+          "encode_p50_ms": 73.14,
+          "decode_p50_ms": 0.4,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 25581,
+          "bits_per_byte": 0.9993,
+          "ratio": 8.006,
+          "encode_p50_ms": 69.43,
+          "decode_p50_ms": 0.59,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 7959,
+          "bits_per_byte": 0.3109,
+          "ratio": 25.732,
+          "encode_p50_ms": 416.67,
+          "decode_p50_ms": 0.57,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 13515,
+          "bits_per_byte": 0.5279,
+          "ratio": 15.154,
+          "encode_p50_ms": 7.1,
+          "decode_p50_ms": 0.53,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 39554,
+          "bits_per_byte": 1.5451,
+          "ratio": 5.178,
+          "encode_p50_ms": 76.66,
+          "decode_p50_ms": 0.22,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 39998,
+          "bits_per_byte": 1.5624,
+          "ratio": 5.12,
+          "encode_p50_ms": 18.45,
+          "decode_p50_ms": 0.09,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 60121,
+          "bits_per_byte": 2.3485,
+          "ratio": 3.406,
+          "encode_p50_ms": 0.34,
+          "decode_p50_ms": 0.16,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 10828,
+          "bits_per_byte": 0.423,
+          "ratio": 18.914,
+          "encode_p50_ms": 210.81,
+          "decode_p50_ms": 0.24,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 15020,
+          "bits_per_byte": 0.5867,
+          "ratio": 13.635,
+          "encode_p50_ms": 0.88,
+          "decode_p50_ms": 0.33,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 21580,
+          "bits_per_byte": 0.843,
+          "ratio": 9.49,
+          "encode_p50_ms": 2012.94,
+          "decode_p50_ms": 0.56,
+          "roundtrip_ok": true
+        }
+      ]
+    },
+    {
+      "file": "zero_sparse_binary_128k.bin",
+      "path": "D:\\PROJECT UNIVERSE\\01Compression\\BHA\\TEST\\zero_sparse_binary_128k.bin",
+      "input_size": 131072,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 656,
+          "bits_per_byte": 0.04,
+          "ratio": 199.805,
+          "encode_p50_ms": 94.67,
+          "decode_p50_ms": 0.45,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 656,
+          "bits_per_byte": 0.04,
+          "ratio": 199.805,
+          "encode_p50_ms": 29.36,
+          "decode_p50_ms": 0.47,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 683,
+          "bits_per_byte": 0.0417,
+          "ratio": 191.906,
+          "encode_p50_ms": 2.46,
+          "decode_p50_ms": 0.54,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 1835,
+          "bits_per_byte": 0.112,
+          "ratio": 71.429,
+          "encode_p50_ms": 9.73,
+          "decode_p50_ms": 0.18,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 1847,
+          "bits_per_byte": 0.1127,
+          "ratio": 70.965,
+          "encode_p50_ms": 9.76,
+          "decode_p50_ms": 0.26,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 513,
+          "bits_per_byte": 0.0313,
+          "ratio": 255.501,
+          "encode_p50_ms": 84.12,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 509,
+          "bits_per_byte": 0.0311,
+          "ratio": 257.509,
+          "encode_p50_ms": 1.63,
+          "decode_p50_ms": 0.25,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 1742,
+          "bits_per_byte": 0.1063,
+          "ratio": 75.242,
+          "encode_p50_ms": 6.63,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_block_hc",
+          "output_size": 1710,
+          "bits_per_byte": 0.1044,
+          "ratio": 76.65,
+          "encode_p50_ms": 0.72,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 7920,
+          "bits_per_byte": 0.4834,
+          "ratio": 16.549,
+          "encode_p50_ms": 0.04,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 510,
+          "bits_per_byte": 0.0311,
+          "ratio": 257.004,
+          "encode_p50_ms": 44.43,
+          "decode_p50_ms": 0.06,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 511,
+          "bits_per_byte": 0.0312,
+          "ratio": 256.501,
+          "encode_p50_ms": 0.3,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zopfli_deflate_15",
+          "output_size": 1467,
+          "bits_per_byte": 0.0895,
+          "ratio": 89.347,
+          "encode_p50_ms": 5740.37,
+          "decode_p50_ms": 0.26,
+          "roundtrip_ok": true
+        }
+      ]
+    }
+  ]
+}

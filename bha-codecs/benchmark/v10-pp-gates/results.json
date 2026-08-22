@@ -1,0 +1,40 @@
+{
+  "description": "v10 preprocessors integrated as BHA gates (worker_gate)",
+  "gates_added": ["pp_dedup_substring", "pp_bcj_x86", "pp_zero_extend"],
+  "files_tested": 45,
+  "files_skipped": 2,
+  "skipped_reason": ">2MB to keep wall clock reasonable",
+  "results": {
+    "pp_dedup_substring_wins_over_lzma_fallback": 7,
+    "pp_bcj_x86_wins_over_lzma_fallback": 5,
+    "no_pp_wins": 33
+  },
+  "winners_by_gate": {
+    "pp_dedup_substring": [
+      "fake_zip_header_text.zip",
+      "html_inline_data_uri_200k.html",
+      "latin1_text_200k.txt",
+      "small_threshold_4k.txt",
+      "unicode_filename_ru.txt",
+      "utf16_like_control.bin",
+      "utf8_cyrillic_200k.txt"
+    ],
+    "pp_bcj_x86": [
+      "archive_zip_100k.zip",
+      "log_high_entropy_tail_512k.log",
+      "random_lcg_256k.bin",
+      "truncated_partial_last_block.bin",
+      "zero_sparse_binary_128k.bin"
+    ]
+  },
+  "notes": [
+    "pp_zero_extend not yet producing wins — decoder needs per-position sidecar.",
+    "pp_dedup_substring may fail on binary data where 0xFF is not a safe sentinel.",
+    "All round-trip tests pass on synthetic data; real-world failures on edge cases."
+  ],
+  "files_modified": [
+    "D:\\4\\bha-codecs\\bha_parallel.py",
+    "D:\\4\\bha-codecs\\bha_persistent_pool.py",
+    "D:\\4\\bha-codecs\\bha_v10_pp_safe.py (new)"
+  ]
+}

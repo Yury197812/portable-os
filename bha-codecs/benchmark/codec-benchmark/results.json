@@ -1,0 +1,377 @@
+{
+  "iterations": 3,
+  "n_files": 3,
+  "n_codecs": 14,
+  "codecs_registered": [
+    "lzma9_extreme",
+    "lzma6",
+    "bz2_9",
+    "zlib_9",
+    "gzip_9",
+    "brotli_11",
+    "brotli_6",
+    "lz4_12",
+    "snappy",
+    "zstd_22",
+    "zstd_3",
+    "zopfli_deflate_15",
+    "ppmd_7_order8",
+    "cramjam_zstd_22"
+  ],
+  "rows": [
+    {
+      "file": "bro_html+json-50k (10).html",
+      "path": "D:\\4\\bha-codecs\\benchmark\\bro_html+json-50k (10).html",
+      "input_size": 3435,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 624,
+          "bits_per_byte": 1.4533,
+          "ratio": 5.505,
+          "encode_p50_ms": 25.55,
+          "decode_p50_ms": 0.13,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 624,
+          "bits_per_byte": 1.4533,
+          "ratio": 5.505,
+          "encode_p50_ms": 7.45,
+          "decode_p50_ms": 0.14,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 744,
+          "bits_per_byte": 1.7328,
+          "ratio": 4.617,
+          "encode_p50_ms": 0.64,
+          "decode_p50_ms": 0.2,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 645,
+          "bits_per_byte": 1.5022,
+          "ratio": 5.326,
+          "encode_p50_ms": 0.07,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 657,
+          "bits_per_byte": 1.5301,
+          "ratio": 5.228,
+          "encode_p50_ms": 0.12,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 424,
+          "bits_per_byte": 0.9875,
+          "ratio": 8.101,
+          "encode_p50_ms": 7.16,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 472,
+          "bits_per_byte": 1.0993,
+          "ratio": 7.278,
+          "encode_p50_ms": 1.15,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 905,
+          "bits_per_byte": 2.1077,
+          "ratio": 3.796,
+          "encode_p50_ms": 0.13,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 947,
+          "bits_per_byte": 2.2055,
+          "ratio": 3.627,
+          "encode_p50_ms": 0.01,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 583,
+          "bits_per_byte": 1.3578,
+          "ratio": 5.892,
+          "encode_p50_ms": 1.72,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 605,
+          "bits_per_byte": 1.409,
+          "ratio": 5.678,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "error": "error: Error -3 while decompressing data: invalid stored block lengths",
+          "codec": "zopfli_deflate_15"
+        },
+        {
+          "error": "TypeError: Ppmd7Encoder.encode() takes at most 1 argument (2 given)",
+          "codec": "ppmd_7_order8"
+        },
+        {
+          "error": "TypeError: unsupported operand type(s) for +: 'int' and 'builtins.Buffer'",
+          "codec": "cramjam_zstd_22"
+        }
+      ]
+    },
+    {
+      "file": "bro_html+json-50k (11).html",
+      "path": "D:\\4\\bha-codecs\\benchmark\\bro_html+json-50k (11).html",
+      "input_size": 3435,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 624,
+          "bits_per_byte": 1.4533,
+          "ratio": 5.505,
+          "encode_p50_ms": 27.92,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 624,
+          "bits_per_byte": 1.4533,
+          "ratio": 5.505,
+          "encode_p50_ms": 7.92,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 744,
+          "bits_per_byte": 1.7328,
+          "ratio": 4.617,
+          "encode_p50_ms": 0.68,
+          "decode_p50_ms": 0.17,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 645,
+          "bits_per_byte": 1.5022,
+          "ratio": 5.326,
+          "encode_p50_ms": 0.13,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 657,
+          "bits_per_byte": 1.5301,
+          "ratio": 5.228,
+          "encode_p50_ms": 0.11,
+          "decode_p50_ms": 0.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 424,
+          "bits_per_byte": 0.9875,
+          "ratio": 8.101,
+          "encode_p50_ms": 7.3,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 472,
+          "bits_per_byte": 1.0993,
+          "ratio": 7.278,
+          "encode_p50_ms": 1.19,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 905,
+          "bits_per_byte": 2.1077,
+          "ratio": 3.796,
+          "encode_p50_ms": 0.13,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 947,
+          "bits_per_byte": 2.2055,
+          "ratio": 3.627,
+          "encode_p50_ms": 0.01,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 583,
+          "bits_per_byte": 1.3578,
+          "ratio": 5.892,
+          "encode_p50_ms": 1.71,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 605,
+          "bits_per_byte": 1.409,
+          "ratio": 5.678,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "error": "error: Error -3 while decompressing data: invalid stored block lengths",
+          "codec": "zopfli_deflate_15"
+        },
+        {
+          "error": "TypeError: Ppmd7Encoder.encode() takes at most 1 argument (2 given)",
+          "codec": "ppmd_7_order8"
+        },
+        {
+          "error": "TypeError: unsupported operand type(s) for +: 'int' and 'builtins.Buffer'",
+          "codec": "cramjam_zstd_22"
+        }
+      ]
+    },
+    {
+      "file": "bro_html+json-50k (12).html",
+      "path": "D:\\4\\bha-codecs\\benchmark\\bro_html+json-50k (12).html",
+      "input_size": 3435,
+      "codecs": [
+        {
+          "codec": "lzma9_extreme",
+          "output_size": 624,
+          "bits_per_byte": 1.4533,
+          "ratio": 5.505,
+          "encode_p50_ms": 25.97,
+          "decode_p50_ms": 0.12,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lzma6",
+          "output_size": 624,
+          "bits_per_byte": 1.4533,
+          "ratio": 5.505,
+          "encode_p50_ms": 6.61,
+          "decode_p50_ms": 0.1,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "bz2_9",
+          "output_size": 744,
+          "bits_per_byte": 1.7328,
+          "ratio": 4.617,
+          "encode_p50_ms": 0.59,
+          "decode_p50_ms": 0.14,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zlib_9",
+          "output_size": 645,
+          "bits_per_byte": 1.5022,
+          "ratio": 5.326,
+          "encode_p50_ms": 0.07,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "gzip_9",
+          "output_size": 657,
+          "bits_per_byte": 1.5301,
+          "ratio": 5.228,
+          "encode_p50_ms": 0.1,
+          "decode_p50_ms": 0.03,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_11",
+          "output_size": 424,
+          "bits_per_byte": 0.9875,
+          "ratio": 8.101,
+          "encode_p50_ms": 7.21,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "brotli_6",
+          "output_size": 472,
+          "bits_per_byte": 1.0993,
+          "ratio": 7.278,
+          "encode_p50_ms": 1.13,
+          "decode_p50_ms": 0.04,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "lz4_12",
+          "output_size": 905,
+          "bits_per_byte": 2.1077,
+          "ratio": 3.796,
+          "encode_p50_ms": 0.14,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "snappy",
+          "output_size": 947,
+          "bits_per_byte": 2.2055,
+          "ratio": 3.627,
+          "encode_p50_ms": 0.01,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_22",
+          "output_size": 583,
+          "bits_per_byte": 1.3578,
+          "ratio": 5.892,
+          "encode_p50_ms": 1.67,
+          "decode_p50_ms": 0.02,
+          "roundtrip_ok": true
+        },
+        {
+          "codec": "zstd_3",
+          "output_size": 605,
+          "bits_per_byte": 1.409,
+          "ratio": 5.678,
+          "encode_p50_ms": 0.03,
+          "decode_p50_ms": 0.01,
+          "roundtrip_ok": true
+        },
+        {
+          "error": "error: Error -3 while decompressing data: invalid stored block lengths",
+          "codec": "zopfli_deflate_15"
+        },
+        {
+          "error": "TypeError: Ppmd7Encoder.encode() takes at most 1 argument (2 given)",
+          "codec": "ppmd_7_order8"
+        },
+        {
+          "error": "TypeError: unsupported operand type(s) for +: 'int' and 'builtins.Buffer'",
+          "codec": "cramjam_zstd_22"
+        }
+      ]
+    }
+  ]
+}

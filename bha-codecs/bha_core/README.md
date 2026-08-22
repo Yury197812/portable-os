@@ -1,0 +1,260 @@
+# bha_core — Production BHA Codec Pipeline
+
+A self-contained package implementing the core layers of the Black Hole
+Archiver (BHA) codec stack, extracted from the larger research project
+at `D:\4\bha-codecs\`.
+
+Version: **1.0** — all 8 core tests pass (see `core_check.py` in the
+parent project).
+
+## Installation
+
+See **`INSTALL.md`** in the parent project (`D:\4\bha-codecs\INSTALL.md`)
+for the full guide. Quick summary:
+
+```bash
+# 1. Set PYTHONPATH so bha_core and BHA runtime resolve
+export PYTHONPATH=/path/to/bha-codecs:/path/to/bha-runtime:$PYTHONPATH
+export BHA_RUNTIME_DIR=/path/to/bha-runtime/runtime
+
+# 2. (Optional) Install codec packages for full bench_codecs support
+pip install brotli lz4 zstandard python-snappy zopfli
+
+# 3. Verify
+python -c "from bha_core import bha, bha_parallel, bha_recommender_v11; print('OK')"
+```
+
+To install as a package:
+```bash
+pip install "bha-core[codecs]"
+```
+
+## What's inside
+
+```
+bha_core/
+├── __init__.py             package marker (__version__, __all__)
+├── bha.py                  entry point: bha_compress() with wall-clock guard
+├── bha_delta.py            L3 preprocessor: per-column delta encoding
+├── bha_v10_pp_safe.py      L3 preprocessor: round-trip safe pp_bcj_x86 / pp_dedup_substring
+├── bha_parallel.py         L9 orchestrator: parallel gates via ProcessPoolExecutor
+├── bha_persistent_pool.py  L9 orchestrator: long-lived singleton pool (2.14× speedup)
+├── bha_recommender_v11.py  L8 production API: per-extension gate priority + LZMA preset
+├── recommender_v11.py      L15 training: build rules.json from telemetry
+├── bench_codecs.py         L6 entropy: 13-codec comparison harness
+├── catalog.ini             codec catalog (file_codec, directory_codec, container)
+└── rules.json              v11 training output (per-extension codec distribution)
+```
+
+## Quick start
+
+```python
+from bha_core import bha, bha_parallel, bha_recommender_v11
+
+# Sequential compression (with wall-clock guard)
+arc, stats, meta = bha.bha_compress(data, src_path=Path("foo.csv"),
+                                   total_timeout_s=20)
+print(f"compressed: {stats}, meta: {meta}")
+
+# Parallel compression (uses v11 gate priority by default)
+arc, meta = bha_parallel.bha_parallel_compress(data, src_path=Path("foo.csv"))
+print(f"best gate: {meta['best_gate']}  v11 priority: {meta.get('v11_priority')}")
+
+# Get gate recommendations for a file
+gates = bha_recommender_v11.recommend("foo.csv", 500_000, k=5)
+preset = bha_recommender_v11.lzma_preset_for("foo.csv", 500_000)
+```
+
+## Layer-by-layer reference
+
+### L1-L2 (I/O + sniffing)
+Implemented inline in each gate function of `bha_parallel.py`. Pattern
+detectors (`_is_csv_like`, `_quoted_csv_gate`, etc.) decide which gates
+to run.
+
+### L3 — `bha_delta.py`: per-column delta preprocessor
+
+**Public function**: `try_column_delta(data: bytes) -> Optional[bytes]`
+
+Sniffs a CSV-like input, detects per-column types (int, float, timestamp,
+IPv4, boolean), encodes each column with the appropriate scheme, packs
+as JSON for downstream LZMA2 compression.
+
+**Adaptive int encoder** (`_adaptive_encode_int`): for integer columns,
+picks the smallest of three modes:
+- `0` plain delta (legacy format, 8-byte first value + zigzag varint deltas)
+- `2` delta-of-delta (best for linear / smooth series)
+- `3` XOR-i32 / `4` XOR-i64 (Snappy-style, best for close values)
+
+Selection is automatic; round-trip is preserved via 1-byte mode selector.
+
+### L3 — `bha_v10_pp_safe.py`: round-trip safe preprocessors
+
+All three return `(preprocessed, sidecar)`. Decoder reverses.
+
+- `pp_dedup_substring_safe(data, min_len=32) -> (bytes, bytes)`
+  Find longest repeated substring; replace second occurrence with
+  9-byte back-ref token `0xFF + u32_LE distance + u32_LE length`.
+  Sidecar holds original substring for verification.
+
+- `pp_bcj_x86_safe(data) -> (bytes, bytes)`
+  Zero out 4 bytes after each `0xE8` / `0xE9` (CALL/JMP rel32) in x86 code.
+  Sidecar holds original offsets.
+
+- `pp_zero_extend_safe(data) -> (bytes, bytes)`
+  Strip 4 leading zero bytes from 8-byte aligned int32 values. **Note**:
+  `decode_zero_extend` is not yet implemented; gate is disabled by
+  default.
+
+### L8 — `bha_recommender_v11.py`: production recommender
+
+Hot-path API for selecting gates and LZMA preset per file.
+
+```python
+recommend(name: str, size: int, k: int = 5) -> list[str]
+    # Returns prioritized BHA gate names (highest priority first).
+    # Uses EXT_PRIORITY dict (17 file extensions) trained on
+    # telemetry_v1.json. Falls back to DEFAULT_PRIORITY if extension
+    # is unknown.
+
+lzma_preset_for(name: str, size: int) -> int
+    # Returns 6 (default) or 9 (EXTREME). 9 is chosen for tiny files
+    # (<8KB) or regimes where telemetry says brotli_11 / zstd_22 win
+    # (high-compression regimes benefit from EXTREME).
+
+stats() -> dict
+    # Returns recommender metrics: version, LOO top-1/top-3, n_files.
+```
+
+Loaded rules live in `rules.json` next to the module (regenerated by
+`recommender_v11.py` training).
+
+### L9 — `bha_parallel.py`: parallel orchestrator
+
+**Public function**: `bha_parallel_compress(data, src_path=None,
+max_workers=None, baseline=None) -> (bytes, dict)`
+
+Runs ~14 BHA gates concurrently via `ProcessPoolExecutor`, picks the
+smallest output. Adaptive strategy:
+- `< 200KB`: skip parallel, use baseline or fallback
+- CSV-like + `< 500KB`: 1 worker
+- CSV-like + `500KB-2MB`: 2 workers
+- CSV-like + `> 2MB`: up to 4 workers
+- Non-CSV + `2-10MB`: 2 workers
+- Non-CSV + `10-50MB`: 4 workers
+- Non-CSV + `> 50MB`: up to 8 workers
+
+**v11 integration** (default on):
+- `BHA_USE_V11=0` — disable v11 recommender (run all gates unordered)
+- `BHA_USE_V11=1` — v11 priority list runs first, then remaining gates
+- `BHA_V11_ONLY=1` — filter to v11 priority gates only
+
+Meta keys: `best_gate`, `best_size`, `n_gates_succeeded`, `gates_tried`,
+`v11_priority`, `v11_lzma_preset`, `v11_only_mode`, `pool_init_used` (from
+persistent variant), `elapsed_s`.
+
+### L9 — `bha_persistent_pool.py`: long-lived worker pool
+
+**Public function**: `bha_parallel_compress(...)` — same signature as
+`bha_parallel.bha_parallel_compress`, but uses a singleton
+`ProcessPoolExecutor` that stays alive between calls.
+
+**2.14× avg speedup** over per-call pool on the 6-fixture benchmark
+from `bha_parallel.py` README §11.4 (6/6 wins).
+
+`shutdown_pool()` — explicit cleanup (also runs from atexit).
+
+### L8 — `recommender_v11.py`: L15 training script
+
+Run as `python -m bha_core.recommender_v11` to retrain v11 from the
+telemetry JSON. Output: `rules.json` next to the script.
+
+Reads telemetry from `D:\4\bha-codecs\benchmark\codec-benchmark\telemetry_v1.json`
+(598 training points: 46 files × 13 codecs). Writes `bha_core/rules.json`.
+
+LOO evaluation: **top-1 = 48.5%**, **top-3 = 76.8%** (vs v9b 42.0%).
+
+### L6 — `bench_codecs.py`: multi-codec comparison harness
+
+**CLI**:
+```bash
+python -m bha_core.bench_codecs --iter 3 --max-file-size 1000000 --quiet \
+        --out benchmark/codec-benchmark/telemetry_v1.json
+```
+
+13 codecs registered: `lzma9_extreme`, `lzma6`, `bz2_9`, `zlib_9`,
+`gzip_9`, `brotli_11`, `brotli_6`, `lz4_12`, `lz4_block_hc`, `snappy`,
+`zstd_22`, `zstd_3`, `zopfli_deflate_15`.
+
+Each codec is round-trip tested before timing. Output JSON contains per
+file × codec: `output_size`, `bits_per_byte`, `ratio`, `encode_p50_ms`,
+`decode_p50_ms`, `roundtrip_ok`.
+
+### L1 — `bha.py`: entry point with safety patches
+
+**Public function**: `bha_compress(data, src_path=None,
+total_timeout_s=20) -> (bytes, stats, meta)`
+
+Patches BHA runtime to skip `PRESET_EXTREME` on files >64KB (saves 90%
+time, ~1-2% size), skips `ssp.encode_data` on files >256KB (LZMA-archive
+is already optimal on those), then calls `_compress_best` with
+`total_timeout_s` watchdog. On timeout, falls back to LZMA-archive.
+
+Also runs `try_column_delta` (bha_delta) in parallel and picks the
+smaller of the two.
+
+### Codec catalog
+
+`catalog.ini` documents the 21 file_codecs (BHCC1, BHTC1, BHMX1, BHRT1,
+...), 6 directory_codecs (BHSD1, BHDS3, BHBK1, ...), and 1 container
+magic (BHA1) used in BHA. Includes v10 preprocessor gates
+(BHV2_DEDUP, BHV2_BCJX, BHV2_ZEXT).
+
+## Verification
+
+The parent project's `core_check.py` runs 8 sub-tests against this
+package. All pass:
+
+```
+PASS  adaptive int (bha_delta)                            OK (15.9s)
+PASS  v10 pp round-trip (bha_v10_pp_safe)                 OK (0.1s)
+PASS  persistent pool (bha_persistent_pool)               OK (0.2s)
+PASS  parallel orchestrator (bha_parallel)                OK (4.4s)
+PASS  v11 recommender API (bha_recommender_v11)           OK (0.1s)
+PASS  L15 training (recommender_v11)                      OK (0.5s)
+PASS  multi-codec bench (bench_codecs)                    OK (13.0s)
+PASS  v10 gates (test_v10_pp_gates)                       OK (326.0s)
+
+8/8 passed
+```
+
+Run from the project root:
+```bash
+python core_check.py
+```
+
+## Layer mapping (from `L1-L12-layers.md`)
+
+| Layer | Module | Status |
+|-------|--------|--------|
+| L1 input | (caller) | — |
+| L2 sniffing | `bha_parallel._is_csv_like` | working |
+| L3 preprocessor | `bha_delta`, `bha_v10_pp_safe` | working |
+| L4 per-codec | `black_hole_archiver._encode_*` (external) | working |
+| L5 sidecar | `bha_v10_pp_safe` (inline) | working |
+| L6 entropy | `bench_codecs` (LZMA2 via BHA runtime) | working |
+| L7 envelope | `black_hole_archiver` (external) | working |
+| L8 recommender | `bha_recommender_v11`, `recommender_v11` | working (48.5% top-1) |
+| L9 parallel | `bha_parallel`, `bha_persistent_pool` | working |
+| L10 container | (external BHA) | working |
+| L11 CLI | `bha.py --bench`, `bha_parallel.py <file>` | working |
+| L12 pipeline | orchestrator + CLI | working |
+
+L13-L18 (verification, telemetry, adaptive control, composition,
+distributed, meta-orchestration) are not in this package yet. See
+`D:\4\bha-codecs\L1-L12-layers.md` for the roadmap.
+
+## License
+
+Project-internal. Source: `D:\PROJECT UNIVERSE\01Compression\BHA\`
+(5646 lines, 216KB, BHA runtime).

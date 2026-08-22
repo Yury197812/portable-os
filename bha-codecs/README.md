@@ -1,230 +1,240 @@
-# BHA SSP5 Codec Recommender — Unified Metrics v1..v9b
+# bha_core — Adaptive Multi-Codec Compression Pipeline
 
-**Recommender that picks the best codec per file for the Black Hole**
-**Archiver (BHA). Final stable version: v9b (real-only top-1 = 42.0%).**
+A telemetry-driven compression pipeline for the Black Hole Archiver (BHA)
+codec stack. Picks the best codec per file using a v11 recommender
+trained on real compression telemetry.
 
-Built: 2026-08-20  |  Path: `D:\4\bha-codecs\`  |  License: project-internal
+**Performance on 50 real BHA files:**
 
-## 1. Summary table v1..v9b
+| Pipeline | Avg ratio | Avg bits/byte | Notes |
+|----------|-----------|---------------|-------|
+| `lzma_extreme` (preset 9) | 2.55× | 3.14 | Slowest, best raw |
+| `lzma6` (preset 6) | 2.51× | 3.19 | Default; 6× faster than extreme |
+| **`brotli_11`** | **2.51×** | **3.19** | Google web codec, fast |
+| `zstd_22` | 2.41× | 3.32 | Facebook codec |
+| `bz2_9` | 1.95× | 4.10 | Best on numeric CSV |
+| `lz4` | 1.45× | 5.52 | Fastest, worst ratio |
+| `snappy` | 1.40× | 5.72 | Fastest |
 
-| Ver | Approach | LOO synth top-1 | LOO real top-1 | LOO real top-3 | 50-file real top-1 |
-|-----|----------|-----------------|-----------------|-----------------|---------------------|
-| **v1** | hand-coded decision tree (14 KB) | 14/14 KB ✓ | — | — | — |
-| **v2** | k-NN baseline (13 sources) |  38.5% | — | — | — |
-| **v3** | augmented k-NN (13×5=65) |  30.8% | — | — | — |
-| **v4** | extended to 37 sources, 6 stdlib |  56.8% | — | — | — |
-| **v5** | + 24 BHA-envelope magics (size model) |  51.4% | — | — | — |
-| **v6** | + 5 preprocessors (delta/transpose/...) |  48.6% | — | — | — |
-| **v7** | + 3 pp + class-balanced k-NN |  48.6% | — | — | — |
-| **v8** | v7 training + 50 real corpus points |   2.7% |  34.0% |  56.0% |  34.0% |
-| **v9** | v8 + IDF locality log(1+N/df) |  10.8% |  30.0% |  50.0% |  30.0% |
-| **v9b** | v8 + locality restricted to BHA-dominant (STABLE) |   2.7% |  42.0% |  52.0% |  42.0% |
+**v11 recommender:** 48.5% top-1 accuracy (vs v9b 42.0%) on 50-file BHA corpus.
+**Persistent pool:** 2.14× avg speedup over per-call ProcessPoolExecutor.
 
-## 2. Real-only LOO top-1 (50 real BHA files, leave-one-out)
+---
 
-```
-v9b ████████████████████████████████  42.0%   ← STABLE
-v8  ███████████████████████████       34.0%
-v9  ████████████████████████          30.0%   (raw locality over-amplifies bz2)
-v1  ████████████████                  22.0%   (hand-coded KB)
-```
+## Install
 
-## 3. Real-only LOO top-3 (50 files)
-
-```
-v8  ████████████████████████████████████  56.0%
-v9b ██████████████████████████████████    52.0%
-v9  ██████████████████████████████      50.0%
-v1  ████████████████                      22.0%
+```bash
+pip install bha-core
+# or with optional codecs:
+pip install "bha-core[codecs]"
 ```
 
-## 4. Real-only LOO top-5 (50 files)
+See **`INSTALL.md`** for full setup including BHA runtime integration.
 
-```
-v9b ██████████████████████████████████████  60.0%   ← STABLE
-v8  ███████████████████████████████████      58.0%
-v9  █████████████████████████████████        56.0%
-```
+---
 
-## 5. Synthetic LOO top-1 over versions (37 synthetic sources)
+## Quick start
 
-```
-v1  ████████████████████████████████████  100.0% (KB overfit)
-v4  ██████████████████                  56.8%
-v5  █████████████████                   51.4%
-v6  ████████████████                    48.6%
-v7  ████████████████                    48.6%
-v2  ████████████                        38.5%
-v3  ██████████                          30.8%
-v9  ███                                  10.8% (synthetic-only LOO not relevant)
-v8  █                                    2.7% (synthetic-only LOO not relevant)
-v9b █                                    2.7% (synthetic-only LOO not relevant)
-```
-Note: v8/v9/v9b's synthetic LOO top-1 collapsed because real-corpus
-points (50) outweigh synthetic (37), shifting class-balance toward
-globally-common lzma2/brotli. This is the correct trade-off for a
-real-file deployment; synthetic-only LOO is no longer the relevant
-metric for v8+.
-
-## 6. Trajectory of real-only LOO top-1 (v1 → v9b)
-
-```
-real-only top-1: 22.0% → ? → ? → ? → ? → ? → ? → 34.0% → 30.0% → 42.0%
-                       v1  v2  v3  v4  v5  v6  v7   v8   v9   v9b
-                              v2-v7 = synthetic-only LOO (not measured on real corpus)
-sparkline: ▁      ▅▃█  (v9 local regression then v9b fix)
-```
-
-## 7. Pick distribution shift v8 → v9b (50 real files)
-
-| Codec | v8 | v9b | Δ |
-|-------|----|----|---|
-| lzma2 | 23 | 25 | +2 |
-| BHTC1 | 6 | 5 | -1 |
-| brotli | 7 | 4 | -3 |
-| BHVT1 | 3 | 4 | +1 |
-| BHRT1 | 2 | 2 |  0 |
-| BHJA1 | 2 | 2 |  0 |
-| BHTL1 | 2 | 2 |  0 |
-| BHNL1 | 0 | 1 | +1 |
-| BHTM1 | 1 | 1 |  0 |
-| BHCC1 | 1 | 1 |  0 |
-| BHCC1__transpose | 1 | 1 |  0 |
-| BHQC1 | 1 | 0 | -1 |
-| bz2 | 1 | 1 |  0 |
-
-Key shifts: lzma2 +2 (BHA-dominant gain), brotli -3 (correctly demoted),
-BHVT1 +1 (now correctly chosen for `pipe_kv_transition_256k.log`).
-
-## 8. Key insights (validated across v1..v9b)
-
-1. **Per-chunk adaptive codec ≤ fixed strategy** — oracle by
-   post-compression size strictly beats any single codec on real data.
-2. **Depth≥2 in compression pipelines = overhead** — LZMA2 already
-   collapses entropy; another LZMA2/bz2/brotli on top adds overhead.
-3. **BHCC1 cross-column beats per-column atomize on multi-col** —
-   cross-column correlation is a real win (3.00% vs 4.07% on telemetry).
-4. **Synthetic ≠ real corpus for benchmarks** — always validate on
-   real files. Same algorithm: +5.6× synth, 0.5× real loss.
-5. **Preprocessor × BHA envelope > stdlib on structured data** —
-   `BHCC1__delta_i64` ×45 on arith streams (8.64% → 0.06%).
-6. **Class-balanced k-NN with `1/sqrt(f/expected)` weights** — v7.
-   sqrt is canonical compromise (Cui et al. 2019, α=0.5).
-7. **Real-corpus training points dominate synthetic for k-NN** — v8.
-   Adding 50 real files lifts real-only top-1 from N/A to 34.0%.
-8. **IDF locality helps ONLY when ground truth is locally rare** — v9.
-   Raw locality demotes lzma2 (23/50 ground truth) and amplifies bz2 (0/50).
-9. **BHA-dominant-restricted locality fixes v9** — v9b. Restrict
-   locality to BHA codecs. Real-only top-1 jumps 17/50 → 21/50 = 42.0%.
-
-## 9. v9b algorithm (3-layer weighted vote)
+### 1. Sequential compression (with wall-clock guard)
 
 ```python
-BHA_DOMINANT = {
-    'lzma2', 'BHTC1', 'BHVT1', 'BHRT1', 'BHJA1', 'BHNL1',
-    'BHCC1', 'BHTM1', 'BHTL1', 'BHMX1', 'BHQC1', 'BHSP1',
-    'BHST1', 'BHDT1', 'BHCS1', 'BHBK1', 'BHDS1', 'BHDS2',
-    'BHCC1__delta_i64', 'BHCC1__transpose', 'BHCC1__json_extract',
-    'BHCC1__collate_keys', 'raw', ...
-}
+from pathlib import Path
+from bha_core import bha
 
-for each training point (87 total = 37 synth + 50 real):
-    d = L1 distance from query to point
-    cb = 1 / sqrt(freq(label) / (n/n_classes))   # class-balance (v7)
-    locality = log(1 + N/df(label)) if label in BHA_DOMINANT else 1.0
-    score[label] += cb / (d + 0.001) * locality
-
-return top-K codecs by accumulated score
+data = Path("report.csv").read_bytes()
+arc, stats, meta = bha.bha_compress(
+    data,
+    src_path=Path("report.csv"),
+    total_timeout_s=20,
+)
+print(f"compressed: {len(arc)} bytes (ratio {100 * len(arc) / len(data):.2f}%)")
+print(f"meta: {meta}")
+# {'elapsed_s': 0.35, 'timed_out': False, 'reached_finish': True, ...}
 ```
 
-**Key insight:** Non-dominant labels (brotli, bz2, zlib) get
-locality=1.0 (neutral). This stops bz2 from stealing lzma2 votes on
-close ties, while BHA codecs (BHTC1, BHVT1, BHRT1, BHJA1) still
-benefit from IDF amplification when they appear rarely locally.
+### 2. Parallel compression with v11 recommender
 
-## 10. File layout
+```python
+from pathlib import Path
+from bha_core import bha_parallel
+
+data = Path("big.log").read_bytes()
+arc, meta = bha_parallel.bha_parallel_compress(data, src_path=Path("big.log"))
+print(f"best gate: {meta['best_gate']}")
+print(f"v11 priority: {meta.get('v11_priority')}")
+print(f"v11 LZMA preset: {meta.get('v11_lzma_preset')}")
+# best gate: pp_bcj_x86
+# v11 priority: ['lzma_fallback', 'sparse_pattern', 'line_norm', 'delta_pp', 'quoted_csv']
+# v11 LZMA preset: 9
+```
+
+### 3. Standalone v11 recommender API (no BHA runtime needed)
+
+```python
+from bha_core import bha_recommender_v11
+
+# Gate recommendations
+gates = bha_recommender_v11.recommend("data.csv", 500_000, k=5)
+# ['delta_pp', 'lzma_fallback', 'telemetry_csv', 'quoted_csv', 'tabular_col']
+
+# LZMA preset for the lzma_fallback gate
+preset = bha_recommender_v11.lzma_preset_for("data.csv", 500_000)
+# 6
+
+# Stats from training
+stats = bha_recommender_v11.stats()
+# {'version': 'v11', 'loo_top1_pct': 48.5, 'loo_top3_pct': 76.8, ...}
+```
+
+### 4. Round-trip safe preprocessors
+
+```python
+from bha_core import bha_v10_pp_safe
+
+# Find longest repeated substring, replace with back-ref token
+data = b"hello world " * 100
+pre, side = bha_v10_pp_safe.pp_dedup_substring_safe(data)
+decoded = bha_v10_pp_safe.decode_dedup_substring(pre, side)
+assert decoded == data  # round-trip safe
+
+# x86 BCJ filter: zero out CALL/JMP offsets
+x86_data = bytes([0xE8, 0x10, 0x00, 0x00, 0x00, 0xE9, 0x20, 0x00, 0x00, 0x00]) * 50
+pre, side = bha_v10_pp_safe.pp_bcj_x86_safe(x86_data)
+decoded = bha_v10_pp_safe.decode_bcj_x86(pre, side)
+assert decoded == x86_data
+```
+
+### 5. Adaptive integer encoder
+
+```python
+from bha_core import bha_delta
+
+# Adaptive int encoder picks the smallest of 3 modes:
+#   0 = plain delta, 2 = delta-of-delta, 3/4 = XOR-i32/i64
+vals = [i * i for i in range(1000)]  # quadratic series
+enc = bha_delta._adaptive_encode_int(vals)
+# enc[0] == 2 — dod wins for quadratic
+dec = bha_delta._decode_adaptive(enc)
+assert dec == vals
+```
+
+### 6. CLI tools (after `pip install bha-core`)
+
+```bash
+# Single-file packer with wall-clock guard
+bha-pack myfile.csv
+
+# Parallel orchestrator (uses v11 recommender by default)
+bha-orchestrate data.csv log.txt archive.html
+```
+
+---
+
+## Architecture overview
+
+The package implements a 12-layer codec stack (L1-L12 from
+`L1-L12-layers.md`). Each layer is independently testable.
+
+```
+L1 input → L2 sniffing → L3 preprocessor → L4 per-codec encoder
+                                          ↓
+L12 pipeline  ←  L11 CLI  ←  L10 container  ←  L9 parallel orchestrator
+                              ↑
+                          L8 v11 recommender  →  L7 envelope
+```
+
+| Layer | Module | Purpose |
+|-------|--------|---------|
+| L3 preprocessor | `bha_delta.py`, `bha_v10_pp_safe.py` | Restructure input to be more compressible |
+| L6 entropy | (via BHA runtime LZMA2) | Statistical back-end |
+| L8 recommender | `bha_recommender_v11.py`, `recommender_v11.py` | Pick best codec per file (48.5% top-1) |
+| L9 orchestrator | `bha_parallel.py`, `bha_persistent_pool.py` | Run multiple gates concurrently |
+| L11 CLI | `bha.py`, `bha_parallel._cli_orchestrator()` | User-facing interface |
+| L12 pipeline | (orchestrator + CLI) | End-to-end compression |
+
+For the full L1-L18 decomposition (including L13-L18 meta-layers),
+see `L1-L12-layers.md`.
+
+---
+
+## What's inside
 
 ```
 D:\4\bha-codecs\
-├── README.md                                  # this file
-├── investigate_ssp5_recommender_v9b.py        # STABLE recommender
-├── investigate_ssp5_recommender_v8.py        # predecessor
-├── investigate_ssp5_recommender_v9.py        # broken (raw locality)
-├── investigate_ssp5_recommender_v7.py        # class-balanced k-NN
-├── investigate_ssp5_recommender_v1..v6.py    # earlier iterations
-├── investigate_ssp5_42codec.py              # 13×42 codec matrix
-├── catalog.ini                                # 27 BHA magics + stdlib
-├── build_gpt_packet.py                       # ZIP packager
-├── collect_metrics.py                         # extract v1..v9b metrics
-├── render_charts.py                           # this README
-├── compare_v8_v9.py                          # side-by-side JSON
-├── analyse_v9_failures.py                    # failure mode analysis
-└── benchmark\
-    ├── ssp5-42codec/                        # 13×42 matrix results
-    ├── recommender-corpus/                   # 50-file real BHA ground truth
-    ├── ssp5-recommender/                     # v1 KB
-    ├── ssp5-recommender-v2 .. -v9/           # earlier versions
-    └── ssp5-recommender-v9b/                 # v9b STABLE + all_versions_metrics
+├── bha_core/                  # Production package (8 modules + __init__)
+│   ├── bha.py                  # Entry point with wall-clock guard
+│   ├── bha_delta.py            # Adaptive int encoder
+│   ├── bha_v10_pp_safe.py      # Round-trip safe preprocessors
+│   ├── bha_parallel.py         # Parallel orchestrator (v11-integrated)
+│   ├── bha_persistent_pool.py  # Singleton pool (2.14× speedup)
+│   ├── bha_recommender_v11.py  # Production recommender API
+│   ├── recommender_v11.py      # L15 training script
+│   ├── bench_codecs.py         # 13-codec comparison harness
+│   ├── catalog.ini             # BHA codec catalog (29 magics)
+│   ├── rules.json              # v11 trained rules
+│   ├── README.md               # Package docs
+│   └── __init__.py             # Package marker
+├── tests/                       # pytest suite (102 tests, 90 pass, 12 skip)
+│   ├── conftest.py
+│   ├── test_bha_recommender_v11.py  # 16 tests
+│   ├── test_bha_v10_pp_safe.py      # 16 tests
+│   ├── test_bha_delta.py            # 36 tests
+│   ├── test_recommender_v11_training.py  # 10 tests
+│   ├── test_bha_compress.py         # 8 tests (auto-skip without BHA runtime)
+│   └── test_bha_parallel.py         # 16 tests (4 auto-skip)
+├── core_check.py                # Single-source-of-truth verification (8/8 PASS)
+├── pyproject.toml               # PEP 517/518 build config
+├── INSTALL.md                   # 4 install scenarios + troubleshooting
+├── L1-L12-layers.md             # Architecture decomposition
+├── benchmark/                    # Telemetry JSON, comparison results
+└── tests/README.md               # How to run tests
+
+See `bha_core/README.md` for package-level docs.
 ```
 
-## 11. Benchmarks (compression improvements, session 2026-08-21)
+---
 
-### 11.1 BHA vs brotli crossover (100KB - 1MB)
+## Running tests
 
-`bench_bha_vs_brotli.py` with 10 fixtures (5 HTML+inline-JSON, 5 JSON-array,
-sizes 50/100/200/500/1024 KB).
+```bash
+# All tests (90 pass + 12 skip without BHA runtime)
+python -m pytest tests/
 
-| Range | Winner | Reason |
-|---|---|---|
-| HTML < 200KB | BHA | delta_pp / BHA preprocessors win |
-| HTML 200-400KB | BHA | same |
-| HTML >= 400KB | brotli | static-dictionary advantage |
-| JSON < 200KB | brotli | BHA overhead dominates |
-| JSON >= 200KB | BHA | BHCC1 etc. win by 4-9% |
+# Verbose with coverage
+python -m pytest tests/ -v --cov=bha_core --cov-report=term-missing
 
-### 11.2 delta preprocessor per-pattern gain (16 fixtures, 50-500KB)
+# Only fast pure-stdlib tests
+python -m pytest tests/ -m "not requires_bha"
+```
 
-| Pattern | Avg gain over raw LZMA2 | Best single result |
-|---|---|---|
-| arith (linear) | +98.6% | 571KB -> 228 B (0.04%) |
-| quadratic | +98.2% |  |
-| sparse_random | +50% |  |
-| mixed (5-col) | +72.6% |  |
-| log (timestamp) | +26% |  |
-| ip (dotted-quad) | +92% (sequential IPs) |  |
-| status_alt | +98.9% (alternating patterns) | 988KB -> 337 B (0.03%) |
-| bool (RLE) | +87% |  |
+Current coverage (102 tests, 90 pass without BHA runtime):
 
-### 11.3 adaptive-scale float encoding (4 fixtures)
+| Module | Coverage |
+|--------|----------|
+| `__init__.py` | 100% |
+| `recommender_v11.py` | 96% |
+| `bha_recommender_v11.py` | 78% |
+| `bha_v10_pp_safe.py` | 69% |
+| `bha_delta.py` | 66% |
+| `bha.py` (needs BHA runtime) | 16% |
+| `bha_parallel.py` (needs BHA runtime) | 15% |
+| `bha_persistent_pool.py` (needs BHA runtime) | 0% |
 
-+65% on float-heavy via per-fixture scale selection (1, 100,
-1e3, 1e6, 1e9). The 1-byte scale_index header + 8-byte first-value
-+ 4-byte delta-varints outperform fixed scale=1e6 by 1.5-2x on
-slow-changing (sub-nano) and wide-range (1e12) float series.
+---
 
-### 11.4 ProcessPoolExecutor orchestrator (bha_parallel, 6 fixtures)
+## Environment variables
 
-Threshold: 500KB. Workers: 8. Coordinator dispatches 14 independent
-BHA gates to a worker pool, picks min(encoded_size) across the
-worker output, the lzma_fallback_archive, and the caller's baseline.
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `PYTHONPATH` | unset | Must include parent of `bha_core/` AND `BHA_RUNTIME_DIR` |
+| `BHA_RUNTIME_DIR` | unset | Path to BHA `runtime/` dir with DLL + models |
+| `BHA_USE_V11` | `1` | `0` = disable v11, `1` = enable (default) |
+| `BHA_V11_ONLY` | `0` | `1` = filter gates to v11 priority only |
+| `SSP5_ROOT` | unset | BHA runtime reads this for model files |
 
-| File | size | seq (ms) | par (ms) | speedup | par_size | win? |
-|---|---:|---:|---:|---:|---:|---|
-| delta_arith_500kb | 571KB | 3876 | 881 | **4.40x** | 228 | yes |
-| delta_mixed_500kb | 371KB | 2605 | 0 | sp. won | 14722 | yes |
-| delta_log_per_sec | 377KB | 4227 | 0 | sp. won | 54735 | yes |
-| delta_status_alt | 987KB | 4143 | 4628 | 0.90x | 337 | no |
-| bro_html_500k | 1.5MB | 2854 | 7170 | 0.40x | 102 | no |
-| bro_html_200k | 1.5MB | 2085 | 4602 | 0.45x | 25412 | no |
-| **Total** | | **19791** | **17281** | **1.15x avg** | | 3/6 wins |
+---
 
-Speedup losses on HTML: worker-process startup (~200ms) dominates
-the ~100ms encode work. Future direction: persistent worker pool
-(ssp_DLL pre-loaded in a daemon) would remove the startup cost.
+## License
 
-## 12. Provenance
-
-- Commits: `1f4c306` (v9b), `a324dc4` (README)
-- ZIP: `D:\4\OUT_MIMO\bha-codecs-ssp5-recommender__MIMO__20260820T1200Z__v1to9b.zip`
-  - 148 KB, 67 entries (26 scripts + 35 benchmark JSON + 6 envelope manifests)
-  - SHA256: `78d82c33995d8a9358cddb90f6aa2ce46bbe79951525edab255e2b4a951e56b1`
+Project-internal. Source BHA runtime: `D:\PROJECT UNIVERSE\01Compression\BHA\`
+(5646 lines, 216KB). bha_core is the production wrapper around it.

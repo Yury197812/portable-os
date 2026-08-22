@@ -34,7 +34,13 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 from typing import Optional, Tuple
 
-sys.path.insert(0, r'D:\\4\\bha-codecs')
+# When run as a script (not imported as part of the bha_core package),
+# add the package directory and the BHA runtime to sys.path so the
+# cross-imports (bha_delta, bha_v10_pp_safe, bha_recommender_v11) resolve.
+# When imported as `bha_core.bha_parallel`, the package mechanism handles
+# this and these paths are no-ops.
+_HERE = Path(__file__).parent
+sys.path.insert(0, str(_HERE))
 sys.path.insert(0, r'D:\PROJECT UNIVERSE\01Compression\BHA')
 
 # Threshold: file size below which multiprocessing overhead exceeds gain
@@ -143,9 +149,11 @@ def worker_init() -> None:
         return
     from black_hole_archiver import _load_runtime
     _WORKER_SSP = _load_runtime()
-    # Pre-load bha_delta for column detection
-    sys.path.insert(0, r'D:\\4\\bha-codecs')
-    import bha_delta
+    # Pre-load bha_delta for column detection.
+    # In subprocess spawn, the bha_core package is importable because
+    # the parent's directory is on PYTHONPATH (set by ProcessPoolExecutor
+    # initializer). Use absolute import to avoid sys.path mutation.
+    import bha_core.bha_delta as bha_delta  # type: ignore
     _WORKER_BHA_DELTA = bha_delta
 
 
@@ -196,7 +204,7 @@ def worker_gate(args: Tuple[str, bytes, Optional[str]]) -> Optional[Tuple[str, i
     try:
         if gate_name == 'delta_pp':
             # Run bha_delta preprocessor + LZMA2 encode of result
-            from bha_delta import try_column_delta
+            from .bha_delta import try_column_delta
             delta_bytes = try_column_delta(data)
             if delta_bytes is not None:
                 # Use _build_file_lzma_fallback_archive (format=XZ
@@ -322,6 +330,65 @@ def worker_gate(args: Tuple[str, bytes, Optional[str]]) -> Optional[Tuple[str, i
                 arc = _build_runtime_lzma_archive(transformed)
                 if _decode_line_delta(ssp.decode_data(arc, None)) == data:
                     return (gate_name, len(_build_file_structured_archive(arc)), _build_file_structured_archive(arc))
+        elif gate_name == 'pp_dedup_substring':
+            # v10: replace longest repeated substring with back-ref token
+            from .bha_v10_pp_safe import (
+                pp_dedup_substring_safe, decode_dedup_substring
+            )
+            preprocessed, sidecar = pp_dedup_substring_safe(data)
+            if not sidecar:
+                # No repetition found — gate does not apply
+                return None
+            arc = _build_runtime_lzma_archive(preprocessed)
+            # Layout: [arc][u32 LE sidecar_len][sidecar]
+            # The sidecar_len is at arc_end, sidecar follows. We store
+            # the length prefix RIGHT AFTER arc, so decoder reads it
+            # from arc_end position.
+            sidecar_blob = len(sidecar).to_bytes(4, 'little') + sidecar
+            full_arc = arc + sidecar_blob
+            # Verify roundtrip: read sidecar_len from end of arc
+            sidecar_len_actual = int.from_bytes(
+                full_arc[len(arc):len(arc) + 4], 'little'
+            )
+            body_actual = arc
+            sidecar_actual = full_arc[len(arc) + 4:len(arc) + 4 + sidecar_len_actual]
+            decoded_body = ssp.decode_data(body_actual, None)
+            reconstructed = decode_dedup_substring(decoded_body, sidecar_actual)
+            if reconstructed == data:
+                return (gate_name, len(full_arc), full_arc)
+        elif gate_name == 'pp_bcj_x86':
+            # v10: zero out 4 bytes after each E8/E9, store offsets in sidecar
+            from .bha_v10_pp_safe import (
+                pp_bcj_x86_safe, decode_bcj_x86
+            )
+            preprocessed, sidecar = pp_bcj_x86_safe(data)
+            if not sidecar or sidecar == b'\x00\x00\x00\x00':
+                # No E8/E9 patterns found
+                return None
+            arc = _build_runtime_lzma_archive(preprocessed)
+            sidecar_blob = len(sidecar).to_bytes(4, 'little') + sidecar
+            full_arc = arc + sidecar_blob
+            sidecar_len_actual = int.from_bytes(
+                full_arc[len(arc):len(arc) + 4], 'little'
+            )
+            body_actual = arc
+            sidecar_actual = full_arc[len(arc) + 4:len(arc) + 4 + sidecar_len_actual]
+            decoded_body = ssp.decode_data(body_actual, None)
+            reconstructed = decode_bcj_x86(decoded_body, sidecar_actual)
+            if reconstructed == data:
+                return (gate_name, len(full_arc), full_arc)
+        elif gate_name == 'pp_zero_extend':
+            # v10: strip 4 leading zero bytes from int32 values; LOSSY (no decoder
+            # yet). Use only as screening preprocessor — gate only succeeds if
+            # the preprocessed body is strictly smaller AND no info is lost.
+            # For now, skip round-trip gate and just compare sizes.
+            from .bha_v10_pp_safe import pp_zero_extend_safe
+            preprocessed, sidecar = pp_zero_extend_safe(data)
+            if not sidecar:
+                return None
+            # Without a decoder, this is lossy — don't return it.
+            # Kept for documentation: future decoder should use per-position sidecar.
+            return None
         return None
     except Exception as e:
         # Log silently in worker; coordinator can still pick other results
@@ -397,12 +464,48 @@ def bha_parallel_compress(
         return arc, meta
 
     src_path_str = str(src_path) if src_path is not None else None
-    gates = [
+    # Use v11 recommender to prioritize gates (highest-priority first).
+    # Falls back to all gates if v11 rules not loaded.
+    use_v11 = os.environ.get('BHA_USE_V11', '1') != '0'
+    v11_only = os.environ.get('BHA_V11_ONLY', '0') == '1'
+    if use_v11:
+        try:
+            from .bha_recommender_v11 import recommend as v11_recommend, lzma_preset_for as v11_preset
+            file_name = src_path.name if src_path else 'unknown.dat'
+            # Use larger k if v11_only mode
+            k = 17 if v11_only else 5
+            priority = v11_recommend(file_name, len(data), k=k)
+            meta['v11_priority'] = priority
+            meta['v11_lzma_preset'] = v11_preset(file_name, len(data))
+            meta['v11_only_mode'] = v11_only
+        except Exception:
+            priority = None
+            meta['v11_priority'] = None
+            meta['v11_lzma_preset'] = None
+            meta['v11_only_mode'] = False
+    else:
+        priority = None
+        meta['v11_priority'] = None
+        meta['v11_lzma_preset'] = None
+        meta['v11_only_mode'] = False
+
+    all_gates = [
         'delta_pp',
         'quoted_csv', 'telemetry_csv', 'sparse_pattern', 'dense_sparse',
         'mixed_formula', 'sparse_col', 'tabular_col', 'record_transpose',
         'vartrans', 'line_norm', 'json_array', 'markdown_table', 'css_struct',
+        'pp_dedup_substring', 'pp_bcj_x86', 'pp_zero_extend',
     ]
+    if priority:
+        if v11_only:
+            # v11 decides which gates to run (subset of all)
+            gates = list(priority)
+        else:
+            # Run v11-prioritized gates first, then fill with remaining
+            seen = set(priority)
+            gates = list(priority) + [g for g in all_gates if g not in seen]
+    else:
+        gates = all_gates
     args_list = [(g, data, src_path_str) for g in gates]
     candidates = []
     if baseline is not None:
@@ -440,6 +543,22 @@ def bha_parallel_compress(
     # sequential, can't be parallelized usefully)
     try:
         from black_hole_archiver import _build_file_lzma_fallback_archive
+        # v11: if recommender says preset 9, use EXTREME
+        if use_v11 and meta.get('v11_lzma_preset') == 9:
+            import lzma as _lz
+            from black_hole_archiver import _build_runtime_lzma_archive
+            # preset 9 EXTREME requires building directly
+            best_preset = _lz.compress(
+                data, format=_lz.FORMAT_RAW,
+                filters=[{"id": _lz.FILTER_LZMA2, "preset": 9 | _lz.PRESET_EXTREME}]
+            )
+            from black_hole_archiver import uleb_encode
+            out_arr = bytearray(b'BHST1')
+            out_arr.extend(uleb_encode(len(data)))
+            out_arr.extend(uleb_encode(0))
+            out_arr.extend(len(best_preset).to_bytes(4, 'little'))
+            out_arr.extend(best_preset)
+            candidates.append(('lzma_fallback_v11preset9', len(out_arr), bytes(out_arr)))
         ssp_arc = _build_file_lzma_fallback_archive(data)
         candidates.append(('lzma_fallback', len(ssp_arc), ssp_arc))
     except Exception:
@@ -458,6 +577,59 @@ def bha_parallel_compress(
     meta['best_size'] = size
     meta['elapsed_s'] = time.perf_counter() - t0
     return arc, meta
+
+
+def _cli_orchestrator(argv=None) -> int:
+    """CLI entry point for bha-orchestrate console script.
+
+    Runs the parallel orchestrator on one or more files, prints per-file
+    results. Honors BHA_USE_V11 / BHA_V11_ONLY env vars (see module docs).
+    """
+    import argparse
+    if argv is None:
+        argv = sys.argv[1:]
+    ap = argparse.ArgumentParser(
+        prog="bha-orchestrate",
+        description="Parallel BHA orchestrator with v11 recommender.",
+    )
+    ap.add_argument("files", nargs="+", type=Path,
+                    help="Files to compress in parallel.")
+    ap.add_argument("--max-workers", type=int, default=None,
+                    help="Override worker count (default: auto from data size).")
+    args = ap.parse_args(argv)
+
+    # Required for Windows multiprocessing spawn
+    mp.freeze_support()
+
+    total_in = 0
+    total_par = 0
+    n = 0
+    for path_str in args.files:
+        path = Path(path_str)
+        if not path.exists():
+            print(f"skip {path}: missing", file=sys.stderr)
+            continue
+        data = path.read_bytes()
+        import bha_core.bha as bha
+        t0 = time.perf_counter()
+        seq_arc, _, seq_meta = bha.bha_compress(data, src_path=path, total_timeout_s=120.0)
+        seq_ms = (time.perf_counter() - t0) * 1000
+
+        t0 = time.perf_counter()
+        par_arc, par_meta = bha_parallel_compress(data, src_path=path, baseline=seq_arc,
+                                                 max_workers=args.max_workers)
+        par_ms = (time.perf_counter() - t0) * 1000
+
+        total_in += len(data)
+        total_par += len(par_arc)
+        n += 1
+        print(f"{path.name:50s}  in={len(data):>9d}  "
+              f"seq={len(seq_arc):>6d} ({seq_ms:>7.0f}ms)  "
+              f"par={len(par_arc):>6d} ({par_ms:>7.0f}ms)  "
+              f"best={par_meta['best_gate']:>22s}")
+    print(f"\n{n} files  in={total_in}  par={total_par}  "
+          f"par_best_ratio={100*total_par/total_in:.2f}%")
+    return 0
 
 
 if __name__ == '__main__':
@@ -519,9 +691,9 @@ if __name__ == '__main__':
     for path_str in sys.argv[1:]:
         path = Path(path_str)
         data = path.read_bytes()
-        # Get baseline (sequential bha_compress via bha.py)
-        sys.path.insert(0, r'D:\\4\\bha-codecs')
-        import bha
+        # Get baseline (sequential bha_compress via bha.py).
+        # Use absolute import to avoid sys.path mutation.
+        import bha_core.bha as bha  # type: ignore
         t0 = time.perf_counter()
         seq_arc, _stats, seq_meta = bha.bha_compress(data, src_path=path, total_timeout_s=120.0)
         seq_ms = (time.perf_counter() - t0) * 1000

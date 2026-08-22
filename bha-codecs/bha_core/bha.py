@@ -16,6 +16,7 @@ Public API:
 """
 from __future__ import annotations
 
+import argparse
 import io
 import json
 import lzma
@@ -126,7 +127,7 @@ def bha_compress(
             result["inner"], result["stats"] = bha._compress_best(data, src_path)
             # Also try delta-preprocessed for numeric CSV
             try:
-                import bha_delta
+                import bha_core.bha_delta as bha_delta  # type: ignore
                 delta_bytes = bha_delta.try_column_delta(data)
                 if delta_bytes is not None:
                     delta_inner, _ = bha._compress_best(delta_bytes, src_path)
@@ -239,7 +240,12 @@ def _bench_one(path: Path, iterations: int, budget_s: float) -> dict:
     }
 
 
-def _cli(argv: list[str]) -> int:
+def _cli(argv=None) -> int:
+    """CLI entry point. `argv` defaults to sys.argv[1:] when invoked via
+    the `bha-pack` console script (which doesn't pass argv).
+    """
+    if argv is None:
+        argv = sys.argv[1:]
     ap = argparse.ArgumentParser(
         prog="bha",
         description="BHA packer (with safety patches) — bench and smoke runner.",
@@ -308,13 +314,24 @@ def _cli(argv: list[str]) -> int:
                 )
         return 0
 
-    # Default: smoke test on the built-in fixtures.
+    # Default: smoke test on the built-in fixtures. Looks for HTML files
+    # in the parent project's benchmark directory, but skips silently if
+    # they're not available (e.g. after pip install into a different
+    # project).
+    _PROJECT = Path(__file__).parent.parent
+    _BENCHMARK = _PROJECT / 'benchmark'
     cases = [
-        (Path(r"D:\4\bha-codecs\benchmark\bro_html+json-50k.html"), 5.0),
-        (Path(r"D:\4\bha-codecs\benchmark\bro_html+json-80k.html"), 5.0),
-        (Path(r"D:\4\bha-codecs\benchmark\bro_specific_html_200k.html"), 10.0),
-        (Path(r"D:\4\bha-codecs\benchmark\bro_specific_html_500k.html"), 15.0),
+        (_BENCHMARK / 'bro_html+json-50k.html', 5.0),
+        (_BENCHMARK / 'bro_html+json-80k.html', 5.0),
+        (_BENCHMARK / 'bro_specific_html_200k.html', 10.0),
+        (_BENCHMARK / 'bro_specific_html_500k.html', 15.0),
     ]
+    # Filter to existing files only
+    cases = [(p, b) for p, b in cases if p.exists()]
+    if not cases:
+        print("smoke test: no built-in fixtures found at", _BENCHMARK)
+        print("Use --bench <file> to benchmark specific files.")
+        return 0
     rows = []
     for p, budget in cases:
         if not p.exists():

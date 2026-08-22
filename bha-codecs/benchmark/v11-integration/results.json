@@ -1,0 +1,104 @@
+{
+  "description": "Compare bha_parallel with and without v11 recommender on BHA corpus",
+  "n_files": 7,
+  "wins_v11": 0,
+  "wins_nov11": 0,
+  "ties": 7,
+  "rows": [
+    {
+      "file": "binary_header_text_payload.log",
+      "input_size": 5308493,
+      "seq_size": 68075,
+      "nov11_size": 64973,
+      "v11_size": 64973,
+      "diff": 0,
+      "verdict": "tie",
+      "v11_priority": [
+        "lzma_fallback",
+        "sparse_pattern",
+        "line_norm",
+        "delta_pp",
+        "quoted_csv"
+      ],
+      "v11_lzma_preset": 9
+    },
+    {
+      "file": "csv_optional_cols_1m.csv",
+      "input_size": 1048531,
+      "seq_size": 289,
+      "nov11_size": 289,
+      "v11_size": 289,
+      "diff": 0,
+      "verdict": "tie",
+      "v11_priority": [
+        "delta_pp",
+        "lzma_fallback",
+        "telemetry_csv",
+        "quoted_csv",
+        "tabular_col"
+      ],
+      "v11_lzma_preset": 6
+    },
+    {
+      "file": "fixed_db_dump_512k.txt",
+      "input_size": 524295,
+      "seq_size": 140,
+      "nov11_size": 140,
+      "v11_size": 140,
+      "diff": 0,
+      "verdict": "tie",
+      "v11_priority": null,
+      "v11_lzma_preset": null
+    },
+    {
+      "file": "log_high_entropy_tail_512k.log",
+      "input_size": 524288,
+      "seq_size": 142657,
+      "nov11_size": 142657,
+      "v11_size": 142657,
+      "diff": 0,
+      "verdict": "tie",
+      "v11_priority": null,
+      "v11_lzma_preset": null
+    },
+    {
+      "file": "log_long_repeated_512k.log",
+      "input_size": 524288,
+      "seq_size": 160,
+      "nov11_size": 160,
+      "v11_size": 160,
+      "diff": 0,
+      "verdict": "tie",
+      "v11_priority": null,
+      "v11_lzma_preset": null
+    },
+    {
+      "file": "single_giant_line_record.dat",
+      "input_size": 10485760,
+      "seq_size": 1651,
+      "nov11_size": 1651,
+      "v11_size": 1651,
+      "diff": 0,
+      "verdict": "tie",
+      "v11_priority": [
+        "delta_pp",
+        "lzma_fallback",
+        "quoted_csv",
+        "telemetry_csv",
+        "json_array"
+      ],
+      "v11_lzma_preset": 6
+    },
+    {
+      "file": "telemetry_logs_1m.log",
+      "input_size": 1048543,
+      "seq_size": 146,
+      "nov11_size": 146,
+      "v11_size": 146,
+      "diff": 0,
+      "verdict": "tie",
+      "v11_priority": null,
+      "v11_lzma_preset": null
+    }
+  ]
+}
