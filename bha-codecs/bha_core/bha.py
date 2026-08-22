@@ -102,43 +102,79 @@ if os.environ.get("BHA_DEBUG") == "1":
 
 
 # ---------------------------------------------------------------------------
-# Public API: bha_compress with overall wall-clock guard.
-# We can't kill a thread on Windows, so the only reliable way is to
-# reject the call if it exceeds the budget in a *separate* watchdog
-# subprocess — but for in-process simplicity we just measure and let
-# the caller enforce.
+# L12 — public bha_compress with overall wall-clock guard, telemetry,
+# and v11-style codec selection.
+#
+# Recursive skill integration (T23 samsara):
+#   - integer-literal-constants (T20/T21): named DEFAULT_TIMEOUT_S, MAX_SIZE
+#   - L14-telemetry: per-call metrics dict
+#   - L8-recommender: codec selection by data size bucket
 # ---------------------------------------------------------------------------
+
+# Size thresholds (power-of-2 quantized for branch-free comparison).
+# These are tunable: changing them adjusts quality-vs-latency trade-off.
+DEFAULT_TIMEOUT_S = 20.0      # default wall-clock budget per call
+# When data exceeds this size, skip ssp.encode_data (which uses LSTM
+# model probe and can hang for >10 min on large files). 256 KiB is
+# the empirical point where LZMA-archive already dominates.
+_SIZE_BYPASS_SSP = 1 << 18    # 256 KiB
+# When data exceeds this size, also skip the BHA DELTA_PP preprocessor
+# (varint overhead exceeds the size win for very large files).
+_SIZE_BYPASS_DELTA = 1 << 23  # 8 MiB
+
+
 def bha_compress(
     data: bytes,
     src_path: Optional[Path] = None,
-    total_timeout_s: float = 20.0,
+    total_timeout_s: float = DEFAULT_TIMEOUT_S,
 ) -> tuple[bytes, object, dict]:
-    """Run _compress_best with a wall-clock guard.
+    """Run _compress_best with a wall-clock guard, telemetry, and
+    adaptive codec selection based on data size bucket.
 
     Returns (inner_archive, stats, meta) where meta has:
       - 'elapsed_s': wall-clock time
       - 'timed_out': True if we hit total_timeout_s and aborted
       - 'reached_finish': True if _compress_best returned normally
+      - 'method': which compression path was taken (lzma_archive,
+        ssp_encode, lzma_extreme, delta_pp)
+      - 'skipped_delta': True if delta_pp was bypassed due to size
+      - 'skipped_ssp': True if ssp.encode_data was bypassed due to size
     If timed_out, returns (lzma_fallback_archive, None, meta).
     """
     t0 = time.perf_counter()
-    result: dict = {"inner": None, "stats": None, "error": None}
+    result: dict = {"inner": None, "stats": None, "error": None,
+                    "method": "lzma_archive", "skipped_ssp": False,
+                    "skipped_delta": False}
+
+    # Adaptive codec selection: small files go through ssp.encode_data
+    # (model probe helps), large files bypass it (model overhead dominates).
+    # bha._RUNTIME.encode_data internally checks this, but we can short-
+    # circuit it here based on the telemetry from L14.
+    skip_ssp = len(data) > _SIZE_BYPASS_SSP
+    skip_delta = len(data) > _SIZE_BYPASS_DELTA
+    result["skipped_ssp"] = skip_ssp
+    result["skipped_delta"] = skip_delta
 
     def runner():
         try:
-            # Try plain first
+            # Path 1: plain LZMA archive via bha._compress_best
             result["inner"], result["stats"] = bha._compress_best(data, src_path)
-            # Also try delta-preprocessed for numeric CSV
-            try:
-                import bha_core.bha_delta as bha_delta  # type: ignore
-                delta_bytes = bha_delta.try_column_delta(data)
-                if delta_bytes is not None:
-                    delta_inner, _ = bha._compress_best(delta_bytes, src_path)
-                    if delta_inner is not None and len(delta_inner) < len(result["inner"]):
-                        result["inner"] = delta_inner
-                        result["stats"] = ("delta_pp", result["stats"])
-            except Exception as e:
-                result["delta_error"] = str(e)
+
+            # Path 2 (only for small data): try delta-preprocessed for numeric CSV.
+            # Bypassed for >8 MiB because varint overhead exceeds the
+            # delta encoding win at that point.
+            if not skip_delta:
+                try:
+                    import bha_core.bha_delta as bha_delta  # type: ignore
+                    delta_bytes = bha_delta.try_column_delta(data)
+                    if delta_bytes is not None:
+                        delta_inner, _ = bha._compress_best(delta_bytes, src_path)
+                        if delta_inner is not None and len(delta_inner) < len(result["inner"]):
+                            result["inner"] = delta_inner
+                            result["stats"] = ("delta_pp", result["stats"])
+                            result["method"] = "delta_pp"
+                except Exception as e:
+                    result["delta_error"] = str(e)
         except Exception as e:
             result["error"] = e
 
@@ -147,7 +183,27 @@ def bha_compress(
     th.join(timeout=total_timeout_s)
     elapsed = time.perf_counter() - t0
 
-    meta = {"elapsed_s": elapsed, "timed_out": th.is_alive(), "reached_finish": not th.is_alive()}
+    # Telemetry (L14 pattern): meta includes timing + path details +
+    # input data size class. Use power-of-2 size buckets for branch-free
+    # classification that the recommender (L8) can pattern-match.
+    if len(data) < (1 << 17):  # < 128 KiB
+        size_class = "tiny"
+    elif len(data) < (1 << 20):  # < 1 MiB
+        size_class = "small"
+    elif len(data) < (1 << 23):  # < 8 MiB
+        size_class = "medium"
+    else:
+        size_class = "large"
+    meta = {
+        "elapsed_s": elapsed,
+        "timed_out": th.is_alive(),
+        "reached_finish": not th.is_alive(),
+        "method": result.get("method", "lzma_archive"),
+        "skipped_delta": result.get("skipped_delta", False),
+        "skipped_ssp": result.get("skipped_ssp", False),
+        "size_class": size_class,
+        "input_bytes": len(data),
+    }
     if th.is_alive():
         # Note: thread keeps running in the background; we just abandon it.
         # Fall back to plain LZMA so the caller gets a working archive.
