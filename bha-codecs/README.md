@@ -207,6 +207,31 @@ python -m pytest tests/ -v --cov=bha_core --cov-report=term-missing
 python -m pytest tests/ -m "not requires_bha"
 ```
 
+## Continuous Integration
+
+The repo ships **two workflow files** in `.github/workflows/`:
+
+- **`bha-codecs-ci.yml`** — for use inside the **portable-os monorepo**
+  (lives at `bha-codecs/.github/workflows/...`). Use the
+  `install_workflow.py` script to install it at the monorepo root:
+  ```bash
+  cd D:\4                       # portable-os root
+  python bha-codecs\install_workflow.py
+  git add .github\workflows\bha-codecs-ci.yml
+  git commit -m "ci: add bha-codecs CI workflow"
+  git push origin master
+  ```
+  Then push changes to `bha-codecs/**` and the workflow runs.
+
+- **`standalone-ci.yml`** — for use as a **standalone repo** (if
+  bha-codecs is split out from the monorepo). Use this as
+  `.github/workflows/ci.yml` in a dedicated bha-core repo.
+
+Both workflows include 4 jobs: `test` (matrix ubuntu/windows ×
+Python 3.11/3.12), `build` (wheel + sdist with package-data
+verification), `lint` (ruff, soft gate), and `benchmark` (v11
+recommender LOO accuracy ≥ 40% gate).
+
 Current coverage (102 tests, 90 pass without BHA runtime):
 
 | Module | Coverage |

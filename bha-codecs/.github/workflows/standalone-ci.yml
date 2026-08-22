@@ -1,0 +1,148 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch:
+
+# Cancel in-progress runs when a new commit lands
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: pytest ${{ matrix.os }} py${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install package + codec extras
+        run: |
+          python -m pip install --upgrade pip
+          # Install the package in editable mode + optional codec extras.
+          # The [codecs] extra is light (bro, lz4, zstd, snappy, zopfli) and
+          # gives full coverage of bench_codecs.py on Linux too. On Windows,
+          # bha_core's bha_parallel/bha_persistent_pool tests are auto-skipped
+          # because the BHA runtime is not available in CI.
+          python -m pip install -e ".[codecs]"
+
+      - name: Run pytest with coverage
+        run: |
+          python -m pytest tests/ -v \
+            --cov=bha_core \
+            --cov-report=term-missing \
+            --cov-report=xml:coverage-${{ matrix.os }}-py${{ matrix.python-version }}.xml \
+            --junitxml=junit-${{ matrix.os }}-py${{ matrix.python-version }}.xml
+
+      - name: Upload coverage to Codecov
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11' && env.CODECOV_TOKEN
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage-ubuntu-py3.11.xml
+          flags: unittests
+          fail_ci_if_error: false
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}-py${{ matrix.python-version }}
+          path: |
+            junit-${{ matrix.os }}-py${{ matrix.python-version }}.xml
+            coverage-${{ matrix.os }}-py${{ matrix.python-version }}.xml
+          retention-days: 14
+
+  build:
+    name: Build wheel + sdist
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install build
+        run: python -m pip install build
+      - name: Build wheel and sdist
+        run: python -m build
+      - name: Verify package data is bundled
+        run: |
+          python -c "
+          import zipfile, sys
+          whl = sorted(__import__('pathlib').Path('dist').glob('*.whl'))[-1]
+          with zipfile.ZipFile(whl) as z:
+              names = z.namelist()
+              for required in ['bha_core/__init__.py', 'bha_core/catalog.ini',
+                                'bha_core/rules.json', 'bha_core/README.md']:
+                  assert any(required in n for n in names), f'{required} missing!'
+              print(f'OK: {whl.name} contains all data files ({len(names)} entries)')
+          "
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
+          retention-days: 7
+
+  lint:
+    name: Ruff lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install ruff
+        run: python -m pip install ruff
+      - name: Check
+        run: |
+          # Lint the production package; tests have looser rules
+          ruff check bha_core/ --statistics
+        continue-on-error: true
+
+  benchmark:
+    name: v11 recommender LOO accuracy gate
+    runs-on: ubuntu-latest
+    # Only on main branch (not on PRs from forks, since LOO reads local
+    # telemetry). Manual trigger via workflow_dispatch for ad-hoc runs.
+    if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install -e ".[codecs]"
+      - name: Train v11 recommender
+        run: |
+          # Re-train v11 from scratch and verify accuracy gate.
+          # Minimum acceptable: 40% top-1 (was 48.5% historically).
+          python -c "
+          from bha_core import recommender_v11
+          from pathlib import Path
+          telemetry = Path('benchmark/codec-benchmark/telemetry_v1.json')
+          if not telemetry.exists():
+              print('SKIP: no telemetry JSON in repo')
+              import sys; sys.exit(0)
+          training = recommender_v11.load_telemetry()
+          metrics = recommender_v11.evaluate(training)
+          print(f'v11 LOO: top-1={metrics[\"top1_pct\"]}%  top-3={metrics[\"top3_pct\"]}%  n={metrics[\"n\"]}')
+          assert metrics['top1_pct'] >= 40.0, f'v11 accuracy dropped: {metrics[\"top1_pct\"]}% < 40%'
+          print('OK: v11 recommender accuracy gate passed')
+          "
