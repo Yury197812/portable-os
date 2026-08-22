@@ -23,21 +23,10 @@ use pyo3::types::PyBytes;
 const I64_BE_BYTES: usize = 8;
 /// Bytes in an i32 little-endian serialized value (4 bytes always).
 const I32_LE_BYTES: usize = 4;
-/// Bits per LEB128 varint continuation chunk.
-const VARINT_SHIFT_BITS: u32 = 7;
 /// Number of repeated-substring window in bytes for pp_dedup.
 const PP_DEDUP_SCAN_WINDOW: usize = 65536;
 /// Maximum length in bytes that pp_dedup will extend a match.
 const PP_DEDUP_MAX_EXTEND: usize = 1024;
-/// Multiplier for the min_len threshold in pp_dedup (need 3x to ensure
-/// round-trip is shorter than input).
-const PP_DEDUP_MIN_LEN_MULT: usize = 3;
-/// Bit-shift to extract the sign bit from an i64 (arithmetic right shift).
-const I64_SIGN_SHIFT: u32 = 63;
-/// Bit-mask to extract the low 7 bits of a varint byte.
-const VARINT_BYTE_MASK: u8 = 0x7F;
-/// High-bit flag indicating varint continuation.
-const VARINT_CONTINUE_FLAG: u8 = 0x80;
 
 // Mode selectors for adaptive_encode_int.
 // These match the values in bha_delta.py (0=plain, 2=dod, 3=xor32, 4=xor64).
@@ -159,18 +148,18 @@ pub fn adaptive_encode_int(py: Python, values: Vec<i64>) -> PyResult<(i32, PyObj
     let dod = encode_dod_inner(&values);
     let xor32 = encode_xor_inner(&values, I32_LE_BYTES);
     let xor64 = encode_xor_inner(&values, I64_BE_BYTES);
-    // Choose smallest
-    let mut best_mode = 0i32;
-    let mut best_size = plain.len();
-    let mut best_bytes = plain;
-    if dod.len() < best_size {
-        best_mode = 2; best_size = dod.len(); best_bytes = dod;
+    // Choose smallest by raw byte length (we don't need the size separately
+    // since we return the bytes themselves)
+    let mut best_mode: i32 = 0;
+    let mut best_bytes: Vec<u8> = plain;
+    if dod.len() < best_bytes.len() {
+        best_mode = 2; best_bytes = dod;
     }
-    if xor32.len() < best_size {
-        best_mode = 3; best_size = xor32.len(); best_bytes = xor32;
+    if xor32.len() < best_bytes.len() {
+        best_mode = 3; best_bytes = xor32;
     }
-    if xor64.len() < best_size {
-        best_mode = 4; best_size = xor64.len(); best_bytes = xor64;
+    if xor64.len() < best_bytes.len() {
+        best_mode = 4; best_bytes = xor64;
     }
     Ok((best_mode, PyBytes::new_bound(py, &best_bytes).into()))
 }
@@ -184,9 +173,9 @@ pub fn choose_mode(values: Vec<i64>) -> PyResult<i32> {
     }
     let plain_size = estimate_plain_size(&values);
     let dod_size = estimate_dod_size(&values);
-    let xor32_size = 4 * values.len();
-    let xor64_size = 8 * values.len();
-    let mut best_mode = 0i32;
+    let xor32_size = I32_LE_BYTES * values.len();
+    let xor64_size = I64_BE_BYTES * values.len();
+    let mut best_mode: i32 = 0;
     let mut best_size = plain_size;
     if dod_size < best_size { best_mode = 2; best_size = dod_size; }
     if xor32_size < best_size { best_mode = 3; best_size = xor32_size; }
@@ -220,16 +209,16 @@ pub fn pp_dedup_substring_scan(
             break;
         }
         let needle = &data[start1..start1 + min_len];
-        // Find next occurrence within 64K window
-        let window_end = (start1 + 1 + 65536).min(n);
+        // Find next occurrence within PP_DEDUP_SCAN_WINDOW bytes
+        let window_end = (start1 + 1 + PP_DEDUP_SCAN_WINDOW).min(n);
         if let Some(start2_rel) = (&data[start1 + 1..window_end])
             .windows(min_len)
             .position(|w| w == needle)
         {
             let start2 = start1 + 1 + start2_rel;
-            // Extend match
+            // Extend match (up to PP_DEDUP_MAX_EXTEND bytes)
             let mut ext = min_len;
-            while ext < 1024
+            while ext < PP_DEDUP_MAX_EXTEND
                 && start1 + ext < n
                 && start2 + ext < n
                 && data[start1 + ext] == data[start2 + ext]
