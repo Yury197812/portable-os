@@ -55,8 +55,10 @@ bha._build_runtime_lzma_archive = _safe_build_lzma
 # 1.5MB HTML (LSTM model probe is the slow path) and the LZMA-archive
 # produced by _safe_build_lzma is already excellent on this content.
 # ---------------------------------------------------------------------------
-_LZMA_PRESET6_THRESHOLD = 64 * 1024  # bytes; above this skip EXTREME
-_SSP_BYPASS_THRESHOLD = 256 * 1024  # bytes; above this skip ssp.encode_data
+# Size thresholds in bytes. Use power-of-2 for branch-free comparisons
+# and self-documenting meaning (1<<16 = 64KB, 1<<18 = 256KB).
+_LZMA_PRESET6_THRESHOLD = 1 << 16  # 64KB; below this use preset 6 + EXTREME
+_SSP_BYPASS_THRESHOLD = 1 << 18   # 256KB; above this skip ssp.encode_data
 
 _orig_encode_data_call = bha._RUNTIME.encode_data
 def _safe_encode_data(data, *a, **kw):
