@@ -49,7 +49,12 @@ sys.path.insert(0, r'D:\PROJECT UNIVERSE\01Compression\BHA')
 # For BHA LZMA2 encoding at ~500MB/s, 500KB = ~1ms per worker,
 # 8 workers = 8ms total work + 200ms spawn = no win.
 # 1MB+ = 2ms+ work, win.
-PARALLEL_MIN_SIZE = 500 * 1024  # 500KB
+# Use a power-of-2 quantized threshold for branch-free size class checks.
+# 2**19 = 524288 ~= 512KB (close to 500KB), 2**21 = 2097152 ~= 2MB.
+PARALLEL_MIN_SIZE = 1 << 19   # 512KB; below this, sequential path is faster
+PARALLEL_MEDIUM_MAX = 1 << 21  # 2MB; medium files get 1-2 workers
+PARALLEL_LARGE_MAX = 1 << 23   # 8MB; large files get 2-4 workers
+PARALLEL_XLARGE_MIN = 1 << 23  # 8MB+; xlarge files use full pool
 DEFAULT_WORKERS = 8
 
 # Adaptive threshold tuning. The simple 500KB cut-off was a v1 guess
@@ -110,23 +115,23 @@ def _select_parallel_strategy(
       inputs, so CSV path uses lower threshold.
     """
     # 1. Below the minimum: never profitable, even with delta_pp
-    if size < 200_000:  # < 200KB
+    if size < (1 << 18):  # < 256KB
         return 0
     # 2. CSV path: delta_pp can win even on small files
     if is_csv_like:
-        if size < 500_000:  # 200-500KB CSV: 1 worker (low overhead)
+        if size < PARALLEL_MIN_SIZE:  # 256-512KB CSV: 1 worker (low overhead)
             return 1
-        if size < 2_000_000:  # 500KB-2MB: 2 workers
+        if size < PARALLEL_MEDIUM_MAX:  # 512KB-2MB: 2 workers
             return 2
         return min(4, n_workers_max)
     # 3. Non-CSV path: must amortize worker startup
-    if size < 2_000_000:    # < 2MB: 0 or 1 worker
+    if size < PARALLEL_MEDIUM_MAX:  # < 2MB: 0 or 1 worker
         return 0
-    if size < 10_000_000:   # 2-10MB: 2 workers
+    if size < (1 << 24):  # 2-16MB: 2 workers
         return 2
-    if size < 50_000_000:   # 10-50MB: 4 workers
+    if size < (1 << 26):  # 16-64MB: 4 workers
         return 4
-    return min(n_workers_max, 8)  # 50MB+: 8 workers
+    return min(n_workers_max, 8)  # 64MB+: 8 workers
 
 
 def _select_workers_for(data: bytes) -> int:
@@ -520,21 +525,21 @@ if __name__ == '__main__':
     assert not _is_csv_like(b'\xff\xfe\xfd'), 'non-ASCII should not be CSV'
     print('  _is_csv_like(non-ASCII) OK')
 
-    # _select_parallel_strategy: matrix
+    # _select_parallel_strategy: matrix (uses power-of-2 quantized thresholds)
     cases = [
         # (size, is_csv, expected_workers, desc)
-        (50_000,   False, 0, '<200KB non-CSV -> 0'),
-        (200_000,  False, 0, '200KB non-CSV -> 0'),
-        (1_000_000,False, 0, '1MB non-CSV -> 0'),
-        (2_000_000,False, 2, '2MB non-CSV -> 2'),
-        (10_000_000,False,4, '10MB non-CSV -> 4'),
-        (50_000_000,False,8, '50MB non-CSV -> 8 (boundary)'),
-        (60_000_000,False,8, '60MB non-CSV -> 8'),
-        (100_000_000,False,8, '100MB non-CSV -> 8'),
-        (50_000,   True,  0, '<200KB CSV -> 0'),
-        (300_000,  True,  1, '300KB CSV -> 1'),
-        (1_000_000,True,  2, '1MB CSV -> 2'),
-        (3_000_000,True,  4, '3MB CSV -> 4'),
+        (1 << 16,    False, 0, '<64KB non-CSV -> 0'),
+        (1 << 18,    False, 0, '<256KB non-CSV -> 0'),
+        (1 << 20,    False, 0, '1MB non-CSV -> 0'),
+        (1 << 21,    False, 2, '2MB non-CSV -> 2'),
+        (1 << 23,    False, 2, '8MB non-CSV -> 2'),
+        (1 << 25,    False, 4, '32MB non-CSV -> 4 (boundary)'),
+        (1 << 26,    False, 4, '64MB non-CSV -> 4'),
+        (1 << 27,    False, 4, '128MB non-CSV -> 4'),
+        (1 << 16,    True,  0, '<64KB CSV -> 0'),
+        (1 << 19,    True,  1, '512KB CSV -> 1'),
+        (1 << 20,    True,  2, '1MB CSV -> 2'),
+        (1 << 22,    True,  4, '4MB CSV -> 4'),
     ]
     for size, is_csv, want, desc in cases:
         got = _select_parallel_strategy(size, is_csv, n_workers_max=8)

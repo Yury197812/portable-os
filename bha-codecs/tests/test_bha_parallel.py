@@ -55,8 +55,9 @@ class TestSelectParallelStrategy:
         assert workers >= 2
 
     def test_non_csv_2mb_two_workers(self):
+        # PARALLEL_MEDIUM_MAX is 2**21 = 2MB exactly
         workers = bha_parallel._select_parallel_strategy(
-            2_000_000, is_csv_like=False, n_workers_max=8)
+            1 << 21, is_csv_like=False, n_workers_max=8)
         assert workers == 2
 
     def test_non_csv_huge_max_workers(self):
@@ -67,13 +68,14 @@ class TestSelectParallelStrategy:
 
 class TestSelectWorkersFor:
     def test_uses_csv_detection(self):
-        # >300KB CSV: workers >= 1 (threshold is 200KB)
-        workers = bha_parallel._select_workers_for(b"a,b\n1,2\n" * 30000)
+        # >=512KB CSV: workers >= 1 (PARALLEL_MIN_SIZE threshold)
+        # Need >=65536 reps × 8 bytes = 524288 bytes
+        workers = bha_parallel._select_workers_for(b"a,b\n1,2\n" * 65536)
         assert workers >= 1
 
     def test_uses_size_bucket(self):
-        workers = bha_parallel._select_workers_for(b"x" * 50_000)
-        # 50KB non-CSV: 0 workers (below threshold)
+        # 64KB non-CSV: 0 workers (below 256KB threshold)
+        workers = bha_parallel._select_workers_for(b"x" * (1 << 16))
         assert workers == 0
 
 
