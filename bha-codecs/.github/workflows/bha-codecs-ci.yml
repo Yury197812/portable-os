@@ -47,6 +47,20 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[codecs]"
 
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      - name: Install maturin
+        run: python -m pip install maturin
+
+      - name: Build and install Rust extension
+        run: |
+          cd bha_core_rs
+          maturin build --release
+          python -m pip install target/wheels/*.whl --force-reinstall
+
       - name: Run pytest with coverage
         run: |
           python -m pytest tests/ -v \
@@ -87,6 +101,33 @@ jobs:
           python-version: "3.11"
       - name: Install build
         run: python -m pip install build
+      - name: Install Rust toolchain + maturin
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      - name: Install maturin
+        run: python -m pip install maturin
+      - name: Build Rust extension (bha_core_rs)
+        run: |
+          # Build the Rust extension (~1 min on first run, cached after).
+          # Result: target/wheels/bha_core_rs-*.whl
+          cd bha_core_rs
+          maturin build --release
+        shell: bash
+      - name: Install Rust wheel
+        run: |
+          python -m pip install bha_core_rs/target/wheels/*.whl --force-reinstall
+      - name: Verify Rust extension imports
+        run: |
+          python -c "
+          import bha_core_rs
+          print('bha_core_rs imported:', bha_core_rs.__version__ if hasattr(bha_core_rs, '__version__') else 'OK')
+          # Quick smoke test
+          mode, body = bha_core_rs.adaptive_encode_int([1, 2, 3, 4, 5] * 1000)
+          assert mode in (0, 2, 3, 4)
+          assert len(body) > 0
+          print(f'Rust smoke test: mode={mode}, body_size={len(body)}')
+          "
       - name: Build wheel and sdist
         run: python -m build
       - name: Verify package data is bundled

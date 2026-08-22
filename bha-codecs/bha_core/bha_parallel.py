@@ -162,6 +162,11 @@ def worker_gate(args: Tuple[str, bytes, Optional[str]]) -> Optional[Tuple[str, i
 
     args: (gate_name, data, src_path_str_or_None)
     Returns: (gate_name, encoded_size, encoded_bytes) or None
+
+    Refactored (T17 Oculus atomization): the 242-line if/elif chain was
+    replaced with a registry-driven dispatcher. Special gates that
+    don't fit the standard (check + encode + build_archive) contract
+    (delta_pp, v10 pp, structured) are handled below.
     """
     global _WORKER_SSP
     gate_name, data, src_path_str = args
@@ -171,232 +176,92 @@ def worker_gate(args: Tuple[str, bytes, Optional[str]]) -> Optional[Tuple[str, i
         worker_init()
         ssp = _WORKER_SSP
 
-    from black_hole_archiver import (
-        _quoted_csv_safety_risk, _quoted_csv_delimiter, _quoted_csv_gate,
-        _encode_quoted_csv, _decode_quoted_csv, _build_file_quoted_csv_archive,
-        _telemetry_csv_gate, _encode_telemetry_csv, _decode_telemetry_csv,
-        _build_file_telemetry_csv_archive,
-        _sparse_pattern_delimiter, _encode_sparse_pattern, _decode_sparse_pattern,
-        _build_file_sparse_pattern_archive,
-        _dense_sparse_delimiter, _encode_dense_sparse, _decode_dense_sparse,
-        _build_file_dense_sparse_archive,
-        _mixed_formula_gate, _encode_mixed_formula, _decode_mixed_formula,
-        _build_file_mixed_formula_archive,
-        _build_runtime_lzma_archive, _build_file_lzma_fallback_archive,
-        _sparse_col_gate, _encode_sparse_col, _decode_sparse_col,
-        _build_file_sparse_col_archive,
-        _tabular_col_gate, _encode_tabular_col, _decode_tabular_col,
-        _build_file_tabular_col_archive,
-        _record_transpose_gate, _encode_record_transpose, _decode_record_transpose,
-        _build_file_record_transpose_archive,
-        _vartrans_gate, _encode_vartrans, _decode_vartrans, _build_file_vartrans_archive,
-        _line_norm_gate, _encode_line_norm, _decode_line_norm,
-        _build_file_line_norm_archive,
-        _json_array_gate, _encode_json_array, _decode_json_array,
-        _build_file_json_array_archive,
-        _markdown_table_gate, _encode_markdown_table, _decode_markdown_table,
-        _build_file_markdown_table_archive,
-        _css_struct_gate, _encode_css_struct, _decode_css_struct,
-        _build_file_css_struct_archive,
-        _structured_transform_file, _decode_line_delta, _build_file_structured_archive,
-    )
-
-    try:
-        if gate_name == 'delta_pp':
-            # Run bha_delta preprocessor + LZMA2 encode of result
-            from .bha_delta import try_column_delta
-            delta_bytes = try_column_delta(data)
-            if delta_bytes is not None:
-                # Use _build_file_lzma_fallback_archive (format=XZ
-                # handles large dict_size correctly). _build_runtime_lzma_archive
-                # uses preset=6 which has dict_size clamped to 131072,
-                # too small for data >128KB.
-                arc = _build_file_lzma_fallback_archive(delta_bytes)
-                return (gate_name, len(arc), arc)
-            return None
-        elif gate_name == 'lzma_fallback':
-            arc = _build_file_lzma_fallback_archive(data)
+    # Special gates (custom logic, not in standard registry)
+    if gate_name == 'delta_pp':
+        # Run bha_delta preprocessor + LZMA2 encode of result
+        from .bha_delta import try_column_delta
+        from black_hole_archiver import _build_file_lzma_fallback_archive
+        delta_bytes = try_column_delta(data)
+        if delta_bytes is not None:
+            arc = _build_file_lzma_fallback_archive(delta_bytes)
             return (gate_name, len(arc), arc)
-        elif gate_name == 'ssp_fallback':
-            arc, _stats = ssp.encode_data(data, None, 1, r=1, block_bits=32, allow_ssp=False)
-            if ssp.decode_data(arc, None) == data:
-                return (gate_name, len(arc), arc)
-        elif gate_name == 'quoted_csv':
-            if not _quoted_csv_safety_risk(src_path, data):
-                return None
-            delim = _quoted_csv_delimiter(src_path)
-            if delim is None or not _quoted_csv_gate(src_path, data):
-                return None
-            blob = _encode_quoted_csv(data, delim)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_quoted_csv(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_quoted_csv_archive(arc)), _build_file_quoted_csv_archive(arc))
-        elif gate_name == 'telemetry_csv':
-            if not _telemetry_csv_gate(data):
-                return None
-            blob = _encode_telemetry_csv(data)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_telemetry_csv(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_telemetry_csv_archive(arc)), _build_file_telemetry_csv_archive(arc))
-        elif gate_name == 'sparse_pattern':
-            delim = _sparse_pattern_delimiter(src_path, data)
-            if delim is None:
-                return None
-            blob = _encode_sparse_pattern(data, delim)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_sparse_pattern(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_sparse_pattern_archive(arc)), _build_file_sparse_pattern_archive(arc))
-        elif gate_name == 'dense_sparse':
-            delim = _dense_sparse_delimiter(src_path, data)
-            if delim is None:
-                return None
-            blob = _encode_dense_sparse(data, delim)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_dense_sparse(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_dense_sparse_archive(arc)), _build_file_dense_sparse_archive(arc))
-        elif gate_name == 'mixed_formula':
-            if not _mixed_formula_gate(src_path, data):
-                return None
-            blob = _encode_mixed_formula(data)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_mixed_formula(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_mixed_formula_archive(arc)), _build_file_mixed_formula_archive(arc))
-        elif gate_name == 'sparse_col':
-            delim = _sparse_col_gate(data)
-            if delim is None:
-                return None
-            blob = _encode_sparse_col(data, delim)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_sparse_col(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_sparse_col_archive(arc)), _build_file_sparse_col_archive(arc))
-        elif gate_name == 'tabular_col':
-            delim = _tabular_col_gate(data)
-            if delim is None:
-                return None
-            blob = _encode_tabular_col(data, delim)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_tabular_col(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_tabular_col_archive(arc)), _build_file_tabular_col_archive(arc))
-        elif gate_name == 'record_transpose':
-            shape = _record_transpose_gate(data)
-            if shape is None:
-                return None
-            stride, rows, delim = shape
-            blob = _encode_record_transpose(data, stride, rows, delim)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_record_transpose(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_record_transpose_archive(arc)), _build_file_record_transpose_archive(arc))
-        elif gate_name == 'vartrans':
-            shape = _record_transpose_gate(data)
-            delim = _vartrans_gate(data, record_transpose_active=shape is not None)
-            if delim is None:
-                return None
-            blob = _encode_vartrans(data, delim)
-            arc, _stats = ssp.encode_data(blob, None, 1, r=1, block_bits=32, allow_ssp=False)
-            if _decode_vartrans(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_vartrans_archive(arc)), _build_file_vartrans_archive(arc))
-        elif gate_name == 'line_norm':
-            if src_path is None or not _line_norm_gate(src_path, data):
-                return None
-            blob = _encode_line_norm(data)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_line_norm(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_line_norm_archive(arc)), _build_file_line_norm_archive(arc))
-        elif gate_name == 'json_array':
-            if src_path is None or not _json_array_gate(src_path, data):
-                return None
-            blob = _encode_json_array(data)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_json_array(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_json_array_archive(arc)), _build_file_json_array_archive(arc))
-        elif gate_name == 'markdown_table':
-            if src_path is None or not _markdown_table_gate(src_path, data):
-                return None
-            blob = _encode_markdown_table(data)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_markdown_table(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_markdown_table_archive(arc)), _build_file_markdown_table_archive(arc))
-        elif gate_name == 'css_struct':
-            if src_path is None or not _css_struct_gate(src_path, data):
-                return None
-            blob = _encode_css_struct(data)
-            arc = _build_runtime_lzma_archive(blob)
-            if _decode_css_struct(ssp.decode_data(arc, None)) == data:
-                return (gate_name, len(_build_file_css_struct_archive(arc)), _build_file_css_struct_archive(arc))
-        elif gate_name == 'structured':
-            mode, transformed = _structured_transform_file(
-                src_path, data, single_file=True, base_rt_guard=False)
-            if mode == 2:  # DIR_STRUCT_MODE_LINE_DELTA = 2
-                arc = _build_runtime_lzma_archive(transformed)
-                if _decode_line_delta(ssp.decode_data(arc, None)) == data:
-                    return (gate_name, len(_build_file_structured_archive(arc)), _build_file_structured_archive(arc))
-        elif gate_name == 'pp_dedup_substring':
-            # v10: replace longest repeated substring with back-ref token
-            from .bha_v10_pp_safe import (
-                pp_dedup_substring_safe, decode_dedup_substring
-            )
+        return None
+
+    if gate_name == 'lzma_fallback':
+        from black_hole_archiver import _build_file_lzma_fallback_archive
+        arc = _build_file_lzma_fallback_archive(data)
+        return (gate_name, len(arc), arc)
+
+    if gate_name == 'ssp_fallback':
+        arc, _stats = ssp.encode_data(data, None, 1, r=1, block_bits=32, allow_ssp=False)
+        if ssp.decode_data(arc, None) == data:
+            return (gate_name, len(arc), arc)
+        return None
+
+    if gate_name == 'structured':
+        from black_hole_archiver import (
+            _structured_transform_file, _decode_line_delta,
+            _build_runtime_lzma_archive, _build_file_structured_archive,
+        )
+        mode, transformed = _structured_transform_file(
+            src_path, data, single_file=True, base_rt_guard=False)
+        if mode == 2:  # DIR_STRUCT_MODE_LINE_DELTA
+            arc = _build_runtime_lzma_archive(transformed)
+            if _decode_line_delta(ssp.decode_data(arc, None)) == data:
+                return (gate_name, len(_build_file_structured_archive(arc)),
+                        _build_file_structured_archive(arc))
+        return None
+
+    # v10 pp gates: round-trip safe preprocessors with custom sidecar logic
+    if gate_name in ('pp_dedup_substring', 'pp_bcj_x86', 'pp_zero_extend'):
+        from black_hole_archiver import (
+            _build_runtime_lzma_archive,
+        )
+        from .bha_v10_pp_safe import (
+            pp_dedup_substring_safe, decode_dedup_substring,
+            pp_bcj_x86_safe, decode_bcj_x86,
+            pp_zero_extend_safe,
+        )
+        if gate_name == 'pp_dedup_substring':
             preprocessed, sidecar = pp_dedup_substring_safe(data)
-            if not sidecar:
-                # No repetition found — gate does not apply
-                return None
-            arc = _build_runtime_lzma_archive(preprocessed)
-            # Layout: [arc][u32 LE sidecar_len][sidecar]
-            # The sidecar_len is at arc_end, sidecar follows. We store
-            # the length prefix RIGHT AFTER arc, so decoder reads it
-            # from arc_end position.
-            sidecar_blob = len(sidecar).to_bytes(4, 'little') + sidecar
-            full_arc = arc + sidecar_blob
-            # Verify roundtrip: read sidecar_len from end of arc
-            sidecar_len_actual = int.from_bytes(
-                full_arc[len(arc):len(arc) + 4], 'little'
-            )
-            body_actual = arc
-            sidecar_actual = full_arc[len(arc) + 4:len(arc) + 4 + sidecar_len_actual]
-            decoded_body = ssp.decode_data(body_actual, None)
-            reconstructed = decode_dedup_substring(decoded_body, sidecar_actual)
-            if reconstructed == data:
-                return (gate_name, len(full_arc), full_arc)
         elif gate_name == 'pp_bcj_x86':
-            # v10: zero out 4 bytes after each E8/E9, store offsets in sidecar
-            from .bha_v10_pp_safe import (
-                pp_bcj_x86_safe, decode_bcj_x86
-            )
             preprocessed, sidecar = pp_bcj_x86_safe(data)
-            if not sidecar or sidecar == b'\x00\x00\x00\x00':
-                # No E8/E9 patterns found
-                return None
-            arc = _build_runtime_lzma_archive(preprocessed)
-            sidecar_blob = len(sidecar).to_bytes(4, 'little') + sidecar
-            full_arc = arc + sidecar_blob
-            sidecar_len_actual = int.from_bytes(
-                full_arc[len(arc):len(arc) + 4], 'little'
-            )
-            body_actual = arc
-            sidecar_actual = full_arc[len(arc) + 4:len(arc) + 4 + sidecar_len_actual]
-            decoded_body = ssp.decode_data(body_actual, None)
-            reconstructed = decode_bcj_x86(decoded_body, sidecar_actual)
-            if reconstructed == data:
-                return (gate_name, len(full_arc), full_arc)
-        elif gate_name == 'pp_zero_extend':
-            # v10: strip 4 leading zero bytes from int32 values; LOSSY (no decoder
-            # yet). Use only as screening preprocessor — gate only succeeds if
-            # the preprocessed body is strictly smaller AND no info is lost.
-            # For now, skip round-trip gate and just compare sizes.
-            from .bha_v10_pp_safe import pp_zero_extend_safe
+        else:  # pp_zero_extend
             preprocessed, sidecar = pp_zero_extend_safe(data)
-            if not sidecar:
-                return None
-            # Without a decoder, this is lossy — don't return it.
-            # Kept for documentation: future decoder should use per-position sidecar.
+        # Zero-extend has no decoder yet — gate disabled
+        if gate_name == 'pp_zero_extend':
             return None
+        if not sidecar or sidecar == b'\x00\x00\x00\x00':
+            return None  # No pattern found
+        arc = _build_runtime_lzma_archive(preprocessed)
+        # Layout: [arc][u32 LE sidecar_len][sidecar]
+        sidecar_blob = len(sidecar).to_bytes(4, 'little') + sidecar
+        full_arc = arc + sidecar_blob
+        # Round-trip verification
+        sidecar_len_actual = int.from_bytes(
+            full_arc[len(arc):len(arc) + 4], 'little'
+        )
+        body_actual = arc
+        sidecar_actual = full_arc[len(arc) + 4:len(arc) + 4 + sidecar_len_actual]
+        decoded_body = ssp.decode_data(body_actual, None)
+        if gate_name == 'pp_dedup_substring':
+            reconstructed = decode_dedup_substring(decoded_body, sidecar_actual)
+        else:  # pp_bcj_x86
+            reconstructed = decode_bcj_x86(decoded_body, sidecar_actual)
+        if reconstructed == data:
+            return (gate_name, len(full_arc), full_arc)
         return None
-    except Exception as e:
-        # Log silently in worker; coordinator can still pick other results
-        import sys
-        import traceback
-        print(f'worker_gate({gate_name}) failed: {e}', file=sys.stderr)
-        traceback.print_exc(file=sys.stderr)
+
+    # Standard 14 BHA codec gates — dispatch via registry
+    from .bha_gates import DEFAULT_REGISTRY, ensure_registered
+    ensure_registered()
+    if not DEFAULT_REGISTRY.has(gate_name):
         return None
+    result = DEFAULT_REGISTRY.run(gate_name, data, src_path, ssp)
+    if result is None:
+        return None
+    size, archive = result
+    return (gate_name, size, archive)
 
 
 def bha_parallel_compress(

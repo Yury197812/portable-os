@@ -44,13 +44,32 @@ def pytest_configure(config):
 
 
 def pytest_collection_modifyitems(config, items):
-    """Auto-skip tests marked requires_bha when BHA runtime missing."""
-    if BHA_RUNTIME_AVAILABLE:
-        return
-    skip_marker = pytest.mark.skip(reason="BHA runtime not on PYTHONPATH")
-    for item in items:
-        if "requires_bha" in item.keywords:
-            item.add_marker(skip_marker)
+    """Auto-skip tests marked requires_bha when BHA runtime missing.
+
+    Also reorders so test_bha_gates runs before test_bha_parallel.
+    Reason: importing test_bha_parallel pulls in bha_parallel module
+    which has a module-level sys.path.insert(0, BHA_RUNTIME_DIR).
+    That side-effect makes black_hole_archiver importable for all
+    subsequent tests, which breaks test_bha_gates' BHA-runtime-not-
+    available assertion (it expects 0 registered gates when BHA is
+    missing). Running test_bha_gates first isolates the BHA-runtime-free
+    state. Once black_hole_archiver is imported anywhere in the process,
+    it's available everywhere — there's no clean way to "un-import".
+    """
+    if not BHA_RUNTIME_AVAILABLE:
+        skip_marker = pytest.mark.skip(reason="BHA runtime not on PYTHONPATH")
+        for item in items:
+            if "requires_bha" in item.keywords:
+                item.add_marker(skip_marker)
+
+    # Reorder: test_bha_gates first (it tests BHA-missing state)
+    items.sort(key=lambda item: (
+        0 if 'test_bha_gates' in str(item.fspath) else
+        1 if 'test_bha_compress' in str(item.fspath) else
+        2 if 'test_bha_parallel' in str(item.fspath) else
+        3,
+        item.location[1],  # line number
+    ))
 
 
 # ---------------------------------------------------------------------------

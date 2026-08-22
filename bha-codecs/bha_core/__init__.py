@@ -22,6 +22,7 @@ __all__ = [
     'bha',
     'bha_delta',
     'bha_v10_pp_safe',
+    'bha_gates',
     'bha_parallel',
     'bha_persistent_pool',
     'bha_recommender_v11',

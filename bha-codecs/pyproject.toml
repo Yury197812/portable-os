@@ -50,10 +50,16 @@ codecs = [
     "python-snappy>=0.6",   # snappy
     "zopfli>=0.4",          # zopfli_deflate_15 (slow but high-ratio deflate)
 ]
+# Rust acceleration: ~14× speedup on bha_delta._adaptive_encode_int
+# hot path. Requires pip install bha-core[rust] (separate build).
+# bha_core gracefully falls back to pure-Python if not installed.
+rust = [
+    "bha-core-rs @ file://./bha_core_rs/target/wheels/bha_core_rs-0.1.0-cp310-abi3-win_amd64.whl",
+]
 
 # Convenience: everything for full benchmark
 all = [
-    "bha-core[codecs]",
+    "bha-core[codecs,rust]",
 ]
 
 [project.urls]

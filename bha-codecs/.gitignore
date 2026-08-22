@@ -14,6 +14,11 @@ htmlcov/
 .tox/
 .nox/
 
+# Rust (maturin-managed)
+bha_core_rs/target/
+bha_core_rs/examples/
+bha_core_rs/Cargo.lock
+
 # Virtualenvs
 .venv/
 _test_venv/

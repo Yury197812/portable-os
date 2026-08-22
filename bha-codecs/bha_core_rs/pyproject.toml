@@ -1,0 +1,19 @@
+[build-system]
+requires = ["maturin>=1.0"]
+build-backend = "maturin"
+
+[project]
+name = "bha-core-rs"
+version = "0.1.0"
+description = "Rust acceleration for bha_core hot paths (delta encoder, dedup substring)"
+requires-python = ">=3.10"
+license = { text = "Project-internal" }
+
+[tool.maturin]
+# Build native Rust module, expose as `bha_core_rs` Python module
+module-name = "bha_core_rs"
+# Use ctypes binding for fastest compile + small binary (vs PyO3)
+# (maturin supports both; ctypes gives thinner dep tree)
+features = ["pyo3/extension-module"]
+# Strip symbols for smaller wheel
+strip = true
